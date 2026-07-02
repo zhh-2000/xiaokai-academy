@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小剀学苑 - 每日学习平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .subject-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .subject-card.english { border-top: 5px solid #4CAF50; }
+        .subject-card.chinese { border-top: 5px solid #E91E63; }
+        .subject-card.math { border-top: 5px solid #2196F3; }
+        .subject-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        .subject-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .subject-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .subject-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #999;
+        }
+        .date-cards {
+            margin-top: 40px;
+        }
+        .date-cards h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .date-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .date-item {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .date-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .date-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 小剀学苑</h1>
+            <p>每日学习，点滴进步 | 今日日期：<span id="currentDate"></span></p>
+        </div>
+        
+        <div class="subjects">
+            <div class="subject-card english" onclick="location.href='english/index.html'">
+                <div class="subject-icon">🔤</div>
+                <div class="subject-title">英语学习</div>
+                <div class="subject-desc">阅读理解、单词记忆、听力训练<br>全面提升英语能力</div>
+                <div class="subject-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="englishWords">0</div>
+                        <div class="stat-label">已学单词</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="englishTests">0</div>
+                        <div class="stat-label">完成测试</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subject-card chinese" onclick="location.href='chinese/index.html'">
+                <div class="subject-icon">📖</div>
+                <div class="subject-title">语文学习</div>
+                <div class="subject-desc">古诗词鉴赏、现代文阅读<br>传承中华文化精粹</div>
+                <div class="subject-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="chinesePoems">0</div>
+                        <div class="stat-label">已学古诗</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="chineseTests">0</div>
+                        <div class="stat-label">完成测试</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subject-card math" onclick="location.href='math/index.html'">
+                <div class="subject-icon">🔢</div>
+                <div class="subject-title">数学学习</div>
+                <div class="subject-desc">简便运算、应用题训练<br>培养数学思维能力</div>
+                <div class="subject-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="mathProblems">0</div>
+                        <div class="stat-label">已做题目</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="mathAccuracy">0%</div>
+                        <div class="stat-label">正确率</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="date-cards">
+            <h2>📅 历史学习记录</h2>
+            <div class="date-list" id="dateList"></div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 小剀学苑 | 每天进步一点点</p>
+        </div>
+    </div>
+    
+    <script>
+        // 显示当前日期
+        const today = new Date();
+        document.getElementById('currentDate').textContent = today.toLocaleDateString('zh-CN');
+        
+        // 加载学习统计数据
+        function loadStats() {
+            const englishData = JSON.parse(localStorage.getItem('englishStats') || '{}');
+            const chineseData = JSON.parse(localStorage.getItem('chineseStats') || '{}');
+            const mathData = JSON.parse(localStorage.getItem('mathStats') || '{}');
+            
+            document.getElementById('englishWords').textContent = englishData.totalWords || 0;
+            document.getElementById('englishTests').textContent = englishData.totalTests || 0;
+            document.getElementById('chinesePoems').textContent = chineseData.totalPoems || 0;
+            document.getElementById('chineseTests').textContent = chineseData.totalTests || 0;
+            document.getElementById('mathProblems').textContent = mathData.totalProblems || 0;
+            document.getElementById('mathAccuracy').textContent = (mathData.accuracy || 0) + '%';
+        }
+        
+        // 加载学习日期记录
+        function loadDateHistory() {
+            const dates = JSON.parse(localStorage.getItem('studyDates') || '[]');
+            const dateList = document.getElementById('dateList');
+            
+            // 添加今天的日期
+            const todayStr = today.toISOString().split('T')[0];
+            if (!dates.includes(todayStr)) {
+                dates.unshift(todayStr);
+            }
+            
+            dates.forEach(date => {
+                const dateItem = document.createElement('div');
+                dateItem.className = 'date-item' + (date === todayStr ? ' active' : '');
+                dateItem.textContent = date;
+                dateList.appendChild(dateItem);
+            });
+        }
+        
+        loadStats();
+        loadDateHistory();
+    </script>
+</body>
+</html>

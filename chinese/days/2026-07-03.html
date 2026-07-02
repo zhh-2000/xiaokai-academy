@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年7月3日 | 小剀学苑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #E91E63;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .header .date {
+            color: #666;
+            font-size: 1.1em;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 12px 24px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        .tab:hover {
+            background: #e0e0e0;
+        }
+        .tab.active {
+            background: #E91E63;
+            color: white;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E91E63;
+        }
+        .poem-card {
+            background: linear-gradient(135deg, #FFF5F7 0%, #FCE4EC 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #F8BBD9;
+        }
+        .poem-title {
+            font-size: 1.5em;
+            color: #C2185B;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .poem-author {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .poem-content {
+            font-size: 1.2em;
+            line-height: 2;
+            text-align: center;
+            color: #333;
+            font-family: 'KaiTi', 'STKaiti', serif;
+        }
+        .poem-content p {
+            margin-bottom: 10px;
+        }
+        .poem-analysis {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .poem-analysis h4 {
+            color: #E91E63;
+            margin-bottom: 15px;
+        }
+        .poem-analysis p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .article-card {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        .article-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .article-card p {
+            color: #444;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .article-source {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+        .question-box {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question-box h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 12px 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option:hover {
+            background: #FCE4EC;
+        }
+        .option.selected {
+            background: #E91E63;
+            color: white;
+        }
+        .option.correct {
+            background: #E91E63;
+            color: white;
+        }
+        .option.wrong {
+            background: #f44336;
+            color: white;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #E91E63;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .score-display {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+            color: white;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .score-display h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 30px;
+            background: #E91E63;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #C2185B;
+            transform: translateY(-2px);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #E91E63;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .test-question {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .test-question h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .word-progress {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">← 返回语文首页</a>
+        
+        <div class="header">
+            <h1>📖 语文学习</h1>
+            <div class="date">2026年7月3日（星期五）</div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('poetry')">📜 古诗词</button>
+            <button class="tab" onclick="showSection('modern')">📚 现代文阅读</button>
+            <button class="tab" onclick="showSection('news')">📰 时文阅读</button>
+            <button class="tab" onclick="showSection('test')">📝 综合测试 (50题)</button>
+        </div>
+        
+        <!-- 古诗词部分 -->
+        <div id="poetry" class="section active">
+            <h2 class="section-title">古诗词鉴赏</h2>
+            
+            <div class="poem-card">
+                <div class="poem-title">七律·庆祝建党105周年</div>
+                <div class="poem-author">当代·佚名</div>
+                <div class="poem-content">
+                    <p>红旗漫卷照东方，</p>
+                    <p>百年奋斗铸辉煌。</p>
+                    <p>初心不改为人民，p>
+                    <p>使命担当志昂扬。</p>
+                    <p>风雨兼程创奇迹，</p>
+                    <p>砥砺前行谱华章。</p>
+                    <p>七一勋章耀神州，</p>
+                    <p>奋进再创新辉煌。</p>
+                </div>
+                <div class="poem-analysis">
+                    <h4>【诗词赏析】</h4>
+                    <p><strong>创作背景：</strong>此诗创作于2026年7月1日，庆祝中国共产党成立105周年。诗中描绘了建党百年以来的光辉历程，表达了对党初心使命的赞颂。</p>
+                    <p><strong>主题思想：</strong>诗歌主题是歌颂党的百年奋斗历程，表达对党为人民服务初心不改的敬意，展现新时代继续奋进的决心。</p>
+                    <p><strong>艺术特色：</strong>采用七律形式，对仗工整，韵律和谐。用词庄重典雅，如"红旗漫卷"、"砥砺前行"等，气势磅礴，情感真挚。</p>
+                </div>
+            </div>
+            
+            <div class="poem-card">
+                <div class="poem-title">水调歌头·七一颂</div>
+                <div class="poem-author">当代·佚名</div>
+                <div class="poem-content">
+                    <p>风雨百年路，奋斗铸华章。</p>
+                    <p>红旗指引方向，人民是脊梁。</p>
+                    <p>初心永不忘，使命肩上扛。</p>
+                    <p>奋进新时代，再创新辉煌。</p>
+                    <p></p>
+                    <p>忆往昔峥嵘，岁月如歌扬。</p>
+                    <p>今朝更奋起，志在万里航。</p>
+                    <p>勋章映荣光，榜样领方向。</p>
+                    <p>团结齐奋进，共筑中国梦。</p>
+                </div>
+                <div class="poem-analysis">
+                    <h4>【诗词赏析】</h4>
+                    <p><strong>创作背景：</strong>此词为庆祝建党105周年而作，采用苏轼《水调歌头》的词牌格式，表达对党的深厚感情。</p>
+                    <p><strong>主题思想：</strong>词中回顾百年奋斗历程，歌颂党的领导，展望新时代的奋进方向，表达实现中国梦的决心。</p>
+                    <p><strong>艺术特色：</strong>词牌格式规整，上下阕呼应，语言通俗流畅，意象鲜明，如"红旗"、"勋章"、"中国梦"等富有时代特色。</p>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>1. "红旗漫卷照东方"中的"漫卷"一词表达了什么意境？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'p1q1', 'A')">A. 红旗缓缓展开的静态画面</div>
+                    <div class="option" onclick="selectOption(this, 'p1q1', 'B')">B. 红旗随风飘扬的动态气势</div>
+                    <div class="option" onclick="selectOption(this, 'p1q1', 'C')">C. 红旗被卷起来的收起状态</div>
+                    <div class="option" onclick="selectOption(this, 'p1q1', 'D')">D. 红旗静止不动的画面</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>2. "初心不改为人民"表达了什么核心思想？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'p1q2', 'A')">A. 个人的理想信念</div>
+                    <div class="option" onclick="selectOption(this, 'p1q2', 'B')">B. 党为人民服务的宗旨</div>
+                    <div class="option" onclick="selectOption(this, 'p1q2', 'C')">C. 追求个人利益</div>
+                    <div class="option" onclick="selectOption(this, 'p1q2', 'D')">D. 完成工作任务</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>3. 诗中"七一勋章"指的是什么？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'p1q3', 'A')">A. 党的最高荣誉勋章</div>
+                    <div class="option" onclick="selectOption(this, 'p1q3', 'B')">B. 普通的纪念章</div>
+                    <div class="option" onclick="selectOption(this, 'p1q3', 'C')">C. 文学奖项</div>
+                    <div class="option" onclick="selectOption(this, 'p1q3', 'D')">D. 体育奖章</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>4. "砥砺前行谱华章"中"砥砺"的含义是？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'p1q4', 'A')">A. 轻松随意地前进</div>
+                    <div class="option" onclick="selectOption(this, 'p1q4', 'B')">B. 勤奋刻苦地磨练前进</div>
+                    <div class="option" onclick="selectOption(this, 'p1q4', 'C')">C. 慢慢地行走</div>
+                    <div class="option" onclick="selectOption(this, 'p1q4', 'D')">D. 停下来休息</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>5. 这首七律的韵脚是什么？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'p1q5', 'A')">A. ang韵（方、煌、扬、章、辉煌）</div>
+                    <div class="option" onclick="selectOption(this, 'p1q5', 'B')">B. ing韵</div>
+                    <div class="option" onclick="selectOption(this, 'p1q5', 'C')">C. ong韵</div>
+                    <div class="option" onclick="selectOption(this, 'p1q5', 'D')">D. an韵</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 现代文阅读 -->
+        <div id="modern" class="section">
+            <h2 class="section-title">现代文阅读</h2>
+            
+            <div class="article-card">
+                <h3>伟大的征程——庆祝中国共产党成立105周年</h3>
+                <p>2026年7月1日，庆祝中国共产党成立105周年大会在北京人民大会堂隆重举行。这是继庆祝中国共产党成立100周年之后，又一个具有里程碑意义的重要时刻。</p>
+                <p>一百零五年的风雨兼程，中国共产党带领中国人民书写了人类历史上最壮丽的史诗。从1921年上海石库门的小楼到今天的世界舞台中央，从革命年代的硝烟战火到新时代的和平繁荣，中国共产党始终坚守初心使命，为人民谋幸福，为民族谋复兴。</p>
+                <p>习近平总书记在大会上向"七一勋章"获得者颁授勋章并发表重要讲话。他回顾了党的光辉历程，指出中国共产党之所以能够历经百年而风华正茂、饱经磨难而生生不息，根本在于党在任何时候都把人民放在心中最高位置。</p>
+                <p>中央档案馆于7月1日向社会开放4.4万余件馆藏档案，这些珍贵的历史文献记录了党的奋斗足迹，见证了中国从站起来、富起来到强起来的伟大飞跃。每一份档案背后，都有一个感人至深的故事，都承载着一段不可忘却的记忆。</p>
+                <p>站在新的历史起点上，我们要继续发扬伟大建党精神，以更加昂扬的姿态奋进新征程。历史告诉我们，只要坚持党的领导，坚持中国特色社会主义道路，就一定能够实现中华民族伟大复兴的中国梦。</p>
+                <div class="article-source">来源：央视新闻 2026年7月1日</div>
+            </div>
+            
+            <div class="question-box">
+                <h4>6. 文章提到的庆祝大会在哪里举行？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'm1q1', 'A')">A. 上海石库门</div>
+                    <div class="option" onclick="selectOption(this, 'm1q1', 'B')">B. 北京人民大会堂</div>
+                    <div class="option" onclick="selectOption(this, 'm1q1', 'C')">C. 天安门广场</div>
+                    <div class="option" onclick="selectOption(this, 'm1q1', 'D')">D. 中央档案馆</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>7. 文中"从站起来、富起来到强起来"指的是什么？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'm1q2', 'A')">A. 个人身体的成长变化</div>
+                    <div class="option" onclick="selectOption(this, 'm1q2', 'B')">B. 中国国家发展的历史进程</div>
+                    <div class="option" onclick="selectOption(this, 'm1q2', 'C')">C. 经济数据的增长</div>
+                    <div class="option" onclick="selectOption(this, 'm1q2', 'D')">D. 人口数量的增加</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>8. 中央档案馆开放了多少件档案？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'm1q3', 'A')">A. 4.4万件</div>
+                    <div class="option" onclick="selectOption(this, 'm1q3', 'B')">B. 4400件</div>
+                    <div class="option" onclick="selectOption(this, 'm1q3', 'C')">C. 44万件</div>
+                    <div class="option" onclick="selectOption(this, 'm1q3', 'D')">D. 440件</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>9. 文章的中心思想是什么？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'm1q4', 'A')">A. 描述庆祝大会的具体流程</div>
+                    <div class="option" onclick="selectOption(this, 'm1q4', 'B')">B. 歌颂党的百年奋斗历程，展望未来</div>
+                    <div class="option" onclick="selectOption(this, 'm1q4', 'C')">C. 介绍中央档案馆的功能</div>
+                    <div class="option" onclick="selectOption(this, 'm1q4', 'D')">D. 记录历史档案的内容</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>10. "伟大建党精神"在文中指什么精神？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'm1q5', 'A')">A. 坚持真理、坚守理想、践行初心、担当使命的精神</div>
+                    <div class="option" onclick="selectOption(this, 'm1q5', 'B')">B. 追求个人成功的精神</div>
+                    <div class="option" onclick="selectOption(this, 'm1q5', 'C')">C. 努力工作的精神</div>
+                    <div class="option" onclick="selectOption(this, 'm1q5', 'D')">D. 学习知识的精神</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 时文阅读 -->
+        <div id="news" class="section">
+            <h2 class="section-title">时文阅读（基于央视新闻）</h2>
+            
+            <div class="article-card">
+                <h3>我国全面进入主汛期 多部门联动防灾减灾</h3>
+                <p>据水利部消息，我国于2026年7月1日起全面进入主汛期。主汛期（7月至8月）期间，我国南北方均有多雨区，北方洪涝偏重，局地极端暴雨洪水偏多，有较强台风北上影响内陆。</p>
+                <p>中央气象台7月1日18时发布台风蓝色预警。预计南海热带低压将以每小时15至20公里的速度向西偏北方向移动，强度逐渐加强，未来24小时内发展为台风，并将于3日下午至晚上在海南岛东部到广东西部一带沿海登陆。</p>
+                <p>受热带低压影响，琼州海峡客滚运输于7月2日15时起全线停运，预计停运将持续2-3天。交通运输部门提醒旅客密切关注台风动态，合理安排出行计划。</p>
+                <p>教育部2026年暑期高校学生资助热线电话于7月1日开通，号码为010-66097980、010-66096590，为家庭经济困难的大学新生提供资助政策咨询与帮助，受理时间为每天8:00-20:00。</p>
+                <div class="article-source">来源：央视新闻 2026年7月2日《早啊！新闻来了》</div>
+            </div>
+            
+            <div class="article-card">
+                <h3>2026世界杯赛况更新</h3>
+                <p>北京时间7月2日，2026美加墨世界杯1/16决赛继续进行。英格兰队以2-1逆转战胜刚果（金）队，成功晋级下一轮。东道主美国队于2日8时迎战波黑队，美国队以D组头名身份晋级，波黑队作为B组第三名惊险出线。</p>
+                <p>在乒乓球赛事方面，WTT美国大满贯女单第二轮中，二号种子王曼昱不敌日本选手佐藤瞳，爆冷无缘16强。男单卫冕冠军王楚钦以3比0战胜对手，顺利晋级。</p>
+                <div class="article-source">来源：央视新闻 2026年7月2日体育报道</div>
+            </div>
+            
+            <div class="question-box">
+                <h4>11. 我国何时进入主汛期？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'n1q1', 'A')">A. 6月1日</div>
+                    <div class="option" onclick="selectOption(this, 'n1q1', 'B')">B. 7月1日</div>
+                    <div class="option" onclick="selectOption(this, 'n1q1', 'C')">C. 8月1日</div>
+                    <div class="option" onclick="selectOption(this, 'n1q1', 'D')">D. 9月1日</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>12. 台风预计何时登陆？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'n1q2', 'A')">A. 7月1日下午</div>
+                    <div class="option" onclick="selectOption(this, 'n1q2', 'B')">B. 7月2日上午</div>
+                    <div class="option" onclick="selectOption(this, 'n1q2', 'C')">C. 7月3日下午至晚上</div>
+                    <div class="option" onclick="selectOption(this, 'n1q2', 'D')">D. 7月4日晚上</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>13. 琼州海峡客滚运输何时停运？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'n1q3', 'A')">A. 7月1日15时</div>
+                    <div class="option" onclick="selectOption(this, 'n1q3', 'B')">B. 7月2日15时</div>
+                    <div class="option" onclick="selectOption(this, 'n1q3', 'C')">C. 7月3日15时</div>
+                    <div class="option" onclick="selectOption(this, 'n1q3', 'D')">D. 7月4日15时</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>14. 教育部资助热线电话有几个号码？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'n1q4', 'A')">A. 1个</div>
+                    <div class="option" onclick="selectOption(this, 'n1q4', 'B')">B. 2个</div>
+                    <div class="option" onclick="selectOption(this, 'n1q4', 'C')">C. 3个</div>
+                    <div class="option" onclick="selectOption(this, 'n1q4', 'D')">D. 4个</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>15. 王楚钦在WTT美国大满贯比赛中的成绩如何？</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'n1q5', 'A')">A. 3比0获胜晋级</div>
+                    <div class="option" onclick="selectOption(this, 'n1q5', 'B')">B. 不敌对手出局</div>
+                    <div class="option" onclick="selectOption(this, 'n1q5', 'C')">C. 2比1获胜</div>
+                    <div class="option" onclick="selectOption(this, 'n1q5', 'D')">D. 1比3落败</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 综合测试 -->
+        <div id="test" class="section">
+            <h2 class="section-title">综合测试（50题）</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="testProgress" style="width: 0%"></div>
+            </div>
+            <div class="word-progress" id="testProgressText">已完成: 0 / 50</div>
+            
+            <div id="testContainer"></div>
+            
+            <div id="testResult" style="display: none;">
+                <div class="score-display">
+                    <h2 id="testScore">0</h2>
+                    <p>得分</p>
+                    <p id="testDetail"></p>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="submitTest()">提交测试</button>
+        </div>
+    </div>
+    
+    <script>
+        // 答案存储
+        let answers = {};
+        
+        // 正确答案
+        const correctAnswers = {
+            'p1q1': 'B', 'p1q2': 'B', 'p1q3': 'A', 'p1q4': 'B', 'p1q5': 'A',
+            'm1q1': 'B', 'm1q2': 'B', 'm1q3': 'A', 'm1q4': 'B', 'm1q5': 'A',
+            'n1q1': 'B', 'n1q2': 'C', 'n1q3': 'B', 'n1q4': 'B', 'n1q5': 'A'
+        };
+        
+        // 测试题目数据（扩展到50题）
+        const testQuestions = [
+            {q: '"红旗漫卷"的"漫"字读音是？', opts: ['màn', 'mán', 'màn', 'mǎn'], ans: 'màn'},
+            {q: '"初心不改为人民"的修辞手法是？', opts: ['比喻', '拟人', '直抒胸臆', '夸张'], ans: '直抒胸臆'},
+            {q: '"砥砺前行"的"砥砺"原意是？', opts: ['磨刀石', '奔跑', '站立', '坐下'], ans: '磨刀石'},
+            {q: '七律每句有多少个字？', opts: ['5字', '6字', '7字', '8字'], ans: '7字'},
+            {q: '"华章"一词的意思是？', opts: ['华丽的文章', '普通的文字', '错误的篇章', '简单的段落'], ans: '华丽的文章'},
+            {q: '水调歌头属于什么词牌？', opts: ['小令', '中调', '长调', '都不属于'], ans: '长调'},
+            {q: '"七一勋章"颁发给什么人？', opts: ['运动员', '优秀党员', '演员', '学生'], ans: '优秀党员'},
+            {q: '"脊梁"一词在此处喻指？', opts: ['身体部位', '支撑力量', '医疗用品', '食物'], ans: '支撑力量'},
+            {q: '词的上下阕关系通常是？', opts: ['独立无关', '呼应统一', '完全相同', '完全相反'], ans: '呼应统一'},
+            {q: '"中国梦"的核心内涵是？', opts: ['个人富裕', '民族复兴', '物质享受', '休息放松'], ans: '民族复兴'},
+            {q: '中国共产党成立年份是？', opts: ['1919年', '1921年', '1949年', '1978年'], ans: '1921年'},
+            {q: '人民大会堂位于？', opts: ['上海', '北京', '广州', '深圳'], ans: '北京'},
+            {q: '"石库门"指的是什么建筑？', opts: ['现代高楼', '传统民居', '工厂', '学校'], ans: '传统民居'},
+            {q: '建党精神的内涵包括？', opts: ['坚持真理', '追求名利', '逃避困难', '放弃理想'], ans: '坚持真理'},
+            {q: '中央档案馆保存的是什么？', opts: ['金钱', '历史档案', '衣服', '食物'], ans: '历史档案'},
+            {q: '"站起来、富起来、强起来"的历史顺序是？', opts: ['强→富→站', '站→富→强', '富→站→强', '站→强→富'], ans: '站→富→强'},
+            {q: '中华民族伟大复兴的目标是？', opts: ['个人成功', '国家富强', '享乐生活', '放弃努力'], ans: '国家富强'},
+            {q: '主汛期的时间范围是？', opts: ['5-6月', '7-8月', '9-10月', '11-12月'], ans: '7-8月'},
+            {q: '台风预警的颜色等级中，蓝色代表？', opts: ['最严重', '较严重', '一般', '轻微'], ans: '一般'},
+            {q: '琼州海峡连接的两地是？', opts: ['广东和海南', '福建和台湾', '浙江和上海', '山东和辽宁'], ans: '广东和海南'},
+            {q: '热带低压发展为台风需要多少小时？', opts: ['12小时', '24小时', '36小时', '48小时'], ans: '24小时'},
+            {q: '教育部资助热线开通目的是？', opts: ['娱乐', '帮助困难学生', '旅游', '购物'], ans: '帮助困难学生'},
+            {q: 'WTT是什么赛事的缩写？', opts: ['足球', '乒乓球', '篮球', '游泳'], ans: '乒乓球'},
+            {q: '世界杯1/16决赛意味着什么？', opts: ['决赛', '淘汰赛首轮', '小组赛', '预选赛'], ans: '淘汰赛首轮'},
+            {q: '"爆冷"在体育新闻中指的是？', opts: ['温度下降', '意外结果', '正常发挥', '天气变化'], ans: '意外结果'},
+            {q: '以下哪个是诗词的基本特征？', opts: ['无韵律', '有韵律', '无情感', '无主题'], ans: '有韵律'},
+            {q: '现代文阅读需要关注什么？', opts: ['仅标题', '内容和中心思想', '仅日期', '仅作者'], ans: '内容和中心思想'},
+            {q: '新闻阅读的主要目的是？', opts: ['娱乐', '获取信息', '睡觉', '聊天'], ans: '获取信息'},
+            {q: '"百年奋斗"指的是多长时间？', opts: ['50年', '100年', '150年', '200年'], ans: '100年'},
+            {q: '"奋进"一词的意思是？', opts: ['停止', '后退', '前进努力', '休息'], ans: '前进努力'},
+            {q: '诗词的"赏析"指的是？', opts: ['批评', '分析和欣赏', '背诵', '抄写'], ans: '分析和欣赏'},
+            {q: '"风华正茂"形容的是？', opts: ['年老衰退', '正值鼎盛', '病弱状态', '幼小时期'], ans: '正值鼎盛'},
+            {q: '"生生不息"的含义是？', opts: ['停止发展', '不断延续发展', '完全消失', '逐渐减少'], ans: '不断延续发展'},
+            {q: '古诗词常用的表现手法有？', opts: ['比喻、拟人', '只有比喻', '只有拟人', '没有手法'], ans: '比喻、拟人'},
+            {q: '"为人民服务"的提出者是？', opts: ['孔子', '毛泽东', '邓小平', '习近平'], ans: '毛泽东'},
+            {q: '阅读理解题需要先做什么？', opts: ['直接答题', '先读文章', '猜测答案', '跳过题目'], ans: '先读文章'},
+            {q: '新闻的时效性指的是？', opts: ['永久不变', '及时更新', '延迟发布', '从不更新'], ans: '及时更新'},
+            {q: '台风登陆后的影响通常是？', opts: ['晴朗天气', '风雨增强', '温度升高', '空气干燥'], ans: '风雨增强'},
+            {q: '水利部属于什么部门？', opts: ['教育', '水利管理', '医疗', '文化'], ans: '水利管理'},
+            {q: '"光荣历程"的"光荣"意思是？', opts: ['羞耻', '荣誉、辉煌', '失败', '平淡'], ans: '荣誉、辉煌'},
+            {q: '"辉煌"一词的反义词是？', opts: ['灿烂', '黯淡', '明亮', '耀眼'], ans: '黯淡'},
+            {q: '诗词的创作背景对理解诗词有什么作用？', opts: ['无作用', '帮助理解', '干扰理解', '可以忽略'], ans: '帮助理解'},
+            {q: '以下哪个是七律的特点？', opts: ['8句', '4句', '6句', '12句'], ans: '8句'},
+            {q: '词牌决定了什么？', opts: ['内容', '格式和韵律', '作者', '日期'], ans: '格式和韵律'},
+            {q: '阅读时文有什么意义？', opts: ['了解时事', '打发时间', '无需阅读', '浪费时间'], ans: '了解时事'},
+            {q: '作文的中心思想也称什么？', opts: ['主题', '标题', '开头', '结尾'], ans: '主题'},
+            {q: '"宝贵的历史文献"中"宝贵"指的是？', opts: ['价值高', '价格贵', '无用', '普通'], ans: '价值高'},
+            {q: '学习语文的目标包括？', opts: ['仅背诵', '阅读、理解、表达', '仅抄写', '仅考试'], ans: '阅读、理解、表达'}
+        ];
+        
+        // 渲染测试题
+        function renderTestQuestions() {
+            const container = document.getElementById('testContainer');
+            container.innerHTML = '';
+            
+            testQuestions.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'test-question';
+                questionDiv.innerHTML = `
+                    <h4>${index + 16}. ${item.q}</h4>
+                    <div class="options">
+                        ${item.opts.map(opt => `
+                            <div class="option" onclick="selectTestOption(this, ${index}, '${opt}')">${opt}</div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        // 选择选项
+        function selectOption(element, questionId, option) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            answers[questionId] = option;
+        }
+        
+        function selectTestOption(element, questionIndex, option) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            answers['test_' + questionIndex] = option;
+            updateTestProgress();
+        }
+        
+        function updateTestProgress() {
+            const answered = Object.keys(answers).filter(k => k.startsWith('test_')).length;
+            document.getElementById('testProgress').style.width = (answered / 35 * 100) + '%';
+            document.getElementById('testProgressText').textContent = `已完成: ${answered} / 35`;
+        }
+        
+        // 提交测试
+        function submitTest() {
+            let correct = 0;
+            const total = 50;
+            
+            // 检查前15题
+            for (let key in correctAnswers) {
+                if (answers[key] && answers[key].startsWith(correctAnswers[key])) {
+                    correct++;
+                }
+            }
+            
+            // 检查后35题
+            testQuestions.forEach((item, index) => {
+                if (answers['test_' + index] === item.ans) {
+                    correct++;
+                }
+            });
+            
+            const score = correct * 2;
+            const percentage = Math.round(correct / total * 100);
+            
+            document.getElementById('testScore').textContent = score + '分';
+            document.getElementById('testDetail').textContent = `正确: ${correct}/${total}题，正确率: ${percentage}%`;
+            document.getElementById('testResult').style.display = 'block';
+            
+            saveProgress(correct, total);
+        }
+        
+        // 保存进度
+        function saveProgress(correct, total) {
+            const today = '2026-07-03';
+            const stats = JSON.parse(localStorage.getItem('chineseStats') || '{}');
+            
+            if (!stats.dates) stats.dates = [];
+            if (!stats.dates.includes(today)) {
+                stats.dates.push(today);
+            }
+            
+            stats.testScore = correct;
+            stats.testTotal = total;
+            stats.totalTests = (stats.totalTests || 0) + 1;
+            stats.totalPoems = (stats.totalPoems || 0) + 2;
+            
+            localStorage.setItem('chineseStats', JSON.stringify(stats));
+            
+            const dates = JSON.parse(localStorage.getItem('studyDates') || '[]');
+            if (!dates.includes(today)) {
+                dates.unshift(today);
+                localStorage.setItem('studyDates', JSON.stringify(dates));
+            }
+        }
+        
+        // 显示部分
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // 初始化
+        renderTestQuestions();
+    </script>
+</body>
+</html>

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年7月3日 | 小剀学苑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4CAF50;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .header .date {
+            color: #666;
+            font-size: 1.1em;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 12px 24px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        .tab:hover {
+            background: #e0e0e0;
+        }
+        .tab.active {
+            background: #4CAF50;
+            color: white;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .reading-passage {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        .reading-passage h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .reading-passage p {
+            color: #444;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .question-box {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question-box h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 12px 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option:hover {
+            background: #e8f5e9;
+        }
+        .option.selected {
+            background: #4CAF50;
+            color: white;
+        }
+        .option.correct {
+            background: #4CAF50;
+            color: white;
+        }
+        .option.wrong {
+            background: #f44336;
+            color: white;
+        }
+        .word-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .word-card .word {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .word-card .phonetic {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        .word-card .meaning {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .word-card .example {
+            font-style: italic;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .word-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .word-nav button {
+            padding: 10px 30px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .word-progress {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+        }
+        .test-container {
+            margin-top: 20px;
+        }
+        .test-question {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .test-question h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .score-display {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .score-display h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .word-type {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .mark-known {
+            margin-top: 15px;
+        }
+        .mark-known label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">← 返回英语首页</a>
+        
+        <div class="header">
+            <h1>🔤 英语学习</h1>
+            <div class="date">2026年7月3日（星期五）</div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('reading')">📖 阅读理解</button>
+            <button class="tab" onclick="showSection('old-words')">📚 老单词复习 (30)</button>
+            <button class="tab" onclick="showSection('new-words')">🆕 新单词学习 (20)</button>
+            <button class="tab" onclick="showSection('test')">📝 综合测试 (100题)</button>
+        </div>
+        
+        <!-- 阅读理解部分 -->
+        <div id="reading" class="section active">
+            <h2 class="section-title">阅读理解（共2篇）</h2>
+            
+            <!-- 第一篇阅读 -->
+            <div class="reading-passage">
+                <h3>Passage 1: CPC Celebrates 105th Anniversary</h3>
+                <p>The Communist Party of China (CPC) celebrated its 105th founding anniversary on July 1, 2026. A grand ceremony was held at the Great Hall of the People in Beijing, where President Xi Jinping presented the "July 1st Medal" to outstanding Party members and delivered an important speech.</p>
+                <p>In his speech, President Xi reviewed the Party's glorious history and called on all Party members to "strive to create new historical glory." He emphasized the importance of maintaining the Party's original aspirations and mission, and continuing to serve the people wholeheartedly.</p>
+                <p>The Central Archives also released over 44,000 historical documents to the public on this special occasion, showcasing the Party's journey and achievements over the past century. A special concert titled "People First" was broadcast on the evening of July 1st to celebrate this milestone.</p>
+                <p>Foreign political parties and leaders from various countries sent congratulatory messages, highly praising the CPC's governance achievements and noting that China's development provides opportunities and references for the world, especially for the Global South.</p>
+            </div>
+            
+            <div class="question-box">
+                <h4>1. When was the CPC founded?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r1q1', 'A')">A. 1921</div>
+                    <div class="option" onclick="selectOption(this, 'r1q1', 'B')">B. 1949</div>
+                    <div class="option" onclick="selectOption(this, 'r1q1', 'C')">C. 1978</div>
+                    <div class="option" onclick="selectOption(this, 'r1q1', 'D')">D. 2026</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>2. Where was the celebration ceremony held?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r1q2', 'A')">A. Tiananmen Square</div>
+                    <div class="option" onclick="selectOption(this, 'r1q2', 'B')">B. The Great Hall of the People</div>
+                    <div class="option" onclick="selectOption(this, 'r1q2', 'C')">C. Zhongnanhai</div>
+                    <div class="option" onclick="selectOption(this, 'r1q2', 'D')">D. National Museum</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>3. How many historical documents were released by the Central Archives?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r1q3', 'A')">A. About 4,400</div>
+                    <div class="option" onclick="selectOption(this, 'r1q3', 'B')">B. About 44,000</div>
+                    <div class="option" onclick="selectOption(this, 'r1q3', 'C')">C. About 440,000</div>
+                    <div class="option" onclick="selectOption(this, 'r1q3', 'D')">D. About 4,000</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>4. What was the title of the special concert?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r1q4', 'A')">A. Party Anniversary</div>
+                    <div class="option" onclick="selectOption(this, 'r1q4', 'B')">B. People First</div>
+                    <div class="option" onclick="selectOption(this, 'r1q4', 'C')">C. Historical Glory</div>
+                    <div class="option" onclick="selectOption(this, 'r1q4', 'D')">D. Serve the People</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>5. What did foreign leaders think of China's development?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r1q5', 'A')">A. It only benefits China</div>
+                    <div class="option" onclick="selectOption(this, 'r1q5', 'B')">B. It provides opportunities for the world</div>
+                    <div class="option" onclick="selectOption(this, 'r1q5', 'C')">C. It has no global impact</div>
+                    <div class="option" onclick="selectOption(this, 'r1q5', 'D')">D. It is not successful</div>
+                </div>
+            </div>
+            
+            <!-- 第二篇阅读 -->
+            <div class="reading-passage">
+                <h3>Passage 2: Typhoon Warning and Flood Season</h3>
+                <p>China entered its main flood season on July 1, 2026, according to the Ministry of Water Resources. During the main flood season from July to August, multiple rainy areas are expected in both northern and southern China, with northern regions facing heavier flooding. Local extreme rainstorms and floods are predicted to be more frequent, and stronger typhoons may move northward to affect inland areas.</p>
+                <p>The Central Meteorological Observatory issued a blue typhoon warning at 6 PM on July 1st. A tropical depression in the South China Sea is expected to move west-northwest at a speed of 15-20 kilometers per hour, gradually strengthening into a typhoon within 24 hours. It is forecast to make landfall along the eastern coast of Hainan Island to western Guangdong on the afternoon or evening of July 3rd.</p>
+                <p>The Qiongzhou Strait passenger ferry service was suspended starting from 3 PM on July 2nd due to the tropical depression, with the suspension expected to last 2-3 days. Ticket sales at various ports were halted from 1 PM on July 2nd. Passengers and drivers needing to cross the strait were advised to pay close attention to typhoon updates.</p>
+                <p>Meanwhile, a blue rainstorm warning was also issued. Heavy to torrential rain is expected in parts of Anhui, Jiangxi, Zhejiang, Hubei, Hunan, Chongqing, Guizhou, Sichuan, Yunnan, Guangxi, and Hainan Island from 8 PM on July 1st to 8 PM on July 2nd.</p>
+            </div>
+            
+            <div class="question-box">
+                <h4>6. When did China enter its main flood season in 2026?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r2q1', 'A')">A. June 1st</div>
+                    <div class="option" onclick="selectOption(this, 'r2q1', 'B')">B. July 1st</div>
+                    <div class="option" onclick="selectOption(this, 'r2q1', 'C')">C. August 1st</div>
+                    <div class="option" onclick="selectOption(this, 'r2q1', 'D')">D. September 1st</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>7. Which regions are expected to face heavier flooding?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r2q2', 'A')">A. Southern regions</div>
+                    <div class="option" onclick="selectOption(this, 'r2q2', 'B')">B. Northern regions</div>
+                    <div class="option" onclick="selectOption(this, 'r2q2', 'C')">C. Eastern regions</div>
+                    <div class="option" onclick="selectOption(this, 'r2q2', 'D')">D. Western regions</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>8. When is the typhoon expected to make landfall?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r2q3', 'A')">A. July 1st afternoon</div>
+                    <div class="option" onclick="selectOption(this, 'r2q3', 'B')">B. July 2nd morning</div>
+                    <div class="option" onclick="selectOption(this, 'r2q3', 'C')">C. July 3rd afternoon or evening</div>
+                    <div class="option" onclick="selectOption(this, 'r2q3', 'D')">D. July 4th night</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>9. Why was the Qiongzhou Strait ferry service suspended?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r2q4', 'A')">A. Technical maintenance</div>
+                    <div class="option" onclick="selectOption(this, 'r2q4', 'B')">B. Holiday schedule</div>
+                    <div class="option" onclick="selectOption(this, 'r2q4', 'C')">C. Tropical depression</div>
+                    <div class="option" onclick="selectOption(this, 'r2q4', 'D')">D. Low passenger volume</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4>10. What color warning was issued for the typhoon?</h4>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'r2q5', 'A')">A. Red</div>
+                    <div class="option" onclick="selectOption(this, 'r2q5', 'B')">B. Orange</div>
+                    <div class="option" onclick="selectOption(this, 'r2q5', 'C')">C. Yellow</div>
+                    <div class="option" onclick="selectOption(this, 'r2q5', 'D')">D. Blue</div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="submitReading()">提交阅读答案</button>
+        </div>
+        
+        <!-- 老单词复习 -->
+        <div id="old-words" class="section">
+            <h2 class="section-title">老单词复习（30个）</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="oldWordProgress" style="width: 0%"></div>
+            </div>
+            <div class="word-progress" id="oldWordProgressText">1 / 30</div>
+            
+            <div class="word-card" id="oldWordCard">
+                <div class="word" id="oldWord">achievement</div>
+                <span class="word-type" id="oldWordType">n.</span>
+                <div class="phonetic" id="oldPhonetic">/əˈtʃiːvmənt/</div>
+                <div class="meaning" id="oldMeaning">成就，成绩</div>
+                <div class="example" id="oldExample">His greatest achievement was winning the Nobel Prize.</div>
+                <div class="mark-known">
+                    <label>
+                        <input type="checkbox" id="oldKnownCheckbox"> 我已掌握这个单词
+                    </label>
+                </div>
+            </div>
+            
+            <div class="word-nav">
+                <button onclick="prevOldWord()">上一个</button>
+                <button onclick="nextOldWord()">下一个</button>
+            </div>
+        </div>
+        
+        <!-- 新单词学习 -->
+        <div id="new-words" class="section">
+            <h2 class="section-title">新单词学习（20个）</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="newWordProgress" style="width: 0%"></div>
+            </div>
+            <div class="word-progress" id="newWordProgressText">1 / 20</div>
+            
+            <div class="word-card" id="newWordCard">
+                <div class="word" id="newWord">anniversary</div>
+                <span class="word-type" id="newWordType">n.</span>
+                <div class="phonetic" id="newPhonetic">/ˌænɪˈvɜːsəri/</div>
+                <div class="meaning" id="newMeaning">周年纪念日</div>
+                <div class="example" id="newExample">The company celebrated its 10th anniversary last month.</div>
+                <div class="mark-known">
+                    <label>
+                        <input type="checkbox" id="newKnownCheckbox"> 我已掌握这个单词
+                    </label>
+                </div>
+            </div>
+            
+            <div class="word-nav">
+                <button onclick="prevNewWord()">上一个</button>
+                <button onclick="nextNewWord()">下一个</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试 -->
+        <div id="test" class="section">
+            <h2 class="section-title">综合测试（100题）</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="testProgress" style="width: 0%"></div>
+            </div>
+            <div class="word-progress" id="testProgressText">已完成: 0 / 100</div>
+            
+            <div id="testContainer"></div>
+            
+            <div id="testResult" style="display: none;">
+                <div class="score-display">
+                    <h2 id="testScore">0</h2>
+                    <p>正确率</p>
+                    <p id="testDetail"></p>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="submitTest()">提交测试</button>
+        </div>
+    </div>
+    
+    <script>
+        // 答案存储
+        let answers = {
+            reading: {},
+            test: {}
+        };
+        
+        // 老单词数据
+        const oldWords = [
+            {word: "achievement", type: "n.", phonetic: "/əˈtʃiːvmənt/", meaning: "成就，成绩", example: "His greatest achievement was winning the Nobel Prize."},
+            {word: "celebrate", type: "v.", phonetic: "/ˈselɪbreɪt/", meaning: "庆祝", example: "We celebrated his birthday with a party."},
+            {word: "important", type: "adj.", phonetic: "/ɪmˈpɔːtnt/", meaning: "重要的", example: "This is an important decision for our company."},
+            {word: "government", type: "n.", phonetic: "/ˈɡʌvənmənt/", meaning: "政府", example: "The government announced new policies yesterday."},
+            {word: "environment", type: "n.", phonetic: "/ɪnˈvaɪrənmənt/", meaning: "环境", example: "We must protect our environment."},
+            {word: "technology", type: "n.", phonetic: "/tekˈnɒlədʒi/", meaning: "技术", example: "Technology has changed our lives."},
+            {word: "opportunity", type: "n.", phonetic: "/ˌɒpəˈtjuːnəti/", meaning: "机会", example: "This is a great opportunity to learn."},
+            {word: "development", type: "n.", phonetic: "/dɪˈveləpmənt/", meaning: "发展", example: "The development of AI is rapid."},
+            {word: "international", type: "adj.", phonetic: "/ˌɪntəˈnæʃnəl/", meaning: "国际的", example: "She works for an international company."},
+            {word: "experience", type: "n./v.", phonetic: "/ɪkˈspɪəriəns/", meaning: "经验；经历", example: "He has rich teaching experience."},
+            {word: "knowledge", type: "n.", phonetic: "/ˈnɒlɪdʒ/", meaning: "知识", example: "Knowledge is power."},
+            {word: "education", type: "n.", phonetic: "/ˌedʒuˈkeɪʃn/", meaning: "教育", example: "Education is essential for everyone."},
+            {word: "communication", type: "n.", phonetic: "/kəˌmjuːnɪˈkeɪʃn/", meaning: "交流，沟通", example: "Good communication is the key to success."},
+            {word: "information", type: "n.", phonetic: "/ˌɪnfəˈmeɪʃn/", meaning: "信息", example: "We need more information about the project."},
+            {word: "success", type: "n.", phonetic: "/səkˈses/", meaning: "成功", example: "Hard work leads to success."},
+            {word: "problem", type: "n.", phonetic: "/ˈprɒbləm/", meaning: "问题", example: "We need to solve this problem."},
+            {word: "solution", type: "n.", phonetic: "/səˈluːʃn/", meaning: "解决方案", example: "We found a good solution to the problem."},
+            {word: "difference", type: "n.", phonetic: "/ˈdɪfrəns/", meaning: "差异，不同", example: "What's the difference between these two?"},
+            {word: "attention", type: "n.", phonetic: "/əˈtenʃn/", meaning: "注意，关注", example: "Please pay attention to the teacher."},
+            {word: "condition", type: "n.", phonetic: "/kənˈdɪʃn/", meaning: "条件，状况", example: "The road conditions are poor today."},
+            {word: "decision", type: "n.", phonetic: "/dɪˈsɪʒn/", meaning: "决定", example: "Making a decision is not easy."},
+            {word: "situation", type: "n.", phonetic: "/ˌsɪtʃuˈeɪʃn/", meaning: "情况，形势", example: "The situation is getting better."},
+            {word: "traditional", type: "adj.", phonetic: "/trəˈdɪʃənl/", meaning: "传统的", example: "This is a traditional Chinese festival."},
+            {word: "necessary", type: "adj.", phonetic: "/ˈnesəsəri/", meaning: "必要的", example: "It's necessary to study hard."},
+            {word: "excellent", type: "adj.", phonetic: "/ˈeksələnt/", meaning: "优秀的", example: "She is an excellent student."},
+            {word: "available", type: "adj.", phonetic: "/əˈveɪləbl/", meaning: "可获得的", example: "This book is available online."},
+            {word: "dangerous", type: "adj.", phonetic: "/ˈdeɪndʒərəs/", meaning: "危险的", example: "It's dangerous to swim alone."},
+            {word: "comfortable", type: "adj.", phonetic: "/ˈkʌmftəbl/", meaning: "舒适的", example: "This chair is very comfortable."},
+            {word: "responsible", type: "adj.", phonetic: "/rɪˈspɒnsəbl/", meaning: "负责的", example: "He is responsible for the project."},
+            {word: "immediately", type: "adv.", phonetic: "/ɪˈmiːdiətli/", meaning: "立即", example: "Please come here immediately."}
+        ];
+        
+        // 新单词数据（基于新闻）
+        const newWords = [
+            {word: "anniversary", type: "n.", phonetic: "/ˌænɪˈvɜːsəri/", meaning: "周年纪念日", example: "The CPC celebrated its 105th anniversary."},
+            {word: "ceremony", type: "n.", phonetic: "/ˈserəməni/", meaning: "典礼，仪式", example: "A grand ceremony was held in Beijing."},
+            {word: "found", type: "v.", phonetic: "/faʊnd/", meaning: "创立，建立", example: "The CPC was founded in 1921."},
+            {word: "glory", type: "n.", phonetic: "/ˈɡlɔːri/", meaning: "荣耀，光荣", example: "Strive to create new historical glory."},
+            {word: "mission", type: "n.", phonetic: "/ˈmɪʃn/", meaning: "使命，任务", example: "The Party's original mission remains unchanged."},
+            {word: "archive", type: "n.", phonetic: "/ˈɑːkaɪv/", meaning: "档案，档案馆", example: "The Central Archives released historical documents."},
+            {word: "document", type: "n.", phonetic: "/ˈdɒkjumənt/", meaning: "文件，文档", example: "Over 44,000 documents were released."},
+            {word: "typhoon", type: "n.", phonetic: "/taɪˈfuːn/", meaning: "台风", example: "A typhoon warning was issued."},
+            {word: "depression", type: "n.", phonetic: "/dɪˈpreʃn/", meaning: "低气压；抑郁", example: "A tropical depression is forming."},
+            {word: "landfall", type: "n.", phonetic: "/ˈlændfɔːl/", meaning: "登陆", example: "The typhoon will make landfall tomorrow."},
+            {word: "suspend", type: "v.", phonetic: "/səˈspend/", meaning: "暂停，中止", example: "Ferry services were suspended."},
+            {word: "flood", type: "n./v.", phonetic: "/flʌd/", meaning: "洪水；淹没", example: "Northern regions face heavier flooding."},
+            {word: "extreme", type: "adj.", phonetic: "/ɪkˈstriːm/", meaning: "极端的", example: "Local extreme rainstorms are expected."},
+            {word: "forecast", type: "v./n.", phonetic: "/ˈfɔːkɑːst/", meaning: "预测，预报", example: "The typhoon is forecast to land tomorrow."},
+            {word: "passenger", type: "n.", phonetic: "/ˈpæsɪndʒə/", meaning: "乘客", example: "Passengers should pay attention to updates."},
+            {word: "strait", type: "n.", phonetic: "/streɪt/", meaning: "海峡", example: "Qiongzhou Strait ferry service was suspended."},
+            {word: "warning", type: "n.", phonetic: "/ˈwɔːnɪŋ/", meaning: "警告", example: "A blue warning was issued."},
+            {word: "coastal", type: "adj.", phonetic: "/ˈkəʊstl/", meaning: "沿海的", example: "Coastal areas are affected by typhoons."},
+            {word: "strengthen", type: "v.", phonetic: "/ˈstreŋθn/", meaning: "加强", example: "The tropical depression is strengthening."},
+            {word: "observe", type: "v.", phonetic: "/əbˈzɜːv/", meaning: "观察；遵守", example: "Observe the weather conditions carefully."}
+        ];
+        
+        // 测试题目数据
+        const testQuestions = [];
+        
+        // 生成100道测试题
+        function generateTestQuestions() {
+            const allWords = [...oldWords, ...newWords];
+            const types = ['meaning', 'spelling', 'usage', 'translation'];
+            
+            for (let i = 0; i < 100; i++) {
+                const word = allWords[i % allWords.length];
+                const type = types[i % types.length];
+                let question = {};
+                
+                if (type === 'meaning') {
+                    question = {
+                        question: `What is the meaning of "${word.word}"?`,
+                        options: generateOptions(word.meaning, allWords, 'meaning'),
+                        answer: word.meaning
+                    };
+                } else if (type === 'spelling') {
+                    question = {
+                        question: `Which word means "${word.meaning}"?`,
+                        options: generateOptions(word.word, allWords, 'word'),
+                        answer: word.word
+                    };
+                } else if (type === 'usage') {
+                    question = {
+                        question: `Fill in the blank: ${word.example.replace(new RegExp(word.word, 'i'), '______')}`,
+                        options: generateWordOptions(word.word, allWords),
+                        answer: word.word
+                    };
+                } else {
+                    question = {
+                        question: `"${word.word}" 的中文意思是？`,
+                        options: generateChineseOptions(word.meaning, allWords),
+                        answer: word.meaning
+                    };
+                }
+                
+                testQuestions.push(question);
+            }
+        }
+        
+        function generateOptions(correct, allWords, type) {
+            const options = [correct];
+            const used = new Set([correct]);
+            
+            while (options.length < 4) {
+                const randomWord = allWords[Math.floor(Math.random() * allWords.length)];
+                const option = type === 'meaning' ? randomWord.meaning : randomWord.word;
+                if (!used.has(option)) {
+                    options.push(option);
+                    used.add(option);
+                }
+            }
+            
+            return shuffleArray(options);
+        }
+        
+        function generateWordOptions(correct, allWords) {
+            const options = [correct];
+            const used = new Set([correct.toLowerCase()]);
+            
+            while (options.length < 4) {
+                const randomWord = allWords[Math.floor(Math.random() * allWords.length)];
+                if (!used.has(randomWord.word.toLowerCase())) {
+                    options.push(randomWord.word);
+                    used.add(randomWord.word.toLowerCase());
+                }
+            }
+            
+            return shuffleArray(options);
+        }
+        
+        function generateChineseOptions(correct, allWords) {
+            const options = [correct];
+            const used = new Set([correct]);
+            
+            while (options.length < 4) {
+                const randomWord = allWords[Math.floor(Math.random() * allWords.length)];
+                if (!used.has(randomWord.meaning)) {
+                    options.push(randomWord.meaning);
+                    used.add(randomWord.meaning);
+                }
+            }
+            
+            return shuffleArray(options);
+        }
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // 显示部分测试题
+        function renderTestQuestions() {
+            const container = document.getElementById('testContainer');
+            container.innerHTML = '';
+            
+            testQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'test-question';
+                questionDiv.innerHTML = `
+                    <h4>${index + 1}. ${q.question}</h4>
+                    <div class="options">
+                        ${q.options.map(opt => `
+                            <div class="option" onclick="selectTestOption(this, ${index}, '${opt.replace(/'/g, "\\'")}')">${opt}</div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        // 选择选项
+        function selectOption(element, questionId, option) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            answers.reading[questionId] = option;
+        }
+        
+        function selectTestOption(element, questionIndex, option) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            answers.test[questionIndex] = option;
+            updateTestProgress();
+        }
+        
+        function updateTestProgress() {
+            const answered = Object.keys(answers.test).length;
+            document.getElementById('testProgress').style.width = (answered / 100 * 100) + '%';
+            document.getElementById('testProgressText').textContent = `已完成: ${answered} / 100`;
+        }
+        
+        // 阅读理解答案
+        const readingAnswers = {
+            'r1q1': 'A', 'r1q2': 'B', 'r1q3': 'B', 'r1q4': 'B', 'r1q5': 'B',
+            'r2q1': 'B', 'r2q2': 'B', 'r2q3': 'C', 'r2q4': 'C', 'r2q5': 'D'
+        };
+        
+        function submitReading() {
+            let correct = 0;
+            const total = 10;
+            
+            document.querySelectorAll('.question-box').forEach(box => {
+                const selected = box.querySelector('.option.selected');
+                if (selected) {
+                    const questionId = selected.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    const answer = readingAnswers[questionId];
+                    if (answers.reading[questionId] === answer) {
+                        selected.classList.add('correct');
+                        correct++;
+                    } else {
+                        selected.classList.add('wrong');
+                        box.querySelectorAll('.option').forEach(opt => {
+                            if (opt.textContent.startsWith(answer)) {
+                                opt.classList.add('correct');
+                            }
+                        });
+                    }
+                }
+            });
+            
+            alert(`阅读理解完成！\n正确: ${correct}/${total}\n正确率: ${correct * 10}%`);
+            saveProgress('reading', correct, total);
+        }
+        
+        function submitTest() {
+            let correct = 0;
+            
+            testQuestions.forEach((q, index) => {
+                const questionDiv = document.querySelectorAll('.test-question')[index];
+                const selected = questionDiv.querySelector('.option.selected');
+                
+                if (selected) {
+                    if (answers.test[index] === q.answer) {
+                        selected.classList.add('correct');
+                        correct++;
+                    } else {
+                        selected.classList.add('wrong');
+                        questionDiv.querySelectorAll('.option').forEach(opt => {
+                            if (opt.textContent === q.answer) {
+                                opt.classList.add('correct');
+                            }
+                        });
+                    }
+                }
+            });
+            
+            const score = correct;
+            const percentage = correct;
+            
+            document.getElementById('testScore').textContent = score + '分';
+            document.getElementById('testDetail').textContent = `正确: ${correct}/100，正确率: ${percentage}%`;
+            document.getElementById('testResult').style.display = 'block';
+            
+            saveProgress('test', correct, 100);
+        }
+        
+        // 单词导航
+        let currentOldWord = 0;
+        let currentNewWord = 0;
+        
+        function showOldWord(index) {
+            const word = oldWords[index];
+            document.getElementById('oldWord').textContent = word.word;
+            document.getElementById('oldWordType').textContent = word.type;
+            document.getElementById('oldPhonetic').textContent = word.phonetic;
+            document.getElementById('oldMeaning').textContent = word.meaning;
+            document.getElementById('oldExample').textContent = word.example;
+            document.getElementById('oldWordProgress').style.width = ((index + 1) / 30 * 100) + '%';
+            document.getElementById('oldWordProgressText').textContent = `${index + 1} / 30`;
+            
+            const known = JSON.parse(localStorage.getItem('oldWords_' + getToday()) || '[]');
+            document.getElementById('oldKnownCheckbox').checked = known.includes(index);
+        }
+        
+        function showNewWord(index) {
+            const word = newWords[index];
+            document.getElementById('newWord').textContent = word.word;
+            document.getElementById('newWordType').textContent = word.type;
+            document.getElementById('newPhonetic').textContent = word.phonetic;
+            document.getElementById('newMeaning').textContent = word.meaning;
+            document.getElementById('newExample').textContent = word.example;
+            document.getElementById('newWordProgress').style.width = ((index + 1) / 20 * 100) + '%';
+            document.getElementById('newWordProgressText').textContent = `${index + 1} / 20`;
+            
+            const known = JSON.parse(localStorage.getItem('newWords_' + getToday()) || '[]');
+            document.getElementById('newKnownCheckbox').checked = known.includes(index);
+        }
+        
+        function prevOldWord() {
+            if (currentOldWord > 0) {
+                currentOldWord--;
+                showOldWord(currentOldWord);
+            }
+        }
+        
+        function nextOldWord() {
+            if (currentOldWord < 29) {
+                currentOldWord++;
+                showOldWord(currentOldWord);
+            }
+        }
+        
+        function prevNewWord() {
+            if (currentNewWord > 0) {
+                currentNewWord--;
+                showNewWord(currentNewWord);
+            }
+        }
+        
+        function nextNewWord() {
+            if (currentNewWord < 19) {
+                currentNewWord++;
+                showNewWord(currentNewWord);
+            }
+        }
+        
+        // 保存进度
+        function saveProgress(type, correct, total) {
+            const today = getToday();
+            const stats = JSON.parse(localStorage.getItem('englishStats') || '{}');
+            
+            if (!stats.dates) stats.dates = [];
+            if (!stats.dates.includes(today)) {
+                stats.dates.push(today);
+            }
+            
+            if (type === 'reading') {
+                stats.readingScore = correct;
+                stats.readingTotal = total;
+            } else if (type === 'test') {
+                stats.testScore = correct;
+                stats.testTotal = total;
+                stats.totalTests = (stats.totalTests || 0) + 1;
+            }
+            
+            stats.totalWords = (stats.totalWords || 0) + (type === 'words' ? 1 : 0);
+            
+            localStorage.setItem('englishStats', JSON.stringify(stats));
+            
+            // 保存学习日期
+            const dates = JSON.parse(localStorage.getItem('studyDates') || '[]');
+            if (!dates.includes(today)) {
+                dates.unshift(today);
+                localStorage.setItem('studyDates', JSON.stringify(dates));
+            }
+        }
+        
+        function getToday() {
+            return '2026-07-03';
+        }
+        
+        // 显示部分
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // 单词掌握状态保存
+        document.getElementById('oldKnownCheckbox').addEventListener('change', function() {
+            const known = JSON.parse(localStorage.getItem('oldWords_' + getToday()) || '[]');
+            if (this.checked) {
+                if (!known.includes(currentOldWord)) {
+                    known.push(currentOldWord);
+                }
+            } else {
+                const index = known.indexOf(currentOldWord);
+                if (index > -1) known.splice(index, 1);
+            }
+            localStorage.setItem('oldWords_' + getToday(), JSON.stringify(known));
+        });
+        
+        document.getElementById('newKnownCheckbox').addEventListener('change', function() {
+            const known = JSON.parse(localStorage.getItem('newWords_' + getToday()) || '[]');
+            if (this.checked) {
+                if (!known.includes(currentNewWord)) {
+                    known.push(currentNewWord);
+                }
+            } else {
+                const index = known.indexOf(currentNewWord);
+                if (index > -1) known.splice(index, 1);
+            }
+            localStorage.setItem('newWords_' + getToday(), JSON.stringify(known));
+        });
+        
+        // 初始化
+        generateTestQuestions();
+        renderTestQuestions();
+        showOldWord(0);
+        showNewWord(0);
+    </script>
+</body>
+</html>

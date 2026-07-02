@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学学习 - 2026年7月3日 | 小剀学苑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2196F3;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .header .date {
+            color: #666;
+            font-size: 1.1em;
+        }
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2196F3;
+        }
+        .tips-box {
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .tips-box h3 {
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+        .tips-box ul {
+            color: #555;
+            line-height: 2;
+        }
+        .tips-box li {
+            margin-bottom: 8px;
+        }
+        .problem-card {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #e0e0e0;
+        }
+        .problem-number {
+            font-size: 1.2em;
+            color: #2196F3;
+            margin-bottom: 15px;
+        }
+        .problem-content {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 20px;
+            font-family: 'Times New Roman', serif;
+        }
+        .input-area {
+            margin-top: 15px;
+        }
+        .input-area label {
+            display: block;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .input-area input {
+            width: 200px;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.3s;
+        }
+        .input-area input:focus {
+            border-color: #2196F3;
+            outline: none;
+        }
+        .result-display {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        .result-display.correct {
+            background: #E8F5E9;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+        }
+        .result-display.wrong {
+            background: #FFEBEE;
+            border: 2px solid #f44336;
+            color: #f44336;
+        }
+        .solution-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #FFF8E1;
+            border-radius: 10px;
+            border: 2px solid #FFC107;
+            display: none;
+        }
+        .solution-box h4 {
+            color: #F57C00;
+            margin-bottom: 10px;
+        }
+        .solution-content {
+            color: #555;
+            line-height: 1.8;
+            font-family: 'Times New Roman', serif;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #2196F3;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            text-align: center;
+            color: #666;
+            margin: 15px 0;
+        }
+        .score-display {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .score-display h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 30px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #78909C;
+        }
+        .btn-secondary:hover {
+            background: #546E7A;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2196F3;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .stats-box {
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .stats-box h3 {
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .stat-item {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+        .stat-value {
+            font-size: 2em;
+            color: #2196F3;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">← 返回数学首页</a>
+        
+        <div class="header">
+            <h1>🔢 数学学习</h1>
+            <div class="date">2026年7月3日（星期五）</div>
+        </div>
+        
+        <div class="stats-box">
+            <h3>今日学习进度</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="answeredCount">0</div>
+                    <div class="stat-label">已答题数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="correctCount">0</div>
+                    <div class="stat-label">正确数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="accuracyRate">0%</div>
+                    <div class="stat-label">正确率</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">进度: <span id="progressText">0 / 20</span></div>
+        
+        <div class="tips-box">
+            <h3>💡 简便运算技巧提示</h3>
+            <ul>
+                <li><strong>凑整法：</strong>观察数字特点，找出能凑成整十、整百、整千的数</li>
+                <li><strong>拆分法：</strong>将较大的数拆分成便于计算的较小数</li>
+                <li><strong>乘法分配律：</strong>a × (b + c) = a × b + a × c</li>
+                <li><strong>结合律：</strong>(a × b) × c = a × (b × c)</li>
+                <li><strong>乘法凑整：</strong>记住常见凑整组合，如 25 × 4 = 100, 125 × 8 = 1000</li>
+                <li><strong>分数运算：</strong>注意分数的通分和约分</li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">简便运算练习（共20题）</h2>
+        
+        <div id="problemsContainer"></div>
+        
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="showAllProblems()">查看全部题目</button>
+            <button class="btn" onclick="checkAllAnswers()">检查所有答案</button>
+            <button class="btn" onclick="showAllSolutions()">显示所有解析</button>
+            <button class="btn btn-secondary" onclick="resetAll()">重新开始</button>
+        </div>
+        
+        <div id="finalResult" style="display: none;">
+            <div class="score-display">
+                <h2 id="finalScore">0</h2>
+                <p>得分</p>
+                <p id="finalDetail"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 题目数据
+        const problems = [
+            {
+                id: 1,
+                content: "25 × 32 × 125",
+                answer: "100000",
+                solution: "解：25 × 32 × 125<br>= 25 × (4 × 8) × 125<br>= (25 × 4) × (8 × 125)<br>= 100 × 1000<br>= 100000<br><br>技巧：将32拆分成4×8，利用25×4=100，125×8=1000凑整"
+            },
+            {
+                id: 2,
+                content: "125 × 88",
+                answer: "11000",
+                solution: "解：125 × 88<br>= 125 × (8 × 11)<br>= (125 × 8) × 11<br>= 1000 × 11<br>= 11000<br><br>技巧：88拆成8×11，利用125×8=1000凑整"
+            },
+            {
+                id: 3,
+                content: "3.6 × 25",
+                answer: "90",
+                solution: "解：3.6 × 25<br>= (3.6 × 100) ÷ 4<br>= 360 ÷ 4<br>= 90<br><br>技巧：利用25×4=100，将问题转化为除法计算"
+            },
+            {
+                id: 4,
+                content: "1.25 × 32 × 2.5",
+                answer: "100",
+                solution: "解：1.25 × 32 × 2.5<br>= 1.25 × (8 × 4) × 2.5<br>= (1.25 × 8) × (4 × 2.5)<br>= 10 × 10<br>= 100<br><br>技巧：32拆成8×4，利用1.25×8=10，2.5×4=10"
+            },
+            {
+                id: 5,
+                content: "99 × 38 + 38",
+                answer: "3800",
+                solution: "解：99 × 38 + 38<br>= 38 × (99 + 1)<br>= 38 × 100<br>= 3800<br><br>技巧：利用乘法分配律，38=38×1，凑成整百"
+            },
+            {
+                id: 6,
+                content: "35 × 102",
+                answer: "3570",
+                solution: "解：35 × 102<br>= 35 × (100 + 2)<br>= 35 × 100 + 35 × 2<br>= 3500 + 70<br>= 3570<br><br>技巧：将102拆成100+2，利用乘法分配律"
+            },
+            {
+                id: 7,
+                content: "48 × 125",
+                answer: "6000",
+                solution: "解：48 × 125<br>= (6 × 8) × 125<br>= 6 × (8 × 125)<br>= 6 × 1000<br>= 6000<br><br>技巧：48拆成6×8，利用8×125=1000凑整"
+            },
+            {
+                id: 8,
+                content: "0.25 × 36",
+                answer: "9",
+                solution: "解：0.25 × 36<br>= (1/4) × 36<br>= 36 ÷ 4<br>= 9<br><br>技巧：0.25=1/4，将乘法转化为除法"
+            },
+            {
+                id: 9,
+                content: "56 + 56 × 99",
+                answer: "5600",
+                solution: "解：56 + 56 × 99<br>= 56 × (1 + 99)<br>= 56 × 100<br>= 5600<br><br>技巧：56=56×1，利用乘法分配律凑整"
+            },
+            {
+                id: 10,
+                content: "7.5 × 2.5 × 4",
+                answer: "75",
+                solution: "解：7.5 × 2.5 × 4<br>= 7.5 × (2.5 × 4)<br>= 7.5 × 10<br>= 75<br><br>技巧：利用2.5×4=10凑整"
+            },
+            {
+                id: 11,
+                content: "202 × 35",
+                answer: "7070",
+                solution: "解：202 × 35<br>= (200 + 2) × 35<br>= 200 × 35 + 2 × 35<br>= 7000 + 70<br>= 7070<br><br>技巧：将202拆成200+2，利用乘法分配律"
+            },
+            {
+                id: 12,
+                content: "0.125 × 64",
+                answer: "8",
+                solution: "解：0.125 × 64<br>= (1/8) × 64<br>= 64 ÷ 8<br>= 8<br><br>技巧：0.125=1/8，将乘法转化为除法"
+            },
+            {
+                id: 13,
+                content: "25 × 44",
+                answer: "1100",
+                solution: "解：25 × 44<br>= 25 × (4 × 11)<br>= (25 × 4) × 11<br>= 100 × 11<br>= 1100<br><br>技巧：44拆成4×11，利用25×4=100凑整"
+            },
+            {
+                id: 14,
+                content: "999 × 72 + 72",
+                answer: "72000",
+                solution: "解：999 × 72 + 72<br>= 72 × (999 + 1)<br>= 72 × 1000<br>= 72000<br><br>技巧：72=72×1，利用乘法分配律凑整千"
+            },
+            {
+                id: 15,
+                content: "6.4 × 25",
+                answer: "160",
+                solution: "解：6.4 × 25<br>= (6.4 × 100) ÷ 4<br>= 640 ÷ 4<br>= 160<br><br>技巧：利用25×4=100，转化为除法计算"
+            },
+            {
+                id: 16,
+                content: "78 × 101",
+                answer: "7878",
+                solution: "解：78 × 101<br>= 78 × (100 + 1)<br>= 78 × 100 + 78 × 1<br>= 7800 + 78<br>= 7878<br><br>技巧：101拆成100+1，利用乘法分配律"
+            },
+            {
+                id: 17,
+                content: "12.5 × 16",
+                answer: "200",
+                solution: "解：12.5 × 16<br>= 12.5 × (8 × 2)<br>= (12.5 × 8) × 2<br>= 100 × 2<br>= 200<br><br>技巧：16拆成8×2，利用12.5×8=100凑整"
+            },
+            {
+                id: 18,
+                content: "63 × 99",
+                answer: "6237",
+                solution: "解：63 × 99<br>= 63 × (100 - 1)<br>= 63 × 100 - 63 × 1<br>= 6300 - 63<br>= 6237<br><br>技巧：99拆成100-1，利用乘法分配律"
+            },
+            {
+                id: 19,
+                content: "50 × 2.5 × 4",
+                answer: "500",
+                solution: "解：50 × 2.5 × 4<br>= 50 × (2.5 × 4)<br>= 50 × 10<br>= 500<br><br>技巧：利用2.5×4=10凑整"
+            },
+            {
+                id: 20,
+                content: "0.75 × 28 + 0.25 × 28",
+                answer: "28",
+                solution: "解：0.75 × 28 + 0.25 × 28<br>= (0.75 + 0.25) × 28<br>= 1 × 28<br>= 28<br><br>技巧：利用乘法分配律的逆运算"
+            }
+        ];
+        
+        // 答案存储
+        let userAnswers = {};
+        let checked = {};
+        
+        // 渲染题目
+        function renderProblems() {
+            const container = document.getElementById('problemsContainer');
+            container.innerHTML = '';
+            
+            problems.forEach((problem, index) => {
+                const card = document.createElement('div');
+                card.className = 'problem-card';
+                card.id = `problem-${index}`;
+                card.innerHTML = `
+                    <div class="problem-number">题目 ${index + 1}</div>
+                    <div class="problem-content">${problem.content} = ?</div>
+                    <div class="input-area">
+                        <label>请输入你的答案：</label>
+                        <input type="text" id="answer-${index}" placeholder="输入答案" 
+                            onchange="saveAnswer(${index})" oninput="updateProgress()">
+                    </div>
+                    <div class="result-display" id="result-${index}">
+                        <span id="result-text-${index}"></span>
+                    </div>
+                    <div class="solution-box" id="solution-${index}">
+                        <h4>解题过程：</h4>
+                        <div class="solution-content">${problem.solution}</div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn" onclick="checkAnswer(${index})">检查答案</button>
+                        <button class="btn btn-secondary" onclick="showSolution(${index})">查看解析</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            // 加载已保存的答案
+            loadSavedAnswers();
+        }
+        
+        // 保存答案
+        function saveAnswer(index) {
+            const input = document.getElementById(`answer-${index}`);
+            userAnswers[index] = input.value.trim();
+            
+            // 保存到localStorage
+            const today = '2026-07-03';
+            localStorage.setItem(`mathAnswers_${today}`, JSON.stringify(userAnswers));
+        }
+        
+        // 加载已保存的答案
+        function loadSavedAnswers() {
+            const today = '2026-07-03';
+            const saved = JSON.parse(localStorage.getItem(`mathAnswers_${today}`) || '{}');
+            userAnswers = saved;
+            
+            for (let index in saved) {
+                const input = document.getElementById(`answer-${index}`);
+                if (input) {
+                    input.value = saved[index];
+                }
+            }
+            
+            updateProgress();
+        }
+        
+        // 检查单个答案
+        function checkAnswer(index) {
+            const input = document.getElementById(`answer-${index}`);
+            const resultDiv = document.getElementById(`result-${index}`);
+            const resultText = document.getElementById(`result-text-${index}`);
+            const userAnswer = input.value.trim();
+            
+            if (!userAnswer) {
+                alert('请先输入答案！');
+                return;
+            }
+            
+            const correctAnswer = problems[index].answer;
+            const isCorrect = userAnswer === correctAnswer;
+            
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result-display ' + (isCorrect ? 'correct' : 'wrong');
+            resultText.innerHTML = isCorrect ? 
+                `✓ 正确！答案是 ${correctAnswer}` : 
+                `✗ 错误！正确答案是 ${correctAnswer}`;
+            
+            checked[index] = isCorrect;
+            updateStats();
+        }
+        
+        // 显示解析
+        function showSolution(index) {
+            const solutionDiv = document.getElementById(`solution-${index}`);
+            solutionDiv.style.display = 'block';
+        }
+        
+        // 检查所有答案
+        function checkAllAnswers() {
+            let allAnswered = true;
+            
+            problems.forEach((problem, index) => {
+                const input = document.getElementById(`answer-${index}`);
+                if (!input.value.trim()) {
+                    allAnswered = false;
+                } else {
+                    checkAnswer(index);
+                }
+            });
+            
+            if (!allAnswered) {
+                alert('请先完成所有题目！');
+            }
+            
+            showFinalResult();
+        }
+        
+        // 显示所有解析
+        function showAllSolutions() {
+            problems.forEach((problem, index) => {
+                showSolution(index);
+            });
+        }
+        
+        // 显示全部题目
+        function showAllProblems() {
+            // 已默认显示全部
+        }
+        
+        // 更新进度
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).filter(k => userAnswers[k] && userAnswers[k].trim() !== '').length;
+            document.getElementById('progressBar').style.width = (answered / 20 * 100) + '%';
+            document.getElementById('progressText').textContent = `${answered} / 20`;
+            updateStats();
+        }
+        
+        // 更新统计数据
+        function updateStats() {
+            const answered = Object.keys(userAnswers).filter(k => userAnswers[k] && userAnswers[k].trim() !== '').length;
+            const correct = Object.keys(checked).filter(k => checked[k]).length;
+            const accuracy = checked && Object.keys(checked).length > 0 ? 
+                Math.round(correct / Object.keys(checked).length * 100) : 0;
+            
+            document.getElementById('answeredCount').textContent = answered;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('accuracyRate').textContent = accuracy + '%';
+        }
+        
+        // 显示最终结果
+        function showFinalResult() {
+            const correct = Object.keys(checked).filter(k => checked[k]).length;
+            const total = 20;
+            const score = correct * 5;
+            const percentage = Math.round(correct / total * 100);
+            
+            document.getElementById('finalScore').textContent = score + '分';
+            document.getElementById('finalDetail').textContent = `正确: ${correct}/${total}题，正确率: ${percentage}%`;
+            document.getElementById('finalResult').style.display = 'block';
+            
+            saveProgress(correct, total);
+        }
+        
+        // 重置
+        function resetAll() {
+            if (confirm('确定要重新开始吗？所有答案将被清空。')) {
+                userAnswers = {};
+                checked = {};
+                
+                const today = '2026-07-03';
+                localStorage.removeItem(`mathAnswers_${today}`);
+                
+                renderProblems();
+                document.getElementById('finalResult').style.display = 'none';
+                updateProgress();
+                updateStats();
+            }
+        }
+        
+        // 保存进度
+        function saveProgress(correct, total) {
+            const today = '2026-07-03';
+            const stats = JSON.parse(localStorage.getItem('mathStats') || '{}');
+            
+            if (!stats.dates) stats.dates = [];
+            if (!stats.dates.includes(today)) {
+                stats.dates.push(today);
+            }
+            
+            stats.testScore = correct;
+            stats.testTotal = total;
+            stats.totalProblems = (stats.totalProblems || 0) + correct;
+            
+            const allCorrect = Object.keys(checked).filter(k => checked[k]).length;
+            const allChecked = Object.keys(checked).length;
+            if (allChecked > 0) {
+                stats.accuracy = Math.round(allCorrect / allChecked * 100);
+            }
+            
+            localStorage.setItem('mathStats', JSON.stringify(stats));
+            
+            const dates = JSON.parse(localStorage.getItem('studyDates') || '[]');
+            if (!dates.includes(today)) {
+                dates.unshift(today);
+                localStorage.setItem('studyDates', JSON.stringify(dates));
+            }
+        }
+        
+        // 初始化
+        renderProblems();
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 | 小剀学苑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #E91E63;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .stats-box {
+            background: #FCE4EC;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .stats-box h3 {
+            color: #E91E63;
+            margin-bottom: 15px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .stat-item {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+        .stat-value {
+            font-size: 2em;
+            color: #E91E63;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E91E63;
+        }
+        .day-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .day-card {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .day-card:hover {
+            border-color: #E91E63;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .day-card.new {
+            border-color: #E91E63;
+            background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%);
+        }
+        .day-card .date {
+            font-size: 1.5em;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .day-card .weekday {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .day-card .progress {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .progress-tag {
+            padding: 5px 10px;
+            background: #E91E63;
+            color: white;
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+        .progress-tag.pending {
+            background: #FFC107;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #E91E63;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .new-badge {
+            background: #E91E63;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">← 返回首页</a>
+        
+        <div class="header">
+            <h1>📖 语文学习</h1>
+            <p>古诗词鉴赏、现代文阅读、时文阅读</p>
+        </div>
+        
+        <div class="stats-box">
+            <h3>学习统计</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalDays">1</div>
+                    <div class="stat-label">学习天数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalPoems">2</div>
+                    <div class="stat-label">已学古诗</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalTests">1</div>
+                    <div class="stat-label">完成测试</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="avgScore">-</div>
+                    <div class="stat-label">平均得分</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">📅 学习日程</h2>
+        
+        <div class="day-cards">
+            <div class="day-card new" onclick="location.href='days/2026-07-03.html'">
+                <div class="date">2026-07-03 <span class="new-badge">新</span></div>
+                <div class="weekday">星期五</div>
+                <div class="progress">
+                    <span class="progress-tag pending">待学习</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function loadStats() {
+            const stats = JSON.parse(localStorage.getItem('chineseStats') || '{}');
+            
+            document.getElementById('totalDays').textContent = (stats.dates?.length || 1);
+            document.getElementById('totalPoems').textContent = (stats.totalPoems || 2);
+            document.getElementById('totalTests').textContent = (stats.totalTests || 1);
+            
+            if (stats.testScore && stats.testTotal) {
+                document.getElementById('avgScore').textContent = Math.round(stats.testScore / stats.testTotal * 100) + '%';
+            }
+        }
+        
+        loadStats();
+    </script>
+</body>
+</html>
