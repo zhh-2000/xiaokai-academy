@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年7月23日 - 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; padding: 20px 0; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { font-size: 1.2em; opacity: 0.9; }
+        .nav { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+        .nav a { background: white; color: #f5576c; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
+        .nav a:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .nav a.active { background: #2d3748; color: white; }
+        .card { background: white; border-radius: 15px; padding: 25px; margin: 20px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .card h2 { color: #f5576c; border-bottom: 3px solid #f5576c; padding-bottom: 10px; margin-bottom: 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .poem-box { background: linear-gradient(135deg, #fff5f5 0%, #fff0f0 100%); padding: 25px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #f5576c; }
+        .poem-title { font-size: 1.5em; color: #f5576c; margin-bottom: 10px; }
+        .poem-author { color: #666; margin-bottom: 15px; }
+        .poem-content { font-size: 1.2em; line-height: 2.2; text-align: center; }
+        .poem-content span { display: block; }
+        .poem-notes { margin-top: 15px; padding: 15px; background: #fff; border-radius: 8px; }
+        .poem-notes h4 { color: #f5576c; margin-bottom: 10px; }
+        .modern-text { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; line-height: 1.9; }
+        .modern-text h3 { color: #f5576c; margin-bottom: 15px; }
+        .news-box { background: linear-gradient(135deg, #e8f4fd 0%, #d1e8ff 100%); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #2196f3; }
+        .news-box h3 { color: #1976d2; margin-bottom: 10px; }
+        .news-meta { color: #666; font-size: 0.9em; margin-bottom: 10px; }
+        .question { margin: 15px 0; padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107; }
+        .question p { margin-bottom: 10px; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 8px; }
+        .options label { display: flex; align-items: center; padding: 10px; background: white; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .options label:hover { background: #e9ecef; }
+        .options input { margin-right: 10px; transform: scale(1.2); }
+        .test-question { margin: 15px 0; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #f5576c; }
+        .progress-bar { height: 10px; background: #e9ecef; border-radius: 5px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #f5576c, #f093fb); transition: width 0.5s; }
+        .btn { background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1.1em; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(245,87,108,0.4); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .result { text-align: center; padding: 30px; }
+        .result .score { font-size: 4em; font-weight: bold; color: #f5576c; }
+        .result .feedback { font-size: 1.2em; margin: 15px 0; }
+        .keyword { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 语文学习</h1>
+            <p class="date">2026年7月23日 星期四</p>
+        </div>
+
+        <div class="nav">
+            <a href="#" onclick="showSection('poetry')">🏛️ 古诗词</a>
+            <a href="#" onclick="showSection('modern')">📚 现代文</a>
+            <a href="#" onclick="showSection('news')">📰 时文阅读</a>
+            <a href="#" onclick="showSection('test')">✍️ 综合测试</a>
+            <a href="../chinese.html">🏠 返回首页</a>
+        </div>
+
+        <!-- 古诗词部分 -->
+        <div id="poetry" class="section active">
+            <div class="card">
+                <h2>🏛️ 古诗词学习</h2>
+                
+                <div class="poem-box">
+                    <div class="poem-title">《望岳》</div>
+                    <div class="poem-author">唐·杜甫</div>
+                    <div class="poem-content">
+                        <span>岱宗夫如何？齐鲁青未了。</span>
+                        <span>造化钟神秀，阴阳割昏晓。</span>
+                        <span>荡胸生曾云，决眦入归鸟。</span>
+                        <span>会当凌绝顶，一览众山小。</span>
+                    </div>
+                    <div class="poem-notes">
+                        <h4>📝 字词注释</h4>
+                        <p><strong>岱宗</strong>：泰山的别名，因泰山为五岳之首，故称"岱宗"。</p>
+                        <p><strong>齐鲁青未了</strong>：泰山横跨齐鲁两地，苍翠的山峦一眼望不到头。</p>
+                        <p><strong>造化钟神秀</strong>：大自然把神奇和秀丽集中于泰山。钟，聚集。</p>
+                        <p><strong>阴阳割昏晓</strong>：山的南北两面，一面明亮一面昏暗，截然不同。</p>
+                        <p><strong>荡胸生曾云</strong>：层云产生，使人心胸摇荡。曾，同"层"。</p>
+                        <p><strong>决眦入归鸟</strong>：睁大眼睛看归巢的鸟儿。决眦，睁大眼睛。</p>
+                        <p><strong>会当凌绝顶</strong>：定要登上泰山的顶峰。会当，终当，终要。</p>
+                        <h4>🎯 主旨概括</h4>
+                        <p>这首诗通过描写泰山雄伟磅礴的气象，抒发了诗人勇攀高峰的雄心壮志，表现了不怕困难、敢于攀登绝顶的豪情壮志。</p>
+                    </div>
+                </div>
+
+                <div class="poem-box" style="margin-top: 30px;">
+                    <div class="poem-title">《春望》</div>
+                    <div class="poem-author">唐·杜甫</div>
+                    <div class="poem-content">
+                        <span>国破山河在，城春草木深。</span>
+                        <span>感时花溅泪，恨别鸟惊心。</span>
+                        <span>烽火连三月，家书抵万金。</span>
+                        <span>白头搔更短，浑欲不胜簪。</span>
+                    </div>
+                    <div class="poem-notes">
+                        <h4>📝 字词注释</h4>
+                        <p><strong>国破</strong>：指安史之乱导致长安沦陷。</p>
+                        <p><strong>感时花溅泪</strong>：感伤国事，看到花开反而落泪。</p>
+                        <p><strong>恨别鸟惊心</strong>：怨恨离别，听到鸟鸣反而感到心惊。</p>
+                        <p><strong>烽火连三月</strong>：战火连续烧了整个春季。三月，指春季三个月。</p>
+                        <p><strong>家书抵万金</strong>：家信难得，足可抵得上万两黄金。</p>
+                        <h4>🎯 主旨概括</h4>
+                        <p>这首诗通过描写春日长安凄惨破败的景象，表达了诗人忧国忧民、思念家人的深沉感情。</p>
+                    </div>
+                </div>
+
+                <div class="poem-box" style="margin-top: 30px;">
+                    <div class="poem-title">《茅屋为秋风所破歌》（节选）</div>
+                    <div class="poem-author">唐·杜甫</div>
+                    <div class="poem-content">
+                        <span>八月秋高风怒号，卷我屋上三重茅。</span>
+                        <span>茅飞渡江洒江郊，高者挂罥长林梢，下者飘转沉塘坳。</span>
+                        <span>安得广厦千万间，大庇天下寒士俱欢颜！</span>
+                        <span>风雨不动安如山。呜呼！何时眼前突兀见此屋，吾庐独破受冻死亦足！</span>
+                    </div>
+                    <div class="poem-notes">
+                        <h4>📝 字词注释</h4>
+                        <p><strong>秋高</strong>：秋深。</p>
+                        <p><strong>挂罥</strong>：挂，缠绕。</p>
+                        <p><strong>安得</strong>：哪里能得到。</p>
+                        <p><strong>大庇</strong>：全部遮蔽、保护。</p>
+                        <p><strong>寒士</strong>：贫苦的读书人。</p>
+                        <h4>🎯 主旨概括</h4>
+                        <p>这首诗通过描写自己的茅屋被秋风吹破的惨状，表达了诗人推己及人、忧国忧民的博大胸怀，以及希望天下寒士都能安居乐业的崇高理想。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 现代文部分 -->
+        <div id="modern" class="section">
+            <div class="card">
+                <h2>📚 现代文阅读</h2>
+                
+                <div class="modern-text">
+                    <h3>荷塘月色（节选）</h3>
+                    <p style="color: #666; margin-bottom: 15px;">朱自清</p>
+                    <p>曲曲折折的荷塘上面，弥望的是田田的叶子。叶子出水很高，像亭亭的舞女的裙。层层的叶子中间，零星地点缀着些白花，有<span class="keyword">袅娜</span>地开着的，有<span class="keyword">羞涩</span>地打着朵儿的；正如一粒粒的明珠，又如碧天里的星星，又如刚出浴的美人。微风过处，送来<span class="keyword">缕缕清香</span>，仿佛远处高楼上渺茫的歌声似的。这时候叶子与花也有一丝的颤动，像闪电般，霎时传过荷塘的那边去了。叶子本是肩并肩密密地挨着，这便宛然有了一道凝碧的波痕。叶子底下是脉脉的流水，遮住了，不能见一些颜色；而叶子却更见风致了。</p>
+                    <p style="margin-top: 15px;">月光如流水一般，静静地泻在这一片叶子和花上。薄薄的青雾浮起在荷塘里。叶子和花仿佛在牛乳中洗过一样；又像笼着轻纱的梦。虽然满月，天上却有一层淡淡的云，所以不能朗照；但我以为这恰是到了好处——酣眠固不可少，小睡也别有风味的。月光是隔了树照过来的，高处丛生的灌木，落下参差的斑驳的黑影，峭楞楞如鬼一般；弯弯的杨柳的稀疏的倩影，却又像是画在荷叶上。塘中的月色并不均匀；但光与影有着和谐的旋律，如<span class="keyword">梵婀玲</span>上奏着的名曲。</p>
+                </div>
+
+                <div class="question" data-question="m1">
+                    <p>1. 文中"袅娜""羞涩"这些词语的运用有什么好处？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m1" value="A"> A. 只是为了增加词语的美感</label>
+                        <label><input type="radio" name="m1" value="B"> B. 赋予荷花以人的神态，写出荷花的千姿百态、楚楚动人</label>
+                        <label><input type="radio" name="m1" value="C"> C. 说明作者不太会描写自然景物</label>
+                        <label><input type="radio" name="m1" value="D"> D. 只是为了凑字数</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m2">
+                    <p>2. "仿佛远处高楼上渺茫的歌声似的"这句话运用了什么修辞手法？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m2" value="A"> A. 比喻</label>
+                        <label><input type="radio" name="m2" value="B"> B. 通感（移觉）</label>
+                        <label><input type="radio" name="m2" value="C"> C. 拟人</label>
+                        <label><input type="radio" name="m2" value="D"> D. 排比</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m3">
+                    <p>3. "月光如流水一般，静静地泻在这一片叶子和花上"中"泻"字好在哪里？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m3" value="A"> A. 形象地写出了月光如流水般倾泻而下的动态美</label>
+                        <label><input type="radio" name="m3" value="B"> B. 说明月光很亮</label>
+                        <label><input type="radio" name="m3" value="C"> C. 表示月光像水一样</label>
+                        <label><input type="radio" name="m3" value="D"> D. 没有什么特别的意思</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m4">
+                    <p>4. "梵婀玲"是指什么？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m4" value="A"> A. 钢琴</label>
+                        <label><input type="radio" name="m4" value="B"> B. 小提琴（Violin的音译）</label>
+                        <label><input type="radio" name="m4" value="C"> C. 古筝</label>
+                        <label><input type="radio" name="m4" value="D"> D. 笛子</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m5">
+                    <p>5. 这段文字主要描写了什么？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m5" value="A"> A. 荷塘的景色</label>
+                        <label><input type="radio" name="m5" value="B"> B. 月光下的荷塘美景</label>
+                        <label><input type="radio" name="m5" value="C"> C. 作者的心情</label>
+                        <label><input type="radio" name="m5" value="D"> D. 荷塘边的树木</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="checkModern()">提交现代文答案</button>
+                <div id="modern-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- 时文阅读部分 -->
+        <div id="news" class="section">
+            <div class="card">
+                <h2>📰 时文阅读</h2>
+                
+                <div class="news-box">
+                    <h3>我国启动质量督察工作 推动高质量发展</h3>
+                    <div class="news-meta">来源：央视新闻 | 2026年7月22日</div>
+                    <p>记者从国家质量强国建设协调推进领导小组办公室获悉，从7月20日起，我国首次启动实施质量督察工作。此次督察工作将会同有关成员单位，对"内卷式"竞争突出领域、社会关切和群众反映强烈的重点领域存在的突出质量问题开展抽查核查。</p>
+                    <p>质量督察工作的启动，是推动高质量发展的重要举措，旨在解决当前经济社会发展中存在的质量问题，维护消费者权益，促进企业提升产品和服务质量。</p>
+                    <p style="margin-top: 15px;">专家表示，质量督察工作将有助于规范市场秩序，促进公平竞争，推动我国经济由高速增长阶段转向高质量发展阶段。</p>
+                </div>
+
+                <div class="question" data-question="n1">
+                    <p>1. 我国首次启动质量督察工作的时间是？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n1" value="A"> A. 7月1日</label>
+                        <label><input type="radio" name="n1" value="B"> B. 7月20日</label>
+                        <label><input type="radio" name="n1" value="C"> C. 7月22日</label>
+                        <label><input type="radio" name="n1" value="D"> D. 8月1日</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="n2">
+                    <p>2. 此次督察工作的重点领域包括？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n2" value="A"> A. 仅限制造业</label>
+                        <label><input type="radio" name="n2" value="B"> B. "内卷式"竞争突出领域和群众反映强烈的领域</label>
+                        <label><input type="radio" name="n2" value="C"> C. 仅限服务业</label>
+                        <label><input type="radio" name="n2" value="D"> D. 仅限农业</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="n3">
+                    <p>3. 质量督察工作的目的是？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n3" value="A"> A. 推动高质量发展</label>
+                        <label><input type="radio" name="n3" value="B"> B. 增加企业负担</label>
+                        <label><input type="radio" name="n3" value="C"> C. 限制企业发展</label>
+                        <label><input type="radio" name="n3" value="D"> D. 减少就业机会</label>
+                    </div>
+                </div>
+
+                <div class="news-box" style="margin-top: 30px;">
+                    <h3>2026世界人工智能大会在上海举行</h3>
+                    <div class="news-meta">来源：China Daily | 2026年7月22日</div>
+                    <p>2026世界人工智能大会在上海举行，大会以"模型时代·伙伴之城"为主题，展示了人工智能在各领域的最新应用成果。</p>
+                    <p>在展览现场，工业机器人展示了高精度的装配能力，服务机器人展示了与顾客互动的能力，医疗机器人展示了辅助医疗的潜力。这些机器人应用横跨工业、零售、生活服务等多个领域，标志着人工智能正在从实验室走向真实应用场景。</p>
+                    <p>专家指出，"具身智能"——即人工智能与物理机器人的结合——正在改变我们的工作和生活方式，未来将创造更多新的就业机会。</p>
+                </div>
+
+                <div class="question" data-question="n4">
+                    <p>4. 2026世界人工智能大会的主题是？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n4" value="A"> A. 科技创新</label>
+                        <label><input type="radio" name="n4" value="B"> B. 模型时代·伙伴之城</label>
+                        <label><input type="radio" name="n4" value="C"> C. 智能未来</label>
+                        <label><input type="radio" name="n4" value="D"> D. 机器时代</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="n5">
+                    <p>5. "具身智能"是指？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n5" value="A"> A. 人工智能与物理机器人的结合</label>
+                        <label><input type="radio" name="n5" value="B"> B. 只有人工智能</label>
+                        <label><input type="radio" name="n5" value="C"> C. 只有机器人</label>
+                        <label><input type="radio" name="n5" value="D"> D. 虚拟现实</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="checkNews()">提交时文答案</button>
+                <div id="news-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试部分 -->
+        <div id="test" class="section">
+            <div class="card">
+                <h2>✍️ 综合测试 (50题)</h2>
+                <div class="progress-bar"><div class="progress-fill" id="progress" style="width: 0%;"></div></div>
+                <p id="progress-text" style="text-align: center; margin-bottom: 20px;">已完成: 0/50</p>
+                
+                <div id="test-container"></div>
+                
+                <button class="btn" id="submit-test" onclick="submitTest()">提交测试</button>
+                <div id="test-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 正确答案
+        const modernAnswers = { m1: 'B', m2: 'B', m3: 'A', m4: 'B', m5: 'B' };
+        const newsAnswers = { n1: 'B', n2: 'B', n3: 'A', n4: 'B', n5: 'A' };
+
+        // 测试题库 (50题)
+        const testQuestions = [
+            // 古诗词 (1-20)
+            {q: "《望岳》的作者是谁？", options: ["李白", "杜甫", "白居易", "王维"], answer: "B"},
+            {q: ""岱宗"指的是哪座山？", options: ["华山", "衡山", "泰山", "恒山"], answer: "C"},
+            {q: ""会当凌绝顶，一览众山小"表达了诗人怎样的情怀？", options: ["消极悲观", "勇攀高峰的雄心壮志", "思乡之情", "怀才不遇"], answer: "B"},
+            {q: "《春望》中"国破山河在"的"国"指的是？", options: ["国都长安", "国家", "国土", "国界"], answer: "A"},
+            {q: ""烽火连三月"中的"三月"是指？", options: ["三个月时间", "春季三个月", "三月这个月份", "三十个月"], answer: "B"},
+            {q: "《春望》表达了诗人怎样的感情？", options: ["喜悦", "忧国忧民", "愤怒", "冷漠"], answer: "B"},
+            {q: ""家书抵万金"运用了什么修辞手法？", options: ["比喻", "夸张", "拟人", "排比"], answer: "B"},
+            {q: "《茅屋为秋风所破歌》中"安得广厦千万间"表达了什么愿望？", options: ["自己住大房子", "天下寒士都能安居乐业", "建造更多房子", "卖房子赚钱"], answer: "B"},
+            {q: "杜甫被后人称为什么？", options: ["诗仙", "诗圣", "诗佛", "诗鬼"], answer: "B"},
+            {q: ""阴阳割昏晓"描写的是什么景象？", options: ["山的南北两面明暗不同", "天气变化", "日夜交替", "季节变化"], answer: "A"},
+            {q: ""决眦入归鸟"中"决眦"的意思是？", options: ["闭眼", "睁大眼睛", "眨眼", "眯眼"], answer: "B"},
+            {q: "《望岳》中"造化钟神秀"的"钟"意思是？", options: ["时钟", "聚集", "钟爱", "敲钟"], answer: "B"},
+            {q: "《春望》的创作背景是？", options: ["安史之乱", "唐朝盛世", "农民起义", "外族入侵"], answer: "A"},
+            {q: ""白头搔更短"描写了诗人怎样的形象？", options: ["年轻有为", "忧愁苍老", "精神焕发", "悠闲自在"], answer: "B"},
+            {q: "《茅屋为秋风所破歌》的体裁是？", options: ["律诗", "绝句", "古体诗（歌行体）", "词"], answer: "C"},
+            {q: ""荡胸生曾云"中"曾"的意思是？", options: ["曾经", "同'层'", "增加", "更加"], answer: "B"},
+            {q: "杜甫是哪个朝代的诗人？", options: ["宋朝", "唐朝", "明朝", "清朝"], answer: "B"},
+            {q: ""感时花溅泪"运用了什么手法？", options: ["比喻", "拟人", "夸张", "对偶"], answer: "B"},
+            {q: ""齐鲁青未了"说明泰山怎样？", options: ["很小", "苍翠辽阔", "荒凉", "低矮"], answer: "B"},
+            {q: ""吾庐独破受冻死亦足"表达了诗人怎样的精神？", options: ["自私自利", "推己及人、舍己为人", "悲观失望", "无所畏惧"], answer: "B"},
+            // 现代文 (21-35)
+            {q: "《荷塘月色》的作者是？", options: ["鲁迅", "朱自清", "老舍", "巴金"], answer: "B"},
+            {q: ""仿佛远处高楼上渺茫的歌声似的"运用了什么修辞手法？", options: ["比喻", "通感", "拟人", "排比"], answer: "B"},
+            {q: ""袅娜""羞涩"原本是用来形容什么的？", options: ["荷花", "人", "动物", "风景"], answer: "B"},
+            {q: ""梵婀玲"是指什么乐器？", options: ["钢琴", "小提琴", "古筝", "笛子"], answer: "B"},
+            {q: ""月光如流水一般"运用了什么修辞？", options: ["比喻", "拟人", "夸张", "排比"], answer: "A"},
+            {q: "文中"泻"字好在哪里？", options: ["普通用词", "写出了月光的动态美", "表示月光很暗", "没有特殊含义"], answer: "B"},
+            {q: ""浮起在荷塘里"的是什么？", options: ["月亮", "薄薄的青雾", "荷花", "水"], answer: "B"},
+            {q: ""叶子和花仿佛在牛乳中洗过一样"说明月光怎样？", options: ["很暗", "朦胧柔和", "很亮", "没有月光"], answer: "B"},
+            {q: ""参差的斑驳的黑影"是什么造成的？", options: ["月光", "树影", "云", "雾"], answer: "B"},
+            {q: "这段文字描写的是什么时间的景色？", options: ["清晨", "中午", "傍晚", "夜晚"], answer: "D"},
+            {q: ""田田的叶子"中"田田"是什么意思？", options: ["田地", "荷叶茂盛的样子", "田字格", "田野"], answer: "B"},
+            {q: "文中主要运用了什么描写方法？", options: ["心理描写", "语言描写", "景物描写", "动作描写"], answer: "C"},
+            {q: ""脉脉的流水"中"脉脉"是什么意思？", options: ["脉搏", "无声地、含情地", "默默地", "慢慢地"], answer: "B"},
+            {q: ""小睡也别有风味"说明作者认为什么？", options: ["喜欢小睡", "朦胧的月色恰到好处", "不喜欢月光", "想睡觉"], answer: "B"},
+            {q: ""如梵婀玲上奏着的名曲"说明什么？", options: ["有人在演奏", "光与影的和谐美", "音乐很好听", "作者在想象"], answer: "B"},
+            // 时文与综合 (36-50)
+            {q: "我国首次启动质量督察工作的时间是？", options: ["7月1日", "7月20日", "7月22日", "8月1日"], answer: "B"},
+            {q: "质量督察工作的目的是？", options: ["增加企业负担", "推动高质量发展", "限制竞争", "减少就业"], answer: "B"},
+            {q: "2026世界人工智能大会在哪里举行？", options: ["北京", "上海", "广州", "深圳"], answer: "B"},
+            {q: ""具身智能"是指什么？", options: ["只有AI", "只有机器人", "AI与机器人的结合", "虚拟现实"], answer: "C"},
+            {q: "中国"太空工厂"可以量产什么？", options: ["火箭", "卫星", "飞机", "汽车"], answer: "B"},
+            {q: "《春望》"感时花溅泪"中"时"指什么？", options: ["时间", "时局、国家局势", "时节", "时候"], answer: "B"},
+            {q: ""浑欲不胜簪"中"浑欲"的意思是？", options: ["浑浊", "简直要", "全部", "浑然"], answer: "B"},
+            {q: "以下哪句是《望岳》中的名句？", options: ["国破山河在", "会当凌绝顶，一览众山小", "烽火连三月", "安得广厦千万间"], answer: "B"},
+            {q: ""决眦入归鸟"描写的是什么？", options: ["看日出", "看归鸟", "看云", "看山"], answer: "B"},
+            {q: "《茅屋为秋风所破歌》中诗人的胸怀是？", options: ["自私自利", "忧国忧民", "独善其身", "随遇而安"], answer: "B"},
+            {q: "《荷塘月色》主要描写的是什么？", options: ["城市夜景", "荷塘月色美景", "乡村风光", "山间小路"], answer: "B"},
+            {q: "质量督察工作关注的是哪些领域？", options: ["所有领域", ""内卷式"竞争领域和群众关切领域", "只有制造业", "只有服务业"], answer: "B"},
+            {q: "人工智能大会展示了哪些机器人？", options: ["只有工业机器人", "工业、服务、医疗等多领域机器人", "只有服务机器人", "只有医疗机器人"], answer: "B"},
+            {q: ""造化钟神秀"中"造化"指的是？", options: ["创造", "大自然", "人工", "设计"], answer: "B"},
+            {q: "以下哪个不是杜甫的作品？", options: ["《望岳》", "《春望》", "《静夜思》", "《茅屋为秋风所破歌》"], answer: "C"}
+        ];
+
+        // 初始化
+        let userAnswers = JSON.parse(localStorage.getItem('chinese_2026-07-23') || '{}');
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function checkModern() {
+            let score = 0;
+            for (let key in modernAnswers) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                if (selected) {
+                    userAnswers[key] = selected.value;
+                    if (selected.value === modernAnswers[key]) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            }
+            document.getElementById('modern-result').style.display = 'block';
+            document.getElementById('modern-result').innerHTML = `<div class="score">${score}/5</div><div class="feedback">${score >= 4 ? '太棒了！' : score >= 3 ? '做得不错！' : '继续努力！'}</div>`;
+            saveProgress();
+        }
+
+        function checkNews() {
+            let score = 0;
+            for (let key in newsAnswers) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                if (selected) {
+                    userAnswers[key] = selected.value;
+                    if (selected.value === newsAnswers[key]) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            }
+            document.getElementById('news-result').style.display = 'block';
+            document.getElementById('news-result').innerHTML = `<div class="score">${score}/5</div><div class="feedback">${score >= 4 ? '太棒了！' : score >= 3 ? '做得不错！' : '继续努力！'}</div>`;
+            saveProgress();
+        }
+
+        function generateTest() {
+            const container = document.getElementById('test-container');
+            container.innerHTML = testQuestions.map((item, index) => `
+                <div class="test-question">
+                    <p><strong>${index + 1}.</strong> ${item.q}</p>
+                    <div class="options">
+                        ${item.options.map((opt, i) => `
+                            <label>
+                                <input type="radio" name="test${index}" value="${opt}" 
+                                    ${userAnswers[`test${index}`] === opt ? 'checked' : ''}>
+                                ${String.fromCharCode(65 + i)}. ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    userAnswers[input.name] = input.value;
+                    saveProgress();
+                    updateProgress();
+                });
+            });
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).filter(k => k.startsWith('test')).length;
+            document.getElementById('progress').style.width = `${answered * 2}%`;
+            document.getElementById('progress-text').textContent = `已完成: ${answered}/50`;
+        }
+
+        function submitTest() {
+            let score = 0;
+            testQuestions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="test${index}"]:checked`);
+                if (selected) {
+                    if (selected.value === item.answer) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            });
+
+            userAnswers.testScore = score;
+            userAnswers.testSubmitted = true;
+            saveProgress();
+
+            document.getElementById('test-result').style.display = 'block';
+            document.getElementById('test-result').innerHTML = `<div class="score">${score}/50</div><div class="feedback">${score >= 45 ? '太优秀了！' : score >= 35 ? '做得不错！' : '继续努力！'}</div><p style="margin-top: 15px;">正确率: ${score * 2}%</p>`;
+            document.getElementById('submit-test').disabled = true;
+        }
+
+        function saveProgress() {
+            localStorage.setItem('chinese_2026-07-23', JSON.stringify(userAnswers));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateTest();
+            for (let key in modernAnswers) {
+                if (userAnswers[key]) {
+                    const radio = document.querySelector(`input[name="${key}"][value="${userAnswers[key]}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+            for (let key in newsAnswers) {
+                if (userAnswers[key]) {
+                    const radio = document.querySelector(`input[name="${key}"][value="${userAnswers[key]}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+            if (userAnswers.testSubmitted) {
+                document.getElementById('submit-test').disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>

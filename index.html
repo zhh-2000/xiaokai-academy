@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小剀学苑 - 每日学习平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .header { background: rgba(255,255,255,0.95); padding: 20px; text-align: center; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 2.5em; color: #333; }
+        .header p { color: #666; margin-top: 10px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .welcome { text-align: center; color: white; margin-bottom: 40px; }
+        .welcome h2 { font-size: 2em; margin-bottom: 10px; }
+        .subjects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .subject-card { background: white; border-radius: 20px; padding: 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+        .subject-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .subject-icon { font-size: 4em; margin-bottom: 15px; }
+        .subject-card h3 { font-size: 1.5em; color: #333; margin-bottom: 10px; }
+        .subject-card p { color: #666; margin-bottom: 15px; }
+        .subject-card.english { border-top: 5px solid #667eea; }
+        .subject-card.english .subject-icon { color: #667eea; }
+        .subject-card.chinese { border-top: 5px solid #f5576c; }
+        .subject-card.chinese .subject-icon { color: #f5576c; }
+        .subject-card.math { border-top: 5px solid #11998e; }
+        .subject-card.math .subject-icon { color: #11998e; }
+        .btn { display: inline-block; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s; }
+        .btn-english { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-chinese { background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%); color: white; }
+        .btn-math { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .btn:hover { transform: scale(1.05); }
+        .recent-days { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 30px; margin-top: 30px; }
+        .recent-days h3 { color: #333; margin-bottom: 20px; font-size: 1.5em; }
+        .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .day-card { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s; border: 2px solid transparent; }
+        .day-card:hover { border-color: #667eea; transform: scale(1.02); }
+        .day-card.new { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .day-card.new .date { color: rgba(255,255,255,0.9); }
+        .day-card .date { font-size: 1.1em; font-weight: bold; color: #333; }
+        .day-card .status { font-size: 0.9em; margin-top: 8px; color: #666; }
+        .day-card .links { margin-top: 12px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .day-card .links a { font-size: 0.85em; padding: 5px 12px; background: rgba(255,255,255,0.2); border-radius: 15px; text-decoration: none; }
+        .day-card:not(.new) .links a { background: #667eea; color: white; }
+        .day-card.new .links a { background: rgba(255,255,255,0.3); color: white; }
+        .footer { text-align: center; color: rgba(255,255,255,0.8); padding: 30px; margin-top: 30px; }
+        .footer a { color: white; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎓 小剀学苑</h1>
+        <p>每日学习，天天进步！今天是 2026年7月23日 星期四</p>
+    </div>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>欢迎来到小剀学苑！</h2>
+            <p>选择科目开始今天的学习吧～</p>
+        </div>
+
+        <div class="subjects">
+            <div class="subject-card english" onclick="location.href='english/english.html'">
+                <div class="subject-icon">📚</div>
+                <h3>英语学习</h3>
+                <p>阅读理解 · 词汇积累 · 综合测试</p>
+                <a href="english/english.html" class="btn btn-english">开始学习</a>
+            </div>
+            
+            <div class="subject-card chinese" onclick="location.href='chinese/chinese.html'">
+                <div class="subject-icon">📖</div>
+                <h3>语文学习</h3>
+                <p>古诗词 · 现代文 · 时文阅读</p>
+                <a href="chinese/chinese.html" class="btn btn-chinese">开始学习</a>
+            </div>
+            
+            <div class="subject-card math" onclick="location.href='math/math.html'">
+                <div class="subject-icon">📐</div>
+                <h3>数学学习</h3>
+                <p>简便运算 · 公式速查 · 专项练习</p>
+                <a href="math/math.html" class="btn btn-math">开始学习</a>
+            </div>
+        </div>
+
+        <div class="recent-days">
+            <h3>📅 学习日程</h3>
+            <div class="days-grid">
+                <div class="day-card new">
+                    <div class="date">2026年7月23日</div>
+                    <div class="status">🆕 今日新内容</div>
+                    <div class="links">
+                        <a href="english/days/2026-07-23.html">英语</a>
+                        <a href="chinese/days/2026-07-23.html">语文</a>
+                        <a href="math/days/2026-07-23.html">数学</a>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="date">2026年7月22日</div>
+                    <div class="status">已发布</div>
+                    <div class="links">
+                        <a href="english/days/2026-07-22.html">英语</a>
+                        <a href="chinese/days/2026-07-22.html">语文</a>
+                        <a href="math/days/2026-07-22.html">数学</a>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="date">2026年7月21日</div>
+                    <div class="status">已发布</div>
+                    <div class="links">
+                        <a href="english/days/2026-07-21.html">英语</a>
+                        <a href="chinese/days/2026-07-21.html">语文</a>
+                        <a href="math/days/2026-07-21.html">数学</a>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="date">2026年7月20日</div>
+                    <div class="status">已发布</div>
+                    <div class="links">
+                        <a href="english/days/2026-07-20.html">英语</a>
+                        <a href="chinese/days/2026-07-20.html">语文</a>
+                        <a href="math/days/2026-07-20.html">数学</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>小剀学苑 © 2026 | 让学习成为一种习惯</p>
+    </div>
+</body>
+</html>
