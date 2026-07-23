@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年7月24日 - 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; padding: 20px 0; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { font-size: 1.2em; opacity: 0.9; }
+        .nav { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+        .nav a { background: white; color: #f5576c; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
+        .nav a:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .nav a.active { background: #2d3748; color: white; }
+        .card { background: white; border-radius: 15px; padding: 25px; margin: 20px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .card h2 { color: #f5576c; border-bottom: 3px solid #f5576c; padding-bottom: 10px; margin-bottom: 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .poem-box { background: linear-gradient(135deg, #fff5f5 0%, #fff0f0 100%); padding: 25px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #f5576c; }
+        .poem-title { font-size: 1.5em; color: #f5576c; margin-bottom: 10px; }
+        .poem-author { color: #666; margin-bottom: 15px; }
+        .poem-content { font-size: 1.2em; line-height: 2.2; text-align: center; }
+        .poem-content span { display: block; }
+        .poem-notes { margin-top: 15px; padding: 15px; background: #fff; border-radius: 8px; }
+        .poem-notes h4 { color: #f5576c; margin-bottom: 10px; }
+        .modern-text { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; line-height: 1.9; }
+        .modern-text h3 { color: #f5576c; margin-bottom: 15px; }
+        .news-box { background: linear-gradient(135deg, #e8f4fd 0%, #d1e8ff 100%); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #2196f3; }
+        .news-box h3 { color: #1976d2; margin-bottom: 10px; }
+        .news-meta { color: #666; font-size: 0.9em; margin-bottom: 10px; }
+        .question { margin: 15px 0; padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107; }
+        .question p { margin-bottom: 10px; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 8px; }
+        .options label { display: flex; align-items: center; padding: 10px; background: white; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .options label:hover { background: #e9ecef; }
+        .options input { margin-right: 10px; transform: scale(1.2); }
+        .test-question { margin: 15px 0; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #f5576c; }
+        .progress-bar { height: 10px; background: #e9ecef; border-radius: 5px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #f5576c, #f093fb); transition: width 0.5s; }
+        .btn { background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1.1em; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(245,87,108,0.4); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .result { text-align: center; padding: 30px; }
+        .result .score { font-size: 4em; font-weight: bold; color: #f5576c; }
+        .result .feedback { font-size: 1.2em; margin: 15px 0; }
+        .keyword { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 语文学习</h1>
+            <p class="date">2026年7月24日 星期五</p>
+        </div>
+
+        <div class="nav">
+            <a href="#" onclick="showSection('poetry')">🏛️ 古诗词</a>
+            <a href="#" onclick="showSection('modern')">📚 现代文</a>
+            <a href="#" onclick="showSection('news')">📰 时文阅读</a>
+            <a href="#" onclick="showSection('test')">✍️ 综合测试</a>
+            <a href="../chinese.html">🏠 返回首页</a>
+        </div>
+
+        <!-- 古诗词部分 -->
+        <div id="poetry" class="section active">
+            <div class="card">
+                <h2>🏛️ 古诗词学习</h2>
+                
+                <div class="poem-box">
+                    <div class="poem-title">《使至塞上》</div>
+                    <div class="poem-author">唐·王维</div>
+                    <div class="poem-content">
+                        <span>单车欲问边，属国过居延。</span>
+                        <span>征蓬出汉塞，归雁入胡天。</span>
+                        <span>大漠孤烟直，长河落日圆。</span>
+                        <span>萧关逢候骑，都护在燕然。</span>
+                    </div>
+                    <div class="poem-notes">
+                        <h4>📝 字词注释</h4>
+                        <p><strong>单车</strong>：一辆车，形容轻车简从。</p>
+                        <p><strong>问边</strong>：慰问边关守军。</p>
+                        <p><strong>属国</strong>：典属国的简称，这里指少数民族地区。</p>
+                        <p><strong>征蓬</strong>：飘飞的蓬草，比喻征途中的孤雁。</p>
+                        <p><strong>孤烟</strong>：烽烟，报警时点的烟火。</p>
+                        <p><strong>长河</strong>：黄河。</p>
+                        <p><strong>候骑</strong>：侦察骑兵。</p>
+                        <h4>🎯 主旨概括</h4>
+                        <p>这首诗通过描写出使边塞的所见所闻，特别是"大漠孤烟直，长河落日圆"这一千古名句，展现了边塞壮阔雄奇的景象，表达了诗人孤独而又开阔的情怀。</p>
+                    </div>
+                </div>
+
+                <div class="poem-box" style="margin-top: 30px;">
+                    <div class="poem-title">《渡荆门送别》</div>
+                    <div class="poem-author">唐·李白</div>
+                    <div class="poem-content">
+                        <span>渡远荆门外，来从楚国游。</span>
+                        <span>山随平野尽，江入大荒流。</span>
+                        <span>月下飞天镜，云生结海楼。</span>
+                        <span>仍怜故乡水，万里送行舟。</span>
+                    </div>
+                    <div class="poem-notes">
+                        <h4>📝 字词注释</h4>
+                        <p><strong>荆门</strong>：山名，在今湖北宜都西北。</p>
+                        <p><strong>楚国</strong>：今湖北一带，古属楚国。</p>
+                        <p><strong>大荒</strong>：广阔无际的原野。</p>
+                        <p><strong>海楼</strong>：海市蜃楼，这里指江上云气变幻。</p>
+                        <p><strong>怜</strong>：爱。</p>
+                        <h4>🎯 主旨概括</h4>
+                        <p>这首诗通过描写诗人出蜀东下途中所见壮丽景象，抒发了对故乡的思念之情。"山随平野尽，江入大荒流"写出了蜀地与荆门的地势变化，气势雄伟。</p>
+                    </div>
+                </div>
+
+                <div class="poem-box" style="margin-top: 30px;">
+                    <div class="poem-title">《黄鹤楼》</div>
+                    <div class="poem-author">唐·崔颢</div>
+                    <div class="poem-content">
+                        <span>昔人已乘黄鹤去，此地空余黄鹤楼。</span>
+                        <span>黄鹤一去不复返，白云千载空悠悠。</span>
+                        <span>晴川历历汉阳树，芳草萋萋鹦鹉洲。</span>
+                        <span>日暮乡关何处是？烟波江上使人愁。</span>
+                    </div>
+                    <div class="poem-notes">
+                        <h4>📝 字词注释</h4>
+                        <p><strong>昔人</strong>：传说中的仙人。</p>
+                        <p><strong>悠悠</strong>：飘荡的样子。</p>
+                        <p><strong>历历</strong>：分明的样子。</p>
+                        <p><strong>萋萋</strong>：茂盛的样子。</p>
+                        <p><strong>乡关</strong>：故乡。</p>
+                        <h4>🎯 主旨概括</h4>
+                        <p>这首诗通过描写登临黄鹤楼的所见所感，抒发了诗人吊古伤今之情和思乡之愁。据说李白读后感叹："眼前有景道不得，崔颢题诗在上头。"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 现代文部分 -->
+        <div id="modern" class="section">
+            <div class="card">
+                <h2>📚 现代文阅读</h2>
+                
+                <div class="modern-text">
+                    <h3>背影（节选）</h3>
+                    <p style="color: #666; margin-bottom: 15px;">朱自清</p>
+                    <p>我说道："爸爸，你走吧。"他往车外看了看，说："我买几个橘子去。你就在此地，不要走动。"我看那边月台的栅栏外有几个卖东西的等着顾客。走到那边月台，须穿过铁道，须跳下去又爬上去。父亲是一个胖子，走过去自然要费事些。我本来要去的，他不肯，只好让他去。</p>
+                    <p style="margin-top: 15px;">我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去，尚不大难。可是他穿过铁道，要爬上那边月台，就不容易了。他用两手攀着上面，两脚再向上缩；他肥胖的身子向左微倾，显出努力的样子。这时我看见他的背影，我的泪很快地流下来了。我赶紧拭干了泪，怕他看见，也怕别人看见。我再向外看时，他已抱了朱红的橘子往回走了。过铁道时，他先将橘子散放在地上，自己慢慢爬下，再抱起橘子走。到这边时，我赶紧去搀他。他和我走到车上，将橘子一股脑儿放在我的皮大衣上。于是扑扑衣上的泥土，心里很轻松似的，过一会说："我走了，到那边来信！"我望着他走出去。他走了几步，回过头看见我，说："进去吧，里边没人。"等他的背影混入来来往往的人里，再找不着了，我便进来坐下，我的眼泪又来了。</p>
+                </div>
+
+                <div class="question" data-question="m1">
+                    <p>1. 父亲买橘子时"蹒跚地走到铁道边"，"蹒跚"一词的作用是？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m1" value="A"> A. 说明父亲走路很慢</label>
+                        <label><input type="radio" name="m1" value="B"> B. 表现父亲身体肥胖、行动不便，突出了买橘子的艰难</label>
+                        <label><input type="radio" name="m1" value="C"> C. 只是描写父亲的走路姿势</label>
+                        <label><input type="radio" name="m1" value="D"> D. 说明父亲年纪大了</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m2">
+                    <p>2. 文中"他肥胖的身子向左微倾，显出努力的样子"，这里"努力"一词表达了什么？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m2" value="A"> A. 父亲身体不好</label>
+                        <label><input type="radio" name="m2" value="B"> B. 父亲爬月台很吃力，体现了对儿子的关爱</label>
+                        <label><input type="radio" name="m2" value="C"> C. 父亲想要锻炼身体</label>
+                        <label><input type="radio" name="m2" value="D"> D. 父亲习惯性地努力</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m3">
+                    <p>3. "我的泪很快地流下来了"，作者流泪的原因是？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m3" value="A"> A. 感动于父亲的爱</label>
+                        <label><input type="radio" name="m3" value="B"> B. 眼睛不舒服</label>
+                        <label><input type="radio" name="m3" value="C"> C. 后悔没自己去买橘子</label>
+                        <label><input type="radio" name="m3" value="D"> D. 想到离别而伤心</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m4">
+                    <p>4. 父亲"扑扑衣上的泥土，心里很轻松似的"，这里"轻松"的真实含义是？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m4" value="A"> A. 父亲真的感到轻松</label>
+                        <label><input type="radio" name="m4" value="B"> B. 父亲完成了心愿，感到欣慰，想让儿子放心</label>
+                        <label><input type="radio" name="m4" value="C"> C. 父亲不累</label>
+                        <label><input type="radio" name="m4" value="D"> D. 父亲故意装作轻松</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="m5">
+                    <p>5. 这段文字主要表达了什么情感？</p>
+                    <div class="options">
+                        <label><input type="radio" name="m5" value="A"> A. 对旅途的厌倦</label>
+                        <label><input type="radio" name="m5" value="B"> B. 对父爱的感动和思念</label>
+                        <label><input type="radio" name="m5" value="C"> C. 对橘子价格的抱怨</label>
+                        <label><input type="radio" name="m5" value="D"> D. 对火车站的印象</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="checkModern()">提交现代文答案</button>
+                <div id="modern-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- 时文阅读部分 -->
+        <div id="news" class="section">
+            <div class="card">
+                <h2>📰 时文阅读</h2>
+                
+                <div class="news-box">
+                    <h3>中国已成为全球160多个国家和地区的主要贸易伙伴</h3>
+                    <div class="news-meta">来源：中新网 | 2026年7月23日</div>
+                    <p>据中国新闻网报道，截至2026年7月，中国已成为全球160多个国家和地区的主要贸易伙伴。这一成就体现了中国在全球贸易中的重要地位。</p>
+                    <p>近年来，中国坚持高水平对外开放，推动共建"一带一路"高质量发展，不断深化与各国的经贸合作。中国已成为140多个国家和地区的主要贸易伙伴，为全球经济增长作出了重要贡献。</p>
+                    <p>专家表示，中国将继续扩大对外开放，推动构建开放型世界经济，为各国企业提供更多发展机遇。</p>
+                </div>
+
+                <div class="question" data-question="n1">
+                    <p>1. 中国已成为多少个国家和地区的主要贸易伙伴？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n1" value="A"> A. 100多个</label>
+                        <label><input type="radio" name="n1" value="B"> B. 160多个</label>
+                        <label><input type="radio" name="n1" value="C"> C. 50多个</label>
+                        <label><input type="radio" name="n1" value="D"> D. 200多个</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="n2">
+                    <p>2. 中国推动什么高质量发展？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n2" value="A"> A. 农业</label>
+                        <label><input type="radio" name="n2" value="B"> B. 共建"一带一路"</label>
+                        <label><input type="radio" name="n2" value="C"> C. 教育</label>
+                        <label><input type="radio" name="n2" value="D"> D. 体育</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="n3">
+                    <p>3. 中国为全球经济增长作出了什么？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n3" value="A"> A. 重要贡献</label>
+                        <label><input type="radio" name="n3" value="B"> B. 小贡献</label>
+                        <label><input type="radio" name="n3" value="C"> C. 无贡献</label>
+                        <label><input type="radio" name="n3" value="D"> D. 负面影响</label>
+                    </div>
+                </div>
+
+                <div class="news-box" style="margin-top: 30px;">
+                    <h3>商务部：上半年外资企业、国有企业进出口均实现两位数增长</h3>
+                    <div class="news-meta">来源：央视新闻 | 2026年7月23日</div>
+                    <p>据央视新闻报道，商务部于2026年7月23日发布数据显示，今年上半年，外资企业、国有企业进出口均实现两位数增长，展现出中国经济的强劲活力。</p>
+                    <p>同时，我国每卖出10辆新车，就有6辆以上是新能源汽车，新能源汽车产业持续领跑全球。这一成就得益于中国在新能源汽车领域的技术创新和产业政策支持。</p>
+                    <p>专家指出，中国经济的持续向好，为世界经济复苏注入了信心和动力。</p>
+                </div>
+
+                <div class="question" data-question="n4">
+                    <p>4. 上半年外资企业进出口实现了什么？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n4" value="A"> A. 下降</label>
+                        <label><input type="radio" name="n4" value="B"> B. 两位数增长</label>
+                        <label><input type="radio" name="n4" value="C"> C. 零增长</label>
+                        <label><input type="radio" name="n4" value="D"> D. 负增长</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="n5">
+                    <p>5. 我国每卖出10辆新车，有多少辆是新能源汽车？</p>
+                    <div class="options">
+                        <label><input type="radio" name="n5" value="A"> A. 3辆</label>
+                        <label><input type="radio" name="n5" value="B"> B. 6辆以上</label>
+                        <label><input type="radio" name="n5" value="C"> C. 1辆</label>
+                        <label><input type="radio" name="n5" value="D"> D. 10辆</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="checkNews()">提交时文答案</button>
+                <div id="news-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试部分 -->
+        <div id="test" class="section">
+            <div class="card">
+                <h2>✍️ 综合测试 (50题)</h2>
+                <div class="progress-bar"><div class="progress-fill" id="progress" style="width: 0%;"></div></div>
+                <p id="progress-text" style="text-align: center; margin-bottom: 20px;">已完成: 0/50</p>
+                
+                <div id="test-container"></div>
+                
+                <button class="btn" id="submit-test" onclick="submitTest()">提交测试</button>
+                <div id="test-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 正确答案
+        const modernAnswers = { m1: 'B', m2: 'B', m3: 'A', m4: 'B', m5: 'B' };
+        const newsAnswers = { n1: 'B', n2: 'B', n3: 'A', n4: 'B', n5: 'B' };
+
+        // 测试题库 (50题)
+        const testQuestions = [
+            // 古诗词 (1-20)
+            {q: "《使至塞上》的作者是谁？", options: ["李白", "王维", "杜甫", "白居易"], answer: "B"},
+            {q: ""大漠孤烟直，长河落日圆"描写的是什么景象？", options: ["江南风光", "边塞壮阔景象", "城市生活", "田园风光"], answer: "B"},
+            {q: ""孤烟"指的是什么？", options: ["普通的烟", "烽烟，报警烟火", "烧火的烟", "雾气"], answer: "B"},
+            {q: ""长河"指的是哪条河？", options: ["长江", "黄河", "淮河", "珠江"], answer: "B"},
+            {q: "《渡荆门送别》的作者是谁？", options: ["王维", "李白", "杜甫", "白居易"], answer: "B"},
+            {q: ""山随平野尽"描写的是什么？", options: ["山景", "蜀地到荆门的地势变化", "平原", "河流"], answer: "B"},
+            {q: ""月下飞天镜"运用了什么修辞？", options: ["比喻", "拟人", "夸张", "对偶"], answer: "A"},
+            {q: ""仍怜故乡水"表达了什么感情？", options: ["厌恶", "思乡之情", "开心", "悲伤"], answer: "B"},
+            {q: "《黄鹤楼》的作者是谁？", options: ["李白", "崔颢", "杜甫", "王维"], answer: "B"},
+            {q: ""白云千载空悠悠"中"悠悠"的意思是？", options: ["悠闲", "飘荡的样子", "忧愁", "长远"], answer: "B"},
+            {q: ""芳草萋萋鹦鹉洲"中"萋萋"的意思是？", options: ["稀疏", "茂盛的样子", "枯萎", "杂乱"], answer: "B"},
+            {q: ""日暮乡关何处是"表达了什么感情？", options: ["喜悦", "思乡之愁", "愤怒", "悲伤"], answer: "B"},
+            {q: "李白读了《黄鹤楼》后怎么评价？", options: ["批评", "赞叹不已", "无视", "修改"], answer: "B"},
+            {q: ""征蓬出汉塞"中"征蓬"比喻什么？", options: ["征途中的孤独", "蓬草", "大雁", "云"], answer: "A"},
+            {q: "王维被称为什么？", options: ["诗仙", "诗佛", "诗圣", "诗鬼"], answer: "B"},
+            {q: ""萧关逢候骑"中"候骑"是指？", options: ["普通骑兵", "侦察骑兵", "将领", "使者"], answer: "B"},
+            {q: "《使至塞上》描写的是什么题材？", options: ["田园", "边塞", "山水", "送别"], answer: "B"},
+            {q: ""海楼"在《渡荆门送别》中指什么？", options: ["真的楼", "海市蜃楼", "云气变幻", "海边的楼"], answer: "C"},
+            {q: "《黄鹤楼》是什么体裁？", options: ["绝句", "律诗", "古体诗", "词"], answer: "B"},
+            {q: ""大漠孤烟直"表现了什么特点？", options: ["荒凉", "壮阔、雄奇", "平静", "悲伤"], answer: "B"},
+            // 现代文 (21-35)
+            {q: "《背影》的作者是谁？", options: ["鲁迅", "朱自清", "老舍", "巴金"], answer: "B"},
+            {q: ""蹒跚"在文中作用是？", options: ["描写动作", "表现艰难，突出父爱", "说明慢", "描写老人"], answer: "B"},
+            {q: "父亲为什么要买橘子？", options: ["自己吃", "给儿子路上吃", "卖钱", "习惯"], answer: "B"},
+            {q: "作者为什么流泪？", options: ["眼疾", "被父爱感动", "后悔", "离别伤心"], answer: "B"},
+            {q: ""扑扑衣上的泥土"表现了什么？", options: ["清洁", "完成心愿的欣慰", "轻松", "习惯"], answer: "B"},
+            {q: "父亲的背影为什么感人？", options: ["穿着特别", "艰难买橘子体现父爱", "很胖", "很远"], answer: "B"},
+            {q: ""心里很轻松似的"真实含义是？", options: ["真轻松", "让儿子放心", "不累", "装作轻松"], answer: "B"},
+            {q: "文中多次写背影的作用是？", options: ["突出形象", "反复点题，深化主题", "凑字数", "习惯"], answer: "B"},
+            {q: "《背影》主要表达什么情感？", options: ["旅途艰辛", "对父爱的感动和思念", "购物", "离别"], answer: "B"},
+            {q: ""显出努力的样子"中"努力"表达了什么？", options: ["吃力", "爬月台的艰难和父爱", "锻炼", "习惯"], answer: "B"},
+            {q: "父亲为什么不让儿子去买橘子？", options: ["儿子不会", "心疼儿子，想自己做事", "省钱", "习惯"], answer: "B"},
+            {q: ""里边没人"这句话说明什么？", options: ["车厢空", "关心儿子行李", "没座位", "寂寞"], answer: "B"},
+            {q: "文中几次写到流泪？", options: ["1次", "2次", "3次", "4次"], answer: "B"},
+            {q: "《背影》的文体是？", options: ["小说", "散文", "诗歌", "戏剧"], answer: "B"},
+            {q: "父亲穿什么颜色的衣服？", options: ["白色", "黑色、深青色", "红色", "蓝色"], answer: "B"},
+            // 时文与综合 (36-50)
+            {q: "中国已成为多少个国家和地区的主要贸易伙伴？", options: ["100多个", "160多个", "50多个", "200多个"], answer: "B"},
+            {q: "中国推动什么高质量发展？", options: ["教育", "共建'一带一路'", "农业", "体育"], answer: "B"},
+            {q: "上半年外资企业进出口实现了什么？", options: ["下降", "两位数增长", "零增长", "负增长"], answer: "B"},
+            {q: "每卖出10辆新车，有多少辆是新能源车？", options: ["3辆", "6辆以上", "1辆", "10辆"], answer: "B"},
+            {q: "新能源汽车产业在全球处于什么地位？", options: ["落后", "领跑全球", "中等", "未知"], answer: "B"},
+            {q: ""大漠孤烟直"出自哪首诗？", options: ["《渡荆门送别》", "《使至塞上》", "《黄鹤楼》", "《望岳》"], answer: "B"},
+            {q: ""山随平野尽"出自哪首诗？", options: ["《使至塞上》", "《渡荆门送别》", "《黄鹤楼》", "《春望》"], answer: "B"},
+            {q: ""日暮乡关何处是"出自哪首诗？", options: ["《渡荆门送别》", "《黄鹤楼》", "《使至塞上》", "《望岳》"], answer: "B"},
+            {q: "《背影》中父亲买的是什么？", options: ["苹果", "橘子", "香蕉", "梨"], answer: "B"},
+            {q: "中国坚持什么水平的对外开放？", options: ["低水平", "高水平", "封闭", "部分开放"], answer: "B"},
+            {q: "中国经济为世界经济注入了什么？", options: ["困难", "信心和动力", "问题", "挑战"], answer: "B"},
+            {q: ""仍怜故乡水"中"怜"的意思是？", options: ["可怜", "爱", "怜惜", "疼爱"], answer: "B"},
+            {q: "以下哪个不是王维的作品？", options: ["《使至塞上》", "《渡荆门送别》", "《山居秋暝》", "《送元二使安西》"], answer: "B"},
+            {q: ""征蓬出汉塞"运用了什么手法？", options: ["比喻", "拟人", "夸张", "排比"], answer: "A"},
+            {q: "《黄鹤楼》写的是什么地方？", options: ["北京", "武汉黄鹤楼", "南京", "上海"], answer: "B"}
+        ];
+
+        // 初始化
+        let userAnswers = JSON.parse(localStorage.getItem('chinese_2026-07-24') || '{}');
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function checkModern() {
+            let score = 0;
+            for (let key in modernAnswers) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                if (selected) {
+                    userAnswers[key] = selected.value;
+                    if (selected.value === modernAnswers[key]) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            }
+            document.getElementById('modern-result').style.display = 'block';
+            document.getElementById('modern-result').innerHTML = `<div class="score">${score}/5</div><div class="feedback">${score >= 4 ? '太棒了！' : score >= 3 ? '做得不错！' : '继续努力！'}</div>`;
+            saveProgress();
+        }
+
+        function checkNews() {
+            let score = 0;
+            for (let key in newsAnswers) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                if (selected) {
+                    userAnswers[key] = selected.value;
+                    if (selected.value === newsAnswers[key]) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            }
+            document.getElementById('news-result').style.display = 'block';
+            document.getElementById('news-result').innerHTML = `<div class="score">${score}/5</div><div class="feedback">${score >= 4 ? '太棒了！' : score >= 3 ? '做得不错！' : '继续努力！'}</div>`;
+            saveProgress();
+        }
+
+        function generateTest() {
+            const container = document.getElementById('test-container');
+            container.innerHTML = testQuestions.map((item, index) => `
+                <div class="test-question">
+                    <p><strong>${index + 1}.</strong> ${item.q}</p>
+                    <div class="options">
+                        ${item.options.map((opt, i) => `
+                            <label>
+                                <input type="radio" name="test${index}" value="${opt}" 
+                                    ${userAnswers[`test${index}`] === opt ? 'checked' : ''}>
+                                ${String.fromCharCode(65 + i)}. ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    userAnswers[input.name] = input.value;
+                    saveProgress();
+                    updateProgress();
+                });
+            });
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).filter(k => k.startsWith('test')).length;
+            document.getElementById('progress').style.width = `${answered * 2}%`;
+            document.getElementById('progress-text').textContent = `已完成: ${answered}/50`;
+        }
+
+        function submitTest() {
+            let score = 0;
+            testQuestions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="test${index}"]:checked`);
+                if (selected) {
+                    if (selected.value === item.answer) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            });
+
+            userAnswers.testScore = score;
+            userAnswers.testSubmitted = true;
+            saveProgress();
+
+            document.getElementById('test-result').style.display = 'block';
+            document.getElementById('test-result').innerHTML = `<div class="score">${score}/50</div><div class="feedback">${score >= 45 ? '太优秀了！' : score >= 35 ? '做得不错！' : '继续努力！'}</div><p style="margin-top: 15px;">正确率: ${score * 2}%</p>`;
+            document.getElementById('submit-test').disabled = true;
+        }
+
+        function saveProgress() {
+            localStorage.setItem('chinese_2026-07-24', JSON.stringify(userAnswers));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateTest();
+            for (let key in modernAnswers) {
+                if (userAnswers[key]) {
+                    const radio = document.querySelector(`input[name="${key}"][value="${userAnswers[key]}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+            for (let key in newsAnswers) {
+                if (userAnswers[key]) {
+                    const radio = document.querySelector(`input[name="${key}"][value="${userAnswers[key]}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+            if (userAnswers.testSubmitted) {
+                document.getElementById('submit-test').disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
