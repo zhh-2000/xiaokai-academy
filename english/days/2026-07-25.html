@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年7月25日 - 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; padding: 20px 0; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { font-size: 1.2em; opacity: 0.9; }
+        .nav { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+        .nav a { background: white; color: #667eea; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
+        .nav a:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .nav a.active { background: #2d3748; color: white; }
+        .card { background: white; border-radius: 15px; padding: 25px; margin: 20px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .card h2 { color: #667eea; border-bottom: 3px solid #667eea; padding-bottom: 10px; margin-bottom: 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .reading-passage { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; line-height: 1.8; }
+        .question { margin: 15px 0; padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107; }
+        .question p { margin-bottom: 10px; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 8px; }
+        .options label { display: flex; align-items: center; padding: 10px; background: white; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .options label:hover { background: #e9ecef; }
+        .options input { margin-right: 10px; transform: scale(1.2); }
+        .word-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .word-item { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 10px; }
+        .word-item .english { font-size: 1.3em; font-weight: bold; }
+        .word-item .chinese { margin-top: 5px; opacity: 0.9; }
+        .word-item .example { margin-top: 8px; font-size: 0.9em; opacity: 0.85; font-style: italic; }
+        .test-container { }
+        .test-question { margin: 15px 0; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3; }
+        .progress-bar { height: 10px; background: #e9ecef; border-radius: 5px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 0.5s; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1.1em; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102,126,234,0.4); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .result { text-align: center; padding: 30px; }
+        .result .score { font-size: 4em; font-weight: bold; color: #667eea; }
+        .result .feedback { font-size: 1.2em; margin: 15px 0; }
+        .back-btn { display: inline-block; background: #6c757d; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; margin-top: 20px; }
+        .vocab-section { margin: 20px 0; }
+        .vocab-section h3 { color: #495057; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+        .status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.85em; margin-left: 10px; }
+        .status-badge.correct { background: #28a745; color: white; }
+        .status-badge.wrong { background: #dc3545; color: white; }
+        .status-badge.pending { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 英语学习</h1>
+            <p class="date">2026年7月25日 星期六</p>
+        </div>
+
+        <div class="nav">
+            <a href="#" onclick="showSection('reading')">📖 阅读理解</a>
+            <a href="#" onclick="showSection('vocabulary')">📝 词汇学习</a>
+            <a href="#" onclick="showSection('test')">✍️ 综合测试</a>
+            <a href="../english.html">🏠 返回首页</a>
+        </div>
+
+        <!-- 阅读理解部分 -->
+        <div id="reading" class="section active">
+            <div class="card">
+                <h2>📖 阅读理解 (2篇)</h2>
+                
+                <!-- 第一篇阅读 -->
+                <div class="reading-passage">
+                    <h3>Passage 1: Chinese Mathematicians Make History at Fields Medal</h3>
+                    <p>On July 23, 2026, a historic moment occurred at the International Congress of Mathematicians in Philadelphia, USA. Two Chinese mathematicians, Wang Hong and Deng Yu, were awarded the Fields Medal, the most prestigious honor in mathematics. This marks the first time that Chinese citizens have received this distinguished award.</p>
+                    <p>Deng Yu was recognized for his groundbreaking work on partial differential equations. He solved the "narrow formulation" of Hilbert's sixth problem, establishing a complete mathematical logic chain from microscopic particle systems to macroscopic Boltzmann equations. This problem had remained unsolved for 125 years.</p>
+                    <p>Wang Hong received the award for her contributions to harmonic analysis and geometric measure theory. She successfully solved the three-dimensional Kakeya conjecture, a challenge that had puzzled mathematicians for over a century. Her work provides new analytical frameworks for fields such as radar, remote sensing, and signal processing.</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 15px;">Source: CGTN, July 24, 2026</p>
+                </div>
+
+                <div class="question" data-question="r1">
+                    <p>1. Where was the International Congress of Mathematicians held?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r1" value="A"> A. Beijing</label>
+                        <label><input type="radio" name="r1" value="B"> B. Philadelphia</label>
+                        <label><input type="radio" name="r1" value="C"> C. London</label>
+                        <label><input type="radio" name="r1" value="D"> D. Tokyo</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r2">
+                    <p>2. How many Chinese mathematicians received the Fields Medal in 2026?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r2" value="A"> A. One</label>
+                        <label><input type="radio" name="r2" value="B"> B. Two</label>
+                        <label><input type="radio" name="r2" value="C"> C. Three</label>
+                        <label><input type="radio" name="r2" value="D"> D. Four</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r3">
+                    <p>3. What problem did Deng Yu solve?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r3" value="A"> A. The Kakeya conjecture</label>
+                        <label><input type="radio" name="r3" value="B"> B. Hilbert's sixth problem</label>
+                        <label><input type="radio" name="r3" value="C"> C. The Fermat's Last Theorem</label>
+                        <label><input type="radio" name="r3" value="D"> D. The Riemann Hypothesis</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r4">
+                    <p>4. How long had Hilbert's sixth problem remained unsolved?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r4" value="A"> A. 50 years</label>
+                        <label><input type="radio" name="r4" value="B"> B. 100 years</label>
+                        <label><input type="radio" name="r4" value="C"> C. 125 years</label>
+                        <label><input type="radio" name="r4" value="D"> D. 200 years</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r5">
+                    <p>5. What field can benefit from Wang Hong's work?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r5" value="A"> A. Radar and signal processing</label>
+                        <label><input type="radio" name="r5" value="B"> B. Agriculture</label>
+                        <label><input type="radio" name="r5" value="C"> C. Literature</label>
+                        <label><input type="radio" name="r5" value="D"> D. Sports</label>
+                    </div>
+                </div>
+
+                <!-- 第二篇阅读 -->
+                <div class="reading-passage" style="margin-top: 30px;">
+                    <h3>Passage 2: "Study in China" Brand Gains Global Recognition</h3>
+                    <p>China's "Study in China" brand is gaining increasing recognition worldwide, according to Education Minister Huai Jinpeng. The minister announced that Chinese language teaching has been incorporated into national education systems in 92 countries, reflecting the growing global interest in Chinese education.</p>
+                    <p>The number of international students studying in China continues to grow rapidly. China is strengthening cooperation with renowned foreign universities in science and engineering fields to attract outstanding overseas youth talent. The goal is to cultivate more individuals who understand and appreciate China.</p>
+                    <p>China's National Smart Education Platform now serves users in over 200 countries and regions. Additionally, Chinese mathematics textbooks have been adopted in British elementary education, and "AI for K12" courses have been promoted to countries including Thailand and Uzbekistan, showcasing China's educational innovation on the global stage.</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 15px;">Source: China Daily, July 24, 2026</p>
+                </div>
+
+                <div class="question" data-question="r6">
+                    <p>6. How many countries have incorporated Chinese into their national education systems?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r6" value="A"> A. 50 countries</label>
+                        <label><input type="radio" name="r6" value="B"> B. 92 countries</label>
+                        <label><input type="radio" name="r6" value="C"> C. 100 countries</label>
+                        <label><input type="radio" name="r6" value="D"> D. 200 countries</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r7">
+                    <p>7. What is the goal of China's international education cooperation?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r7" value="A"> A. To make money</label>
+                        <label><input type="radio" name="r7" value="B"> B. To cultivate people who understand China</label>
+                        <label><input type="radio" name="r7" value="C"> C. To export textbooks</label>
+                        <label><input type="radio" name="r7" value="D"> D. To build universities abroad</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r8">
+                    <p>8. Which country has adopted Chinese mathematics textbooks?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r8" value="A"> A. Thailand</label>
+                        <label><input type="radio" name="r8" value="B"> B. Britain</label>
+                        <label><input type="radio" name="r8" value="C"> C. Uzbekistan</label>
+                        <label><input type="radio" name="r8" value="D"> D. Japan</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r9">
+                    <p>9. How many countries does the National Smart Education Platform serve?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r9" value="A"> A. 92 countries</label>
+                        <label><input type="radio" name="r9" value="B"> B. Over 200 countries and regions</label>
+                        <label><input type="radio" name="r9" value="C"> C. 50 countries</label>
+                        <label><input type="radio" name="r9" value="D"> D. 100 countries</label>
+                    </div>
+                </div>
+
+                <div class="question" data-question="r10">
+                    <p>10. What courses have been promoted to Thailand and Uzbekistan?</p>
+                    <div class="options">
+                        <label><input type="radio" name="r10" value="A"> A. "AI for K12" courses</label>
+                        <label><input type="radio" name="r10" value="B"> B. History courses</label>
+                        <label><input type="radio" name="r10" value="C"> C. Literature courses</label>
+                        <label><input type="radio" name="r10" value="D"> D. Sports courses</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="checkReading()">提交阅读理解答案</button>
+                <div id="reading-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习部分 -->
+        <div id="vocabulary" class="section">
+            <div class="card">
+                <h2>📝 词汇学习</h2>
+                
+                <div class="vocab-section">
+                    <h3>📚 复习词汇 (30个)</h3>
+                    <div class="word-list">
+                        <div class="word-item"><div class="english">achieve</div><div class="chinese">v. 实现，达到</div><div class="example">achieve one's goal 实现目标</div></div>
+                        <div class="word-item"><div class="english">benefit</div><div class="chinese">n./v. 好处；受益</div><div class="example">benefit from 从...中受益</div></div>
+                        <div class="word-item"><div class="english">challenge</div><div class="chinese">n./v. 挑战</div><div class="example">face a challenge 面对挑战</div></div>
+                        <div class="word-item"><div class="english">develop</div><div class="chinese">v. 发展，开发</div><div class="example">develop new technology 开发新技术</div></div>
+                        <div class="word-item"><div class="english">environment</div><div class="chinese">n. 环境</div><div class="example">protect the environment 保护环境</div></div>
+                        <div class="word-item"><div class="english">focus</div><div class="chinese">n./v. 焦点；集中</div><div class="example">focus on 专注于</div></div>
+                        <div class="word-item"><div class="english">global</div><div class="chinese">adj. 全球的</div><div class="example">global economy 全球经济</div></div>
+                        <div class="word-item"><div class="english">improve</div><div class="chinese">v. 改善，提高</div><div class="example">improve skills 提高技能</div></div>
+                        <div class="word-item"><div class="english">knowledge</div><div class="chinese">n. 知识</div><div class="example">gain knowledge 获得知识</div></div>
+                        <div class="word-item"><div class="english">manage</div><div class="chinese">v. 管理，设法做到</div><div class="example">manage time 管理时间</div></div>
+                        <div class="word-item"><div class="english">necessary</div><div class="chinese">adj. 必要的</div><div class="example">necessary conditions 必要条件</div></div>
+                        <div class="word-item"><div class="english">opportunity</div><div class="chinese">n. 机会</div><div class="example">seize the opportunity 抓住机会</div></div>
+                        <div class="word-item"><div class="english">participate</div><div class="chinese">v. 参加</div><div class="example">participate in 参加</div></div>
+                        <div class="word-item"><div class="english">quality</div><div class="chinese">n. 质量</div><div class="example">high quality 高质量</div></div>
+                        <div class="word-item"><div class="english">recognize</div><div class="chinese">v. 认出，承认</div><div class="example">recognize the importance 认识到重要性</div></div>
+                        <div class="word-item"><div class="english">significant</div><div class="chinese">adj. 重要的，显著的</div><div class="example">significant progress 显著进步</div></div>
+                        <div class="word-item"><div class="english">technology</div><div class="chinese">n. 技术</div><div class="example">advanced technology 先进技术</div></div>
+                        <div class="word-item"><div class="english">variety</div><div class="chinese">n. 多样性</div><div class="example">a variety of 各种各样的</div></div>
+                        <div class="word-item"><div class="english">wonder</div><div class="chinese">v./n. 想知道；奇迹</div><div class="example">wonder why 想知道为什么</div></div>
+                        <div class="word-item"><div class="english">actual</div><div class="chinese">adj. 实际的</div><div class="example">actual situation 实际情况</div></div>
+                        <div class="word-item"><div class="english">balance</div><div class="chinese">n./v. 平衡</div><div class="example">keep balance 保持平衡</div></div>
+                        <div class="word-item"><div class="english">conclusion</div><div class="chinese">n. 结论</div><div class="example">draw a conclusion 得出结论</div></div>
+                        <div class="word-item"><div class="english">determine</div><div class="chinese">v. 决定，确定</div><div class="example">determine the cause 确定原因</div></div>
+                        <div class="word-item"><div class="english">establish</div><div class="chinese">v. 建立</div><div class="example">establish a company 建立公司</div></div>
+                        <div class="word-item"><div class="english">fundamental</div><div class="chinese">adj. 基本的</div><div class="example">fundamental principles 基本原则</div></div>
+                        <div class="word-item"><div class="english">generation</div><div class="chinese">n. 一代，产生</div><div class="example">next generation 下一代</div></div>
+                        <div class="word-item"><div class="english">identify</div><div class="chinese">v. 识别，辨认</div><div class="example">identify the problem 识别问题</div></div>
+                        <div class="word-item"><div class="english">maintain</div><div class="chinese">v. 维持，保持</div><div class="example">maintain health 保持健康</div></div>
+                        <div class="word-item"><div class="english">potential</div><div class="chinese">adj./n. 潜在的；潜力</div><div class="example">great potential 巨大潜力</div></div>
+                        <div class="word-item"><div class="english">resource</div><div class="chinese">n. 资源</div><div class="example">natural resources 自然资源</div></div>
+                    </div>
+                </div>
+
+                <div class="vocab-section">
+                    <h3>✨ 新词汇 (20个)</h3>
+                    <div class="word-list">
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">mathematician</div><div class="chinese">n. 数学家</div><div class="example">famous mathematician 著名数学家</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">prestigious</div><div class="chinese">adj. 有声望的</div><div class="example">prestigious award 有声望的奖项</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">distinguished</div><div class="chinese">adj. 杰出的</div><div class="example">distinguished scientist 杰出科学家</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">groundbreaking</div><div class="chinese">adj. 开创性的</div><div class="example">groundbreaking research 开创性研究</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">equation</div><div class="chinese">n. 方程式</div><div class="example">mathematical equation 数学方程式</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">microscopic</div><div class="chinese">adj. 微观的</div><div class="example">microscopic world 微观世界</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">macroscopic</div><div class="chinese">adj. 宏观的</div><div class="example">macroscopic view 宏观视角</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">conjecture</div><div class="chinese">n. 猜想</div><div class="example">prove a conjecture 证明猜想</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">analytical</div><div class="chinese">adj. 分析的</div><div class="example">analytical framework 分析框架</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">recognition</div><div class="chinese">n. 认可，承认</div><div class="example">global recognition 全球认可</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">incorporate</div><div class="chinese">v. 纳入，包含</div><div class="example">incorporate into 纳入</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">renowned</div><div class="chinese">adj. 著名的</div><div class="example">renowned university 著名大学</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">cultivate</div><div class="chinese">v. 培养</div><div class="example">cultivate talent 培养人才</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">platform</div><div class="chinese">n. 平台</div><div class="example">education platform 教育平台</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">textbook</div><div class="chinese">n. 教科书</div><div class="example">mathematics textbook 数学教科书</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">innovation</div><div class="chinese">n. 创新</div><div class="example">educational innovation 教育创新</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">puzzle</div><div class="chinese">v./n. 困惑；难题</div><div class="example">puzzle mathematicians 困惑数学家</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">framework</div><div class="chinese">n. 框架</div><div class="example">analytical framework 分析框架</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">remote</div><div class="chinese">adj. 遥远的</div><div class="example">remote sensing 遥感</div></div>
+                        <div class="word-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><div class="english">signal</div><div class="chinese">n./v. 信号；发信号</div><div class="example">signal processing 信号处理</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试部分 -->
+        <div id="test" class="section">
+            <div class="card">
+                <h2>✍️ 综合测试 (100题)</h2>
+                <div class="progress-bar"><div class="progress-fill" id="progress" style="width: 0%;"></div></div>
+                <p id="progress-text" style="text-align: center; margin-bottom: 20px;">已完成: 0/100</p>
+                
+                <div id="test-container"></div>
+                
+                <button class="btn" id="submit-test" onclick="submitTest()">提交测试</button>
+                <div id="test-result" class="result" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 正确答案
+        const readingAnswers = {
+            r1: 'B', r2: 'B', r3: 'B', r4: 'C', r5: 'A',
+            r6: 'B', r7: 'B', r8: 'B', r9: 'B', r10: 'A'
+        };
+
+        // 测试题库
+        const testQuestions = [
+            // 词汇选择题 (1-30)
+            {q: "The Fields Medal is a _____ award in mathematics.", options: ["prestigious", "common", "ordinary", "unknown"], answer: "A"},
+            {q: "Chinese mathematicians made a _____ achievement.", options: ["groundbreaking", "small", "minor", "insignificant"], answer: "A"},
+            {q: "The problem had _____ mathematicians for over a century.", options: ["puzzled", "helped", "ignored", "pleased"], answer: "A"},
+            {q: "Her work provides new _____ frameworks.", options: ["analytical", "emotional", "physical", "natural"], answer: "A"},
+            {q: "Chinese education is gaining global _____.", options: ["recognition", "criticism", "rejection", "ignorance"], answer: "A"},
+            {q: "Chinese has been _____ into national education systems.", options: ["incorporated", "removed", "rejected", "ignored"], answer: "A"},
+            {q: "China cooperates with _____ universities.", options: ["renowned", "unknown", "small", "local"], answer: "A"},
+            {q: "The goal is to _____ talent.", options: ["cultivate", "destroy", "ignore", "reduce"], answer: "A"},
+            {q: "The education _____ serves users worldwide.", options: ["platform", "building", "book", "teacher"], answer: "A"},
+            {q: "Chinese textbooks have been _____ in Britain.", options: ["adopted", "rejected", "ignored", "banned"], answer: "A"},
+            {q: "The _____ Medal is the highest honor in mathematics.", options: ["Fields", "Olympic", "Nobel", "Oscar"], answer: "A"},
+            {q: "Wang Hong solved the Kakeya _____.", options: ["conjecture", "book", "exam", "class"], answer: "A"},
+            {q: "Deng Yu worked on partial differential _____.", options: ["equations", "books", "schools", "teams"], answer: "A"},
+            {q: "The problem was _____ for 125 years.", options: ["unsolved", "easy", "simple", "known"], answer: "A"},
+            {q: "The award ceremony was held in _____.", options: ["Philadelphia", "Beijing", "London", "Tokyo"], answer: "A"},
+            {q: "We should _____ our goals.", options: ["achieve", "ignore", "forget", "abandon"], answer: "A"},
+            {q: "The _____ economy affects everyone.", options: ["global", "local", "small", "minor"], answer: "A"},
+            {q: "We need to _____ on our studies.", options: ["focus", "ignore", "forget", "neglect"], answer: "A"},
+            {q: "There is a _____ of options.", options: ["variety", "shortage", "lack", "absence"], answer: "A"},
+            {q: "We should _____ from our mistakes.", options: ["learn", "ignore", "repeat", "forget"], answer: "A"},
+            {q: "Technology is changing _____.", options: ["rapidly", "slowly", "never", "rarely"], answer: "A"},
+            {q: "The _____ of the meeting was productive.", options: ["outcome", "beginning", "start", "origin"], answer: "A"},
+            {q: "We should _____ new solutions.", options: ["develop", "ignore", "destroy", "remove"], answer: "A"},
+            {q: "It is important to stay _____.", options: ["focused", "distracted", "confused", "lost"], answer: "A"},
+            {q: "The _____ of this project is significant.", options: ["impact", "beginning", "start", "origin"], answer: "A"},
+            {q: "We need to _____ the situation.", options: ["analyze", "ignore", "forget", "neglect"], answer: "A"},
+            {q: "Education opens many _____.", options: ["opportunities", "problems", "issues", "challenges"], answer: "A"},
+            {q: "He is _____ in mathematics.", options: ["interested", "boring", "tired", "sleepy"], answer: "A"},
+            {q: "The report was _____ by experts.", options: ["prepared", "destroyed", "ignored", "forgotten"], answer: "A"},
+            {q: "The team made great _____.", options: ["progress", "mistakes", "errors", "failures"], answer: "A"},
+            // 完成句子 (31-60)
+            {q: "He _____ to solve the problem.", options: ["managed", "failed", "refused", "denied"], answer: "A"},
+            {q: "The solution was _____ by scientists.", options: ["discovered", "hidden", "lost", "destroyed"], answer: "A"},
+            {q: "We need to _____ the results.", options: ["verify", "ignore", "reject", "deny"], answer: "A"},
+            {q: "The project _____ a lot of resources.", options: ["requires", "wastes", "destroys", "ignores"], answer: "A"},
+            {q: "This will _____ education.", options: ["benefit", "harm", "damage", "hurt"], answer: "A"},
+            {q: "The system is fully _____.", options: ["automated", "manual", "broken", "damaged"], answer: "A"},
+            {q: "We should _____ new opportunities.", options: ["seek", "ignore", "avoid", "miss"], answer: "A"},
+            {q: "The plan was _____ implemented.", options: ["successfully", "unsuccessfully", "rarely", "never"], answer: "A"},
+            {q: "We must _____ the rules.", options: ["follow", "break", "ignore", "violate"], answer: "A"},
+            {q: "The goal is _____ achievable.", options: ["definitely", "never", "rarely", "impossibly"], answer: "A"},
+            {q: "We need _____ planning.", options: ["careful", "careless", "random", "hasty"], answer: "A"},
+            {q: "The results were _____.", options: ["impressive", "disappointing", "poor", "bad"], answer: "A"},
+            {q: "This is a _____ decision.", options: ["strategic", "random", "careless", "hasty"], answer: "A"},
+            {q: "The _____ are very positive.", options: ["outcomes", "problems", "issues", "failures"], answer: "A"},
+            {q: "We should _____ our time carefully.", options: ["allocate", "waste", "spend", "lose"], answer: "A"},
+            {q: "The process is highly _____.", options: ["efficient", "inefficient", "slow", "delayed"], answer: "A"},
+            {q: "We need _____ communication.", options: ["effective", "poor", "bad", "failed"], answer: "A"},
+            {q: "The team _____ together.", options: ["works", "argues", "fights", "quarrels"], answer: "A"},
+            {q: "This is _____ important.", options: ["extremely", "rarely", "never", "barely"], answer: "A"},
+            {q: "We should _____ the task.", options: ["complete", "abandon", "ignore", "skip"], answer: "A"},
+            {q: "The _____ was significant.", options: ["achievement", "failure", "loss", "defeat"], answer: "A"},
+            {q: "We need _____ support.", options: ["continuous", "occasional", "rare", "never"], answer: "A"},
+            {q: "The project was a great _____.", options: ["success", "failure", "disaster", "loss"], answer: "A"},
+            {q: "International recognition is _____.", options: ["important", "unnecessary", "irrelevant", "optional"], answer: "A"},
+            {q: "The minister _____ the meeting.", options: ["attended", "missed", "ignored", "skipped"], answer: "A"},
+            {q: "Mathematics requires _____ thinking.", options: ["logical", "emotional", "physical", "random"], answer: "A"},
+            {q: "We should _____ early warnings.", options: ["monitor", "ignore", "dismiss", "forget"], answer: "A"},
+            {q: "Cooperation leads to _____.", options: ["success", "failure", "conflict", "problems"], answer: "A"},
+            {q: "The textbook _____ many chapters.", options: ["contains", "excludes", "avoids", "ignores"], answer: "A"},
+            {q: "Measures should be _____.", options: ["comprehensive", "limited", "partial", "incomplete"], answer: "A"},
+            // 语法题 (61-80)
+            {q: "He _____ to school every day.", options: ["goes", "going", "gone", "go"], answer: "A"},
+            {q: "They _____ working on the project.", options: ["are", "is", "was", "been"], answer: "A"},
+            {q: "The book _____ by many students.", options: ["is read", "is reading", "are read", "reading"], answer: "A"},
+            {q: "She _____ already finished.", options: ["has", "have", "had", "having"], answer: "A"},
+            {q: "If it _____, we will stay inside.", options: ["rains", "rain", "rained", "raining"], answer: "A"},
+            {q: "The task is _____ than expected.", options: ["harder", "hardest", "hard", "more hard"], answer: "A"},
+            {q: "This is the _____ book I've read.", options: ["best", "good", "better", "well"], answer: "A"},
+            {q: "He asked _____ I could help.", options: ["if", "that", "what", "which"], answer: "A"},
+            {q: "The meeting _____ at 9 am.", options: ["starts", "start", "starting", "started"], answer: "A"},
+            {q: "We _____ studying English for three years.", options: ["have been", "has been", "had been", "are being"], answer: "A"},
+            {q: "The work _____ by tomorrow.", options: ["will be completed", "completes", "completed", "completing"], answer: "A"},
+            {q: "He _____ when the phone rang.", options: ["was sleeping", "sleeps", "slept", "sleeping"], answer: "A"},
+            {q: "I enjoy _____ books.", options: ["reading", "read", "reads", "to read"], answer: "A"},
+            {q: "The report needs _____ checked.", options: ["to be", "be", "being", "been"], answer: "A"},
+            {q: "He is _____ of the two students.", options: ["the taller", "taller", "tallest", "more tall"], answer: "A"},
+            {q: "We should focus on _____.", options: ["learning", "learn", "learns", "learned"], answer: "A"},
+            {q: "The data _____ analyzed carefully.", options: ["should be", "should", "is being", "been"], answer: "A"},
+            {q: "She made him _____ the work.", options: ["do", "to do", "doing", "does"], answer: "A"},
+            {q: "It is important _____ on time.", options: ["to be", "be", "being", "been"], answer: "A"},
+            {q: "The team _____ of ten members.", options: ["consists", "consist", "consisting", "consisted"], answer: "A"},
+            // 阅读理解题 (81-100)
+            {q: "The Fields Medal ceremony was held in _____.", options: ["Philadelphia", "Beijing", "London", "Tokyo"], answer: "A"},
+            {q: "_____ Chinese mathematicians won the Fields Medal.", options: ["Two", "One", "Three", "Four"], answer: "A"},
+            {q: "Deng Yu solved Hilbert's _____ problem.", options: ["sixth", "first", "third", "tenth"], answer: "A"},
+            {q: "Wang Hong solved the _____ conjecture.", options: ["Kakeya", "Poincare", "Riemann", "Goldbach"], answer: "A"},
+            {q: "Chinese is taught in _____ national education systems.", options: ["92", "50", "100", "200"], answer: "A"},
+            {q: "The Smart Education Platform serves over _____ countries.", options: ["200", "50", "92", "100"], answer: "A"},
+            {q: "Chinese textbooks are used in _____ education.", options: ["British", "American", "Japanese", "French"], answer: "A"},
+            {q: "AI courses have been promoted to Thailand and _____.", options: ["Uzbekistan", "Japan", "Korea", "India"], answer: "A"},
+            {q: "The Fields Medal is _____ in mathematics.", options: ["prestigious", "common", "new", "unknown"], answer: "A"},
+            {q: "Hilbert's problem was unsolved for _____ years.", options: ["125", "50", "100", "200"], answer: "A"},
+            {q: "Wang Hong's work benefits _____ processing.", options: ["signal", "food", "textile", "chemical"], answer: "A"},
+            {q: "The education minister is named _____.", options: ["Huai Jinpeng", "Wang Yi", "Deng Yu", "Wang Hong"], answer: "A"},
+            {q: "The Fields Medal is given to _____.", options: ["mathematicians", "writers", "athletes", "actors"], answer: "A"},
+            {q: "Kakeya conjecture is _____-dimensional.", options: ["three", "two", "four", "one"], answer: "A"},
+            {q: "Remote sensing is related to _____.", options: ["analysis", "farming", "cooking", "driving"], answer: "A"},
+            {q: "International students in China are _____.", options: ["growing", "decreasing", "stable", "unknown"], answer: "A"},
+            {q: "China cooperates with _____ universities.", options: ["foreign", "only local", "no", "few"], answer: "A"},
+            {q: "The Kakeya conjecture puzzled mathematicians for _____.", options: ["a century", "a decade", "a year", "a month"], answer: "A"},
+            {q: "The Fields Medal was awarded in July _____.", options: ["2026", "2020", "2010", "2000"], answer: "A"},
+            {q: "Chinese education innovation is recognized _____.", options: ["globally", "locally", "rarely", "never"], answer: "A"}
+        ];
+
+        // 初始化
+        let userAnswers = JSON.parse(localStorage.getItem('english_2026-07-25') || '{}');
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // 检查阅读理解
+        function checkReading() {
+            let score = 0;
+            for (let key in readingAnswers) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                if (selected) {
+                    userAnswers[key] = selected.value;
+                    if (selected.value === readingAnswers[key]) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            }
+            document.getElementById('reading-result').style.display = 'block';
+            document.getElementById('reading-result').innerHTML = `
+                <div class="score">${score}/10</div>
+                <div class="feedback">${score >= 8 ? '太棒了！' : score >= 6 ? '做得不错，继续努力！' : '需要多加练习哦！'}</div>
+            `;
+            saveProgress();
+        }
+
+        // 生成测试题
+        function generateTest() {
+            const container = document.getElementById('test-container');
+            container.innerHTML = testQuestions.map((item, index) => `
+                <div class="test-question">
+                    <p><strong>${index + 1}.</strong> ${item.q}</p>
+                    <div class="options">
+                        ${item.options.map((opt, i) => `
+                            <label>
+                                <input type="radio" name="test${index}" value="${opt}" 
+                                    ${userAnswers[`test${index}`] === opt ? 'checked' : ''}>
+                                ${String.fromCharCode(65 + i)}. ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // 添加答案变化监听
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    userAnswers[input.name] = input.value;
+                    saveProgress();
+                    updateProgress();
+                });
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).filter(k => k.startsWith('test')).length;
+            document.getElementById('progress').style.width = `${answered}%`;
+            document.getElementById('progress-text').textContent = `已完成: ${answered}/100`;
+        }
+
+        // 提交测试
+        function submitTest() {
+            let score = 0;
+            testQuestions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="test${index}"]:checked`);
+                if (selected) {
+                    if (selected.value === item.answer) {
+                        score++;
+                        selected.parentElement.style.background = '#d4edda';
+                    } else {
+                        selected.parentElement.style.background = '#f8d7da';
+                    }
+                }
+            });
+
+            userAnswers.testScore = score;
+            userAnswers.testSubmitted = true;
+            saveProgress();
+
+            document.getElementById('test-result').style.display = 'block';
+            document.getElementById('test-result').innerHTML = `
+                <div class="score">${score}/100</div>
+                <div class="feedback">${score >= 90 ? '太优秀了！保持这个水平！' : score >= 70 ? '做得不错！' : '继续努力，多加练习！'}</div>
+                <p style="margin-top: 15px;">正确率: ${score}%</p>
+            `;
+            document.getElementById('submit-test').disabled = true;
+        }
+
+        function saveProgress() {
+            localStorage.setItem('english_2026-07-25', JSON.stringify(userAnswers));
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            generateTest();
+
+            // 恢复阅读理解答案
+            for (let key in readingAnswers) {
+                if (userAnswers[key]) {
+                    const radio = document.querySelector(`input[name="${key}"][value="${userAnswers[key]}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+
+            // 恢复测试状态
+            if (userAnswers.testSubmitted) {
+                document.getElementById('submit-test').disabled = true;
+                submitTest();
+            }
+        });
+    </script>
+</body>
+</html>
