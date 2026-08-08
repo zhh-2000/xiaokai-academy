@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月9日 - 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        h1 { font-size: 1.8em; margin-bottom: 5px; }
+        .date { opacity: 0.9; }
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .tab:hover { background: #f0f8ff; }
+        .tab.active {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-bottom-color: #0056b3;
+        }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .section.active { display: block; }
+        .section-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4facfe;
+        }
+        .passage {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        .passage-title { font-weight: bold; color: #333; margin-bottom: 10px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff;
+            border-left: 4px solid #4facfe;
+        }
+        .question-text { font-weight: bold; margin-bottom: 10px; }
+        .options { margin-left: 20px; }
+        .option {
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .option:hover { background: #e3f2fd; }
+        .option.selected { background: #bbdefb; }
+        .option.correct { background: #c8e6c9; }
+        .option.wrong { background: #ffcdd2; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+        .vocab-card {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .vocab-card:hover { border-color: #4facfe; }
+        .vocab-card.learned { background: #e8f5e9; }
+        .vocab-word { font-weight: bold; color: #1976d2; font-size: 1.1em; }
+        .vocab-phonetic { color: #666; font-size: 0.9em; margin-left: 8px; }
+        .vocab-meaning { margin-top: 5px; color: #333; }
+        .vocab-example { margin-top: 5px; color: #666; font-size: 0.85em; font-style: italic; }
+        .btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            transition: width 0.3s;
+        }
+        .result {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        .score { font-size: 2.5em; color: #1976d2; font-weight: bold; }
+        .feedback { margin-top: 10px; }
+        .hidden { display: none; }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-left: 5px;
+        }
+        .badge-new { background: #ff5722; color: white; }
+        .badge-review { background: #4caf50; color: white; }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← 返回</a>
+    <div class="container">
+        <header>
+            <h1>📚 英语学习</h1>
+            <p class="date">2026年8月9日</p>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="reading">📖 阅读理解</div>
+            <div class="tab" data-tab="vocab">📝 词汇学习</div>
+            <div class="tab" data-tab="test">✍️ 综合测试</div>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="section active" id="reading">
+            <div class="section-title">📖 阅读理解 (2篇)</div>
+
+            <!-- Passage 1 -->
+            <div class="passage">
+                <div class="passage-title">Passage 1: Typhoon Dolphin Approaches Eastern China</div>
+                <p>Typhoon Dolphin, the 13th typhoon of this year, was located about 520 kilometers east of Wenzhou, Zhejiang Province, at 9 a.m. on August 8, 2026. With maximum winds reaching level 14 near its center, the typhoon is moving west-northwest at a speed of 10-15 kilometers per hour.</p>
+                <p style="margin-top:10px;">According to meteorological forecasts, Dolphin is expected to make landfall between Zhoushan in Zhejiang and Fuding in Fujian during the night of August 9 to the morning of August 10. The landing intensity could reach levels 13-14. Multiple regions in eastern China have issued typhoon warnings and are making preparations for the upcoming storm.</p>
+                <p style="margin-top:10px;">Local authorities have activated emergency response plans, with rescue teams ready for deployment. Residents in coastal areas are advised to stay indoors and avoid unnecessary outdoor activities during the typhoon period.</p>
+            </div>
+
+            <div class="question">
+                <div class="question-text">1. Where was Typhoon Dolphin located at 9 a.m. on August 8?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 1, 'A')">A. 520 km west of Wenzhou</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 1, 'B')">B. 520 km east of Wenzhou</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 1, 'C')">C. In Fujian Province</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 1, 'D')">D. In Shanghai</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. What is the maximum wind level of Typhoon Dolphin?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 1, 'A')">A. Level 10</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 1, 'B')">B. Level 12</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 1, 'C')">C. Level 14</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 1, 'D')">D. Level 16</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. When is the typhoon expected to make landfall?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 1, 'A')">A. August 8 morning</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 1, 'B')">B. August 8 night</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 1, 'C')">C. August 9 night to August 10 morning</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 1, 'D')">D. August 10 afternoon</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. What are residents advised to do?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 1, 'A')">A. Go to the beach to watch the typhoon</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 1, 'B')">B. Stay indoors and avoid unnecessary outdoor activities</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 1, 'C')">C. Take photos of the storm</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 1, 'D')">D. Evacuate immediately to other cities</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">5. What does the word "landfall" mean in this passage?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 1, 'A')">A. A type of storm</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 1, 'B')">B. The moment a storm reaches land</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 1, 'C')">C. A weather forecast</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 1, 'D')">D. Strong winds</div>
+                </div>
+            </div>
+
+            <!-- Passage 2 -->
+            <div class="passage" style="margin-top: 25px;">
+                <div class="passage-title">Passage 2: International Defense Agreement Signed</div>
+                <p>Saudi Arabia, Türkiye, and Pakistan signed the Makkah Joint Defense Agreement on August 8, 2026. According to the agreement, any armed attack against one of the three countries will be considered an attack against all of them.</p>
+                <p style="margin-top:10px;">This historic agreement marks a significant development in regional cooperation. The three nations pledged to strengthen their military collaboration and share intelligence to address common security challenges.</p>
+                <p style="margin-top:10px;">Meanwhile, Iran's President stated that Tehran favors dialogue but won't be forced to surrender. He emphasized that Iran remains committed to its obligations as long as other parties fulfill their commitments under the MoU (Memorandum of Understanding).</p>
+            </div>
+
+            <div class="question">
+                <div class="question-text">6. Which countries signed the Makkah Joint Defense Agreement?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 2, 'A')">A. Saudi Arabia, Türkiye, and Pakistan</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 2, 'B')">B. Iran, Saudi Arabia, and Türkiye</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 2, 'C')">C. China, Russia, and Pakistan</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 2, 'D')">D. USA, Saudi Arabia, and Iran</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">7. What does the agreement state about attacks?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 2, 'A')">A. Only economic attacks count</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 2, 'B')">B. An attack on one is considered an attack on all</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 2, 'C')">C. Each country handles attacks separately</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 2, 'D')">D. Only nuclear attacks are covered</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">8. What did the three nations pledge to do?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 2, 'A')">A. Reduce military spending</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 2, 'B')">B. Strengthen military collaboration and share intelligence</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 2, 'C')">C. Withdraw from international organizations</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 2, 'D')">D. Close their borders</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">9. What is Iran's President's attitude toward dialogue?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 2, 'A')">A. Completely opposed</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 2, 'B')">B. Favors dialogue but won't be forced to surrender</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 2, 'C')">C. Wants to surrender</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 2, 'D')">D. Has no opinion</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">10. What does "MoU" stand for?</div>
+                <div class="options">
+                    <div class="option" data-answer="A" onclick="selectOption(this, 'reading', 2, 'A')">A. Memorandum of Understanding</div>
+                    <div class="option" data-answer="B" onclick="selectOption(this, 'reading', 2, 'B')">B. Ministry of Unity</div>
+                    <div class="option" data-answer="C" onclick="selectOption(this, 'reading', 2, 'C')">C. Military Operation Unit</div>
+                    <div class="option" data-answer="D" onclick="selectOption(this, 'reading', 2, 'D')">D. Meeting of Union</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="checkReading()">提交阅读答案</button>
+            <div class="result hidden" id="readingResult">
+                <div class="score" id="readingScore">0/10</div>
+                <div class="feedback" id="readingFeedback"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="section" id="vocab">
+            <div class="section-title">📝 词汇学习 (50词)</div>
+            <p style="color:#666;margin-bottom:15px;">点击卡片标记为已学习，学习进度会自动保存</p>
+            <div class="progress-bar"><div class="progress-fill" id="vocabProgress" style="width:0%"></div></div>
+            <p style="text-align:center;color:#666;" id="vocabCount">已学习: 0/50</p>
+
+            <h3 style="margin:20px 0 10px;color:#4caf50;">📚 复习词汇 (30词)</h3>
+            <div class="vocab-grid" id="reviewVocab"></div>
+
+            <h3 style="margin:20px 0 10px;color:#ff5722;">🆕 新词学习 (20词)</h3>
+            <div class="vocab-grid" id="newVocab"></div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="section" id="test">
+            <div class="section-title">✍️ 综合测试 (100题)</div>
+            <div class="progress-bar"><div class="progress-fill" id="testProgress" style="width:0%"></div></div>
+            <p style="text-align:center;color:#666;" id="testCount">已完成: 0/100</p>
+            <div id="testContainer"></div>
+            <button class="btn" onclick="checkTest()">提交测试</button>
+            <div class="result hidden" id="testResult">
+                <div class="score" id="testScore">0/100</div>
+                <div class="feedback" id="testFeedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 正确答案
+        const readingAnswers = {
+            1: ['B','C','C','B','B'],
+            2: ['A','B','B','B','A']
+        };
+
+        // 词汇数据
+        const reviewWords = [
+            {word: "abandon", phonetic: "/əˈbændən/", meaning: "v. 放弃，抛弃", example: "Don't abandon your dreams."},
+            {word: "ability", phonetic: "/əˈbɪləti/", meaning: "n. 能力", example: "She has the ability to succeed."},
+            {word: "achieve", phonetic: "/əˈtʃiːv/", meaning: "v. 实现，达到", example: "You can achieve your goals."},
+            {word: "adventure", phonetic: "/ədˈventʃər/", meaning: "n. 冒险，奇遇", example: "Life is an adventure."},
+            {word: "ancient", phonetic: "/ˈeɪnʃənt/", meaning: "adj. 古代的", example: "This is an ancient temple."},
+            {word: "balance", phonetic: "/ˈbæləns/", meaning: "n./v. 平衡", example: "Keep a balance between work and rest."},
+            {word: "believe", phonetic: "/bɪˈliːv/", meaning: "v. 相信", example: "I believe in you."},
+            {word: "brave", phonetic: "/breɪv/", meaning: "adj. 勇敢的", example: "Be brave and face the challenge."},
+            {word: "culture", phonetic: "/ˈkʌltʃər/", meaning: "n. 文化", example: "Learn about different cultures."},
+            {word: "decide", phonetic: "/dɪˈsaɪd/", meaning: "v. 决定", example: "You need to decide now."},
+            {word: "develop", phonetic: "/dɪˈveləp/", meaning: "v. 发展，开发", example: "Let's develop a plan."},
+            {word: "discover", phonetic: "/dɪˈskʌvər/", meaning: "v. 发现", example: "Columbus discovered America."},
+            {word: "effect", phonetic: "/ɪˈfekt/", meaning: "n. 效果，影响", example: "What's the effect of this medicine?"},
+            {word: "encourage", phonetic: "/ɪnˈkʌrɪdʒ/", meaning: "v. 鼓励", example: "Teachers encourage students."},
+            {word: "environment", phonetic: "/ɪnˈvaɪrənmənt/", meaning: "n. 环境", example: "Protect our environment."},
+            {word: "explain", phonetic: "/ɪkˈspleɪn/", meaning: "v. 解释", example: "Can you explain this?"},
+            {word: "focus", phonetic: "/ˈfəʊkəs/", meaning: "n./v. 焦点，集中", example: "Focus on your studies."},
+            {word: "generous", phonetic: "/ˈdʒenərəs/", meaning: "adj. 慷慨的", example: "He is very generous."},
+            {word: "habit", phonetic: "/ˈhæbɪt/", meaning: "n. 习惯", example: "Good habits lead to success."},
+            {word: "improve", phonetic: "/ɪmˈpruːv/", meaning: "v. 改善", example: "You need to improve your skills."},
+            {word: "include", phonetic: "/ɪnˈkluːd/", meaning: "v. 包括", example: "The price includes breakfast."},
+            {word: "influence", phonetic: "/ˈɪnfluəns/", meaning: "n./v. 影响", example: "Parents influence children."},
+            {word: "journey", phonetic: "/ˈdʒɜːrni/", meaning: "n. 旅程", example: "Life is a journey."},
+            {word: "knowledge", phonetic: "/ˈnɒlɪdʒ/", meaning: "n. 知识", example: "Knowledge is power."},
+            {word: "necessary", phonetic: "/ˈnesəseri/", meaning: "adj. 必要的", example: "It's necessary to study hard."},
+            {word: "opportunity", phonetic: "/ˌɒpərˈtuːnəti/", meaning: "n. 机会", example: "Don't miss this opportunity."},
+            {word: "patience", phonetic: "/ˈpeɪʃns/", meaning: "n. 耐心", example: "Have patience with yourself."},
+            {word: "prepare", phonetic: "/prɪˈpeər/", meaning: "v. 准备", example: "Prepare for the exam."},
+            {word: "quality", phonetic: "/ˈkwɒləti/", meaning: "n. 质量，品质", example: "Quality is more important than quantity."}
+        ];
+
+        const newWords = [
+            {word: "meteorological", phonetic: "/ˌmiːtiərəˈlɒdʒɪkl/", meaning: "adj. 气象的", example: "Meteorological forecasts predict rain."},
+            {word: "landfall", phonetic: "/ˈlændfɔːl/", meaning: "n. 登陆", example: "The typhoon made landfall yesterday."},
+            {word: "collaboration", phonetic: "/kəˌlæbəˈreɪʃn/", meaning: "n. 合作", example: "International collaboration is important."},
+            {word: "intelligence", phonetic: "/ɪnˈtelɪdʒəns/", meaning: "n. 情报，智力", example: "Share intelligence information."},
+            {word: "obligation", phonetic: "/ˌɒblɪˈgeɪʃn/", meaning: "n. 义务，责任", example: "We have an obligation to help."},
+            {word: "emergency", phonetic: "/ɪˈmɜːdʒənsi/", meaning: "n. 紧急情况", example: "Emergency response teams are ready."},
+            {word: "deploy", phonetic: "/dɪˈplɔɪ/", meaning: "v. 部署，调动", example: "Soldiers were deployed to the area."},
+            {word: "authorities", phonetic: "/ɔːˈθɒrətiz/", meaning: "n. 当局，官方", example: "Local authorities issued a warning."},
+            {word: "resident", phonetic: "/ˈrezɪdənt/", meaning: "n. 居民", example: "Residents should stay indoors."},
+            {word: "significant", phonetic: "/sɪɡˈnɪfɪkənt/", meaning: "adj. 重要的", example: "This is a significant development."},
+            {word: "regional", phonetic: "/ˈriːdʒənl/", meaning: "adj. 区域的", example: "Regional cooperation matters."},
+            {word: "pledged", phonetic: "/pledʒd/", meaning: "v. 承诺", example: "They pledged to work together."},
+            {word: "commitment", phonetic: "/kəˈmɪtmənt/", meaning: "n. 承诺", example: "Fulfill your commitment."},
+            {word: "forecast", phonetic: "/ˈfɔːkɑːst/", meaning: "n./v. 预测", example: "The weather forecast is accurate."},
+            {word: "intensity", phonetic: "/ɪnˈtensəti/", meaning: "n. 强度", example: "The typhoon's intensity is high."},
+            {word: "activate", phonetic: "/ˈæktɪveɪt/", meaning: "v. 激活", example: "Activate the emergency plan."},
+            {word: "coastal", phonetic: "/ˈkəʊstl/", meaning: "adj. 沿海的", example: "Coastal areas are at risk."},
+            {word: "avoid", phonetic: "/əˈvɔɪd/", meaning: "v. 避免", example: "Avoid unnecessary outdoor activities."},
+            {word: "preparation", phonetic: "/ˌprepəˈreɪʃn/", meaning: "n. 准备", example: "Make preparations for the storm."},
+            {word: "defense", phonetic: "/dɪˈfens/", meaning: "n. 防御", example: "The defense agreement was signed."}
+        ];
+
+        // 测试题数据
+        const testQuestions = [];
+
+        // 生成测试题
+        function generateTestQuestions() {
+            // 单词选择题 (50题)
+            const allWords = [...reviewWords, ...newWords];
+            for (let i = 0; i < 50; i++) {
+                const word = allWords[i % allWords.length];
+                const wrongOptions = allWords.filter(w => w.word !== word.word).slice(0, 3).map(w => w.meaning);
+                const options = [word.meaning, ...wrongOptions].sort(() => Math.random() - 0.5);
+                testQuestions.push({
+                    question: `${i+1}. "${word.word}" 的意思是？`,
+                    options: options,
+                    answer: word.meaning
+                });
+            }
+
+            // 语法选择题 (30题)
+            const grammarQuestions = [
+                {q: "51. She _____ to school every day.", opts: ["go", "goes", "going", "went"], ans: "goes"},
+                {q: "52. I _____ my homework yesterday.", opts: ["do", "does", "did", "done"], ans: "did"},
+                {q: "53. They _____ playing basketball now.", opts: ["is", "are", "was", "were"], ans: "are"},
+                {q: "54. He _____ English for three years.", opts: ["studies", "studied", "has studied", "will study"], ans: "has studied"},
+                {q: "55. The book _____ by Lu Xun.", opts: ["writes", "wrote", "is written", "was written"], ans: "was written"},
+                {q: "56. _____ you like apples?", opts: ["Do", "Does", "Did", "Are"], ans: "Do"},
+                {q: "57. She is _____ than her sister.", opts: ["tall", "taller", "tallest", "the tallest"], ans: "taller"},
+                {q: "58. This is _____ book I have ever read.", opts: ["interesting", "more interesting", "most interesting", "the most interesting"], ans: "the most interesting"},
+                {q: "59. He asked me _____ I liked the movie.", opts: ["that", "what", "if", "which"], ans: "if"},
+                {q: "60. I enjoy _____ music.", opts: ["listen to", "listening to", "to listen", "listened"], ans: "listening to"},
+                {q: "61. The train _____ at 8:00 tomorrow.", opts: ["leave", "leaves", "left", "will leave"], ans: "will leave"},
+                {q: "62. Neither Tom nor I _____ a teacher.", opts: ["is", "are", "am", "be"], ans: "am"},
+                {q: "63. The boy _____ father is a doctor is my friend.", opts: ["who", "whose", "which", "that"], ans: "whose"},
+                {q: "64. It's important _____ English well.", opts: ["learn", "learning", "to learn", "learned"], ans: "to learn"},
+                {q: "65. I have _____ money.", opts: ["much", "many", "a few", "a lot"], ans: "much"},
+                {q: "66. She was reading _____ I came in.", opts: ["when", "while", "since", "until"], ans: "when"},
+                {q: "67. I prefer tea _____ coffee.", opts: ["than", "to", "over", "for"], ans: "to"},
+                {q: "68. He runs _____ fast _____ his brother.", opts: ["as...as", "so...that", "too...to", "such...that"], ans: "as...as"},
+                {q: "69. The weather is _____ hot _____ go out.", opts: ["too...to", "so...that", "such...that", "enough...to"], ans: "too...to"},
+                {q: "70. I wonder _____ he will come.", opts: ["that", "what", "if", "how"], ans: "if"},
+                {q: "71. There _____ a lot of water in the bottle.", opts: ["is", "are", "has", "have"], ans: "is"},
+                {q: "72. He made me _____ the room.", opts: ["clean", "to clean", "cleaning", "cleaned"], ans: "clean"},
+                {q: "73. The story is very _____.", opts: ["excite", "excited", "exciting", "excitement"], ans: "exciting"},
+                {q: "74. I'm looking forward _____ you.", opts: ["see", "to see", "to seeing", "seeing"], ans: "to seeing"},
+                {q: "75. _____ hard he works!", opts: ["What", "How", "What a", "How a"], ans: "How"},
+                {q: "76. She suggested _____ to the park.", opts: ["go", "to go", "going", "goes"], ans: "going"},
+                {q: "77. It takes me two hours _____ my homework.", opts: ["finish", "to finish", "finishing", "finished"], ans: "to finish"},
+                {q: "78. The more you practice, _____ you will be.", opts: ["good", "better", "the better", "best"], ans: "the better"},
+                {q: "79. He is one of the _____ in our class.", opts: ["good student", "better students", "best students", "best student"], ans: "best students"},
+                {q: "80. I don't know _____ do next.", opts: ["how to", "what to", "where to", "when to"], ans: "what to"}
+            ];
+
+            grammarQuestions.forEach(g => {
+                testQuestions.push({
+                    question: g.q,
+                    options: g.opts,
+                    answer: g.ans
+                });
+            });
+
+            // 完成句子题 (20题)
+            const completionQuestions = [
+                {q: "81. Typhoon Dolphin _____ (expect) to make landfall tonight.", ans: "is expected"},
+                {q: "82. Residents _____ (advise) to stay indoors during the typhoon.", ans: "are advised"},
+                {q: "83. The three countries _____ (sign) a defense agreement yesterday.", ans: "signed"},
+                {q: "84. Iran remains committed to its _____ (obligate).", ans: "obligations"},
+                {q: "85. The typhoon's _____ (intense) reached level 14.", ans: "intensity"},
+                {q: "86. _____ (emergency) response teams are ready.", ans: "Emergency"},
+                {q: "87. This is a _____ (significance) development.", ans: "significant"},
+                {q: "88. They pledged to strengthen their _____ (collaborate).", ans: "collaboration"},
+                {q: "89. The weather _____ (forecast) is important for farmers.", ans: "forecast"},
+                {q: "90. _____ (coast) areas need special protection.", ans: "Coastal"},
+                {q: "91. We should avoid _____ (necessary) outdoor activities.", ans: "unnecessary"},
+                {q: "92. The _____ (authority) issued a warning.", ans: "authorities"},
+                {q: "93. The storm is moving at a _____ (speed) of 15 km/h.", ans: "speed"},
+                {q: "94. Maximum winds reach level 14 near the _____ (center).", ans: "center"},
+                {q: "95. The landing _____ (intense) could reach level 13.", ans: "intensity"},
+                {q: "96. They are making _____ (prepare) for the storm.", ans: "preparations"},
+                {q: "97. International _____ (cooperate) is essential.", ans: "cooperation"},
+                {q: "98. The president made an important _____ (state).", ans: "statement"},
+                {q: "99. We should fulfill our _____ (commit).", ans: "commitments"},
+                {q: "100. The agreement marks a new era of _____ (partner).", ans: "partnership"}
+            ];
+
+            completionQuestions.forEach(c => {
+                testQuestions.push({
+                    question: c.q,
+                    options: [c.ans, "other1", "other2", "other3"],
+                    answer: c.ans,
+                    type: "completion"
+                });
+            });
+        }
+
+        generateTestQuestions();
+
+        // 用户答案存储
+        let userAnswers = {
+            reading: {},
+            test: {}
+        };
+
+        // 从localStorage加载
+        function loadData() {
+            const saved = localStorage.getItem('english_2026-08-09');
+            if (saved) {
+                userAnswers = JSON.parse(saved);
+            }
+        }
+
+        // 保存到localStorage
+        function saveData() {
+            localStorage.setItem('english_2026-08-09', JSON.stringify(userAnswers));
+            updateGlobalStats();
+        }
+
+        // 更新全局统计
+        function updateGlobalStats() {
+            let stats = JSON.parse(localStorage.getItem('xiaokai_stats') || '{"days":1,"questions":0,"correct":0}');
+            // 计算完成的题目数
+            let totalQ = 0;
+            let correctQ = 0;
+
+            // 阅读理解
+            if (userAnswers.readingScore !== undefined) {
+                totalQ += 10;
+                correctQ += userAnswers.readingScore;
+            }
+
+            // 测试
+            if (userAnswers.testScore !== undefined) {
+                totalQ += 100;
+                correctQ += userAnswers.testScore;
+            }
+
+            stats.questions = totalQ;
+            stats.correct = correctQ;
+            localStorage.setItem('xiaokai_stats', JSON.stringify(stats));
+        }
+
+        // Tab切换
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // 选择答案
+        function selectOption(element, section, passage, question, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+
+            if (!userAnswers[section]) userAnswers[section] = {};
+            if (!userAnswers[section][passage]) userAnswers[section][passage] = {};
+            userAnswers[section][passage][question] = answer;
+            saveData();
+        }
+
+        // 检查阅读理解
+        function checkReading() {
+            let score = 0;
+            const total = 10;
+
+            for (let p = 1; p <= 2; p++) {
+                for (let q = 1; q <= 5; q++) {
+                    const userAns = userAnswers.reading?.[p]?.[q];
+                    const correctAns = readingAnswers[p][q-1];
+
+                    document.querySelectorAll(`.question:nth-of-type(${(p-1)*5 + q}) .option`).forEach(opt => {
+                        opt.classList.remove('correct', 'wrong');
+                        if (opt.dataset.answer === correctAns) {
+                            opt.classList.add('correct');
+                        } else if (opt.classList.contains('selected')) {
+                            opt.classList.add('wrong');
+                        }
+                    });
+
+                    if (userAns === correctAns) score++;
+                }
+            }
+
+            userAnswers.readingScore = score;
+            saveData();
+
+            document.getElementById('readingScore').textContent = `${score}/${total}`;
+            document.getElementById('readingFeedback').textContent = score >= 8 ? '太棒了！继续加油！' : score >= 6 ? '不错！再接再厉！' : '加油！多多练习！';
+            document.getElementById('readingResult').classList.remove('hidden');
+        }
+
+        // 渲染词汇
+        function renderVocab() {
+            const reviewContainer = document.getElementById('reviewVocab');
+            const newContainer = document.getElementById('newVocab');
+
+            reviewWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'vocab-card' + (userAnswers[`vocab_${w.word}`] ? ' learned' : '');
+                card.innerHTML = `
+                    <div><span class="vocab-word">${w.word}</span><span class="vocab-phonetic">${w.phonetic}</span><span class="badge badge-review">复习</span></div>
+                    <div class="vocab-meaning">${w.meaning}</div>
+                    <div class="vocab-example">${w.example}</div>
+                `;
+                card.onclick = () => {
+                    userAnswers[`vocab_${w.word}`] = true;
+                    card.classList.add('learned');
+                    saveData();
+                    updateVocabProgress();
+                };
+                reviewContainer.appendChild(card);
+            });
+
+            newWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'vocab-card' + (userAnswers[`vocab_${w.word}`] ? ' learned' : '');
+                card.innerHTML = `
+                    <div><span class="vocab-word">${w.word}</span><span class="vocab-phonetic">${w.phonetic}</span><span class="badge badge-new">新词</span></div>
+                    <div class="vocab-meaning">${w.meaning}</div>
+                    <div class="vocab-example">${w.example}</div>
+                `;
+                card.onclick = () => {
+                    userAnswers[`vocab_${w.word}`] = true;
+                    card.classList.add('learned');
+                    saveData();
+                    updateVocabProgress();
+                };
+                newContainer.appendChild(card);
+            });
+
+            updateVocabProgress();
+        }
+
+        // 更新词汇进度
+        function updateVocabProgress() {
+            let learned = 0;
+            [...reviewWords, ...newWords].forEach(w => {
+                if (userAnswers[`vocab_${w.word}`]) learned++;
+            });
+            const total = 50;
+            document.getElementById('vocabProgress').style.width = (learned/total*100) + '%';
+            document.getElementById('vocabCount').textContent = `已学习: ${learned}/${total}`;
+        }
+
+        // 渲染测试题
+        function renderTest() {
+            const container = document.getElementById('testContainer');
+            container.innerHTML = '';
+
+            testQuestions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map(opt => `
+                            <div class="option" onclick="selectTestOption(${i}, '${opt.replace(/'/g, "\\'")}')">${opt}</div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            updateTestProgress();
+        }
+
+        // 选择测试答案
+        function selectTestOption(index, answer) {
+            userAnswers.test[index] = answer;
+
+            const options = document.querySelectorAll('#testContainer .question')[index].querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.textContent === answer) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            saveData();
+            updateTestProgress();
+        }
+
+        // 更新测试进度
+        function updateTestProgress() {
+            let completed = 0;
+            for (let i = 0; i < 100; i++) {
+                if (userAnswers.test[i]) completed++;
+            }
+            document.getElementById('testProgress').style.width = (completed) + '%';
+            document.getElementById('testCount').textContent = `已完成: ${completed}/100`;
+        }
+
+        // 检查测试
+        function checkTest() {
+            let score = 0;
+
+            testQuestions.forEach((q, i) => {
+                const userAns = userAnswers.test[i];
+                const correctAns = q.answer;
+
+                const options = document.querySelectorAll('#testContainer .question')[i].querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    if (opt.textContent === correctAns || (q.type === 'completion' && opt.textContent === correctAns)) {
+                        opt.classList.add('correct');
+                    } else if (opt.classList.contains('selected')) {
+                        opt.classList.add('wrong');
+                    }
+                });
+
+                if (userAns === correctAns) score++;
+            });
+
+            userAnswers.testScore = score;
+            saveData();
+
+            document.getElementById('testScore').textContent = `${score}/100`;
+            document.getElementById('testFeedback').textContent = score >= 90 ? '太棒了！优秀！' : score >= 70 ? '不错！继续努力！' : '加油！多多练习！';
+            document.getElementById('testResult').classList.remove('hidden');
+        }
+
+        // 初始化
+        loadData();
+        renderVocab();
+        renderTest();
+    </script>
+</body>
+</html>

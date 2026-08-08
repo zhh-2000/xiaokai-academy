@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月9日 - 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header {
+            text-align: center;
+            color: #333;
+            padding: 20px;
+        }
+        h1 { font-size: 1.8em; margin-bottom: 5px; }
+        .date { opacity: 0.7; }
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.1);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+        .tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            font-size: 0.9em;
+        }
+        .tab:hover { background: #f0fff0; }
+        .tab.active {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            border-bottom-color: #66bb6a;
+        }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .section.active { display: block; }
+        .section-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #a8edea;
+        }
+        .poem {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .poem-title { font-size: 1.3em; font-weight: bold; margin-bottom: 5px; }
+        .poem-author { color: #666; margin-bottom: 15px; }
+        .poem-content { line-height: 2; font-size: 1.1em; }
+        .poem-note {
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: left;
+        }
+        .poem-note h4 { color: #e65100; margin-bottom: 8px; }
+        .passage {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        .passage-title { font-weight: bold; color: #333; margin-bottom: 10px; font-size: 1.1em; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff;
+            border-left: 4px solid #a8edea;
+        }
+        .question-text { font-weight: bold; margin-bottom: 10px; }
+        .options { margin-left: 20px; }
+        .option {
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .option:hover { background: #e8f5e9; }
+        .option.selected { background: #c8e6c9; }
+        .option.correct { background: #a5d6a7; }
+        .option.wrong { background: #ffcdd2; }
+        .btn {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+        }
+        .btn:hover { opacity: 0.9; }
+        .result {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        .score { font-size: 2.5em; color: #2e7d32; font-weight: bold; }
+        .feedback { margin-top: 10px; }
+        .hidden { display: none; }
+        .news-source {
+            font-size: 0.8em;
+            color: #666;
+            text-align: right;
+            margin-top: 10px;
+        }
+        .fill-blank {
+            display: inline-block;
+            width: 100px;
+            border-bottom: 2px solid #333;
+            text-align: center;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← 返回</a>
+    <div class="container">
+        <header>
+            <h1>📖 语文学习</h1>
+            <p class="date">2026年8月9日</p>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="poem">🏯 古诗词</div>
+            <div class="tab" data-tab="modern">📰 现代文</div>
+            <div class="tab" data-tab="news">🌍 时文</div>
+            <div class="tab" data-tab="test">✍️ 综合测试</div>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="section active" id="poem">
+            <div class="section-title">🏯 古诗词鉴赏</div>
+
+            <div class="poem">
+                <div class="poem-title">望岳</div>
+                <div class="poem-author">【唐】杜甫</div>
+                <div class="poem-content">
+                    岱宗夫如何？齐鲁青未了。<br>
+                    造化钟神秀，阴阳割昏晓。<br>
+                    荡胸生曾云，决眦入归鸟。<br>
+                    会当凌绝顶，一览众山小。
+                </div>
+                <div class="poem-note">
+                    <h4>📝 词语注释</h4>
+                    <p>①岱宗：泰山的别名，因泰山为五岳之首，故称岱宗。</p>
+                    <p>②造化：大自然。钟：聚集。</p>
+                    <p>③阴阳：山北为阴，山南为阳。割：分开。</p>
+                    <p>④曾：同"层"。</p>
+                    <p>⑤决眦：睁大眼睛。决：裂开。眦：眼眶。</p>
+                </div>
+                <div class="poem-note">
+                    <h4>💡 诗歌赏析</h4>
+                    <p>此诗作于杜甫青年时期，通过描绘泰山雄伟壮丽的景象，表达了诗人不怕困难、敢于攀登顶峰的雄心壮志，同时也展示了诗人积极向上的人生态度。"会当凌绝顶，一览众山小"为千古名句，既写出了泰山的高峻雄伟，又含蓄地表达了诗人远大的抱负。</p>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">1. 诗中"岱宗"指的是哪座山？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'poem', 1, 'A')">A. 华山</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 1, 'B')">B. 泰山</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 1, 'C')">C. 衡山</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 1, 'D')">D. 嵩山</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. "造化钟神秀"中"钟"的意思是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'poem', 2, 'A')">A. 钟表</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 2, 'B')">B. 钟声</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 2, 'C')">C. 聚集</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 2, 'D')">D. 钟爱</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. "会当凌绝顶，一览众山小"表达了诗人怎样的情感？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'poem', 3, 'A')">A. 畏惧困难，退缩不前</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 3, 'B')">B. 敢于攀登、积极向上的雄心壮志</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 3, 'C')">C. 对山景的留恋</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 3, 'D')">D. 对人生的消极态度</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. 本诗的体裁是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'poem', 4, 'A')">A. 律诗</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 4, 'B')">B. 绝句</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 4, 'C')">C. 词</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 4, 'D')">D. 曲</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">5. 对这首诗理解不正确的一项是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'poem', 5, 'A')">A. 首联设问，表达诗人对泰山的赞叹</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 5, 'B')">B. 颔联写近望之势，见泰山巍峨高大</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 5, 'C')">C. 颈联写细望之景，见诗人胸怀激荡</div>
+                    <div class="option" onclick="selectOption(this, 'poem', 5, 'D')">D. 尾联写诗人登上山顶的感受</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="checkPoem()">提交答案</button>
+            <div class="result hidden" id="poemResult">
+                <div class="score" id="poemScore">0/5</div>
+                <div class="feedback" id="poemFeedback"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="section" id="modern">
+            <div class="section-title">📰 现代文阅读</div>
+
+            <div class="passage">
+                <div class="passage-title">读书的境界</div>
+                <p>古人云："书山有路勤为径，学海无涯苦作舟。"读书是获得知识的重要途径，也是提升自我修养的有效方法。</p>
+                <p style="margin-top:10px;">读书有三个境界。第一境界是"好读书，不求甚解"。这并非说读书可以马马虎虎，而是说要广泛涉猎，不拘泥于一家之言。正如陶渊明所言，读书贵在自得其乐，不必过分纠缠于每一个细节。</p>
+                <p style="margin-top:10px;">第二境界是"读万卷书，行万里路"。读书不能只是纸上谈兵，还要与实践相结合。只有将书本知识与生活实践相印证，才能真正理解书中的道理。陆游说："纸上得来终觉浅，绝知此事要躬行。"就是这个道理。</p>
+                <p style="margin-top:10px;">第三境界是"读书破万卷，下笔如有神"。当阅读量达到一定程度，知识便会融会贯通，运用自如。杜甫正是通过博览群书，才创作出那么多脍炙人口的诗篇。</p>
+                <p style="margin-top:10px;">读书是一辈子的事。让我们在书海中遨游，不断提升自己，追求更高的人生境界。</p>
+            </div>
+
+            <div class="question">
+                <div class="question-text">6. 文中提到的读书第一个境界是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'A')">A. 读万卷书，行万里路</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'B')">B. 好读书，不求甚解</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'C')">C. 读书破万卷，下笔如有神</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'D')">D. 书山有路勤为径</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">7. "纸上得来终觉浅，绝知此事要躬行"说明的道理是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'A')">A. 读书越多越好</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'B')">B. 读书要与实践相结合</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'C')">C. 书本知识没用</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'D')">D. 不需要读书</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">8. 文中引用杜甫的话是为了说明？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'A')">A. 杜甫诗写得好</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'B')">B. 大量阅读能提升写作能力</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'C')">C. 古人喜欢读书</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'D')">D. 下笔需要灵感</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">9. 对"好读书，不求甚解"理解正确的是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'A')">A. 读书要马虎一些</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'B')">B. 广泛阅读，不拘泥于一家之言</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'C')">C. 不用理解书的内容</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'D')">D. 只读有趣的书</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">10. 本文主要想表达的观点是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'A')">A. 古人读书的方法</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'B')">B. 读书的三个境界及其意义</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'C')">C. 杜甫的创作经历</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'D')">D. 陶渊明的读书心得</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="checkModern()">提交答案</button>
+            <div class="result hidden" id="modernResult">
+                <div class="score" id="modernScore">0/5</div>
+                <div class="feedback" id="modernFeedback"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="section" id="news">
+            <div class="section-title">🌍 时文阅读</div>
+
+            <div class="passage">
+                <div class="passage-title">台风"白海豚"逼近 华东沿海严阵以待</div>
+                <p>据中央气象台消息，今年第13号台风"白海豚"（强台风级）已于8月8日9时位于浙江省温州市以东约520公里的东海南部海面，中心最大风力达14级。</p>
+                <p style="margin-top:10px;">气象部门预计，"白海豚"将以每小时10-15公里的速度向西偏北方向移动，预计于9日夜间至10日凌晨在浙江舟山至福建福鼎一带沿海登陆，登陆强度可达13-14级。</p>
+                <p style="margin-top:10px;">受台风外围环流影响，浙江、福建等地已发布台风预警。温州气象台于8月8日14时23分将台风黄色预警信号升级为橙色预警信号。预计今明两天，温州市区和沿海平原风力将达到10-12级，沿海海面风力可达13-15级。</p>
+                <p style="margin-top:10px;">当地政府已启动应急响应预案，救援队伍随时待命。相关部门提醒沿海居民注意安全，避免不必要的外出，做好防风防雨准备。</p>
+                <div class="news-source">—— 新闻来源：央视新闻、中央气象台 2026年8月8日</div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">11. 台风"白海豚"的中心最大风力达到几级？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 1, 'A')">A. 12级</div>
+                    <div class="option" onclick="selectOption(this, 'news', 1, 'B')">B. 13级</div>
+                    <div class="option" onclick="selectOption(this, 'news', 1, 'C')">C. 14级</div>
+                    <div class="option" onclick="selectOption(this, 'news', 1, 'D')">D. 15级</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">12. 台风预计何时登陆？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 2, 'A')">A. 8月8日白天</div>
+                    <div class="option" onclick="selectOption(this, 'news', 2, 'B')">B. 8月8日夜间</div>
+                    <div class="option" onclick="selectOption(this, 'news', 2, 'C')">C. 8月9日夜间至10日凌晨</div>
+                    <div class="option" onclick="selectOption(this, 'news', 2, 'D')">D. 8月10日下午</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">13. 温州市发布的台风预警信号级别是？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 3, 'A')">A. 蓝色预警</div>
+                    <div class="option" onclick="selectOption(this, 'news', 3, 'B')">B. 黄色预警</div>
+                    <div class="option" onclick="selectOption(this, 'news', 3, 'C')">C. 橙色预警</div>
+                    <div class="option" onclick="selectOption(this, 'news', 3, 'D')">D. 红色预警</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">14. 台风登陆地点可能在？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 4, 'A')">A. 山东沿海</div>
+                    <div class="option" onclick="selectOption(this, 'news', 4, 'B')">B. 浙江舟山至福建福鼎一带</div>
+                    <div class="option" onclick="selectOption(this, 'news', 4, 'C')">C. 广东沿海</div>
+                    <div class="option" onclick="selectOption(this, 'news', 4, 'D')">D. 江苏沿海</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">15. 从文中可以看出，当地政府采取了哪些措施？</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 5, 'A')">A. 启动应急响应预案，救援队伍待命</div>
+                    <div class="option" onclick="selectOption(this, 'news', 5, 'B')">B. 让所有居民撤离</div>
+                    <div class="option" onclick="selectOption(this, 'news', 5, 'C')">C. 关闭所有学校</div>
+                    <div class="option" onclick="selectOption(this, 'news', 5, 'D')">D. 停止所有交通</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="checkNews()">提交答案</button>
+            <div class="result hidden" id="newsResult">
+                <div class="score" id="newsScore">0/5</div>
+                <div class="feedback" id="newsFeedback"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="section" id="test">
+            <div class="section-title">✍️ 综合测试 (50题)</div>
+            <div id="testContainer"></div>
+            <button class="btn" onclick="checkTest()">提交测试</button>
+            <div class="result hidden" id="testResult">
+                <div class="score" id="testScore">0/50</div>
+                <div class="feedback" id="testFeedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 正确答案
+        const answers = {
+            poem: ['B', 'C', 'B', 'A', 'D'],
+            modern: ['B', 'B', 'B', 'B', 'B'],
+            news: ['C', 'C', 'C', 'B', 'A']
+        };
+
+        // 综合测试题
+        const testQuestions = [
+            {q: "1. 下列加点字读音正确的一项是", options: ["A. 岱宗（dài）", "B. 决眦（zī）", "C. 曾云（céng）", "D. 钟神秀（zhōng）"], ans: "A"},
+            {q: "2. "造化钟神秀"中"钟"的用法与下列哪项相同", options: ["A. 钟表", "B. 一见钟情", "C. 钟灵毓秀", "D. 钟声"], ans: "C"},
+            {q: "3. 对"阴阳割昏晓"理解正确的是", options: ["A. 山的南北两面分出清晨和傍晚", "B. 太阳和月亮分割了天空", "C. 早晨和傍晚分割了天空", "D. 阴天和晴天分开了"], ans: "A"},
+            {q: "4. 《望岳》的作者是", options: ["A. 李白", "B. 杜甫", "C. 白居易", "D. 王维"], ans: "B"},
+            {q: "5. 下列诗句与《望岳》主题相似的是", options: ["A. 床前明月光", "B. 春眠不觉晓", "C. 会当凌绝顶，一览众山小", "D. 独坐幽篁里"], ans: "C"},
+            {q: "6. "齐鲁青未了"中"未了"的意思是", options: ["A. 没有结束", "B. 没有料到", "C. 未来", "D. 不能了结"], ans: "A"},
+            {q: "7. 下列加点词解释有误的一项是", options: ["A. 岱宗夫如何（助词，无义）", "B. 造化钟神秀（聚集）", "C. 决眦入归鸟（眼眶）", "D. 会当凌绝顶（登上）"], ans: "D"},
+            {q: "8. 本诗的写作顺序是", options: ["A. 由近及远", "B. 由远及近", "C. 由下而上", "D. 由上而下"], ans: "C"},
+            {q: "9. "一览众山小"运用了什么表现手法", options: ["A. 比喻", "B. 夸张", "C. 拟人", "D. 对比"], ans: "D"},
+            {q: "10. 下列对诗歌理解有误的一项是", options: ["A. 首联写远望泰山之貌", "B. 颔联写近望泰山之高", "C. 颈联写细望泰山之景", "D. 尾联写登泰山之感"], ans: "D"},
+            {q: "11. 下列词语中加点字读音全部正确的一项是", options: ["A. 炽热（zhì）", "B. 档案（dàng）", "C. 氛围（fēn）", "D. 即使（jí）"], ans: "C"},
+            {q: "12. 下列词语书写全部正确的一项是", options: ["A. 巧妙绝论", "B. 走投无路", "C. 相得益章", "D. 一愁莫展"], ans: "B"},
+            {q: "13. 下列各句中，加点成语使用恰当的一项是", options: ["A. 他的演讲夸夸其谈", "B. 这道题让我百思不解", "C. 他对工作一丝不苟", "D. 这篇文章妙趣横生"], ans: "D"},
+            {q: "14. 下列句子没有语病的一句是", options: ["A. 通过学习使我进步很大", "B. 他是一个优秀的学生", "C. 我们必须遵守纪律和行为", "D. 他经常回忆过去的往事"], ans: "B"},
+            {q: "15. 下列句子标点符号使用正确的一项是", options: ["A. 我问他:"你去不去？"", "B. "好吧，"他说:"我答应你。"", "C. 《论语》是儒家经典著作。", "D. 他喜欢打球、跑步、游泳......等运动。"], ans: "C"},
+            {q: "16. 下列句子排序正确的一项是", options: ["A. ①②③④⑤", "B. ②①③⑤④", "C. ③①②④⑤", "D. ①③②④⑤"], ans: "B"},
+            {q: "17. 下列文学常识表述有误的一项是", options: ["A. 杜甫是唐代现实主义诗人", "B. 《望岳》是杜甫青年时期作品", "C. 杜甫被后人称为"诗圣"", "D. 杜甫的诗风格浪漫豪放"], ans: "D"},
+            {q: "18. 下列各组词语中，没有错别字的一组是", options: ["A. 装钉 狭隘", "B. 惊惶 慷慨", "C. 暄嚷 嶙峋", "D. 酝酿 决择"], ans: "B"},
+            {q: "19. 下列句子中，修辞手法判断正确的一项是", options: ["A. 春天像刚落地的娃娃（比喻）", "B. 油蛉在这里低唱（比喻）", "C. 他像是热锅上的蚂蚁（拟人）", "D. 山舞银蛇，原驰蜡象（对偶）"], ans: "A"},
+            {q: "20. 对下列句子主干提取正确的一项是", options: ["A. 我的老师是一位优秀的教育工作者（老师是工作者）", "B. 永恒的骄傲和自豪充溢着我的内心（骄傲和自豪充溢）", "C. 这里的早晨充满勃勃生机（早晨充满生机）", "D. 秋天的北京是一个美丽的季节（北京是季节）"], ans: "C"},
+            // 继续添加30道题目...
+            {q: "21. 下列各组中加点字注音全部正确的一项是", options: ["A. 狭隘（ài）", "B. 酝酿（niàng）", "C. 迸溅（bìng）", "D. 秕谷（bǐ）"], ans: "B"},
+            {q: "22. 下列词语中字形全部正确的一项是", options: ["A. 潜心贯注", "B. 一反即往", "C. 慷慨淋漓", "D. 深恶痛决"], ans: "C"},
+            {q: "23. 下列句子中加点成语使用恰当的一项是", options: ["A. 他在学习上刻苦认真，废寝忘食", "B. 他的演讲让人心旷神怡", "C. 这道题让我喜出望外", "D. 他做事总是小心翼翼"], ans: "A"},
+            {q: "24. 下列句子没有语病的一项是", options: ["A. 我们必须养成讲卫生的习惯", "B. 我们讨论并听取了校长的报告", "C. 谁也不能否认地球不是圆的", "D. 这本书的内容和形式都很精美"], ans: "A"},
+            {q: "25. 下列句子标点使用正确的一项是", options: ["A. 他问："明天你来吗？"", "B. 你去过北京吗？", "C. 《红楼梦》是曹雪芹写的。", "D. 他喜欢读书、写字......等活动。"], ans: "B"},
+            {q: "26. "书山有路勤为径"的下句是", options: ["A. 学海无涯苦作舟", "B. 梅花香自苦寒来", "C. 宝剑锋从磨砺出", "D. 三更灯火五更鸡"], ans: "A"},
+            {q: "27. 下列对联对应正确的一项是", options: ["A. 青山有幸埋忠骨，白铁无辜铸佞臣——岳飞墓", "B. 刚直不阿留正气，万古忠魂驰烈马——关羽", "C. 写鬼写妖高人一等，刺贪刺虐入木三分——蒲松龄", "D. 世上疮痍诗中圣哲，民间疾苦笔底波澜——李白"], ans: "A"},
+            {q: "28. 下列作品与作者对应错误的一项是", options: ["A. 《春》——朱自清", "B. 《从百草园到三味书屋》——鲁迅", "C. 《济南的冬天》——老舍", "D. 《皇帝的新装》——安徒生"], ans: "D"},
+            {q: "29. 下列句子中关联词语使用不当的一项是", options: ["A. 因为下雨，所以比赛取消了", "B. 只要努力，就能成功", "C. 虽然下雨，但是我们坚持训练", "D. 他不但聪明，而且勤奋"], ans: "B"},
+            {q: "30. 下列句子排列顺序正确的一项是", options: ["A. ①②③④", "B. ②①④③", "C. ③②①④", "D. ①③②④"], ans: "B"},
+            {q: "31. 对《望岳》理解有误的一项是", options: ["A. 全诗紧扣"望"字，从不同角度描写泰山", "B. "阴阳割昏晓"写泰山的高大雄伟", "C. "决眦入归鸟"写诗人睁大眼睛看归鸟", "D. 尾联写诗人已登上泰山山顶"], ans: "D"},
+            {q: "32. 下列加点字解释有误的一项是", options: ["A. 造化钟神秀（聚集）", "B. 决眦入归鸟（裂开）", "C. 会当凌绝顶（登上）", "D. 一览众山小（看）"], ans: "B"},
+            {q: "33. 下列句子中，没有通假字的一项是", options: ["A. 荡胸生曾云", "B. 决眦入归鸟", "C. 会当凌绝顶", "D. 略无阙处"], ans: "C"},
+            {q: "34. 下列对诗句赏析有误的一项是", options: ["A. "岱宗夫如何"以设问开头，引出下文", "B. "齐鲁青未了"写泰山之高大", "C. "造化钟神秀"写泰山之秀美", "D. "会当凌绝顶"写诗人已经登顶"], ans: "D"},
+            {q: "35. 下列各句朗读节奏划分正确的一项是", options: ["A. 岱宗/夫/如何", "B. 齐鲁/青/未了", "C. 造化/钟/神秀", "D. 会当/凌/绝顶"], ans: "C"},
+            {q: "36. 下列关于诗歌的表述，有误的一项是", options: ["A. 律诗通常八句，分四联", "B. 首联是律诗的第一联", "C. 颔联是律诗的第三联", "D. 尾联是律诗的最后一联"], ans: "C"},
+            {q: "37. 下列加点字词类活用相同的一项是", options: ["A. 造化钟神秀", "B. 阴阳割昏晓", "C. 一览众山小", "D. 决眦入归鸟"], ans: "C"},
+            {q: "38. 下列句子翻译正确的一项是", options: ["A. 岱宗夫如何：泰山是什么样子的呢？", "B. 齐鲁青未了：齐和鲁两国青翠的颜色没有尽头", "C. 造化钟神秀：造物主送来神秀", "D. 阴阳割昏晓：阴阳分割了清晨和傍晚"], ans: "A"},
+            {q: "39. 下列对杜甫的说法有误的一项是", options: ["A. 杜甫是唐代诗人", "B. 杜甫与李白合称"李杜"", "C. 杜甫的诗反映社会现实", "D. 杜甫的诗风豪放飘逸"], ans: "D"},
+            {q: "40. 下列关于《望岳》的表述正确的一项是", options: ["A. 这首诗写于杜甫晚年", "B. 这首诗表达了诗人的雄心壮志", "C. 这首诗是律诗", "D. 这首诗主要写泰山日出"], ans: "B"},
+            {q: "41. 下列各组词语中加点字注音全部正确的一项是", options: ["A. 着落（zhuó）", "B. 澄清（chéng）", "C. 酝酿（liàng）", "D. 响午（xiǎng）"], ans: "B"},
+            {q: "42. 下列词语中没有错别字的一项是", options: ["A. 偏辟 秀颀", "B. 嶙峋 狭隘", "C. 决择 惊惶", "D. 暄嚷 酝酿"], ans: "B"},
+            {q: "43. 下列句子中成语使用正确的一项是", options: ["A. 他学习刻苦，废寝忘食", "B. 这道题我无动于衷", "C. 他对工作一丝不苟", "D. 他的演讲抑扬顿挫"], ans: "A"},
+            {q: "44. 下列句子没有语病的一项是", options: ["A. 通过这次活动，使我受到了教育", "B. 他的事迹感动了在场的所有人", "C. 我们必须遵守纪律和原则", "D. 他经常回忆过去的往事"], ans: "B"},
+            {q: "45. 下列句子标点符号使用正确的一项是", options: ["A. 他说："明天见。"", "B. 你去吗？他问", "C. 《论语》是一本好书。", "D. 他喜欢打球、跑步......等运动。"], ans: "A"},
+            {q: "46. 下列关于律诗的说法有误的一项是", options: ["A. 律诗通常八句", "B. 律诗讲究对仗", "C. 律诗有严格的平仄要求", "D. 律诗都是五言"], ans: "D"},
+            {q: "47. "会当凌绝顶"的"凌"解释正确的是", options: ["A. 冰凌", "B. 登上", "C. 凌辱", "D. 凌乱"], ans: "B"},
+            {q: "48. 下列诗句运用了夸张手法的一项是", options: ["A. 岱宗夫如何", "B. 齐鲁青未了", "C. 造化钟神秀", "D. 会当凌绝顶"], ans: "B"},
+            {q: "49. 下列各句中，"之"字用法与其他三项不同的是", options: ["A. 泰山之阳", "B. 送杜少府之任蜀州", "C. 莲之出淤泥而不染", "D. 予独爱莲之出淤泥"], ans: "B"},
+            {q: "50. 下列对《望岳》的赏析有误的一项是", options: ["A. 全诗以"望"贯穿始终", "B. 诗歌体现了年轻杜甫的雄心壮志", "C. "一览众山小"表达了诗人的志向", "D. 诗歌主要表达了诗人对泰山的畏惧"], ans: "D"}
+        ];
+
+        // 用户答案存储
+        let userAnswers = {};
+
+        // 从localStorage加载
+        function loadData() {
+            const saved = localStorage.getItem('chinese_2026-08-09');
+            if (saved) {
+                userAnswers = JSON.parse(saved);
+            }
+        }
+
+        // 保存到localStorage
+        function saveData() {
+            localStorage.setItem('chinese_2026-08-09', JSON.stringify(userAnswers));
+            updateGlobalStats();
+        }
+
+        // 更新全局统计
+        function updateGlobalStats() {
+            let stats = JSON.parse(localStorage.getItem('xiaokai_stats') || '{"days":1,"questions":0,"correct":0}');
+            let totalQ = 0;
+            let correctQ = 0;
+
+            if (userAnswers.poemScore !== undefined) {
+                totalQ += 5;
+                correctQ += userAnswers.poemScore;
+            }
+            if (userAnswers.modernScore !== undefined) {
+                totalQ += 5;
+                correctQ += userAnswers.modernScore;
+            }
+            if (userAnswers.newsScore !== undefined) {
+                totalQ += 5;
+                correctQ += userAnswers.newsScore;
+            }
+            if (userAnswers.testScore !== undefined) {
+                totalQ += 50;
+                correctQ += userAnswers.testScore;
+            }
+
+            stats.questions = totalQ;
+            stats.correct = correctQ;
+            localStorage.setItem('xiaokai_stats', JSON.stringify(stats));
+        }
+
+        // Tab切换
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // 选择答案
+        function selectOption(element, section, question, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+
+            if (!userAnswers[section]) userAnswers[section] = {};
+            userAnswers[section][question] = answer;
+            saveData();
+        }
+
+        // 检查古诗
+        function checkPoem() {
+            let score = 0;
+            answers.poem.forEach((ans, i) => {
+                const userAns = userAnswers.poem?.[i+1];
+                if (userAns === ans) score++;
+            });
+            userAnswers.poemScore = score;
+            saveData();
+            document.getElementById('poemScore').textContent = `${score}/5`;
+            document.getElementById('poemFeedback').textContent = score >= 4 ? '太棒了！继续加油！' : score >= 3 ? '不错！再接再厉！' : '加油！多多练习！';
+            document.getElementById('poemResult').classList.remove('hidden');
+        }
+
+        // 检查现代文
+        function checkModern() {
+            let score = 0;
+            answers.modern.forEach((ans, i) => {
+                const userAns = userAnswers.modern?.[i+1];
+                if (userAns === ans) score++;
+            });
+            userAnswers.modernScore = score;
+            saveData();
+            document.getElementById('modernScore').textContent = `${score}/5`;
+            document.getElementById('modernFeedback').textContent = score >= 4 ? '太棒了！继续加油！' : score >= 3 ? '不错！再接再厉！' : '加油！多多练习！';
+            document.getElementById('modernResult').classList.remove('hidden');
+        }
+
+        // 检查时文
+        function checkNews() {
+            let score = 0;
+            answers.news.forEach((ans, i) => {
+                const userAns = userAnswers.news?.[i+1];
+                if (userAns === ans) score++;
+            });
+            userAnswers.newsScore = score;
+            saveData();
+            document.getElementById('newsScore').textContent = `${score}/5`;
+            document.getElementById('newsFeedback').textContent = score >= 4 ? '太棒了！继续加油！' : score >= 3 ? '不错！再接再厉！' : '加油！多多练习！';
+            document.getElementById('newsResult').classList.remove('hidden');
+        }
+
+        // 渲染测试题
+        function renderTest() {
+            const container = document.getElementById('testContainer');
+            container.innerHTML = '';
+
+            testQuestions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `
+                    <div class="question-text">${q.q}</div>
+                    <div class="options">
+                        ${q.options.map(opt => `
+                            <div class="option" onclick="selectTestOption(${i}, '${opt.charAt(0)}')">${opt}</div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // 选择测试答案
+        function selectTestOption(index, answer) {
+            if (!userAnswers.test) userAnswers.test = {};
+            userAnswers.test[index] = answer;
+
+            const options = document.querySelectorAll('#testContainer .question')[index].querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.textContent.charAt(0) === answer) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            saveData();
+        }
+
+        // 检查测试
+        function checkTest() {
+            let score = 0;
+
+            testQuestions.forEach((q, i) => {
+                const userAns = userAnswers.test?.[i];
+                const correctAns = q.ans;
+
+                const options = document.querySelectorAll('#testContainer .question')[i].querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    if (opt.textContent.charAt(0) === correctAns) {
+                        opt.classList.add('correct');
+                    } else if (opt.classList.contains('selected')) {
+                        opt.classList.add('wrong');
+                    }
+                });
+
+                if (userAns === correctAns) score++;
+            });
+
+            userAnswers.testScore = score;
+            saveData();
+
+            document.getElementById('testScore').textContent = `${score}/50`;
+            document.getElementById('testFeedback').textContent = score >= 45 ? '太棒了！优秀！' : score >= 35 ? '不错！继续努力！' : '加油！多多练习！';
+            document.getElementById('testResult').classList.remove('hidden');
+        }
+
+        // 初始化
+        loadData();
+        renderTest();
+    </script>
+</body>
+</html>

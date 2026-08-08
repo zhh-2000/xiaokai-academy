@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小剀学苑 - 快乐学习每一天</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        .subject-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .subject-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+        .subject-name {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subject-desc {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .subject-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .subject-btn:hover {
+            opacity: 0.9;
+        }
+        .days-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        .days-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .day-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2b 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .day-card:hover {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        .day-date {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .day-status {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .day-card.new {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .day-card.new .day-date::before {
+            content: "🌟 ";
+        }
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 小剀学苑</h1>
+            <p class="subtitle">每天进步一点点，快乐学习每一天</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalDays">1</div>
+                <div class="stat-label">学习天数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalQuestions">0</div>
+                <div class="stat-label">完成题目</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="accuracy">0%</div>
+                <div class="stat-label">正确率</div>
+            </div>
+        </div>
+
+        <div class="subjects">
+            <div class="subject-card" onclick="location.href='english/index.html'">
+                <div class="subject-icon">📚</div>
+                <div class="subject-name">英语</div>
+                <div class="subject-desc">阅读理解 · 词汇积累 · 综合测试</div>
+                <button class="subject-btn">开始学习</button>
+            </div>
+            <div class="subject-card" onclick="location.href='chinese/index.html'">
+                <div class="subject-icon">📖</div>
+                <div class="subject-name">语文</div>
+                <div class="subject-desc">古诗词 · 现代文 · 时文阅读</div>
+                <button class="subject-btn">开始学习</button>
+            </div>
+            <div class="subject-card" onclick="location.href='math/index.html'">
+                <div class="subject-icon">🔢</div>
+                <div class="subject-name">数学</div>
+                <div class="subject-desc">简便运算 · 逻辑思维 · 计算练习</div>
+                <button class="subject-btn">开始学习</button>
+            </div>
+        </div>
+
+        <div class="days-section">
+            <h2 class="days-title">📅 学习日历</h2>
+            <div class="days-grid">
+                <div class="day-card new" onclick="goToDay('2026-08-09')">
+                    <div class="day-date">2026-08-09</div>
+                    <div class="day-status">🌟 新内容</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>小剀学苑 © 2026 | 用心陪伴每一次学习</p>
+        </footer>
+    </div>
+
+    <script>
+        // 加载统计数据
+        function loadStats() {
+            const stats = JSON.parse(localStorage.getItem('xiaokai_stats') || '{"days":1,"questions":0,"correct":0}');
+            document.getElementById('totalDays').textContent = stats.days;
+            document.getElementById('totalQuestions').textContent = stats.questions;
+            const accuracy = stats.questions > 0 ? Math.round((stats.correct / stats.questions) * 100) : 0;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+        }
+
+        function goToDay(date) {
+            // 检查哪个科目有数据
+            const subjects = ['english', 'chinese', 'math'];
+            for (let subject of subjects) {
+                const key = `${subject}_${date}`;
+                if (localStorage.getItem(key)) {
+                    location.href = `${subject}/days/${date}.html`;
+                    return;
+                }
+            }
+            // 默认跳转到英语
+            location.href = `english/days/${date}.html`;
+        }
+
+        loadStats();
+    </script>
+</body>
+</html>
