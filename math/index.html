@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学学习 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #3498db;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 10px;
+            color: #3498db;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .back-link:hover {
+            background: #f5f5f5;
+        }
+        
+        .day-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .day-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(52, 152, 219, 0.2);
+        }
+        
+        .day-card.new {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+        
+        .day-card.new .day-title {
+            color: white;
+        }
+        
+        .day-card.new .day-date {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .day-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .day-date {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        
+        .day-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .content-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        .day-card.new .content-tag {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .new-badge {
+            background: #ff5722;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .stats-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .stats-title {
+            color: #3498db;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .day-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> 返回首页
+        </a>
+        
+        <div class="header">
+            <h1><i class="fas fa-calculator"></i> 数学学习</h1>
+            <p>简便运算 · 公式运用 · 计算练习</p>
+        </div>
+        
+        <div class="day-grid">
+            <a href="days/2026-08-31.html" class="day-card new">
+                <div class="day-title">8月31日学习内容 <span class="new-badge">NEW</span></div>
+                <div class="day-date">2026年8月31日 星期一</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">平方差公式</span>
+                    <span class="content-tag">提取公因数</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-30.html" class="day-card">
+                <div class="day-title">8月30日学习内容</div>
+                <div class="day-date">2026年8月30日 星期日</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">平方差公式</span>
+                    <span class="content-tag">提取公因数</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-29.html" class="day-card">
+                <div class="day-title">8月29日学习内容</div>
+                <div class="day-date">2026年8月29日 星期六</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">平方差公式</span>
+                    <span class="content-tag">提取公因数</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-28.html" class="day-card">
+                <div class="day-title">8月28日学习内容</div>
+                <div class="day-date">2026年8月28日 星期五</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">平方差公式</span>
+                    <span class="content-tag">提取公因数</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-27.html" class="day-card">
+                <div class="day-title">8月27日学习内容</div>
+                <div class="day-date">2026年8月27日 星期四</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">平方差公式</span>
+                    <span class="content-tag">提取公因数</span>
+                </div>
+            </a>
+
+            <a href="days/2026-08-25.html" class="day-card">
+                <div class="day-title">8月25日学习内容</div>
+                <div class="day-date">2026年8月25日 星期二</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">平方差公式</span>
+                    <span class="content-tag">即时验证</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-24.html" class="day-card">
+                <div class="day-title">8月24日学习内容</div>
+                <div class="day-date">2026年8月24日 星期一</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">小数运算</span>
+                    <span class="content-tag">即时验证</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-23.html" class="day-card">
+                <div class="day-title">8月23日学习内容</div>
+                <div class="day-date">2026年8月23日 星期六</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">小数运算</span>
+                    <span class="content-tag">即时验证</span>
+                </div>
+            </a>
+            <a href="days/2026-08-22.html" class="day-card">
+                <div class="day-title">8月22日学习内容</div>
+                <div class="day-date">2026年8月22日 星期五</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">乘法分配律</span>
+                    <span class="content-tag">凑整法</span>
+                    <span class="content-tag">小数运算</span>
+                    <span class="content-tag">即时验证</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-21.html" class="day-card">
+                <div class="day-title">8月21日学习内容</div>
+                <div class="day-date">2026年8月21日 星期四</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-20.html" class="day-card">
+                <div class="day-title">8月20日学习内容</div>
+                <div class="day-date">2026年8月20日 星期三</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-19.html" class="day-card">
+                <div class="day-title">8月19日学习内容</div>
+                <div class="day-date">2026年8月19日 星期二</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-18.html" class="day-card">
+                <div class="day-title">8月18日学习内容</div>
+                <div class="day-date">2026年8月18日 星期一</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-16.html" class="day-card">
+                <div class="day-title">8月16日学习内容</div>
+                <div class="day-date">2026年8月16日 星期六</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-15.html" class="day-card">
+                <div class="day-title">8月15日学习内容</div>
+                <div class="day-date">2026年8月15日 星期五</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-14.html" class="day-card">
+                <div class="day-title">8月14日学习内容</div>
+                <div class="day-date">2026年8月14日 星期四</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-13.html" class="day-card">
+                <div class="day-title">8月13日学习内容</div>
+                <div class="day-date">2026年8月13日 星期三</div>
+                <div class="day-content">
+                    <span class="content-tag">20题简便运算</span>
+                    <span class="content-tag">公式回顾</span>
+                    <span class="content-tag">即时验证</span>
+                    <span class="content-tag">详细解析</span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="stats-section">
+            <h2 class="stats-title"><i class="fas fa-chart-line"></i> 学习统计</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalQuestions">0</div>
+                    <div class="stat-label">完成题目</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="correctRate">0%</div>
+                    <div class="stat-label">正确率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalDays">0</div>
+                    <div class="stat-label">学习天数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="avgScore">-</div>
+                    <div class="stat-label">平均得分</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 计算统计数据
+        function calculateStats() {
+            let totalQuestions = 0;
+            let correctQuestions = 0;
+            let totalDays = 0;
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('xiaokai_math_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        if (data) {
+                            totalDays++;
+                            for (let j = 1; j <= 20; j++) {
+                                if (data[j] && data[j].checked) {
+                                    totalQuestions++;
+                                    if (data[j].correct) {
+                                        correctQuestions++;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (e) {}
+                }
+            }
+            
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            document.getElementById('correctRate').textContent = totalQuestions > 0 ? 
+                Math.round(correctQuestions / totalQuestions * 100) + '%' : '0%';
+            document.getElementById('totalDays').textContent = totalDays;
+            document.getElementById('avgScore').textContent = totalDays > 0 ? 
+                Math.round(correctQuestions / totalDays) : '-';
+        }
+        
+        window.onload = calculateStats;
+    </script>
+</body>
+</html>

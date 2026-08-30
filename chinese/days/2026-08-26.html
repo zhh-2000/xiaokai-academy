@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月26日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月26日 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">观沧海</div>
+                    <div class="author">东汉 · 曹操</div>
+                    <div class="content">
+                        东临碣石，以观沧海。<br>
+                        水何澹澹，山岛竦峙。<br>
+                        树木丛生，百草丰茂。<br>
+                        秋风萧瑟，洪波涌起。<br>
+                        日月之行，若出其中；<br>
+                        星汉灿烂，若出其里。<br>
+                        幸甚至哉，歌以咏志。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>碣石</strong>：山名，在今河北省。</p>
+                        <p>② <strong>沧海</strong>：大海，指渤海。</p>
+                        <p>③ <strong>澹澹</strong>：水波荡漾的样子。</p>
+                        <p>④ <strong>竦峙</strong>：高高耸立。</p>
+                        <p>⑤ <strong>星汉</strong>：银河。</p>
+                        <p>⑥ <strong>幸甚至哉</strong>：幸运极了。</p>
+                        <p>⑦ <strong>歌以咏志</strong>：用诗歌来表达志向。</p>
+                        <br>
+                        <p><strong>译文：</strong>向东登上碣石山，观赏大海。海水波荡漾，山岛高高耸立。树木百草生长茂盛。秋风瑟瑟吹过，巨大的波涛涌起。日月运行，好像从海中升起；银河灿烂，好像出自海中。真是幸运极了，用诗歌来咏叹志向。</p>
+                        <br>
+                        <p><strong>赏析：</strong>全诗以"观"字统领，描绘了大海的壮阔景象。诗人借大海的雄伟表达了统一天下的雄心壮志。"日月之行，若出其中；星汉灿烂，若出其里"想象奇特，表现了大海包蕴万物的博大胸怀，也暗喻诗人自己统一天下的博大胸襟。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">次北固山下</div>
+                    <div class="author">唐 · 王湾</div>
+                    <div class="content">
+                        客路青山外，行舟绿水前。<br>
+                        潮平两岸阔，风正一帆悬。<br>
+                        海日生残夜，江春入旧年。<br>
+                        乡书何处达？归雁洛阳边。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>次</strong>：停泊。</p>
+                        <p>② <strong>北固山</strong>：在今江苏镇江。</p>
+                        <p>③ <strong>客路</strong>：旅途。</p>
+                        <p>④ <strong>潮平</strong>：潮水涨满。</p>
+                        <p>⑤ <strong>风正</strong>：风向顺且风力适度。</p>
+                        <p>⑥ <strong>残夜</strong>：夜将尽时。</p>
+                        <p>⑦ <strong>归雁</strong>：大雁归飞，古人认为大雁能传书。</p>
+                        <br>
+                        <p><strong>译文：</strong>旅途在青山之外，行船在绿水之前。潮水涨满，两岸之间水面宽阔；风向顺正，一片白帆高高悬挂。海上的太阳从残夜中升起，江上的春意进入旧年。家书寄往何处？归雁飞向洛阳那边。</p>
+                        <br>
+                        <p><strong>赏析：</strong>"海日生残夜，江春入旧年"是千古名句。太阳从残夜中升起，春意提前进入旧年，蕴含着旧事物中孕育新事物的哲理，表达了诗人对时光流逝的感慨和对未来的希望。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>6G时代的中国力量</h3>
+                    <p>当5G网络还在改变我们的生活时，6G技术的研发早已悄然启程。2026年，中国在6G领域取得了令人瞩目的成就，向世界展示了中国科技的力量与速度。这背后，是无数科研人员日以继夜的不懈努力，是国家层面的战略布局，更是中华民族自强不息精神的生动体现。</p>
+                    <p>2026年，国务院国资委召开中央企业6G未来产业推进会，标志着中国在6G技术发展上迈出了关键一步。会上，中央企业组建联合体，集中力量推进关键技术攻关。这种"集中力量办大事"的模式，正是中国科技发展的独特优势。面对6G这一未来产业的核心战场，中国没有选择单打独斗，而是以联合体的形式凝聚各方力量，展现出团结协作、协同创新的智慧。</p>
+                    <p>围绕6G技术图谱，我国系统布局技术任务71项，覆盖了从基础研究到应用落地的全链条。更令人骄傲的是，中国已公开6G专利5300多件，在全球6G专利布局中占据重要位置。这些数字的背后，是科研人员无数个通宵达旦的坚守，是反复试验、不断失败的坚持。每一项专利的诞生，都凝聚着中国科学家的智慧与汗水。</p>
+                    <p>在核心设备研发方面，中国也取得了重大突破。6G卫星终端与基站的芯片器件等核心设备的研发成功，意味着中国在6G关键技术上不再受制于人。这些芯片虽小，却承载着大国科技自立自强的梦想。从"跟跑"到"并跑"，再到部分领域"领跑"，中国科技工作者用行动诠释了什么叫自主创新、什么叫坚持不懈。</p>
+                    <p>6G技术的应用场景十分广阔，已覆盖轨道交通、电力系统等多个领域。在未来的智慧城市中，6G将让交通更智能、让电网更高效、让生活更便捷。它不仅是一项技术，更是改变社会的力量。中国6G的发展，正在为世界科技发展贡献中国方案、中国智慧。</p>
+                    <p>从"两弹一星"到"北斗导航"，从"5G领跑"到"6G突破"，中国科技的每一次跨越，都源于一代代科技工作者的坚守与拼搏。6G时代的中国力量，不仅是技术的力量，更是精神的力量——那是永不言败的坚持，是敢为人先的创新，是科技报国的赤诚。作为新时代的中学生，我们应当从这些科技成就中汲取力量，努力学习，为祖国的科技发展贡献自己的一份力量。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>京津冀蒙青启动防汛四级应急响应 第二十六届投洽会蓄势待发</h3>
+                    <p>据应急管理部消息，气象部门预报未来三天，西北地区、内蒙古、华北等地有明显降雨过程，青海东部和南部、内蒙古西部、河北中部、北京、天津等地部分地区有大到暴雨，局地有特大暴雨。8月25日10时，国家防总、应急管理部针对北京、天津、河北、内蒙古、青海启动防汛四级应急响应。</p>
+                    <p>第二十六届中国国际投资贸易洽谈会将于9月8日至11日在福建厦门举行。首次设置"双主宾国"，由芬兰和沙特担任。已有123个国家和地区代表团报名参加，60个国家和地区设展。围绕"投资中国""中国投资""国际投资"三大板块，设置14个专业展区。</p>
+                    <p>8月24日，国家主席习近平致电阿拉姆吉尔，祝贺他就任孟加拉人民共和国总统。习近平指出，中国和孟加拉国是传统友好邻邦，建交51年来，两国始终相互尊重、平等相待。</p>
+                    <div class="source">来源：综合央视新闻、新华社、人民日报（2026年8月25日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-08-26';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-26',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《观沧海》的作者是谁？", options: ["刘备", "孙权", "曹操", "诸葛亮"], answer: 2 },
+            { q: "2. \"东临碣石\"中\"碣石\"是什么？", options: ["地名", "山名，在今河北省", "河名", "关名"], answer: 1 },
+            { q: "3. \"水何澹澹\"中\"澹澹\"是什么意思？", options: ["水深", "水波荡漾的样子", "水清", "水急"], answer: 1 },
+            { q: "4. \"星汉灿烂\"中\"星汉\"指什么？", options: ["太阳", "月亮", "银河", "星星"], answer: 2 },
+            { q: "5. \"日月之行，若出其中\"表现了大海怎样的特点？", options: ["海水很深", "大海包蕴万物的博大胸怀", "海浪很大", "海面很宽"], answer: 1 },
+            { q: "6. 《次北固山下》的作者是谁？", options: ["王维", "王湾", "王勃", "王昌龄"], answer: 1 },
+            { q: "7. \"次北固山下\"中\"次\"是什么意思？", options: ["其次", "停泊", "经过", "到达"], answer: 1 },
+            { q: "8. \"海日生残夜\"中\"残夜\"是什么意思？", options: ["深夜", "夜将尽时", "黑夜", "残缺的夜"], answer: 1 },
+            { q: "9. \"归雁洛阳边\"中\"归雁\"有什么含义？", options: ["大雁南飞", "古人认为大雁能传书", "大雁归巢", "大雁迷路"], answer: 1 },
+            { q: "10. \"海日生残夜，江春入旧年\"蕴含了什么哲理？", options: ["时光飞逝", "旧事物中孕育新事物", "春来冬去", "昼夜交替"], answer: 1 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 国务院国资委召开的是什么会议？", options: ["5G产业推进会", "中央企业6G未来产业推进会", "科技创新大会", "数字经济发展会"], answer: 1 },
+            { q: "12. 中央企业如何推进6G关键技术攻关？", options: ["各自为战", "组建联合体", "委托国外", "等待引进"], answer: 1 },
+            { q: "13. 围绕技术图谱系统布局技术任务多少项？", options: ["51项", "61项", "71项", "81项"], answer: 2 },
+            { q: "14. 中国公开6G专利多少件？", options: ["3300多件", "4300多件", "5300多件", "6300多件"], answer: 2 },
+            { q: "15. 6G在什么设备研发取得突破？", options: ["手机屏幕", "6G卫星终端与基站的芯片器件等核心设备", "电池", "天线外壳"], answer: 1 },
+            { q: "16. 6G应用场景覆盖哪些领域？", options: ["只有通信", "轨道交通、电力系统等多领域", "只有军事", "只有医疗"], answer: 1 },
+            { q: "17. 文章中提到中国科技发展的独特优势是什么？", options: ["资金充足", "集中力量办大事", "人才众多", "技术引进"], answer: 1 },
+            { q: "18. 中国6G专利在全球处于什么位置？", options: ["落后", "不重要", "占据重要位置", "最后一名"], answer: 2 },
+            { q: "19. 文章结尾号召中学生怎么做？", options: ["玩耍", "努力学习，为祖国科技发展贡献力量", "出国", "创业"], answer: 1 },
+            { q: "20. 这篇文章的中心思想是什么？", options: ["6G技术很复杂", "中国6G发展体现创新精神和国家力量，激励青少年科技报国", "外国技术更先进", "6G离我们很远"], answer: 1 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 针对哪些地区启动防汛四级应急响应？", options: ["北京、上海、广东", "北京、天津、河北、内蒙古、青海", "四川、云南、贵州", "黑龙江、吉林、辽宁"], answer: 1 },
+            { q: "22. 何时启动防汛四级应急响应？", options: ["8月24日10时", "8月25日10时", "8月25日8时", "8月26日10时"], answer: 1 },
+            { q: "23. 哪些地区可能有大到暴雨？", options: ["广东、广西", "青海东部和南部、内蒙古西部、河北中部、北京、天津等地", "山东、河南", "浙江、福建"], answer: 1 },
+            { q: "24. 第二十六届投洽会在哪里举行？", options: ["福建福州", "福建厦门", "广东深圳", "上海"], answer: 1 },
+            { q: "25. 投洽会什么时候举行？", options: ["9月1日至5日", "9月8日至11日", "9月10日至15日", "9月15日至20日"], answer: 1 },
+            { q: "26. 投洽会首次设置什么？", options: ["双主宾省", "双主宾国", "双主宾城", "双主宾区"], answer: 1 },
+            { q: "27. 双主宾国由哪两个国家担任？", options: ["美国和日本", "芬兰和沙特", "法国和德国", "英国和意大利"], answer: 1 },
+            { q: "28. 有多少个国家和地区代表团报名参加投洽会？", options: ["103个", "113个", "123个", "133个"], answer: 2 },
+            { q: "29. 有多少个国家和地区设展？", options: ["40个", "50个", "60个", "70个"], answer: 2 },
+            { q: "30. 习近平致电祝贺谁就任孟加拉国总统？", options: ["哈西娜", "阿拉姆吉尔", "穆伊兹", "亚明"], answer: 1 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《观沧海》的作者是哪个朝代的人？", options: ["西汉", "东汉", "三国", "西晋"], answer: 1 },
+            { q: "2. \"东临碣石\"中\"临\"的意思是？", options: ["靠近", "登上、到达", "面临", "临时"], answer: 1 },
+            { q: "3. \"沧海\"在诗中指哪片海？", options: ["东海", "南海", "渤海", "黄海"], answer: 2 },
+            { q: "4. \"水何澹澹\"中\"何\"的用法是？", options: ["多么", "什么", "为什么", "如何"], answer: 0 },
+            { q: "5. \"山岛竦峙\"中\"竦峙\"的意思是？", options: ["低矮", "高高耸立", "弯曲", "倾斜"], answer: 1 },
+            { q: "6. \"秋风萧瑟\"中\"萧瑟\"形容什么？", options: ["风和日丽", "风声凄清", "秋雨", "秋收"], answer: 1 },
+            { q: "7. \"幸甚至哉\"中\"幸\"的意思是？", options: ["幸运", "幸福", "幸好", "运气"], answer: 0 },
+            { q: "8. \"歌以咏志\"表达了诗人怎样的志向？", options: ["隐居山林", "统一天下的雄心壮志", "游山玩水", "饮酒作乐"], answer: 1 },
+            { q: "9. 《观沧海》全诗以哪个字统领？", options: ["临", "观", "望", "看"], answer: 1 },
+            { q: "10. \"日月之行，若出其中\"用了什么修辞手法？", options: ["比喻", "拟人", "夸张", "对偶"], answer: 2 },
+            { q: "11. 《次北固山下》的作者王湾是哪个朝代的诗人？", options: ["初唐", "盛唐", "中唐", "晚唐"], answer: 0 },
+            { q: "12. \"次北固山下\"中\"北固山\"在今哪里？", options: ["江苏南京", "江苏镇江", "江苏苏州", "浙江杭州"], answer: 1 },
+            { q: "13. \"客路青山外\"中\"客路\"的意思是？", options: ["客人的路", "旅途", "客栈的路", "客人来了"], answer: 1 },
+            { q: "14. \"潮平两岸阔\"中\"潮平\"的意思是？", options: ["潮水平静", "潮水涨满", "潮水退去", "潮水很小"], answer: 1 },
+            { q: "15. \"风正一帆悬\"中\"风正\"的意思是？", options: ["风向正", "风向顺且风力适度", "风很大", "风停了"], answer: 1 },
+            { q: "16. \"海日生残夜\"中\"生\"字的妙处在于？", options: ["写出太阳升起", "赋予太阳生命，表现新旧交替", "形容天亮", "形容日出"], answer: 1 },
+            { q: "17. \"江春入旧年\"蕴含的哲理是？", options: ["春天来了", "旧事物中孕育新事物", "冬天过去", "江水变暖"], answer: 1 },
+            { q: "18. \"乡书何处达\"表达了诗人什么情感？", options: ["喜悦", "思乡之情", "愤怒", "悲伤"], answer: 1 },
+            { q: "19. \"归雁洛阳边\"中\"归雁\"寄托了什么？", options: ["思乡和寄书的希望", "对大雁的喜爱", "对自然的赞美", "对春天的期盼"], answer: 0 },
+            { q: "20. \"海日生残夜，江春入旧年\"被誉为什么？", options: ["千古绝唱", "千古名句", "千古奇句", "千古佳句"], answer: 1 },
+            { q: "21. 国务院国资委召开的6G会议名称是？", options: ["6G技术大会", "中央企业6G未来产业推进会", "6G发展论坛", "6G创新峰会"], answer: 1 },
+            { q: "22. 中央企业推进6G攻关采取的形式是？", options: ["单打独斗", "组建联合体", "引进技术", "合作外包"], answer: 1 },
+            { q: "23. 中国公开6G专利多少件？", options: ["3300多件", "4300多件", "5300多件", "6300多件"], answer: 2 },
+            { q: "24. 6G核心设备研发突破包括什么？", options: ["手机外壳", "6G卫星终端与基站的芯片器件", "显示屏", "电池"], answer: 1 },
+            { q: "25. 6G应用场景不包括以下哪个领域？", options: ["轨道交通", "电力系统", "航天旅行", "智慧城市"], answer: 2 },
+            { q: "26. 文章中提到的中国科技发展独特优势是？", options: ["资金充足", "集中力量办大事", "人口众多", "地大物博"], answer: 1 },
+            { q: "27. 中国6G专利在全球处于什么地位？", options: ["落后", "一般", "占据重要位置", "领先所有国家"], answer: 2 },
+            { q: "28. 防汛四级应急响应针对哪些地区？", options: ["京津冀蒙青", "京津冀晋鲁", "川渝黔滇藏", "黑吉辽蒙新"], answer: 0 },
+            { q: "29. 防汛应急响应何时启动？", options: ["8月24日10时", "8月25日10时", "8月26日10时", "8月25日8时"], answer: 1 },
+            { q: "30. 第二十六届投洽会举办地是？", options: ["福州", "厦门", "深圳", "上海"], answer: 1 },
+            { q: "31. 投洽会举办时间是？", options: ["9月1-5日", "9月8-11日", "9月10-14日", "9月15-20日"], answer: 1 },
+            { q: "32. 投洽会双主宾国是？", options: ["美国、日本", "芬兰、沙特", "法国、德国", "英国、意大利"], answer: 1 },
+            { q: "33. 报名参加投洽会的国家和地区有多少？", options: ["113个", "123个", "133个", "143个"], answer: 1 },
+            { q: "34. 投洽会设展的国家和地区有多少？", options: ["50个", "60个", "70个", "80个"], answer: 1 },
+            { q: "35. 习近平祝贺谁就任孟加拉国总统？", options: ["哈西娜", "阿拉姆吉尔", "穆伊兹", "亚明"], answer: 1 },
+            { q: "36. 中孟建交多少年？", options: ["41年", "51年", "61年", "71年"], answer: 1 },
+            { q: "37. 下列词语中字形完全正确的是：", options: ["萧瑟", "萧澀", "箫瑟", "肃瑟"], answer: 0 },
+            { q: "38. \"坚持不懈\"的近义词是：", options: ["半途而废", "锲而不舍", "浅尝辄止", "三天打鱼"], answer: 1 },
+            { q: "39. 下列句子没有语病的是：", options: ["通过6G技术发展，使中国强大", "6G技术的发展使中国更加强大", "通过6G技术，使中国更强大", "6G技术发展使中国强大，更强大"], answer: 1 },
+            { q: "40. \"日月之行，若出其中\"与\"星汉灿烂，若出其里\"构成什么关系？", options: ["比喻", "对偶", "拟人", "排比"], answer: 1 },
+            { q: "41. \"海日生残夜，江春入旧年\"中\"生\"和\"入\"用得精妙，这属于？", options: ["比喻精当", "炼字精妙", "夸张恰当", "对偶工整"], answer: 1 },
+            { q: "42. 下列对\"澹澹\"解释正确的是：", options: ["水深的样子", "水波荡漾的样子", "水清的样子", "水急的样子"], answer: 1 },
+            { q: "43. \"幸甚至哉\"中\"至\"的意思是？", options: ["到达", "极、最", "至于", "至今"], answer: 1 },
+            { q: "44. 曹操是三国时期哪一方的领袖？", options: ["蜀汉", "东吴", "曹魏", "西晋"], answer: 2 },
+            { q: "45. \"集中力量办大事\"体现了什么精神？", options: ["个人主义", "团结协作", "各自为政", "消极等待"], answer: 1 },
+            { q: "46. 下列哪个成语最适合形容6G科研人员？", options: ["半途而废", "锲而不舍", "随遇而安", "得过且过"], answer: 1 },
+            { q: "47. \"自主创新\"的意思是？", options: ["自己创造", "依靠自身力量进行创新创造", "自己动手", "自己改革"], answer: 1 },
+            { q: "48. 下列对\"科技报国\"理解正确的是？", options: ["用科技赚钱", "用科技力量报效祖国", "科技可以强国", "科技很重要"], answer: 1 },
+            { q: "49. \"从跟跑到并跑再到领跑\"说明中国科技？", options: ["越来越落后", "不断进步、实现超越", "一直领先", "停滞不前"], answer: 1 },
+            { q: "50. 对全文内容理解最准确的一项是？", options: ["6G只是一项技术", "6G时代的中国力量是技术与精神的统一，激励青少年报国", "中国6G已经完全领先世界", "6G发展不需要努力"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

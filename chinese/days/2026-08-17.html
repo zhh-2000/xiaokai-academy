@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月17日 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', 'SimSun', serif; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .header h1 { color: #e74c3c; font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { color: #666; font-size: 1.2em; }
+        .progress-bar { background: #e0e0e0; border-radius: 10px; height: 30px; margin-top: 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #e74c3c, #c0392b); height: 100%; width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .section { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .section-title { color: #e74c3c; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: #c0392b; }
+        .poem-box { background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%); border-radius: 15px; padding: 30px; margin-bottom: 20px; border-left: 5px solid #e74c3c; }
+        .poem-title { color: #333; font-size: 1.6em; margin-bottom: 10px; text-align: center; }
+        .poem-author { color: #666; font-size: 1.1em; text-align: center; margin-bottom: 20px; }
+        .poem-content { font-size: 1.3em; line-height: 2.5; text-align: center; color: #333; }
+        .poem-content p { margin: 10px 0; }
+        .modern-article { background: #f8f9fa; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .article-title { color: #333; font-size: 1.4em; margin-bottom: 15px; font-weight: bold; }
+        .article-content { color: #555; line-height: 2; font-size: 1.1em; text-indent: 2em; }
+        .current-news { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 15px; padding: 25px; margin-bottom: 20px; border-left: 5px solid #4caf50; }
+        .news-badge { display: inline-block; background: #4caf50; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; margin-bottom: 15px; }
+        .question-item { background: #fff; border: 2px solid #e0e0e0; border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+        .question-text { color: #333; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
+        .options { display: grid; gap: 10px; }
+        .option { padding: 15px 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option:hover { background: #ffebee; border-color: #e74c3c; }
+        .option.selected { background: #e74c3c; color: white; border-color: #e74c3c; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .btn { padding: 15px 40px; border: none; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+        .btn-primary { background: linear-gradient(90deg, #e74c3c, #c0392b); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4); }
+        .btn-success { background: linear-gradient(90deg, #4caf50, #45a049); color: white; }
+        .btn-success:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .stat-card { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border-radius: 15px; padding: 25px; text-align: center; color: white; }
+        .stat-card .number { font-size: 3em; font-weight: bold; }
+        .stat-card .label { font-size: 1.1em; opacity: 0.9; }
+        .test-timer { background: #fff3e0; border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .test-timer .time { font-size: 3em; color: #e74c3c; font-weight: bold; }
+        .test-timer .label { color: #666; }
+        .result-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .result-content { background: white; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; width: 90%; }
+        .result-score { font-size: 5em; color: #e74c3c; font-weight: bold; }
+        .result-message { font-size: 1.5em; color: #333; margin: 20px 0; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 15px 30px; background: white; border: 2px solid #e0e0e0; border-radius: 30px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .tab:hover { border-color: #e74c3c; }
+        .tab.active { background: linear-gradient(90deg, #e74c3c, #c0392b); color: white; border-color: transparent; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #f5f5f5; border-radius: 10px; color: #666; text-decoration: none; margin-bottom: 20px; transition: all 0.3s; }
+        .back-btn:hover { background: #e0e0e0; }
+        .annotation-box { background: #fff; border: 2px dashed #e74c3c; border-radius: 10px; padding: 20px; margin-top: 20px; }
+        .annotation-title { color: #e74c3c; font-weight: bold; margin-bottom: 10px; }
+        .annotation-content { color: #555; line-height: 1.8; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } .section-title { font-size: 1.4em; } .poem-content { font-size: 1.1em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回语文首页</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-pen-fancy"></i> 语文学习</h1>
+            <p class="date">2026年8月17日 星期日</p>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('poem')">古诗词</div>
+            <div class="tab" onclick="showSection('modern')">现代文</div>
+            <div class="tab" onclick="showSection('news')">时文阅读</div>
+            <div class="tab" onclick="showSection('test')">综合测试</div>
+        </div>
+        
+        <!-- 古诗词部分 -->
+        <div id="poemSection" class="section">
+            <h2 class="section-title"><i class="fas fa-scroll"></i> 古诗词学习</h2>
+            
+            <div class="poem-box">
+                <h3 class="poem-title">钱塘湖春行</h3>
+                <p class="poem-author">【唐】白居易</p>
+                <div class="poem-content">
+                    <p>孤山寺北贾亭西，水面初平云脚低。</p>
+                    <p>几处早莺争暖树，谁家新燕啄春泥。</p>
+                    <p>乱花渐欲迷人眼，浅草才能没马蹄。</p>
+                    <p>最爱湖东行不足，绿杨阴里白沙堤。</p>
+                </div>
+            </div>
+            
+            <div class="annotation-box">
+                <p class="annotation-title">【注释】</p>
+                <div class="annotation-content">
+                    <p><strong>钱塘湖</strong>：即杭州西湖。</p>
+                    <p><strong>孤山寺</strong>：在西湖后湖的孤山上。</p>
+                    <p><strong>贾亭</strong>：又叫贾公亭，在西湖边上。</p>
+                    <p><strong>水面初平</strong>：春天湖水初涨，水面与岸齐平。</p>
+                    <p><strong>云脚低</strong>：云层低垂，好像要与湖面相接。</p>
+                    <p><strong>早莺</strong>：初春早来的黄鹂。</p>
+                    <p><strong>争暖树</strong>：争着飞向朝阳的树枝。</p>
+                    <p><strong>新燕</strong>：刚从南方飞回来的燕子。</p>
+                    <p><strong>啄春泥</strong>：燕子衔泥筑巢。</p>
+                    <p><strong>乱花</strong>：各种颜色的野花。</p>
+                    <p><strong>渐欲</strong>：渐渐要。</p>
+                    <p><strong>行不足</strong>：游赏不够。</p>
+                </div>
+            </div>
+            
+            <div class="poem-box">
+                <h3 class="poem-title">泊秦淮</h3>
+                <p class="poem-author">【唐】杜牧</p>
+                <div class="poem-content">
+                    <p>烟笼寒水月笼沙，夜泊秦淮近酒家。</p>
+                    <p>商女不知亡国恨，隔江犹唱后庭花。</p>
+                </div>
+            </div>
+            
+            <div class="annotation-box">
+                <p class="annotation-title">【注释】</p>
+                <div class="annotation-content">
+                    <p><strong>秦淮</strong>：即秦淮河，流经南京。</p>
+                    <p><strong>烟笼寒水</strong>：烟雾笼罩着清冷的河水。</p>
+                    <p><strong>月笼沙</strong>：月光笼罩着沙滩。</p>
+                    <p><strong>商女</strong>：以卖唱为生的歌女。</p>
+                    <p><strong>亡国恨</strong>：亡国的悲恨，指陈朝灭亡。</p>
+                    <p><strong>后庭花</strong>：《玉树后庭花》，陈后主所作，被视为亡国之音。</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="savePoemProgress()"><i class="fas fa-check"></i> 已掌握古诗词</button>
+            </div>
+        </div>
+        
+        <!-- 现代文部分 -->
+        <div id="modernSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-book"></i> 现代文阅读</h2>
+            
+            <div class="modern-article">
+                <h3 class="article-title">春（节选）</h3>
+                <p class="article-content">
+                    盼望着，盼望着，东风来了，春天的脚步近了。一切都像刚睡醒的样子，欣欣然张开了眼。山朗润起来了，水涨起来了，太阳的脸红起来了。小草偷偷地从土里钻出来，嫩嫩的，绿绿的。园子里，田野里，瞧去，一大片一大片满是的。坐着，躺着，打两个滚，踢几脚球，赛几趟跑，捉几回迷藏。风轻悄悄的，草软绵绵的。
+                </p>
+                <p class="article-content">
+                    桃树、杏树、梨树，你不让我，我不让你，都开满了花赶趟儿。红的像火，粉的像霞，白的像雪。花里带着甜味儿；闭了眼，树上仿佛已经满是桃儿、杏儿、梨儿。花下成千成百的蜜蜂嗡嗡地闹着，大小的蝴蝶飞来飞去。野花遍地是：杂样儿，有名字的，没名字的，散在草丛里，像眼睛，像星星，还眨呀眨的。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">1. "小草偷偷地从土里钻出来"运用了什么修辞手法？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'A')">A. 比喻</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'B')">B. 拟人</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'C')">C. 夸张</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'D')">D. 排比</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">2. "红的像火，粉的像霞，白的像雪"运用了什么修辞？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'A')">A. 比喻和排比</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'B')">B. 只有比喻</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'C')">C. 只有排比</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'D')">D. 拟人</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">3. "你不让我，我不让你"表现了什么？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'A')">A. 花儿们竞争激烈</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'B')">B. 花儿竞相开放的生机勃勃</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'C')">C. 花儿互相打架</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'D')">D. 花儿在争吵</div>
+                </div>
+            </div>
+            
+            <div class="modern-article">
+                <h3 class="article-title">故乡（节选）</h3>
+                <p class="article-content">
+                    我冒着严寒，回到相隔二千余里，别了二十余年的故乡去。时候既然是深冬，渐近故乡时，天气又阴晦了，冷风吹进船舱中，呜呜的响，从蓬隙向外一望，苍黄的天底下，远近横着几个萧索的荒村，没有一些活气。我的心禁不住悲凉起来了。
+                </p>
+                <p class="article-content">
+                    阿！这不是我二十年来时时记得的故乡？我所记得的故乡全不如此。我的故乡好得多了。但要我记起他的美丽，说出他的佳处来，却又没有影像，没有言辞了。仿佛也就如此。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">4. "苍黄的天底下，远近横着几个萧索的荒村"描写的是什么景象？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'A')">A. 故乡的美丽景色</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'B')">B. 故乡萧条衰败的景象</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'C')">C. 故乡繁华热闹</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'D')">D. 故乡春天的美景</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">5. 作者为什么感到"悲凉"？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'A')">A. 天气冷</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'B')">B. 故乡与自己记忆中的美好形成对比，感到失望</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'C')">C. 身体不舒服</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'D')">D. 路途遥远疲惫</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitModernAnswers()"><i class="fas fa-check"></i> 提交现代文答案</button>
+            </div>
+        </div>
+        
+        <!-- 时文阅读部分 -->
+        <div id="newsSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 时文阅读</h2>
+            
+            <div class="current-news">
+                <span class="news-badge">2026年8月16日 央视新闻</span>
+                <h3 class="article-title">中国成功发射卫星互联网低轨24组卫星</h3>
+                <p class="article-content">
+                    北京时间2026年8月16日12时10分，我国在海南商业航天发射场使用长征十二号运载火箭，成功将卫星互联网低轨24组卫星发射升空，卫星顺利进入预定轨道，发射任务获得圆满成功。这是海南商业航天发射场作为我国首个商业航天港发挥重要作用的又一里程碑。卫星互联网星座将为全球通信能力提供重要支撑，包括电信、导航和数据服务等应用领域。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">6. 卫星发射的时间是？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'A')">A. 8月15日</div>
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'B')">B. 8月16日12时10分</div>
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'C')">C. 8月17日</div>
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'D')">D. 8月18日</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">7. 发射地点是？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'A')">A. 酒泉卫星发射中心</div>
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'B')">B. 西昌卫星发射中心</div>
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'C')">C. 海南商业航天发射场</div>
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'D')">D. 太原卫星发射中心</div>
+                </div>
+            </div>
+            
+            <div class="current-news">
+                <span class="news-badge">2026年8月16日 央视新闻</span>
+                <h3 class="article-title">中国成为"世界创新实验室"</h3>
+                <p class="article-content">
+                    2026年8月16日，央视新闻报道，中国正在成为新技术加速走向现实应用的一座"世界创新实验室"。从大模型、机器人到创新药研发，中国产品得到全球用户追捧的同时，中国人工智能等前沿产业的最新动向也成为全球企业关注的焦点。这体现了中国在科技创新领域的快速发展，以及将研究成果转化为实际应用的能力。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">8. 中国被称为"世界创新实验室"的原因是？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'A')">A. 中国人口多</div>
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'B')">B. 新技术加速从研发到应用的转化</div>
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'C')">C. 中国面积大</div>
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'D')">D. 中国历史悠久</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">9. 文中提到的创新领域包括？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'A')">A. 大模型、机器人、创新药研发</div>
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'B')">B. 只有农业</div>
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'C')">C. 只有制造业</div>
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'D')">D. 只有旅游业</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">10. 中国产品在全球的 reception 是？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'A')">A. 被忽视</div>
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'B')">B. 得到用户追捧</div>
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'C')">C. 被抵制</div>
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'D')">D. 没人关注</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitNewsAnswers()"><i class="fas fa-check"></i> 提交时文答案</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试部分 -->
+        <div id="testSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 综合测试 (50题)</h2>
+            
+            <div class="test-timer">
+                <div class="time" id="timer">45:00</div>
+                <div class="label">剩余时间</div>
+            </div>
+            
+            <div id="testQuestions"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitTest()"><i class="fas fa-paper-plane"></i> 提交测试</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card"><div class="number" id="poemScore">-</div><div class="label">古诗词掌握</div></div>
+            <div class="stat-card"><div class="number" id="readingScore">-</div><div class="label">阅读理解得分</div></div>
+            <div class="stat-card"><div class="number" id="testScore">-</div><div class="label">测试得分</div></div>
+            <div class="stat-card"><div class="number" id="totalProgress">0%</div><div class="label">总体完成度</div></div>
+        </div>
+    </div>
+    
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="result-score" id="finalScore">0</div>
+            <div class="result-message" id="resultMessage">继续努力！</div>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">确定</button>
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'xiaokai_chinese_2026_08_17';
+        
+        const answers = {
+            modern: { 1: 'B', 2: 'A', 3: 'B', 4: 'B', 5: 'B' },
+            news: { 6: 'B', 7: 'C', 8: 'B', 9: 'A', 10: 'B' }
+        };
+        
+        let userData = { poemLearned: false, modernAnswers: {}, newsAnswers: {}, testAnswers: {} };
+        
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) { userData = JSON.parse(saved); updateProgress(); }
+        }
+        
+        function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(userData)); }
+        
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('poemSection').style.display = section === 'poem' ? 'block' : 'none';
+            document.getElementById('modernSection').style.display = section === 'modern' ? 'block' : 'none';
+            document.getElementById('newsSection').style.display = section === 'news' ? 'block' : 'none';
+            document.getElementById('testSection').style.display = section === 'test' ? 'block' : 'none';
+        }
+        
+        function selectOption(element, type, questionNum, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            if (type === 'modern') userData.modernAnswers[questionNum] = answer;
+            else if (type === 'news') userData.newsAnswers[questionNum] = answer;
+            saveData();
+        }
+        
+        function savePoemProgress() {
+            userData.poemLearned = true;
+            saveData();
+            updateProgress();
+            document.getElementById('poemScore').textContent = '已掌握';
+            alert('古诗词学习进度已保存！');
+        }
+        
+        function submitModernAnswers() {
+            let correct = 0;
+            for (let i = 1; i <= 5; i++) { if (userData.modernAnswers[i] === answers.modern[i]) correct++; }
+            userData.modernScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('readingScore').textContent = correct + '/10';
+            alert('现代文阅读完成！得分：' + correct + '/5');
+        }
+        
+        function submitNewsAnswers() {
+            let correct = 0;
+            for (let i = 6; i <= 10; i++) { if (userData.newsAnswers[i] === answers.news[i]) correct++; }
+            userData.newsScore = correct;
+            saveData();
+            updateProgress();
+            const totalReading = (userData.modernScore || 0) + correct;
+            document.getElementById('readingScore').textContent = totalReading + '/10';
+            alert('时文阅读完成！得分：' + correct + '/5');
+        }
+        
+        function generateTestQuestions() {
+            const container = document.getElementById('testQuestions');
+            const questions = [
+                // 字音字形（10题）
+                { q: '"孤山寺"中"孤"的读音是：', opts: ['gū', 'hú', 'gǔ', 'gù'], a: 'gū' },
+                { q: '"贾亭"中"贾"的读音是：', opts: ['jiǎ', 'gǔ', 'jià', 'gū'], a: 'jiǎ' },
+                { q: '"水面初平"中"初"的意思是：', opts: ['开始', '第一次', '刚刚', '原来'], a: '刚刚' },
+                { q: '"争暖树"中"争"的意思是：', opts: ['争吵', '争着', '竞争', '争夺'], a: '争着' },
+                { q: '"啄春泥"描写的是：', opts: ['黄鹂', '燕子', '喜鹊', '麻雀'], a: '燕子' },
+                { q: '"乱花渐欲迷人眼"中"渐欲"的意思是：', opts: ['想要', '渐渐要', '希望', '打算'], a: '渐渐要' },
+                { q: '《钱塘湖春行》描写的是哪个季节？', opts: ['春季', '夏季', '秋季', '冬季'], a: '春季' },
+                { q: '"白沙堤"在今天的哪里？', opts: ['北京', '杭州西湖', '南京', '苏州'], a: '杭州西湖' },
+                { q: '《泊秦淮》的作者是：', opts: ['李白', '杜甫', '杜牧', '白居易'], a: '杜牧' },
+                { q: '"后庭花"被称为什么？', opts: ['经典歌曲', '亡国之音', '民间小调', '宫廷雅乐'], a: '亡国之音' },
+                
+                // 古诗词理解（15题）
+                { q: '《钱塘湖春行》描写的地点是：', opts: ['洞庭湖', '西湖', '太湖', '鄱阳湖'], a: '西湖' },
+                { q: '"几处早莺争暖树"表现了：', opts: ['鸟儿打架', '春天的生机', '天气寒冷', '树木茂盛'], a: '春天的生机' },
+                { q: '"乱花渐欲迷人眼"说明：', opts: ['花太多不好看', '花儿繁茂', '人眼睛不好', '花不好看'], a: '花儿繁茂' },
+                { q: '"最爱湖东行不足"表达了诗人：', opts: ['疲惫', '流连忘返', '想回家', '肚子饿'], a: '流连忘返' },
+                { q: '《钱塘湖春行》的整体基调是：', opts: ['悲伤', '欢快喜爱', '愤怒', '平静'], a: '欢快喜爱' },
+                { q: '"烟笼寒水"中的"笼"字的作用是：', opts: ['说明有笼子', '形象写出烟雾笼罩', '遮挡', '固定'], a: '形象写出烟雾笼罩' },
+                { q: '"商女不知亡国恨"表达的感情是：', opts: ['对商女的喜爱', '对统治者的讽刺', '对歌女的同情', '对音乐的欣赏'], a: '对统治者的讽刺' },
+                { q: '《泊秦淮》写于什么朝代？', opts: ['汉', '唐', '宋', '明'], a: '唐' },
+                { q: '秦淮河在今天的哪个城市？', opts: ['北京', '南京', '杭州', '苏州'], a: '南京' },
+                { q: '"夜泊秦淮近酒家"说明诗人：', opts: ['喝酒了', '停船住宿', '路过', '白天游玩'], a: '停船住宿' },
+                { q: '《钱塘湖春行》的作者是：', opts: ['李白', '杜甫', '白居易', '杜牧'], a: '白居易' },
+                { q: '两首诗的共同点是：', opts: ['都是唐诗', '都写春天', '都是七律', '都写湖泊'], a: '都是唐诗' },
+                { q: '"水面初平云脚低"描写的是：', opts: ['夏天的湖面', '春天湖水初涨', '秋天的湖面', '冬天的湖面'], a: '春天湖水初涨' },
+                { q: '"隔江犹唱后庭花"中"犹"的意思是：', opts: ['犹豫', '还，仍然', '尤其', '更加'], a: '还，仍然' },
+                { q: '《泊秦淮》的主题是：', opts: ['写景', '怀古讽今', '思乡', '送别'], a: '怀古讽今' },
+                
+                // 现代文理解（15题）
+                { q: '《春》的作者是：', opts: ['鲁迅', '老舍', '朱自清', '巴金'], a: '朱自清' },
+                { q: '"小草偷偷地从土里钻出来"运用了：', opts: ['比喻', '拟人', '夸张', '排比'], a: '拟人' },
+                { q: '"红的像火，粉的像霞，白的像雪"描写的是：', opts: ['小草', '花朵', '树木', '云彩'], a: '花朵' },
+                { q: '"花里带着甜味儿"运用了什么感觉？', opts: ['视觉', '听觉', '嗅觉', '触觉'], a: '嗅觉' },
+                { q: '"像眼睛，像星星"描写的是：', opts: ['蜜蜂', '蝴蝶', '野花', '露珠'], a: '野花' },
+                { q: '《故乡》的作者是：', opts: ['鲁迅', '朱自清', '老舍', '巴金'], a: '鲁迅' },
+                { q: '"萧索的荒村"描写的是：', opts: ['春天的故乡', '深冬萧条的故乡', '夏天的故乡', '热闹的故乡'], a: '深冬萧条的故乡' },
+                { q: '作者回到故乡时的心情是：', opts: ['快乐', '悲凉', '平静', '愤怒'], a: '悲凉' },
+                { q: '"没有一些活气"说明故乡：', opts: ['很安静', '没有生机', '人少', '空气不好'], a: '没有生机' },
+                { q: '"我所记得的故乡全不如此"说明：', opts: ['记忆中的故乡更好', '现实更好', '记忆错误', '没有变化'], a: '记忆中的故乡更好' },
+                { q: '《春》的主题是：', opts: ['怀念故乡', '赞美春天', '批判社会', '思念亲人'], a: '赞美春天' },
+                { q: '《故乡》的主题是：', opts: ['赞美春天', '反映农村的衰败和农民的困苦', '写景', '思乡'], a: '反映农村的衰败和农民的困苦' },
+                { q: '"风轻悄悄的，草软绵绵的"运用了：', opts: ['比喻', '拟人', '排比', '夸张'], a: '拟人' },
+                { q: '"欣欣然"的意思是：', opts: ['悲伤', '高兴的样子', '生气', '着急'], a: '高兴的样子' },
+                { q: '"苍黄的天"中"苍黄"描写的是：', opts: ['美丽的颜色', '阴沉萧条的气氛', '天空的颜色', '晚霞'], a: '阴沉萧条的气氛' },
+                
+                // 时文阅读（5题）
+                { q: '卫星发射的时间是8月几日？', opts: ['15日', '16日', '17日', '18日'], a: '16日' },
+                { q: '发射地点在哪个省？', opts: ['北京', '上海', '海南', '广东'], a: '海南' },
+                { q: '中国被称为什么？', opts: ['世界工厂', '世界创新实验室', '文明古国', '东方明珠'], a: '世界创新实验室' },
+                { q: '文中提到的创新领域有：', opts: ['只有农业', '大模型、机器人、创新药', '只有制造业', '只有教育'], a: '大模型、机器人、创新药' },
+                { q: '中国产品在全球的反应是：', opts: ['被忽视', '得到用户追捧', '被抵制', '无人知晓'], a: '得到用户追捧' },
+                
+                // 语言运用（5题）
+                { q: '下列句子没有语病的是：', opts: ['通过学习使我进步很大', '他的学习态度是端正的', '我们要发扬优点', '他做事很认真负责'], a: '他做事很认真负责' },
+                { q: '下列词语书写正确的是：', opts: ['惦记', '掂记', '惦记', '惦记'], a: '惦记' },
+                { q: '下列句子标点使用正确的是：', opts: ['他说，"我走了"', '他说："我走了。"', '他说"我走了"', '他说："我走了"'], a: '他说："我走了。"' },
+                { q: '下列成语使用正确的是：', opts: ['他办事斤斤计较', '他学习孜孜不倦', '他为人斤斤计较', '他工作无所事事'], a: '他学习孜孜不倦' },
+                { q: '下列句子是比喻句的是：', opts: ['他好像很累', '他像他父亲', '弯弯的月亮像小船', '大家像一家人'], a: '弯弯的月亮像小船' }
+            ];
+            
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <p class="question-text">${i + 1}. ${q.q}</p>
+                    <div class="options">
+                        ${q.opts.map((opt, j) => `<div class="option" onclick="selectTestOption(this, ${i}, '${opt}')">${String.fromCharCode(65 + j)}. ${opt}</div>`).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            return questions;
+        }
+        
+        let testQuestions = [];
+        let timerInterval = null;
+        let timeLeft = 2700;
+        
+        function selectTestOption(element, questionIndex, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            userData.testAnswers[questionIndex] = answer;
+            saveData();
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+            }, 1000);
+        }
+        
+        function submitTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            let correct = 0;
+            testQuestions.forEach((q, i) => { if (userData.testAnswers[i] === q.a) correct++; });
+            userData.testScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('testScore').textContent = correct + '/50';
+            document.getElementById('finalScore').textContent = correct;
+            
+            let message = '';
+            if (correct >= 45) message = '太棒了！你真是语文小能手！';
+            else if (correct >= 40) message = '很好！继续保持！';
+            else if (correct >= 35) message = '不错，还有进步空间！';
+            else if (correct >= 30) message = '及格了，继续努力！';
+            else message = '需要加油哦！多读多练！';
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+        
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
+        
+        function updateProgress() {
+            let progress = 0;
+            if (userData.poemLearned) progress += 30;
+            if (userData.modernScore) progress += 20;
+            if (userData.newsScore) progress += 20;
+            if (userData.testScore) progress += 30;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressFill').textContent = Math.round(progress) + '%';
+            document.getElementById('totalProgress').textContent = Math.round(progress) + '%';
+            if (userData.poemLearned) document.getElementById('poemScore').textContent = '已掌握';
+        }
+        
+        window.onload = function() {
+            loadData();
+            testQuestions = generateTestQuestions();
+            startTimer();
+        };
+    </script>
+</body>
+</html>

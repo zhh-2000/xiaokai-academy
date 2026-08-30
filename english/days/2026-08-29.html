@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月29日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月29日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>China's Qixi Festival Sparks Nationwide Celebrations</h3>
+                    <p>On August 29, 2026, China celebrated its annual Qixi Festival, often described as the nation's own Valentine's Day, coinciding with the seventh day of the seventh lunar month. The festival sparked a nationwide surge in weddings and romantic celebrations across the country.</p>
+                    <p>In Shanghai, marriage registration offices were overwhelmed by demand. In Changning District, online booking slots for wedding registrations — the highest in years — were fully reserved within seconds, underscoring the popularity of the day as an auspicious occasion for couples.</p>
+                    <p>In Guangzhou, Guangdong Province, 15 couples took part in a mass wedding held atop an outdoor platform 50 meters above ground at the Guangzhou Tower. The ceremony, filled with applause and affection, highlighted the symbolic importance of the festival for many newlyweds.</p>
+                    <p>The flower markets in Kunming, Yunnan Province, were equally lively. Demand for roses, carnations, and sunflowers surged, driving prices up more than tenfold. A standard 20-stem bouquet that usually sells for 10 yuan exceeded 100 yuan. Traders attributed the sharp increase to reduced flower yields caused by unfavorable weather, with the overall fresh flower price index climbing over 60% compared with pre-festival levels.</p>
+                    <p>Despite lower production, the Kunming International Flower Auction Center reported maintaining an average daily supply of more than 6 million stems, ensuring ample availability for celebrations nationwide.</p>
+                    <p>The Qixi Festival, rooted in a centuries-old legend of star-crossed lovers, continues to blend tradition with modern consumer culture, reaffirming its status as one of China's most cherished celebrations of love.</p>
+                    <span class="source">Source: China Daily, Thai Times, 2026-08-29</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Typhoon Saudel Makes Landfall in Zhejiang, Rescue Efforts Continue in Xizang</h3>
+                    <p>Typhoon Saudel, the 18th typhoon of 2026, made landfall along the coast of Yuhuan, a city under the jurisdiction of Taizhou, Zhejiang Province, at around 8:05 a.m. on August 28, 2026, packing maximum sustained winds of 35 meters per second near its center.</p>
+                    <p>The Zhejiang provincial meteorological observatory reported that the typhoon brought heavy rain and rough seas to coastal areas. Taizhou city had already elevated its typhoon emergency response to Level I, the highest level, in preparation for the storm's arrival. The typhoon was expected to move westward into Fujian and Jiangxi provinces, bringing risks of flash floods, geological disasters, and urban waterlogging.</p>
+                    <p>Meanwhile, in Southwest China's Xizang autonomous region, rescue efforts continued following a devastating mudslide that hit the Gyirong border port on August 26. A 15-member reconnaissance team from China Anneng, a State-owned engineering and rescue enterprise, was deployed to the barrier lake area on August 28, equipped with reconnaissance drones, portable satellite stations, and fixed communication monitoring units.</p>
+                    <p>The team conducted on-site surveys of the barrier dam and surrounding roads to provide precise data support for the scientific disposal of the barrier lake. President Xi Jinping urged all-out rescue efforts for both Chinese and foreign nationals who remained missing in the mudslide-hit area.</p>
+                    <p>The Ministry of Water Resources held a special consultation to analyze the typhoon's development and its impact, systematically deploying flood prevention work across multiple river basins.</p>
+                    <span class="source">Source: China Daily, Xinhua, 2026-08-28</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-08-29';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-29',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. When did China celebrate the Qixi Festival in 2026?", options: ["August 27, 2026", "August 28, 2026", "August 29, 2026", "August 30, 2026"], answer: 2 },
+            { q: "2. The Qixi Festival is often described as China's own ___.", options: ["New Year", "Valentine's Day", "Mid-Autumn Festival", "Spring Festival"], answer: 1 },
+            { q: "3. The Qixi Festival coincides with the ___ day of the seventh lunar month.", options: ["first", "third", "fifth", "seventh"], answer: 3 },
+            { q: "4. In which city were marriage registration offices overwhelmed by demand?", options: ["Beijing", "Shanghai", "Guangzhou", "Kunming"], answer: 1 },
+            { q: "5. In which district of Shanghai were booking slots fully reserved within seconds?", options: ["Pudong District", "Changning District", "Xuhui District", "Jingan District"], answer: 1 },
+            { q: "6. How many couples took part in the mass wedding at the Guangzhou Tower?", options: ["10 couples", "15 couples", "20 couples", "50 couples"], answer: 1 },
+            { q: "7. The mass wedding was held atop a platform how many meters above ground?", options: ["30 meters", "40 meters", "50 meters", "100 meters"], answer: 2 },
+            { q: "8. In which province were the flower markets equally lively?", options: ["Yunnan Province", "Guangdong Province", "Zhejiang Province", "Fujian Province"], answer: 0 },
+            { q: "9. How much did a standard 20-stem bouquet that usually sells for 10 yuan exceed on the festival?", options: ["50 yuan", "80 yuan", "100 yuan", "200 yuan"], answer: 2 },
+            { q: "10. How many stems did the Kunming International Flower Auction Center maintain as average daily supply?", options: ["More than 3 million", "More than 4 million", "More than 5 million", "More than 6 million"], answer: 3 }
+        ];
+
+        const reading2Data = [
+            { q: "11. Typhoon Saudel was the ___ typhoon of 2026.", options: ["15th", "16th", "17th", "18th"], answer: 3 },
+            { q: "12. Where did Typhoon Saudel make landfall?", options: ["Yuhuan, Zhejiang Province", "Xiamen, Fujian Province", "Guangzhou, Guangdong Province", "Shanghai"], answer: 0 },
+            { q: "13. At what time did the typhoon make landfall?", options: ["Around 6:05 a.m.", "Around 7:05 a.m.", "Around 8:05 a.m.", "Around 9:05 a.m."], answer: 2 },
+            { q: "14. What were the maximum sustained winds near the typhoon's center?", options: ["25 meters per second", "30 meters per second", "35 meters per second", "45 meters per second"], answer: 2 },
+            { q: "15. To which level did Taizhou city elevate its typhoon emergency response?", options: ["Level II", "Level I", "Level III", "Level IV"], answer: 1 },
+            { q: "16. Which provinces was the typhoon expected to move westward into?", options: ["Fujian and Jiangxi", "Guangdong and Hunan", "Sichuan and Yunnan", "Shandong and Henan"], answer: 0 },
+            { q: "17. In which autonomous region did rescue efforts continue following a mudslide?", options: ["Xinjiang", "Guangxi", "Xizang", "Inner Mongolia"], answer: 2 },
+            { q: "18. When did the mudslide hit the Gyirong border port?", options: ["August 24", "August 25", "August 26", "August 27"], answer: 2 },
+            { q: "19. How many members were in the reconnaissance team from China Anneng?", options: ["10 members", "12 members", "15 members", "20 members"], answer: 2 },
+            { q: "20. Who urged all-out rescue efforts for the missing?", options: ["Premier Li Qiang", "President Xi Jinping", "A provincial governor", "A foreign leader"], answer: 1 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "festival", phonetic: "/ˈfɛstɪvəl/", meaning: "n. 节日" },
+            { word: "celebrate", phonetic: "/ˈsɛlɪbreɪt/", meaning: "v. 庆祝" },
+            { word: "annual", phonetic: "/ˈænjuəl/", meaning: "adj. 年度的；每年的" },
+            { word: "marriage", phonetic: "/ˈmærɪdʒ/", meaning: "n. 婚姻；结婚" },
+            { word: "registration", phonetic: "/ˌrɛdʒɪˈstreɪʃən/", meaning: "n. 登记；注册" },
+            { word: "demand", phonetic: "/dɪˈmɑːnd/", meaning: "n./v. 需求；要求" },
+            { word: "reserved", phonetic: "/rɪˈzɜːvd/", meaning: "adj. 预订的 v. 预订(reserve的过去分词)" },
+            { word: "auspicious", phonetic: "/ɔːˈspɪʃəs/", meaning: "adj. 吉利的；吉祥的" },
+            { word: "ceremony", phonetic: "/ˈsɛrɪməni/", meaning: "n. 仪式；典礼" },
+            { word: "affection", phonetic: "/əˈfɛkʃən/", meaning: "n. 喜爱；感情" },
+            { word: "symbolic", phonetic: "/sɪmˈbɒlɪk/", meaning: "adj. 象征的" },
+            { word: "carnation", phonetic: "/kɑːˈneɪʃən/", meaning: "n. 康乃馨" },
+            { word: "tenfold", phonetic: "/ˈtɛnfoʊld/", meaning: "adv./adj. 十倍地(的)" },
+            { word: "yield", phonetic: "/jiːld/", meaning: "n./v. 产量；产出" },
+            { word: "ample", phonetic: "/ˈæmpəl/", meaning: "adj. 充足的；丰富的" },
+            { word: "availability", phonetic: "/əˌveɪləˈbɪləti/", meaning: "n. 可获得性；可用性" },
+            { word: "legend", phonetic: "/ˈlɛdʒənd/", meaning: "n. 传说；传奇" },
+            { word: "blend", phonetic: "/blɛnd/", meaning: "v./n. 混合；融合" },
+            { word: "typhoon", phonetic: "/taɪˈfuːn/", meaning: "n. 台风" },
+            { word: "reconnaissance", phonetic: "/rɪˈkɒnɪsəns/", meaning: "n. 侦察；勘察" }
+        ];
+
+        const oldVocabData = [
+            { word: "weather", phonetic: "/ˈwɛðər/", meaning: "n. 天气" },
+            { word: "rain", phonetic: "/reɪn/", meaning: "n./v. 雨；下雨" },
+            { word: "wind", phonetic: "/wɪnd/", meaning: "n. 风" },
+            { word: "coast", phonetic: "/koʊst/", meaning: "n. 海岸" },
+            { word: "sea", phonetic: "/siː/", meaning: "n. 海" },
+            { word: "city", phonetic: "/ˈsɪti/", meaning: "n. 城市" },
+            { word: "people", phonetic: "/ˈpiːpəl/", meaning: "n. 人们" },
+            { word: "couple", phonetic: "/ˈkʌpəl/", meaning: "n. 夫妇；一对" },
+            { word: "love", phonetic: "/lʌv/", meaning: "n./v. 爱" },
+            { word: "flower", phonetic: "/ˈflaʊər/", meaning: "n. 花" },
+            { word: "market", phonetic: "/ˈmɑːrkɪt/", meaning: "n. 市场" },
+            { word: "price", phonetic: "/praɪs/", meaning: "n. 价格" },
+            { word: "buy", phonetic: "/baɪ/", meaning: "v. 买" },
+            { word: "sell", phonetic: "/sɛl/", meaning: "v. 卖" },
+            { word: "tradition", phonetic: "/trəˈdɪʃən/", meaning: "n. 传统" },
+            { word: "modern", phonetic: "/ˈmɒdərn/", meaning: "adj. 现代的" },
+            { word: "culture", phonetic: "/ˈkʌltʃər/", meaning: "n. 文化" },
+            { word: "rescue", phonetic: "/ˈrɛskjuː/", meaning: "n./v. 救援" },
+            { word: "team", phonetic: "/tiːm/", meaning: "n. 团队" },
+            { word: "survey", phonetic: "/ˈsɜːrveɪ/", meaning: "n./v. 调查；勘察" },
+            { word: "road", phonetic: "/roʊd/", meaning: "n. 道路" },
+            { word: "safe", phonetic: "/seɪf/", meaning: "adj. 安全的" },
+            { word: "danger", phonetic: "/ˈdeɪndʒər/", meaning: "n. 危险" },
+            { word: "water", phonetic: "/ˈwɔːtər/", meaning: "n. 水" },
+            { word: "mountain", phonetic: "/ˈmaʊntɪn/", meaning: "n. 山" },
+            { word: "help", phonetic: "/hɛlp/", meaning: "v./n. 帮助" },
+            { word: "storm", phonetic: "/stɔːrm/", meaning: "n. 风暴" },
+            { word: "province", phonetic: "/ˈprɒvɪns/", meaning: "n. 省" },
+            { word: "level", phonetic: "/ˈlɛvəl/", meaning: "n. 等级；水平" },
+            { word: "area", phonetic: "/ˈɛriə/", meaning: "n. 地区" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. China ___ its annual Qixi Festival on August 29, 2026.", type: "choice", options: ["celebrates", "celebrated", "celebrate", "is celebrating"], answer: 1 },
+            { q: "2. The festival ___ a nationwide surge in weddings.", type: "choice", options: ["spark", "sparks", "sparked", "sparking"], answer: 2 },
+            { q: "3. Marriage registration offices ___ by demand in Shanghai.", type: "choice", options: ["overwhelm", "overwhelmed", "were overwhelmed", "are overwhelmed"], answer: 2 },
+            { q: "4. Booking slots ___ fully reserved within seconds.", type: "choice", options: ["is", "are", "was", "were"], answer: 3 },
+            { q: "5. 15 couples ___ part in a mass wedding.", type: "choice", options: ["take", "took", "taking", "takes"], answer: 1 },
+            { q: "6. The mass wedding ___ atop an outdoor platform.", type: "choice", options: ["hold", "held", "was held", "holds"], answer: 2 },
+            { q: "7. Demand for roses, carnations, and sunflowers ___.", type: "choice", options: ["surge", "surged", "surges", "is surging"], answer: 1 },
+            { q: "8. Prices ___ up more than tenfold.", type: "choice", options: ["drive", "drove", "were driven", "driven"], answer: 2 },
+            { q: "9. Traders ___ the sharp increase to reduced flower yields.", type: "choice", options: ["attribute", "attributed", "attributes", "attributing"], answer: 1 },
+            { q: "10. Typhoon Saudel ___ landfall along the coast of Yuhuan.", type: "choice", options: ["make", "makes", "made", "making"], answer: 2 },
+            { q: "11. The typhoon ___ maximum sustained winds of 35 meters per second.", type: "choice", options: ["pack", "packs", "packed", "is packing"], answer: 2 },
+            { q: "12. Taizhou city ___ its typhoon emergency response to Level I.", type: "choice", options: ["elevate", "elevated", "elevates", "elevating"], answer: 1 },
+            { q: "13. A 15-member reconnaissance team ___ to the barrier lake area.", type: "choice", options: ["deploy", "deployed", "was deployed", "deploys"], answer: 2 },
+            { q: "14. President Xi Jinping ___ all-out rescue efforts.", type: "choice", options: ["urge", "urged", "urges", "urging"], answer: 1 },
+            { q: "15. The Ministry of Water Resources ___ a special consultation.", type: "choice", options: ["hold", "held", "holds", "holding"], answer: 1 },
+            { q: "16. The Qixi Festival is ___ on the seventh day of the seventh lunar month.", type: "choice", options: ["base", "based", "basing", "bases"], answer: 1 },
+            { q: "17. The team ___ equipped with reconnaissance drones.", type: "choice", options: ["is", "are", "was", "were"], answer: 2 },
+            { q: "18. The festival continues ___ tradition with modern consumer culture.", type: "choice", options: ["blend", "blending", "to blend", "blended"], answer: 2 },
+            { q: "19. Prices were driven up more than ___.", type: "choice", options: ["tenfold", "tenfolds", "ten fold", "tenth-fold"], answer: 0 },
+            { q: "20. ___ the lower production, supply remained ample.", type: "choice", options: ["Although", "Despite", "Because", "However"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. A ___ is a day or period of celebration.", type: "choice", options: ["festival", "weather", "road", "mountain"], answer: 0 },
+            { q: "22. To ___ means to mark a special day with joy.", type: "choice", options: ["celebrate", "ignore", "cancel", "forget"], answer: 0 },
+            { q: "23. ___ means happening once every year.", type: "choice", options: ["Annual", "Daily", "Weekly", "Monthly"], answer: 0 },
+            { q: "24. ___ is the legal union between two people.", type: "choice", options: ["Marriage", "Business", "Travel", "Work"], answer: 0 },
+            { q: "25. ___ is the act of recording information officially.", type: "choice", options: ["Registration", "Deletion", "Removal", "Refusal"], answer: 0 },
+            { q: "26. A strong ___ for flowers pushed prices up.", type: "choice", options: ["demand", "supply", "gift", "freebie"], answer: 0 },
+            { q: "27. The seats were fully ___ within seconds.", type: "choice", options: ["reserved", "empty", "open", "free"], answer: 0 },
+            { q: "28. An ___ occasion is considered lucky or favorable.", type: "choice", options: ["auspicious", "unlucky", "terrible", "ordinary"], answer: 0 },
+            { q: "29. A wedding ___ is a formal event with rituals.", type: "choice", options: ["ceremony", "game", "race", "sale"], answer: 0 },
+            { q: "30. ___ means a feeling of fondness or love.", type: "choice", options: ["Affection", "Anger", "Fear", "Hate"], answer: 0 },
+            { q: "31. A ___ gesture stands for something deeper.", type: "choice", options: ["symbolic", "random", "meaningless", "empty"], answer: 0 },
+            { q: "32. A ___ is a flower often given on Mother's Day.", type: "choice", options: ["carnation", "rose", "stone", "tree"], answer: 0 },
+            { q: "33. Ten times as much is ___.", type: "choice", options: ["tenfold", "double", "half", "single"], answer: 0 },
+            { q: "34. A crop's ___ is the amount it produces.", type: "choice", options: ["yield", "loss", "cost", "price"], answer: 0 },
+            { q: "35. ___ means more than enough; plentiful.", type: "choice", options: ["Ample", "Scarce", "Empty", "Short"], answer: 0 },
+            { q: "36. ___ refers to whether something can be obtained.", type: "choice", options: ["Availability", "Shortage", "Absence", "Lack"], answer: 0 },
+            { q: "37. A centuries-old ___ tells the story of star-crossed lovers.", type: "choice", options: ["legend", "invoice", "manual", "invoice"], answer: 0 },
+            { q: "38. To ___ means to mix together.", type: "choice", options: ["blend", "separate", "divide", "break"], answer: 0 },
+            { q: "39. A ___ is a powerful tropical storm.", type: "choice", options: ["typhoon", "breeze", "calm", "drizzle"], answer: 0 },
+            { q: "40. ___ is the act of gathering information by observation.", type: "choice", options: ["Reconnaissance", "Guesswork", "Gambling", "Rest"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. The Qixi Festival falls ___ the seventh day of the seventh lunar month.", type: "choice", options: ["in", "on", "at", "for"], answer: 1 },
+            { q: "42. Prices were driven ___ more than tenfold.", type: "choice", options: ["up", "down", "in", "off"], answer: 0 },
+            { q: "43. The ceremony was filled ___ applause and affection.", type: "choice", options: ["of", "with", "by", "for"], answer: 1 },
+            { q: "44. Traders attributed the increase ___ reduced yields.", type: "choice", options: ["for", "to", "with", "by"], answer: 1 },
+            { q: "45. The price index climbed ___ 60% compared with pre-festival levels.", type: "choice", options: ["under", "over", "below", "within"], answer: 1 },
+            { q: "46. ___ lower production, supply remained ample.", type: "choice", options: ["Although", "Despite", "Because", "Since"], answer: 1 },
+            { q: "47. The festival is rooted ___ a centuries-old legend.", type: "choice", options: ["in", "on", "at", "by"], answer: 0 },
+            { q: "48. The typhoon made landfall ___ the coast of Yuhuan.", type: "choice", options: ["along", "between", "among", "within"], answer: 0 },
+            { q: "49. Yuhuan is a city ___ the jurisdiction of Taizhou.", type: "choice", options: ["under", "above", "over", "beside"], answer: 0 },
+            { q: "50. The team was equipped ___ reconnaissance drones.", type: "choice", options: ["with", "of", "by", "for"], answer: 0 },
+            { q: "51. Taizhou elevated its response ___ Level I.", type: "choice", options: ["to", "at", "in", "for"], answer: 0 },
+            { q: "52. The typhoon was expected ___ westward.", type: "choice", options: ["to move", "moving", "moved", "move"], answer: 0 },
+            { q: "53. Rescue efforts continued ___ the mudslide.", type: "choice", options: ["following", "followed", "follow", "follows"], answer: 0 },
+            { q: "54. The team conducted surveys ___ the barrier dam.", type: "choice", options: ["of", "for", "with", "by"], answer: 0 },
+            { q: "55. ___ terrible the storm is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 2 },
+            { q: "56. She is ___ auspicious occasion for a wedding.", type: "choice", options: ["a", "an", "the", "/"], answer: 1 },
+            { q: "57. Prices rose ___ fast ___ they shocked the market.", type: "choice", options: ["so; that", "too; to", "very; that", "such; that"], answer: 0 },
+            { q: "58. ___ couples took part in the mass wedding.", type: "choice", options: ["Fifteen", "Fifteenth", "Fifty", "Fifth"], answer: 0 },
+            { q: "59. The typhoon packed winds of 35 meters per second, ___ was very strong.", type: "choice", options: ["that", "which", "who", "what"], answer: 1 },
+            { q: "60. The legend is ___ old that it has been told for centuries.", type: "choice", options: ["so", "too", "very", "such"], answer: 0 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. When did China celebrate the Qixi Festival in 2026?", type: "choice", options: ["August 27, 2026", "August 28, 2026", "August 29, 2026", "August 30, 2026"], answer: 2 },
+            { q: "62. The Qixi Festival is often described as China's own ___.", type: "choice", options: ["New Year", "Valentine's Day", "Mid-Autumn Festival", "Spring Festival"], answer: 1 },
+            { q: "63. The Qixi Festival coincides with which day of the seventh lunar month?", type: "choice", options: ["The first", "The third", "The fifth", "The seventh"], answer: 3 },
+            { q: "64. In which city were marriage registration offices overwhelmed?", type: "choice", options: ["Beijing", "Shanghai", "Guangzhou", "Kunming"], answer: 1 },
+            { q: "65. In which district were booking slots fully reserved within seconds?", type: "choice", options: ["Pudong", "Changning", "Xuhui", "Jingan"], answer: 1 },
+            { q: "66. How many couples took part in the mass wedding at Guangzhou Tower?", type: "choice", options: ["10 couples", "15 couples", "20 couples", "50 couples"], answer: 1 },
+            { q: "67. How high above ground was the platform for the mass wedding?", type: "choice", options: ["30 meters", "40 meters", "50 meters", "100 meters"], answer: 2 },
+            { q: "68. In which province were the flower markets lively?", type: "choice", options: ["Yunnan", "Guangdong", "Zhejiang", "Fujian"], answer: 0 },
+            { q: "69. How much did a 20-stem bouquet exceed on the festival?", type: "choice", options: ["50 yuan", "80 yuan", "100 yuan", "200 yuan"], answer: 2 },
+            { q: "70. How many stems did the Kunming Flower Auction Center maintain daily?", type: "choice", options: ["3 million", "4 million", "5 million", "6 million"], answer: 3 },
+            { q: "71. Which number typhoon of 2026 was Saudel?", type: "choice", options: ["15th", "16th", "17th", "18th"], answer: 3 },
+            { q: "72. Where did Typhoon Saudel make landfall?", type: "choice", options: ["Yuhuan, Zhejiang", "Xiamen, Fujian", "Guangzhou, Guangdong", "Shanghai"], answer: 0 },
+            { q: "73. At what time did the typhoon make landfall?", type: "choice", options: ["6:05 a.m.", "7:05 a.m.", "8:05 a.m.", "9:05 a.m."], answer: 2 },
+            { q: "74. What were the maximum sustained winds near the typhoon's center?", type: "choice", options: ["25 m/s", "30 m/s", "35 m/s", "45 m/s"], answer: 2 },
+            { q: "75. To which level did Taizhou elevate its emergency response?", type: "choice", options: ["Level IV", "Level III", "Level II", "Level I"], answer: 3 },
+            { q: "76. Which provinces was the typhoon expected to move into?", type: "choice", options: ["Fujian and Jiangxi", "Guangdong and Hunan", "Sichuan and Yunnan", "Shandong and Henan"], answer: 0 },
+            { q: "77. In which region did rescue efforts continue after a mudslide?", type: "choice", options: ["Xinjiang", "Guangxi", "Xizang", "Inner Mongolia"], answer: 2 },
+            { q: "78. When did the mudslide hit the Gyirong border port?", type: "choice", options: ["August 24", "August 25", "August 26", "August 27"], answer: 2 },
+            { q: "79. How many members were in the reconnaissance team?", type: "choice", options: ["10", "12", "15", "20"], answer: 2 },
+            { q: "80. Who urged all-out rescue efforts for the missing?", type: "choice", options: ["Premier Li Qiang", "President Xi Jinping", "A governor", "A foreign leader"], answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '七夕节常被称为中国的情人节。'", type: "choice", options: ["The Qixi Festival is often described as the nation's own Valentine's Day.", "Qixi Festival is nation Valentine Day.", "The Qixi Festival often describe China Valentine.", "Qixi Festival being nation own Valentine."], answer: 0 },
+            { q: "82. 'Demand surged.' means demand ___.", type: "choice", options: ["rose sharply", "fell slowly", "stayed same", "disappeared"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["15 couples took part in a mass wedding.", "15 couples takes part in a mass wedding.", "15 couples take part in a mass wedding yesterday.", "15 couple took part in a mass wedding."], answer: 0 },
+            { q: "84. 'Prices were driven up more than tenfold.' means prices rose to more than ___.", type: "choice", options: ["twice the original", "five times the original", "ten times the original", "half the original"], answer: 2 },
+            { q: "85. Choose the correct translation: '台风'桑德尔'在浙江玉环沿海登陆。'", type: "choice", options: ["Typhoon Saudel made landfall along the coast of Yuhuan, Zhejiang.", "Typhoon Saudel land Yuhuan Zhejiang.", "Typhoon Saudel making landfall coast Yuhuan.", "Typhoon Saudel will lands coast of Yuhuan."], answer: 0 },
+            { q: "86. 'The team was deployed to the area.' In reported speech: He said the team ___ to the area.", type: "choice", options: ["is deployed", "was deployed", "deploys", "deploy"], answer: 1 },
+            { q: "87. The passive voice of 'The typhoon brought heavy rain' is ___.", type: "choice", options: ["Heavy rain was brought by the typhoon", "Heavy rain has brought the typhoon", "Heavy rain brings the typhoon", "Heavy rain is bring typhoon"], answer: 0 },
+            { q: "88. 'Prices exceeded 100 yuan.' This uses the ___ voice.", type: "choice", options: ["active", "passive", "conditional", "imperative"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The festival is cherished, ___?'", type: "choice", options: ["isn't it", "is it", "doesn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Neither the rain ___ the wind stopped the ceremony.' Fill in the blank.", type: "choice", options: ["or", "nor", "and", "but"], answer: 1 },
+            { q: "91. Choose the correct translation: '该节日起源于一个古老的传说。'", type: "choice", options: ["The festival is rooted in a centuries-old legend.", "Festival rooted old legend.", "The festival is root legend old.", "Legend is rooted festival old."], answer: 0 },
+            { q: "92. 'all-out rescue efforts' means ___.", type: "choice", options: ["half-hearted tries", "complete and full rescue efforts", "small attempts", "no effort"], answer: 1 },
+            { q: "93. 'If the typhoon moves westward, floods may occur.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The team was equipped with drones.", "The team equipped with drones.", "The team is equip drones.", "The team were equip by drones."], answer: 0 },
+            { q: "95. '___ the high demand nor the bad weather stopped the celebrations.' Fill in the blank.", type: "choice", options: ["Either", "Neither", "Both", "Or"], answer: 1 },
+            { q: "96. The indirect speech of 'He said, \"The typhoon is coming.\"' is ___.", type: "choice", options: ["He said the typhoon is coming.", "He said the typhoon was coming.", "He says the typhoon was coming.", "He said I was coming."], answer: 1 },
+            { q: "97. 'Traders attributed the increase to reduced yields.' 'attributed' means ___.", type: "choice", options: ["denied", "credited", "cancelled", "postponed"], answer: 1 },
+            { q: "98. 'Prices have climbed over 60%.' 'have climbed' is ___ tense.", type: "choice", options: ["present", "past", "present perfect", "future"], answer: 2 },
+            { q: "99. 'The typhoon made landfall.' The subject is ___.", type: "choice", options: ["The typhoon", "made", "the", "landfall"], answer: 0 },
+            { q: "100. 'I'm looking forward to ___ the festival.'", type: "choice", options: ["celebrate", "celebrating", "celebrated", "celebrates"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月27日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月27日 星期四 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">闻王昌龄左迁龙标遥有此寄</div>
+                    <div class="author">唐 · 李白</div>
+                    <div class="content">
+                        杨花落尽子规啼，闻道龙标过五溪。<br>
+                        我寄愁心与明月，随君直到夜郎西。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>左迁</strong>：贬官，降职。古人以右为尊，以左为卑。</p>
+                        <p>② <strong>龙标</strong>：唐代县名，在今湖南黔阳（今洪江市）。王昌龄被贬为龙标尉。</p>
+                        <p>③ <strong>子规</strong>：即杜鹃鸟，啼声哀切，相传为古蜀王杜宇之魂所化。</p>
+                        <p>④ <strong>五溪</strong>：指辰溪、酉溪、巫溪、武溪、沅溪，在今湖南西部和贵州东部一带。</p>
+                        <p>⑤ <strong>闻道</strong>：听说。</p>
+                        <p>⑥ <strong>愁心</strong>：忧愁思念之心。</p>
+                        <p>⑦ <strong>夜郎</strong>：唐代少数民族国名，在今贵州桐梓县一带。</p>
+                        <br>
+                        <p><strong>译文：</strong>杨花已经落尽，子规鸟哀切地啼叫，听说你被贬为龙标尉，要经过五溪。我把忧愁思念的心寄托给明月，让明月伴随你一直走到夜郎以西。</p>
+                        <br>
+                        <p><strong>赏析：</strong>这是一首借月抒怀的赠别诗。首句写景，杨花落尽、子规哀啼，渲染出凄凉哀惋的氛围，烘托离别之情。后两句"我寄愁心与明月，随君直到夜郎西"想象奇特，诗人将无形的"愁心"寄托给明月，让明月化为有情的伴侣，一路追随友人，表现出对王昌龄的深切牵挂与关切。全诗富有浪漫主义色彩，体现了李白诗歌想象丰富、意境奇伟、情深意挚的艺术风格。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">夜雨寄北</div>
+                    <div class="author">唐 · 李商隐</div>
+                    <div class="content">
+                        君问归期未有期，巴山夜雨涨秋池。<br>
+                        何当共剪西窗烛，却话巴山夜雨时。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>寄北</strong>：寄给在北方的人（一说寄给妻子，一说寄给友人）。</p>
+                        <p>② <strong>巴山</strong>：指大巴山，在今四川东部。</p>
+                        <p>③ <strong>涨秋池</strong>：秋夜的雨使池水涨满。</p>
+                        <p>④ <strong>何当</strong>：什么时候才能，表示期望。</p>
+                        <p>⑤ <strong>共剪西窗烛</strong>：在西窗下一起剪烛芯。蜡烛燃久变暗，剪去烛芯使明亮，以便夜谈。</p>
+                        <p>⑥ <strong>却话</strong>：回头说，追述。</p>
+                        <p>⑦ <strong>归期</strong>：回家的日期。</p>
+                        <br>
+                        <p><strong>译文：</strong>你问我回家的日期，我还没有确定的归期。今夜巴山下着大雨，雨水涨满了秋天的池塘。什么时候我们才能一起在西窗下剪烛夜谈，回过头来述说此刻巴山夜雨中的情景呢？</p>
+                        <br>
+                        <p><strong>赏析：</strong>这首诗通过"巴山夜雨"这一典型意象，抒发了羁旅思乡之情。前两句写现实中的孤寂与思念——归期无定、夜雨涨池，凄清孤寂；后两句想象未来重逢的情景，以他日相聚时的欢谈反衬今夜的孤愁。"何当共剪西窗烛，却话巴山夜雨时"虚实结合，时空交错，回环往复，含蓄隽永，将思念之情写得曲折深婉、余味无穷。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>科技自立自强：中国创新的东方力量</h3>
+                    <p>时代的车轮滚滚向前，科技创新已成为大国博弈的核心战场。2026年，站在"十四五"规划圆满收官的历史节点上，中国以科技自立自强为旗帜，走出了一条独具东方特色的创新之路。从人工智能到产业升级，从标准研制到核心攻关，中国创新的力量正以前所未有的姿态，向世界展示着东方智慧的深厚底蕴。</p>
+                    <p>工业和信息化部传来振奋人心的消息：我国已有近200项人工智能关键标准成功研制。这些标准如同科技创新的"基石"，为人工智能产业的规范发展、安全应用提供了坚实的制度保障。标准的研制，意味着中国不再只是技术的追随者，而是规则的制定者。在人工智能这一关乎未来的关键领域，中国正以标准引领发展，以规范护航创新，展现出大国科技的责任与担当。</p>
+                    <p>产业升级方面，"十四五"期间规模以上工业增加值年均增长5.9%，这一数字背后是中国制造业向新、向优、向智、向绿的深刻变革。"向新"，是向新技术、新业态进军；"向优"，是向高品质、高效率迈进；"向智"，是向智能化、数字化转型；"向绿"，是向绿色低碳、可持续发展前行。四个方向，勾勒出中国工业从"制造大国"迈向"制造强国"的清晰路径。</p>
+                    <p>这些成就的背后，是无数中国科学家呕心沥血、无私奉献的身影。他们中有人数十年如一日扎根实验室，有人放弃国外优厚待遇毅然归国，有人为了攻克一个技术难题通宵达旦。正是这种"板凳要坐十年冷"的坚守，这种"苟利国家生死以"的担当，铸就了中国科技自立自强的精神丰碑。他们用行动告诉我们：科技报国不是一句口号，而是融入血脉的信念。</p>
+                    <p>从"两弹一星"的惊天巨响，到"北斗"组网的全球覆盖；从"蛟龙"探海的深海壮举，到"嫦娥"奔月的太空传奇——中国科技的每一次跨越，都凝聚着一代代科技工作者的心血与智慧。如今，近200项AI标准、5.9%的工业增速，正是这份精神的延续与升华。东方力量，不仅是技术的力量，更是精神的力量、文化的力量、信念的力量。</p>
+                    <p>作为新时代的中学生，我们生逢其时，重任在肩。科技的未来属于青年，创新的希望寄托于青年。我们要以科学家为榜样，弘扬科技报国精神，脚踏实地学好每一门功课，培养科学思维与创新意识。也许今天的我们还坐在课堂里，但明天的我们，必将成为推动中国科技自立自强的中坚力量。</p>
+                    <p>科技自立自强，是国之大者，也是民之所盼。让我们以东方力量为旗帜，以科技创新为引擎，在不懈奋斗中书写属于我们这一代人的科技华章。中国创新的未来，正等待着我们用青春与智慧去点亮。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>习近平将出席上海合作组织峰会并访问吉尔吉斯斯坦、埃及</h3>
+                    <p>外交部8月26日宣布：应吉尔吉斯斯坦总统扎帕罗夫邀请，国家主席习近平将于8月30日至9月3日出席在吉尔吉斯斯坦首都比什凯克举行的2026年上海合作组织峰会，并对吉尔吉斯斯坦进行国事访问。应阿拉伯埃及共和国总统塞西邀请，习近平主席还将对埃及进行国事访问。</p>
+                    <p>此次上海合作组织峰会是2026年上合组织的重要外交活动，各方将就深化成员国间合作、维护地区安全稳定、推动经济人文交流等议题深入交换意见。习近平主席此访将进一步巩固中吉、中埃传统友好关系，推动构建更加紧密的命运共同体。</p>
+                    <p>另据报道，加拿大8月26日宣布将对美国加征等额反制关税，以回应美方贸易措施。中方对此回应表示，反对任何形式的单边主义和贸易保护主义，呼吁有关各方通过对话协商妥善解决分歧，维护多边贸易体制和全球产业链供应链稳定。</p>
+                    <p>工业和信息化部8月26日发布消息：我国已有近200项人工智能关键标准成功研制，为人工智能产业规范发展、安全应用提供坚实保障。"十四五"期间，规模以上工业增加值年均增长5.9%，中国制造业向新、向优、向智、向绿的转型升级取得显著成效。</p>
+                    <div class="source">来源：综合央广网、中国日报（2026年8月26日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-08-27';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-27',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《闻王昌龄左迁龙标遥有此寄》的作者是谁？", options: ["杜甫", "李白", "王维", "白居易"], answer: 1 },
+            { q: "2. \"左迁\"的意思是什么？", options: ["升官", "调任", "贬官、降职", "退休"], answer: 2 },
+            { q: "3. \"子规\"指的是什么鸟？", options: ["黄鹂", "喜鹊", "杜鹃鸟", "燕子"], answer: 2 },
+            { q: "4. \"我寄愁心与明月\"运用了什么修辞手法？", options: ["比喻", "拟人", "夸张", "对偶"], answer: 1 },
+            { q: "5. \"随君直到夜郎西\"表现了诗人怎样的情感？", options: ["对故乡的思念", "对友人的深切牵挂", "对战争的厌恶", "对自然的赞美"], answer: 1 },
+            { q: "6. 《夜雨寄北》的作者是谁？", options: ["李贺", "李商隐", "杜牧", "温庭筠"], answer: 1 },
+            { q: "7. \"巴山\"指什么地方？", options: ["大巴山，在今四川东部", "泰山", "太行山", "终南山"], answer: 0 },
+            { q: "8. \"何当共剪西窗烛\"中\"何当\"的意思是？", options: ["为什么", "什么时候才能", "如何", "哪里"], answer: 1 },
+            { q: "9. \"却话巴山夜雨时\"中\"却话\"的意思是？", options: ["拒绝说话", "回头说、追述", "然而说", "退后说"], answer: 1 },
+            { q: "10. 《夜雨寄北》在抒情方式上有什么突出特点？", options: ["直抒胸臆", "虚实结合、想象未来", "借景抒情", "托物言志"], answer: 1 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 我国已成功研制多少项人工智能关键标准？", options: ["近100项", "近150项", "近200项", "近300项"], answer: 2 },
+            { q: "12. \"十四五\"期间规模以上工业增加值年均增长多少？", options: ["4.9%", "5.9%", "6.9%", "7.9%"], answer: 1 },
+            { q: "13. 产业升级的四个方向是？", options: ["向大、向多、向快、向强", "向新、向优、向智、向绿", "向高、向精、向尖、向深", "向东、向西、向南、向北"], answer: 1 },
+            { q: "14. \"向智\"指的是什么？", options: ["向智力投资", "向智能化、数字化转型", "向智囊团学习", "向智慧城市搬迁"], answer: 1 },
+            { q: "15. 文章认为标准的研制意味着中国是什么角色？", options: ["技术追随者", "规则制定者", "市场参与者", "资金提供者"], answer: 1 },
+            { q: "16. 中国制造业正在经历怎样的转变？", options: ["从\"制造强国\"到\"制造大国\"", "从\"制造大国\"迈向\"制造强国\"", "从工业到农业", "从内销到外销"], answer: 1 },
+            { q: "17. 文章提到中国科学家具有怎样的精神？", options: ["急功近利", "呕心沥血、无私奉献", "墨守成规", "好高骛远"], answer: 1 },
+            { q: "18. 文章列举的重大科技成就不包括以下哪一项？", options: ["两弹一星", "北斗组网", "蛟龙探海", "芯片大量进口"], answer: 3 },
+            { q: "19. 文章号召中学生应该怎么做？", options: ["专注娱乐", "弘扬科技报国精神，努力学习", "尽早出国", "只学理科"], answer: 1 },
+            { q: "20. 这篇文章的中心思想是什么？", options: ["中国科技已经全面领先世界", "中国科技自立自强体现东方力量，激励青年科技报国", "外国科技更加先进", "科技创新不重要"], answer: 1 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 习近平主席将于何时出席2026年上海合作组织峰会？", options: ["8月20日至25日", "8月30日至9月3日", "9月5日至10日", "9月15日至20日"], answer: 1 },
+            { q: "22. 2026年上海合作组织峰会在哪里举行？", options: ["北京", "比什凯克", "莫斯科", "塔什干"], answer: 1 },
+            { q: "23. 习近平主席此次对哪两个国家进行国事访问？", options: ["俄罗斯、白俄罗斯", "吉尔吉斯斯坦、埃及", "哈萨克斯坦、沙特", "乌兹别克斯坦、伊朗"], answer: 1 },
+            { q: "24. 应哪两位领导人邀请进行国事访问？", options: ["普京、马克龙", "扎帕罗夫、塞西", "拜登、朔尔茨", "莫迪、岸田"], answer: 1 },
+            { q: "25. 加拿大8月26日宣布对哪个国家加征等额反制关税？", options: ["中国", "美国", "墨西哥", "日本"], answer: 1 },
+            { q: "26. 中方对加征关税一事的态度是？", options: ["支持单边主义", "反对单边主义和贸易保护主义", "保持沉默", "立即报复"], answer: 1 },
+            { q: "27. 工信部发布我国已成功研制多少项人工智能关键标准？", options: ["近100项", "近200项", "近300项", "近500项"], answer: 1 },
+            { q: "28. \"十四五\"期间规模以上工业增加值年均增长多少？", options: ["4.9%", "5.9%", "6.9%", "7.9%"], answer: 1 },
+            { q: "29. 上海合作组织峰会是哪一年的重要外交活动？", options: ["2024年", "2025年", "2026年", "2027年"], answer: 2 },
+            { q: "30. 习近平主席此访将进一步推动构建什么？", options: ["经济联盟", "更加紧密的命运共同体", "军事同盟", "贸易壁垒"], answer: 1 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《闻王昌龄左迁龙标遥有此寄》的作者是哪个朝代的诗人？", options: ["汉", "唐", "宋", "明"], answer: 1 },
+            { q: "2. \"左迁\"中\"左\"在古代官制中表示什么？", options: ["尊贵", "卑、降", "中间", "无特殊含义"], answer: 1 },
+            { q: "3. \"龙标\"指什么？", options: ["人名", "唐代县名，王昌龄被贬之地", "山名", "官名"], answer: 1 },
+            { q: "4. \"子规\"在诗中指哪种鸟？", options: ["黄鹂", "杜鹃鸟", "画眉", "百灵"], answer: 1 },
+            { q: "5. 子规的啼声有什么特点？", options: ["清脆悦耳", "哀切", "高亢嘹亮", "低沉浑厚"], answer: 1 },
+            { q: "6. \"五溪\"位于今天的哪个地区？", options: ["山东", "湖南西部和贵州东部", "广东", "辽宁"], answer: 1 },
+            { q: "7. \"夜郎\"在今哪里？", options: ["云南", "贵州桐梓县一带", "广西", "四川"], answer: 1 },
+            { q: "8. \"我寄愁心与明月\"中\"与\"的意思是？", options: ["和", "给、寄托给", "参与", "赞许"], answer: 1 },
+            { q: "9. \"我寄愁心与明月\"运用了什么修辞手法？", options: ["比喻", "拟人", "夸张", "排比"], answer: 1 },
+            { q: "10. 李白诗歌的主要风格是？", options: ["现实主义", "浪漫主义", "自然主义", "象征主义"], answer: 1 },
+            { q: "11. 李白被后人誉为？", options: ["诗圣", "诗仙", "诗鬼", "诗佛"], answer: 1 },
+            { q: "12. 《夜雨寄北》的作者李商隐是哪个时期的诗人？", options: ["初唐", "盛唐", "中唐", "晚唐"], answer: 3 },
+            { q: "13. \"寄北\"的意思是？", options: ["寄到南方", "寄给在北方的人", "寄往西域", "寄到京城"], answer: 1 },
+            { q: "14. \"巴山\"指什么？", options: ["大巴山，在今四川东部", "祁连山", "长白山", "武夷山"], answer: 0 },
+            { q: "15. \"何当共剪西窗烛\"中\"何当\"的意思是？", options: ["何必", "什么时候才能", "为何", "何地"], answer: 1 },
+            { q: "16. \"共剪西窗烛\"中\"剪\"指什么？", options: ["剪断蜡烛", "剪去烛芯使明亮", "剪纸", "剪裁"], answer: 1 },
+            { q: "17. \"却话巴山夜雨时\"中\"却话\"的意思是？", options: ["拒绝说", "回头说、追述", "却步", "然而说"], answer: 1 },
+            { q: "18. 《夜雨寄北》最主要的抒情特点是？", options: ["直抒胸臆", "虚实结合、时空交错", "托物言志", "借古讽今"], answer: 1 },
+            { q: "19. 《夜雨寄北》表达了诗人怎样的情感？", options: ["壮志未酬", "羁旅思乡之情", "怀才不遇", "田园之乐"], answer: 1 },
+            { q: "20. \"巴山夜雨涨秋池\"中\"涨\"字的作用是？", options: ["说明雨小", "渲染凄凉孤寂的氛围", "形容水清", "表示天晴"], answer: 1 },
+            { q: "21. 我国已成功研制多少项人工智能关键标准？", options: ["近100项", "近150项", "近200项", "近300项"], answer: 2 },
+            { q: "22. \"十四五\"期间规模以上工业增加值年均增长多少？", options: ["4.9%", "5.9%", "6.9%", "7.9%"], answer: 1 },
+            { q: "23. 产业升级的四个方向是？", options: ["向新、向优、向智、向绿", "向大、向多、向快、向强", "向东、向西、向南、向北", "向高、向精、向尖、向深"], answer: 0 },
+            { q: "24. \"向绿\"指的是什么？", options: ["向绿色食品", "向绿色低碳、可持续发展", "向绿化带", "向绿卡"], answer: 1 },
+            { q: "25. 文章认为研制标准意味着中国是什么角色？", options: ["技术追随者", "规则制定者", "市场跟随者", "资金借用者"], answer: 1 },
+            { q: "26. 中国制造业正在经历怎样的转变？", options: ["从制造强国到制造大国", "从制造大国迈向制造强国", "从工业到农业", "从出口到内销"], answer: 1 },
+            { q: "27. 文章提到中国科学家体现了什么精神？", options: ["急功近利", "呕心沥血、无私奉献", "墨守成规", "好高骛远"], answer: 1 },
+            { q: "28. 文章列举的重大科技成就不包括？", options: ["两弹一星", "北斗组网", "蛟龙探海", "芯片大量进口"], answer: 3 },
+            { q: "29. 文章号召新时代中学生应该？", options: ["专注娱乐", "弘扬科技报国精神、努力学习", "尽早出国", "只学一门课"], answer: 1 },
+            { q: "30. 这篇现代文的中心思想是？", options: ["中国科技已全面领先", "中国科技自立自强体现东方力量，激励青年报国", "外国科技更先进", "科技不重要"], answer: 1 },
+            { q: "31. 习近平主席何时出席2026年上海合作组织峰会？", options: ["8月20日至25日", "8月30日至9月3日", "9月5日至10日", "9月15日至20日"], answer: 1 },
+            { q: "32. 2026年上海合作组织峰会在哪里举行？", options: ["北京", "比什凯克", "莫斯科", "塔什干"], answer: 1 },
+            { q: "33. 习近平主席此次对哪两国进行国事访问？", options: ["俄罗斯、白俄罗斯", "吉尔吉斯斯坦、埃及", "哈萨克斯坦、沙特", "乌兹别克斯坦、伊朗"], answer: 1 },
+            { q: "34. 应哪两位领导人邀请？", options: ["普京、马克龙", "扎帕罗夫、塞西", "拜登、朔尔茨", "莫迪、岸田"], answer: 1 },
+            { q: "35. 加拿大8月26日宣布对哪个国家加征反制关税？", options: ["中国", "美国", "墨西哥", "日本"], answer: 1 },
+            { q: "36. 中方对加征关税一事的态度是？", options: ["支持单边主义", "反对单边主义和贸易保护主义", "保持沉默", "立即报复"], answer: 1 },
+            { q: "37. 工信部发布我国研制了多少项AI关键标准？", options: ["近100项", "近200项", "近300项", "近500项"], answer: 1 },
+            { q: "38. 习近平主席此访将推动构建什么？", options: ["经济联盟", "更加紧密的命运共同体", "军事同盟", "贸易壁垒"], answer: 1 },
+            { q: "39. 下列词语字形完全正确的是：", options: ["羁旅", "羇旅", "畸旅", "崎旅"], answer: 0 },
+            { q: "40. \"锲而不舍\"的近义词是：", options: ["半途而废", "坚持不懈", "浅尝辄止", "三天打鱼"], answer: 1 },
+            { q: "41. 下列句子没有语病的是：", options: ["通过学习古诗，使我受益匪浅", "学习古诗使我受益匪浅", "通过学习古诗，使我进步", "学习古诗使我受益匪浅，更加进步了"], answer: 1 },
+            { q: "42. \"我寄愁心与明月，随君直到夜郎西\"两句之间是什么关系？", options: ["并列", "承接", "对比", "递进"], answer: 1 },
+            { q: "43. 拟人修辞手法的特点是？", options: ["打比方", "赋予事物以人的情感和动作", "夸大事实", "结构对称"], answer: 1 },
+            { q: "44. \"虚实结合\"中\"实\"指的是？", options: ["想象", "现实情景", "梦境", "虚构"], answer: 1 },
+            { q: "45. \"子规\"在古诗中常象征什么？", options: ["丰收", "离愁别绪、思乡", "喜庆", "勇武"], answer: 1 },
+            { q: "46. \"向新、向优、向智、向绿\"运用了什么修辞？", options: ["比喻", "排比", "拟人", "夸张"], answer: 1 },
+            { q: "47. \"命运共同体\"体现的外交理念是？", options: ["零和博弈", "合作共赢", "以邻为壑", "独善其身"], answer: 1 },
+            { q: "48. 下列对\"科技自立自强\"理解正确的是？", options: ["闭门造车", "依靠自身力量实现科技创新", "拒绝合作", "依赖引进"], answer: 1 },
+            { q: "49. 李商隐与谁合称\"小李杜\"？", options: ["李贺", "杜牧", "杜甫", "杜审言"], answer: 1 },
+            { q: "50. 对本日全部内容理解最准确的一项是？", options: ["古诗文与现代科技无关", "古诗词寄情言志，现代时文彰显中国创新与外交力量，共同激励青年报国", "时文内容仅是新闻报道", "现代文与古诗词没有联系"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

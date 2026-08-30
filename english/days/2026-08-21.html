@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月21日 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { color: #666; font-size: 1.2em; }
+        .progress-bar { background: #e0e0e0; border-radius: 10px; height: 30px; margin-top: 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .section { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .section-title { color: #667eea; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: #764ba2; }
+        .reading-passage { background: #f8f9fa; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .passage-title { color: #333; font-size: 1.4em; margin-bottom: 15px; font-weight: bold; }
+        .passage-content { color: #555; line-height: 2; font-size: 1.1em; }
+        .question-item { background: #fff; border: 2px solid #e0e0e0; border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+        .question-text { color: #333; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
+        .options { display: grid; gap: 10px; }
+        .option { padding: 15px 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option:hover { background: #e8eaf6; border-color: #667eea; }
+        .option.selected { background: #667eea; color: white; border-color: #667eea; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .word-card { background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf6 100%); border-radius: 15px; padding: 20px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .word-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); border-color: #667eea; }
+        .word-card .word { font-size: 1.5em; color: #667eea; font-weight: bold; margin-bottom: 10px; }
+        .word-card .pronunciation { color: #888; font-size: 0.9em; margin-bottom: 10px; }
+        .word-card .meaning { color: #555; font-size: 1.1em; }
+        .word-card .example { color: #888; font-size: 0.9em; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; font-style: italic; }
+        .word-card.memorized { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); }
+        .word-card.memorized .word { color: #2e7d32; }
+        .btn { padding: 15px 40px; border: none; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+        .btn-primary { background: linear-gradient(90deg, #667eea, #764ba2); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: linear-gradient(90deg, #4caf50, #45a049); color: white; }
+        .btn-success:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 25px; text-align: center; color: white; }
+        .stat-card .number { font-size: 3em; font-weight: bold; }
+        .stat-card .label { font-size: 1.1em; opacity: 0.9; }
+        .test-timer { background: #fff3e0; border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .test-timer .time { font-size: 3em; color: #ff9800; font-weight: bold; }
+        .test-timer .label { color: #666; }
+        .result-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .result-content { background: white; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; width: 90%; }
+        .result-score { font-size: 5em; color: #667eea; font-weight: bold; }
+        .result-message { font-size: 1.5em; color: #333; margin: 20px 0; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 15px 30px; background: white; border: 2px solid #e0e0e0; border-radius: 30px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .tab:hover { border-color: #667eea; }
+        .tab.active { background: linear-gradient(90deg, #667eea, #764ba2); color: white; border-color: transparent; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #f5f5f5; border-radius: 10px; color: #666; text-decoration: none; margin-bottom: 20px; transition: all 0.3s; }
+        .back-btn:hover { background: #e0e0e0; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } .section-title { font-size: 1.4em; } .word-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回英语首页</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> 英语学习</h1>
+            <p class="date">2026年8月21日 星期四</p>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('reading')">📖 阅读理解</div>
+            <div class="tab" onclick="showSection('vocab')">📚 单词学习</div>
+            <div class="tab" onclick="showSection('test')">📝 综合测试</div>
+        </div>
+        
+        <!-- 阅读理解部分 -->
+        <div id="readingSection" class="section">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 阅读理解 (2篇)</h2>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 1: Xi Jinping Congratulates Hichilema on Re-election as Zambia's President</h3>
+                <p class="passage-content">
+                    On August 20, 2026, Chinese President Xi Jinping sent a message to Hakainde Hichilema, congratulating him on his re-election as President of the Republic of Zambia. Xi pointed out that in recent years, the two leaders have met twice and jointly guided the development of China-Zambia relations. The two countries have deepened political mutual trust, achieved fruitful practical cooperation, and maintained close coordination and cooperation in multilateral affairs. Xi said he values the development of China-Zambia relations and is willing to work with President Hichilema to implement the outcomes of the Forum on China-Africa Cooperation (FOCAC) Beijing Summit, carry forward traditional friendship, firmly support each other, and continuously elevate the comprehensive strategic cooperative partnership to new heights.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">1. When did Xi Jinping send the congratulatory message?</p>
+                <div class="options">
+                    <div class="option" data-key="1_1" data-answer="A" onclick="selectOption(this, 'reading', 1, 1, 'A')">A. August 18, 2026</div>
+                    <div class="option" data-key="1_1" data-answer="B" onclick="selectOption(this, 'reading', 1, 1, 'B')">B. August 19, 2026</div>
+                    <div class="option" data-key="1_1" data-answer="C" onclick="selectOption(this, 'reading', 1, 1, 'C')">C. August 20, 2026</div>
+                    <div class="option" data-key="1_1" data-answer="D" onclick="selectOption(this, 'reading', 1, 1, 'D')">D. August 21, 2026</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">2. Who did Xi Jinping congratulate?</p>
+                <div class="options">
+                    <div class="option" data-key="1_2" data-answer="A" onclick="selectOption(this, 'reading', 1, 2, 'A')">A. Edgar Lungu</div>
+                    <div class="option" data-key="1_2" data-answer="B" onclick="selectOption(this, 'reading', 1, 2, 'B')">B. Hakainde Hichilema</div>
+                    <div class="option" data-key="1_2" data-answer="C" onclick="selectOption(this, 'reading', 1, 2, 'C')">C. Michael Sata</div>
+                    <div class="option" data-key="1_2" data-answer="D" onclick="selectOption(this, 'reading', 1, 2, 'D')">D. Rupiah Banda</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">3. Hichilema was re-elected as President of which country?</p>
+                <div class="options">
+                    <div class="option" data-key="1_3" data-answer="A" onclick="selectOption(this, 'reading', 1, 3, 'A')">A. Republic of Zimbabwe</div>
+                    <div class="option" data-key="1_3" data-answer="B" onclick="selectOption(this, 'reading', 1, 3, 'B')">B. Republic of Tanzania</div>
+                    <div class="option" data-key="1_3" data-answer="C" onclick="selectOption(this, 'reading', 1, 3, 'C')">C. Republic of Zambia</div>
+                    <div class="option" data-key="1_3" data-answer="D" onclick="selectOption(this, 'reading', 1, 3, 'D')">D. Republic of Kenya</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">4. How many times have the two leaders met in recent years?</p>
+                <div class="options">
+                    <div class="option" data-key="1_4" data-answer="A" onclick="selectOption(this, 'reading', 1, 4, 'A')">A. Once</div>
+                    <div class="option" data-key="1_4" data-answer="B" onclick="selectOption(this, 'reading', 1, 4, 'B')">B. Twice</div>
+                    <div class="option" data-key="1_4" data-answer="C" onclick="selectOption(this, 'reading', 1, 4, 'C')">C. Three times</div>
+                    <div class="option" data-key="1_4" data-answer="D" onclick="selectOption(this, 'reading', 1, 4, 'D')">D. Four times</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">5. Which forum's outcomes did Xi mention they would implement?</p>
+                <div class="options">
+                    <div class="option" data-key="1_5" data-answer="A" onclick="selectOption(this, 'reading', 1, 5, 'A')">A. BRICS Summit</div>
+                    <div class="option" data-key="1_5" data-answer="B" onclick="selectOption(this, 'reading', 1, 5, 'B')">B. G20 Summit</div>
+                    <div class="option" data-key="1_5" data-answer="C" onclick="selectOption(this, 'reading', 1, 5, 'C')">C. APEC Summit</div>
+                    <div class="option" data-key="1_5" data-answer="D" onclick="selectOption(this, 'reading', 1, 5, 'D')">D. FOCAC Beijing Summit</div>
+                </div>
+            </div>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 2: US Economists Reject "China Shock" Narrative; Chinese FM Responds</h3>
+                <p class="passage-content">
+                    On August 20, 2026, regarding comments by economists including Harvard Kennedy School's Dani Rodrik and American Enterprise Institute's Michael Strain, who rejected the "China shock" and "China squeeze" narratives, Chinese Foreign Ministry spokesperson Lin Jian said that "more and more insightful voices are saying the same. Facts show China's development brings opportunities, not shocks; empowerment, not squeeze." Economists noted China's trade is not "beggar-thy-neighbor" but "benefit-thy-neighbor." China exports not only finished goods but also equipment, parts and intermediates that lower industrialization costs for many countries. Lin said that affordable and high-quality Chinese manufacturing has lowered the threshold for industrialization in developing countries, and open-source and inclusive Chinese innovation has made cutting-edge technologies accessible and affordable to more nations.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">6. Which institution is Dani Rodrik affiliated with?</p>
+                <div class="options">
+                    <div class="option" data-key="2_1" data-answer="A" onclick="selectOption(this, 'reading', 2, 1, 'A')">A. Harvard Kennedy School</div>
+                    <div class="option" data-key="2_1" data-answer="B" onclick="selectOption(this, 'reading', 2, 1, 'B')">B. Stanford University</div>
+                    <div class="option" data-key="2_1" data-answer="C" onclick="selectOption(this, 'reading', 2, 1, 'C')">C. MIT Sloan School</div>
+                    <div class="option" data-key="2_1" data-answer="D" onclick="selectOption(this, 'reading', 2, 1, 'D')">D. Yale University</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">7. Michael Strain is from which institution?</p>
+                <div class="options">
+                    <div class="option" data-key="2_2" data-answer="A" onclick="selectOption(this, 'reading', 2, 2, 'A')">A. Brookings Institution</div>
+                    <div class="option" data-key="2_2" data-answer="B" onclick="selectOption(this, 'reading', 2, 2, 'B')">B. American Enterprise Institute</div>
+                    <div class="option" data-key="2_2" data-answer="C" onclick="selectOption(this, 'reading', 2, 2, 'C')">C. Heritage Foundation</div>
+                    <div class="option" data-key="2_2" data-answer="D" onclick="selectOption(this, 'reading', 2, 2, 'D')">D. Cato Institute</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">8. Who is the Chinese Foreign Ministry spokesperson mentioned?</p>
+                <div class="options">
+                    <div class="option" data-key="2_3" data-answer="A" onclick="selectOption(this, 'reading', 2, 3, 'A')">A. Wang Wenbin</div>
+                    <div class="option" data-key="2_3" data-answer="B" onclick="selectOption(this, 'reading', 2, 3, 'B')">B. Mao Ning</div>
+                    <div class="option" data-key="2_3" data-answer="C" onclick="selectOption(this, 'reading', 2, 3, 'C')">C. Lin Jian</div>
+                    <div class="option" data-key="2_3" data-answer="D" onclick="selectOption(this, 'reading', 2, 3, 'D')">D. Hua Chunying</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">9. According to the economists, China's trade is best described as?</p>
+                <div class="options">
+                    <div class="option" data-key="2_4" data-answer="A" onclick="selectOption(this, 'reading', 2, 4, 'A')">A. beggar-thy-neighbor</div>
+                    <div class="option" data-key="2_4" data-answer="B" onclick="selectOption(this, 'reading', 2, 4, 'B')">B. benefit-thy-neighbor</div>
+                    <div class="option" data-key="2_4" data-answer="C" onclick="selectOption(this, 'reading', 2, 4, 'C')">C. zero-sum game</div>
+                    <div class="option" data-key="2_4" data-answer="D" onclick="selectOption(this, 'reading', 2, 4, 'D')">D. protectionist</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">10. What has Chinese manufacturing lowered for developing countries?</p>
+                <div class="options">
+                    <div class="option" data-key="2_5" data-answer="A" onclick="selectOption(this, 'reading', 2, 5, 'A')">A. The cost of education</div>
+                    <div class="option" data-key="2_5" data-answer="B" onclick="selectOption(this, 'reading', 2, 5, 'B')">B. The price of luxury goods</div>
+                    <div class="option" data-key="2_5" data-answer="C" onclick="selectOption(this, 'reading', 2, 5, 'C')">C. The threshold for innovation</div>
+                    <div class="option" data-key="2_5" data-answer="D" onclick="selectOption(this, 'reading', 2, 5, 'D')">D. The threshold for industrialization</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitReadingAnswers()"><i class="fas fa-check"></i> 提交阅读答案</button>
+            </div>
+        </div>
+        
+        <!-- 单词学习部分 -->
+        <div id="vocabSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-book"></i> 单词学习</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #4caf50; margin-bottom: 20px;"><i class="fas fa-history"></i> 复习单词 (30个)</h3>
+                <div class="word-grid" id="oldWordsGrid"></div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-star"></i> 新学单词 (20个)</h3>
+                <div class="word-grid" id="newWordsGrid"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="saveVocabProgress()"><i class="fas fa-save"></i> 保存学习进度</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试部分 -->
+        <div id="testSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 综合测试 (100题)</h2>
+            
+            <div class="test-timer">
+                <div class="time" id="timer">60:00</div>
+                <div class="label">剩余时间</div>
+            </div>
+            
+            <div id="testQuestions"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitTest()"><i class="fas fa-paper-plane"></i> 提交测试</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card"><div class="number" id="readingScore">-</div><div class="label">阅读理解得分</div></div>
+            <div class="stat-card"><div class="number" id="vocabProgress">0/50</div><div class="label">单词掌握进度</div></div>
+            <div class="stat-card"><div class="number" id="testScore">-</div><div class="label">测试得分</div></div>
+            <div class="stat-card"><div class="number" id="totalProgress">0%</div><div class="label">总体完成度</div></div>
+        </div>
+    </div>
+    
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="result-score" id="finalScore">0</div>
+            <div class="result-message" id="resultMessage">继续努力！</div>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">确定</button>
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'xiaokai_english_2026_08_21';
+        
+        // 老单词数据（30个基础常用词 - 复习巩固）
+        const oldWords = [
+            { word: 'congratulate', pronunciation: '/kənˈɡrætʃuleɪt/', meaning: '祝贺', example: 'Xi Jinping congratulated Hichilema on his re-election.' },
+            { word: 'message', pronunciation: '/ˈmesɪdʒ/', meaning: '消息；贺电', example: 'Xi sent a message to the President of Zambia.' },
+            { word: 'president', pronunciation: '/ˈprezɪdənt/', meaning: '总统', example: 'Hichilema was re-elected as President of Zambia.' },
+            { word: 're-election', pronunciation: '/ˌriːɪˈlekʃn/', meaning: '连任', example: 'He won his re-election as President.' },
+            { word: 'republic', pronunciation: '/rɪˈpʌblɪk/', meaning: '共和国', example: 'Zambia is the Republic of Zambia.' },
+            { word: 'relation', pronunciation: '/rɪˈleɪʃn/', meaning: '关系', example: 'China-Zambia relations are deepening.' },
+            { word: 'trust', pronunciation: '/trʌst/', meaning: '信任', example: 'The two countries deepened political mutual trust.' },
+            { word: 'practical', pronunciation: '/ˈpræktɪkl/', meaning: '实际的', example: 'They achieved fruitful practical cooperation.' },
+            { word: 'cooperation', pronunciation: '/kəʊˌɒpəˈreɪʃn/', meaning: '合作', example: 'Practical cooperation has been fruitful.' },
+            { word: 'multilateral', pronunciation: '/ˌmʌltiˈlætərəl/', meaning: '多边的', example: 'They coordinate in multilateral affairs.' },
+            { word: 'affairs', pronunciation: '/əˈfeəz/', meaning: '事务', example: 'They cooperate in multilateral affairs.' },
+            { word: 'value', pronunciation: '/ˈvæljuː/', meaning: '重视', example: 'Xi values the development of China-Zambia relations.' },
+            { word: 'willing', pronunciation: '/ˈwɪlɪŋ/', meaning: '愿意的', example: 'He is willing to work with Hichilema.' },
+            { word: 'implement', pronunciation: '/ˈɪmplɪment/', meaning: '实施', example: 'They will implement the outcomes of the forum.' },
+            { word: 'outcome', pronunciation: '/ˈaʊtkʌm/', meaning: '成果', example: 'They will implement the outcomes of FOCAC.' },
+            { word: 'forum', pronunciation: '/ˈfɔːrəm/', meaning: '论坛', example: 'The FOCAC Beijing Summit was held.' },
+            { word: 'friendship', pronunciation: '/ˈfrendʃɪp/', meaning: '友谊', example: 'They carry forward traditional friendship.' },
+            { word: 'support', pronunciation: '/səˈpɔːt/', meaning: '支持', example: 'They firmly support each other.' },
+            { word: 'elevate', pronunciation: '/ˈelɪveɪt/', meaning: '提升', example: 'They elevate the partnership to new heights.' },
+            { word: 'comprehensive', pronunciation: '/ˌkɒmprɪˈhensɪv/', meaning: '全面的', example: 'They have a comprehensive strategic partnership.' },
+            { word: 'strategic', pronunciation: '/strəˈtiːdʒɪk/', meaning: '战略的', example: 'It is a strategic cooperative partnership.' },
+            { word: 'partnership', pronunciation: '/ˈpɑːrtnəʃɪp/', meaning: '伙伴关系', example: 'The partnership is elevating to new heights.' },
+            { word: 'economist', pronunciation: '/ɪˈkɒnəmɪst/', meaning: '经济学家', example: 'Economists rejected the false narrative.' },
+            { word: 'narrative', pronunciation: '/ˈnærətɪv/', meaning: '叙事', example: 'They rejected the "China shock" narrative.' },
+            { word: 'spokesperson', pronunciation: '/ˈspəʊkspɜːsən/', meaning: '发言人', example: 'Lin Jian is the Foreign Ministry spokesperson.' },
+            { word: 'development', pronunciation: '/dɪˈveləpmənt/', meaning: '发展', example: "China's development brings opportunities." },
+            { word: 'opportunity', pronunciation: '/ˌɒpəˈtjuːnəti/', meaning: '机会', example: 'Development brings opportunities, not shocks.' },
+            { word: 'empowerment', pronunciation: '/ɪmˈpaʊəmənt/', meaning: '赋能', example: 'It brings empowerment, not squeeze.' },
+            { word: 'trade', pronunciation: '/treɪd/', meaning: '贸易', example: "China's trade is benefit-thy-neighbor." },
+            { word: 'manufacturing', pronunciation: '/ˌmænjuˈfæktʃərɪŋ/', meaning: '制造业', example: 'Chinese manufacturing is affordable and high-quality.' }
+        ];
+        
+        // 新单词数据（20个与新闻相关）
+        const newWords = [
+            { word: 'congratulate', pronunciation: '/kənˈɡrætʃuleɪt/', meaning: '祝贺', example: 'Xi congratulated Hichilema on his victory.' },
+            { word: 're-election', pronunciation: '/ˌriːɪˈlekʃn/', meaning: '连任', example: 'Hichilema won his re-election as President.' },
+            { word: 'bilateral', pronunciation: '/ˌbaɪˈlætərəl/', meaning: '双边的', example: 'They hold bilateral meetings regularly.' },
+            { word: 'summit', pronunciation: '/ˈsʌmɪt/', meaning: '峰会', example: 'The FOCAC Beijing Summit was held.' },
+            { word: 'mutual', pronunciation: '/ˈmjuːtʃuəl/', meaning: '相互的', example: 'They deepened political mutual trust.' },
+            { word: 'coordination', pronunciation: '/kəʊˌɔːdɪˈneɪʃn/', meaning: '协调', example: 'They maintain close coordination in affairs.' },
+            { word: 'fruitful', pronunciation: '/ˈfruːtfl/', meaning: '丰硕的', example: 'They achieved fruitful cooperation.' },
+            { word: 'narrative', pronunciation: '/ˈnærətɪv/', meaning: '叙事', example: 'Economists rejected the false narrative.' },
+            { word: 'refutation', pronunciation: '/ˌrefjuˈteɪʃn/', meaning: '驳斥', example: 'The refutation of the narrative is important.' },
+            { word: 'beggar-thy-neighbor', pronunciation: '/ˈbeɡəðaɪˈneɪbə/', meaning: '以邻为壑', example: "China's trade is not beggar-thy-neighbor." },
+            { word: 'intermediate', pronunciation: '/ˌɪntəˈmiːdiət/', meaning: '中间的', example: 'China exports intermediates to many countries.' },
+            { word: 'industrialization', pronunciation: '/ɪnˌdʌstriəlaɪˈzeɪʃn/', meaning: '工业化', example: 'Chinese manufacturing lowers industrialization costs.' },
+            { word: 'threshold', pronunciation: '/ˈθreʃhəʊld/', meaning: '门槛', example: 'It lowered the threshold for industrialization.' },
+            { word: 'accessible', pronunciation: '/əkˈsesəbl/', meaning: '可获得的', example: 'Technologies became accessible to more nations.' },
+            { word: 'inclusive', pronunciation: '/ɪnˈkluːsɪv/', meaning: '包容的', example: 'Chinese innovation is inclusive.' },
+            { word: 'resilience', pronunciation: '/rɪˈzɪliəns/', meaning: '韧性', example: "China's economy shows resilience." },
+            { word: 'dividend', pronunciation: '/ˈdɪvɪdend/', meaning: '红利', example: 'Development brings dividends to all nations.' },
+            { word: 'insightful', pronunciation: '/ˈɪnsaɪtfl/', meaning: '有见地的', example: 'More insightful voices are speaking up.' },
+            { word: 'spokesperson', pronunciation: '/ˈspəʊkspɜːsən/', meaning: '发言人', example: 'The spokesperson responded to comments.' },
+            { word: 'empirical', pronunciation: '/ɪmˈpɪrɪkl/', meaning: '实证的', example: 'Empirical evidence shows China brings opportunities.' }
+        ];
+        
+        // 阅读理解答案
+        const readingAnswers = {
+            1: ['C', 'B', 'C', 'B', 'D'],
+            2: ['A', 'B', 'C', 'B', 'D']
+        };
+        
+        // 用户答案存储
+        let userAnswers = { reading: {}, vocab: { old: [], new: [] }, test: {} };
+        
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    userAnswers = JSON.parse(saved);
+                    if (!userAnswers.reading) userAnswers.reading = {};
+                    if (!userAnswers.vocab) userAnswers.vocab = { old: [], new: [] };
+                    if (!userAnswers.test) userAnswers.test = {};
+                } catch (e) {
+                    userAnswers = { reading: {}, vocab: { old: [], new: [] }, test: {} };
+                }
+            }
+            updateProgress();
+        }
+        
+        function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers)); }
+        
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('readingSection').style.display = section === 'reading' ? 'block' : 'none';
+            document.getElementById('vocabSection').style.display = section === 'vocab' ? 'block' : 'none';
+            document.getElementById('testSection').style.display = section === 'test' ? 'block' : 'none';
+        }
+        
+        function selectOption(element, type, passageNum, questionNum, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            const key = `${passageNum}_${questionNum}`;
+            userAnswers.reading[key] = answer;
+            saveData();
+        }
+        
+        function restoreReadingSelections() {
+            document.querySelectorAll('#readingSection .option').forEach(opt => {
+                const key = opt.getAttribute('data-key');
+                const answer = opt.getAttribute('data-answer');
+                if (key && answer && userAnswers.reading[key] === answer) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
+        
+        function submitReadingAnswers() {
+            let correct = 0;
+            let total = 10;
+            for (let passage = 1; passage <= 2; passage++) {
+                for (let q = 1; q <= 5; q++) {
+                    const key = `${passage}_${q}`;
+                    const userAnswer = userAnswers.reading[key];
+                    const correctAnswer = readingAnswers[passage][q - 1];
+                    if (userAnswer === correctAnswer) correct++;
+                }
+            }
+            userAnswers.readingScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('readingScore').textContent = correct + '/' + total;
+            alert(`阅读理解完成！得分：${correct}/${total}`);
+        }
+        
+        function renderWords() {
+            const oldGrid = document.getElementById('oldWordsGrid');
+            const newGrid = document.getElementById('newWordsGrid');
+            oldGrid.innerHTML = '';
+            newGrid.innerHTML = '';
+            
+            oldWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.old.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('old', i, card);
+                oldGrid.appendChild(card);
+            });
+            
+            newWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.new.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('new', i, card);
+                newGrid.appendChild(card);
+            });
+        }
+        
+        function toggleWordMemorized(type, index, element) {
+            const arr = userAnswers.vocab[type];
+            const idx = arr.indexOf(index);
+            if (idx === -1) { arr.push(index); element.classList.add('memorized'); }
+            else { arr.splice(idx, 1); element.classList.remove('memorized'); }
+            saveData();
+            updateVocabProgress();
+        }
+        
+        function updateVocabProgress() {
+            const total = userAnswers.vocab.old.length + userAnswers.vocab.new.length;
+            document.getElementById('vocabProgress').textContent = total + '/50';
+        }
+        
+        function saveVocabProgress() {
+            saveData();
+            updateProgress();
+            updateVocabProgress();
+            alert('单词学习进度已保存！');
+        }
+        
+        function generateTestQuestions() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            const questions = [];
+            const allWords = [...oldWords, ...newWords];
+            
+            // 单词选择题（50题）
+            for (let i = 0; i < 50; i++) {
+                const word = allWords[i % allWords.length];
+                const wrongMeanings = ['快乐', '悲伤', '快速', '慢速', '简单', '困难', '美丽', '聪明', '年轻', '古老', '现代', '安全'];
+                const correctMeaning = word.meaning;
+                let wrongOptions = wrongMeanings.filter(m => m !== correctMeaning).slice(0, 3);
+                // 补充其他单词释义作为干扰项
+                if (wrongOptions.length < 3) {
+                    const otherMeanings = allWords.map(w => w.meaning).filter(m => m !== correctMeaning && !wrongOptions.includes(m));
+                    while (wrongOptions.length < 3 && otherMeanings.length > 0) {
+                        wrongOptions.push(otherMeanings.shift());
+                    }
+                }
+                const options = [correctMeaning, ...wrongOptions].sort(() => Math.random() - 0.5);
+                questions.push({ type: 'vocab', question: `"${word.word}" 的意思是？`, options: options, answer: correctMeaning });
+            }
+            
+            // 语法选择题（30题）
+            const grammarQuestions = [
+                { q: 'Xi Jinping ___ a message to Hichilema.', opts: ['send', 'sends', 'sent', 'sending'], a: 'sent' },
+                { q: 'He ___ him on his re-election.', opts: ['congratulate', 'congratulates', 'congratulated', 'congratulating'], a: 'congratulated' },
+                { q: 'The two leaders ___ twice in recent years.', opts: ['meet', 'meets', 'have met', 'meeting'], a: 'have met' },
+                { q: 'They ___ the development of China-Zambia relations.', opts: ['guide', 'guides', 'guided', 'have guided'], a: 'guided' },
+                { q: 'The two countries ___ political mutual trust.', opts: ['deepen', 'deepens', 'have deepened', 'deepening'], a: 'have deepened' },
+                { q: 'They ___ fruitful practical cooperation.', opts: ['achieve', 'achieves', 'achieved', 'achieving'], a: 'achieved' },
+                { q: 'Xi ___ the development of China-Zambia relations.', opts: ['value', 'values', 'valued', 'valuing'], a: 'values' },
+                { q: 'He ___ to work with President Hichilema.', opts: ['is willing', 'was willing', 'will', 'would'], a: 'is willing' },
+                { q: 'They ___ to implement the outcomes of FOCAC.', opts: ['agree', 'agrees', 'agreed', 'agreeing'], a: 'agreed' },
+                { q: 'The FOCAC Beijing Summit ___ in Beijing.', opts: ['holds', 'held', 'was held', 'is held'], a: 'was held' },
+                { q: 'Economists ___ the "China shock" narrative.', opts: ['reject', 'rejects', 'rejected', 'rejecting'], a: 'rejected' },
+                { q: 'Lin Jian ___ that more insightful voices are saying the same.', opts: ['say', 'says', 'said', 'saying'], a: 'said' },
+                { q: "China's development ___ opportunities, not shocks.", opts: ['bring', 'brings', 'brought', 'bringing'], a: 'brings' },
+                { q: 'It ___ empowerment, not squeeze.', opts: ['bring', 'brings', 'brought', 'bringing'], a: 'brings' },
+                { q: 'China ___ not only finished goods but also equipment.', opts: ['export', 'exports', 'exported', 'exporting'], a: 'exports' },
+                { q: 'These ___ industrialization costs for many countries.', opts: ['lower', 'lowers', 'lowered', 'lowering'], a: 'lower' },
+                { q: "Chinese manufacturing ___ the threshold for industrialization.", opts: ['has lowered', 'lowers', 'lowered', 'lowering'], a: 'has lowered' },
+                { q: 'Chinese innovation ___ cutting-edge technologies accessible.', opts: ['make', 'makes', 'has made', 'made'], a: 'has made' },
+                { q: 'The two countries ___ traditional friendship.', opts: ['carry forward', 'carries forward', 'carried forward', 'carrying forward'], a: 'carry forward' },
+                { q: 'They ___ each other firmly.', opts: ['support', 'supports', 'supported', 'supporting'], a: 'support' },
+                { q: 'China and Zambia ___ in multilateral affairs.', opts: ['coordinate', 'coordinates', 'coordinated', 'coordinating'], a: 'coordinate' },
+                { q: 'The re-election ___ on August 20, 2026.', opts: ['take place', 'takes place', 'took place', 'taking place'], a: 'took place' },
+                { q: 'Economists ___ the "China squeeze" narrative too.', opts: ['reject', 'rejects', 'rejected', 'rejecting'], a: 'rejected' },
+                { q: 'Lin Jian ___ to the economists\' comments.', opts: ['respond', 'responds', 'responded', 'responding'], a: 'responded' },
+                { q: 'More insightful voices ___ the same thing.', opts: ['say', 'says', 'are saying', 'said'], a: 'are saying' },
+                { q: 'China ___ equipment and parts to many countries.', opts: ['export', 'exports', 'exported', 'exporting'], a: 'exports' },
+                { q: 'Affordable manufacturing ___ the threshold.', opts: ['lower', 'lowers', 'lowered', 'lowering'], a: 'lowers' },
+                { q: 'Open-source innovation ___ technologies accessible.', opts: ['make', 'makes', 'made', 'making'], a: 'makes' },
+                { q: 'The partnership ___ to new heights.', opts: ['elevate', 'elevates', 'is elevating', 'elevating'], a: 'is elevating' },
+                { q: 'Facts ___ that China\'s development brings opportunities.', opts: ['show', 'shows', 'showed', 'showing'], a: 'show' }
+            ];
+            
+            for (let i = 0; i < 30; i++) {
+                const gq = grammarQuestions[i % grammarQuestions.length];
+                questions.push({ type: 'grammar', question: gq.q, options: gq.opts, answer: gq.a });
+            }
+            
+            // 阅读理解题（20题）
+            const readingTestQuestions = [
+                { q: 'Xi sent the congratulatory message on ___.', opts: ['August 18, 2026', 'August 19, 2026', 'August 20, 2026', 'August 21, 2026'], a: 'August 20, 2026' },
+                { q: 'Hichilema is President of ___.', opts: ['the Republic of Zimbabwe', 'the Republic of Tanzania', 'the Republic of Zambia', 'the Republic of Kenya'], a: 'the Republic of Zambia' },
+                { q: 'The two leaders met ___ times in recent years.', opts: ['once', 'twice', 'three times', 'four times'], a: 'twice' },
+                { q: 'The forum mentioned in the passage is ___.', opts: ['BRICS Summit', 'G20 Summit', 'APEC Summit', 'FOCAC Beijing Summit'], a: 'FOCAC Beijing Summit' },
+                { q: 'China and Zambia will elevate the ___ partnership.', opts: ['comprehensive strategic cooperative', 'basic economic', 'military alliance', 'cultural exchange'], a: 'comprehensive strategic cooperative' },
+                { q: 'The countries deepened political mutual ___.', opts: ['trust', 'doubt', 'conflict', 'suspicion'], a: 'trust' },
+                { q: 'They achieved ___ practical cooperation.', opts: ['fruitful', 'fruitless', 'limited', 'failed'], a: 'fruitful' },
+                { q: 'Xi is ___ to work with Hichilema.', opts: ['unwilling', 'willing', 'forced', 'unable'], a: 'willing' },
+                { q: 'Dani Rodrik is from ___.', opts: ['Harvard Kennedy School', 'Stanford University', 'MIT Sloan School', 'Yale University'], a: 'Harvard Kennedy School' },
+                { q: 'Michael Strain is from ___.', opts: ['Brookings Institution', 'American Enterprise Institute', 'Heritage Foundation', 'Cato Institute'], a: 'American Enterprise Institute' },
+                { q: 'The Chinese FM spokesperson is ___.', opts: ['Wang Wenbin', 'Mao Ning', 'Lin Jian', 'Hua Chunying'], a: 'Lin Jian' },
+                { q: "China's development brings ___ not shocks.", opts: ['opportunities', 'threats', 'problems', 'crises'], a: 'opportunities' },
+                { q: "China's trade is ___ not beggar-thy-neighbor.", opts: ['benefit-thy-neighbor', 'zero-sum', 'protectionist', 'selfish'], a: 'benefit-thy-neighbor' },
+                { q: 'China exports equipment, parts and ___.', opts: ['luxuries', 'intermediates', 'weapons', 'waste'], a: 'intermediates' },
+                { q: 'Chinese manufacturing lowered the ___ for industrialization.', opts: ['cost', 'threshold', 'speed', 'quality'], a: 'threshold' },
+                { q: 'Chinese innovation is ___ and inclusive.', opts: ['closed', 'open-source', 'secret', 'exclusive'], a: 'open-source' },
+                { q: 'The economists rejected the "China ___" narrative.', opts: ['boom', 'shock', 'rise', 'growth'], a: 'shock' },
+                { q: 'Lin Jian said more ___ voices are saying the same.', opts: ['insightful', 'ignorant', 'confused', 'biased'], a: 'insightful' },
+                { q: "China's development brings empowerment, not ___.", opts: ['squeeze', 'help', 'aid', 'support'], a: 'squeeze' },
+                { q: 'China exports not only finished goods but also ___.', opts: ['food', 'equipment', 'art', 'music'], a: 'equipment' }
+            ];
+            
+            for (let i = 0; i < 20; i++) {
+                const rq = readingTestQuestions[i];
+                questions.push({ type: 'reading', question: rq.q, options: rq.opts, answer: rq.a });
+            }
+            
+            // 渲染题目
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                const optsHtml = q.options.map((opt, j) => {
+                    const selectedClass = (userAnswers.test[i] === opt) ? ' selected' : '';
+                    return `<div class="option${selectedClass}" onclick="selectTestOption(this, ${i}, '${opt.replace(/'/g, "\\'")}')">${String.fromCharCode(65 + j)}. ${opt}</div>`;
+                }).join('');
+                div.innerHTML = `
+                    <p class="question-text">${i + 1}. ${q.question}</p>
+                    <div class="options">
+                        ${optsHtml}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            return questions;
+        }
+        
+        let testQuestions = [];
+        let timerInterval = null;
+        let timeLeft = 3600;
+        
+        function selectTestOption(element, questionIndex, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            userAnswers.test[questionIndex] = answer;
+            saveData();
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+            }, 1000);
+        }
+        
+        function submitTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            let correct = 0;
+            testQuestions.forEach((q, i) => { if (userAnswers.test[i] === q.answer) correct++; });
+            userAnswers.testScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('testScore').textContent = correct + '/100';
+            document.getElementById('finalScore').textContent = correct;
+            
+            let message = '';
+            if (correct >= 90) message = '太棒了！你做得非常好！';
+            else if (correct >= 80) message = '很好！继续保持！';
+            else if (correct >= 70) message = '不错，还有进步空间！';
+            else if (correct >= 60) message = '及格了，继续努力！';
+            else message = '需要加油哦！多练习吧！';
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+        
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
+        
+        function updateProgress() {
+            let progress = 0;
+            if (userAnswers.readingScore !== undefined) progress += 25;
+            if (userAnswers.vocab.old.length > 0 || userAnswers.vocab.new.length > 0) {
+                progress += 25 * (userAnswers.vocab.old.length + userAnswers.vocab.new.length) / 50;
+            }
+            if (userAnswers.testScore !== undefined) progress += 50;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressFill').textContent = Math.round(progress) + '%';
+            document.getElementById('totalProgress').textContent = Math.round(progress) + '%';
+            
+            if (userAnswers.readingScore !== undefined) {
+                document.getElementById('readingScore').textContent = userAnswers.readingScore + '/10';
+            }
+            if (userAnswers.testScore !== undefined) {
+                document.getElementById('testScore').textContent = userAnswers.testScore + '/100';
+            }
+        }
+        
+        window.onload = function() {
+            loadData();
+            renderWords();
+            testQuestions = generateTestQuestions();
+            restoreReadingSelections();
+            startTimer();
+            updateVocabProgress();
+        };
+    </script>
+</body>
+</html>

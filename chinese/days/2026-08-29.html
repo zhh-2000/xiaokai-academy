@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月29日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月29日 星期六 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">迢迢牵牛星</div>
+                    <div class="author">《古诗十九首》</div>
+                    <div class="content">
+                        迢迢牵牛星，皎皎河汉女。<br>
+                        纤纤擢素手，札札弄机杼。<br>
+                        终日不成章，泣涕零如雨。<br>
+                        河汉清且浅，相去复几许。<br>
+                        盈盈一水间，脉脉不得语。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>迢迢</strong>：遥远的样子。牵牛星：天鹰座α星，在银河之南。</p>
+                        <p>② <strong>皎皎</strong>：明亮的样子。河汉女：指织女星，天琴座α星，在银河之北。</p>
+                        <p>③ <strong>纤纤</strong>：纤细柔长的样子。擢：举起。素手：白皙的手。</p>
+                        <p>④ <strong>札札</strong>：织机声。机杼：织布机。杼：梭子。</p>
+                        <p>⑤ <strong>终日</strong>：整天。不成章：织不成布匹。章：布匹的经纬纹理。</p>
+                        <p>⑥ <strong>泣涕</strong>：眼泪。零：落下。</p>
+                        <p>⑦ <strong>河汉</strong>：银河。清且浅：清澈又浅。相去：相距。复几许：又有多远呢。</p>
+                        <p>⑧ <strong>盈盈</strong>：水清浅的样子，也形容女子仪态。一水间：隔着一道银河水。脉脉：含情相视的样子。不得语：不能说话。</p>
+                        <br>
+                        <p><strong>译文：</strong>遥远的牵牛星，明亮的织女星。纤细的手举起白皙的手，札札地弄着织布机。整天织不成布匹，泪水如雨般落下。银河清澈又浅，相距又能有多远呢？隔着一道清澈的银河水，含情相视却不能说话。</p>
+                        <br>
+                        <p><strong>赏析：</strong>此诗选自《古诗十九首》，以牛郎织女的传说为题材，描写织女思念牛郎的深情。诗中"盈盈一水间，脉脉不得语"成为千古名句，以近在咫尺却不能相语的悲哀，深刻表达了思念之苦。全诗语言朴素自然，叠字运用巧妙（迢迢、皎皎、纤纤、札札、盈盈、脉脉），增强了音韵美和形象美。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">鹊桥仙·纤云弄巧</div>
+                    <div class="author">北宋 · 秦观</div>
+                    <div class="content">
+                        纤云弄巧，飞星传恨，银汉迢迢暗度。<br>
+                        金风玉露一相逢，便胜却人间无数。<br>
+                        柔情似水，佳期如梦，忍顾鹊桥归路。<br>
+                        两情若是久长时，又岂在朝朝暮暮。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>纤云弄巧</strong>：纤细的云彩变幻出巧妙的花样。弄：变幻。</p>
+                        <p>② <strong>飞星传恨</strong>：流星传递离愁别恨。飞星：指流星。</p>
+                        <p>③ <strong>银汉</strong>：银河。迢迢：遥远。暗度：暗暗渡过。</p>
+                        <p>④ <strong>金风</strong>：秋风。玉露：白露。金风玉露一相逢：秋风白露中牛郎织女相逢。</p>
+                        <p>⑤ <strong>胜却</strong>：胜过。人间无数：人世间无数次的相聚。</p>
+                        <p>⑥ <strong>柔情似水</strong>：温柔的情意像流水。佳期如梦：美好的相会如同梦境。</p>
+                        <p>⑦ <strong>忍顾</strong>：怎么忍心回顾。鹊桥归路：通过鹊桥归去的路。</p>
+                        <p>⑧ <strong>两情</strong>：两人的感情。久长：长久。朝朝暮暮：每天早晚相聚。</p>
+                        <br>
+                        <p><strong>译文：</strong>纤细的云彩变幻出巧妙的花样，飞驰的流星传递着离恨，在遥远的银河上暗暗渡过。秋风白露中一旦相逢，便胜过人间无数的相聚。柔情如水，佳期如梦，怎么忍心回顾鹊桥上归去的路。两人的感情若是长久的，又何必在乎朝朝暮暮的相聚。</p>
+                        <br>
+                        <p><strong>赏析：</strong>此词以七夕牛郎织女相会为题材，却一反传统悲情，提出了"两情若是久长时，又岂在朝朝暮暮"的爱情观，表达了爱情重在精神契合而非朝夕相处的深刻思想。上阕写相逢之难得与珍贵，下阕写离别之不舍与达观。"金风玉露一相逢，便胜却人间无数"以极高的格调赞颂了真挚的爱情。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>七夕节：从古老传说到现代浪漫</h3>
+                    <p>每年农历七月初七，是中国传统的七夕节。这一节日源于牛郎织女的传说——相传天上的织女与凡间的牛郎相恋，却被王母娘娘以银河相隔，唯有每年七月初七，喜鹊搭成鹊桥，两人才能在桥上相会一次。2026年8月29日恰逢七夕，全国掀起了一股浪漫庆祝的热潮。</p>
+                    <p>在上海，婚姻登记处被需求所淹没。长宁区网上预约登记名额在几秒内被抢空，创下近年新高。在广州，15对新人在广州塔50米高的户外平台上举行了集体婚礼，掌声与温情交织。</p>
+                    <p>昆明花卉市场同样热闹非凡。玫瑰、康乃馨、向日葵的需求暴增，推动价格上涨十倍以上。一束20支的标准花束通常售价10元，七夕期间超过100元。花商将价格暴涨归因于天气不佳导致的鲜花减产，鲜花价格指数较节前上涨超过60%。</p>
+                    <p>尽管产量下降，昆明国际花卉拍卖交易中心仍保持了日均600万支以上的供应量，确保全国各地庆祝活动的充足供应。七夕节根植于牛郎织女的古老传说，继续将传统与现代消费文化融合，巩固了其作为中国最受珍视的爱情庆典的地位。</p>
+                    <p>七夕节的文化内涵远不止于消费。从《古诗十九首》中"盈盈一水间，脉脉不得语"的深情，到秦观"两情若是久长时，又岂在朝朝暮暮"的达观，七夕承载着中华民族对忠贞爱情的向往与歌颂。各地举办"我们的节日·七夕"主题活动，挖掘节日文化内涵，弘扬勤劳智慧、忠贞爱情、家庭美满的价值理念。</p>
+                    <p>作为新时代的中学生，我们既要感受七夕节带来的浪漫氛围，更要理解其深厚的文化底蕴。每一次节日的庆祝，都是文化传承的延续。让我们在学习古诗词中感悟先人的情感世界，在了解时事中关注国家的发展变化，做中华优秀传统文化的传承者和弘扬者。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>台风"沙德尔"登陆浙江 西藏泥石流救援持续推进 习近平将出席上合峰会</h3>
+                    <p>今年第18号台风"沙德尔"于8月28日上午8时05分在浙江台州玉环市沿海登陆，登陆时中心附近最大风力12级（35米/秒）。浙江台州已将防台风应急响应提升至I级。台风预计西行深入福建、江西等省份，山洪和地质灾害、城市内涝风险较高。</p>
+                    <p>在西藏自治区，吉隆口岸泥石流灾害救援工作持续推进。8月28日，中国安能集团15人勘察队携带勘察无人机、便携卫星站和固定通信监控设备赶赴堰塞湖区域，对堰塞坝及周围道路进行实地勘察，为科学处置堰塞湖提供精准数据支撑。习近平总书记要求全力搜救泥石流中失联的中外人员。</p>
+                    <p>8月30日至9月3日，国家主席习近平将出席在比什凯克举行的2026年上海合作组织峰会，并应吉尔吉斯斯坦总统扎帕罗夫、埃及总统塞西邀请对两国进行国事访问。这是中国元首外交的重要行程，将进一步深化中国与中亚、非洲国家的友好合作关系。</p>
+                    <p>习近平总书记近日作出重要指示强调，树立和践行正确政绩观是一项长期任务，必须久久为功。中央党的建设工作领导小组24日召开会议，总结树立和践行正确政绩观学习教育，研究部署巩固拓展学习教育成果。</p>
+                    <div class="source">来源：综合央视新闻、中国日报（2026年8月28-29日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-08-29';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-29',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《迢迢牵牛星》选自哪部作品？", options: ["《诗经》", "《楚辞》", "《古诗十九首》", "《乐府诗集》"], answer: 2 },
+            { q: "2. \"迢迢牵牛星\"中\"迢迢\"的意思是？", options: ["明亮", "遥远", "纤细", "清澈"], answer: 1 },
+            { q: "3. \"河汉女\"指的是？", options: ["银河", "织女星", "牵牛星", "月亮"], answer: 1 },
+            { q: "4. \"札札弄机杼\"描写的是谁在做什么？", options: ["牛郎耕地", "织女织布", "诗人写作", "农民种田"], answer: 1 },
+            { q: "5. \"盈盈一水间，脉脉不得语\"表达了怎样的情感？", options: ["喜悦", "愤怒", "近在咫尺却不能相语的思念之苦", "悲伤绝望"], answer: 2 },
+            { q: "6. 《鹊桥仙·纤云弄巧》的作者是？", options: ["苏轼", "辛弃疾", "秦观", "李清照"], answer: 2 },
+            { q: "7. \"金风玉露一相逢\"中\"金风\"指的是？", options: ["春风", "夏风", "秋风", "冬风"], answer: 2 },
+            { q: "8. \"两情若是久长时，又岂在朝朝暮暮\"表达了怎样的爱情观？", options: ["追求朝夕相处", "爱情重在精神契合而非朝夕相聚", "及时行乐", "悲观消极"], answer: 1 },
+            { q: "9. 《迢迢牵牛星》全诗运用了几组叠字？", options: ["三组", "四组", "五组", "六组"], answer: 3 },
+            { q: "10. 两首诗词的共同题材是？", options: ["春节", "七夕节", "中秋节", "端午节"], answer: 1 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 2026年七夕节是公历几月几日？", options: ["8月28日", "8月29日", "8月30日", "8月7日"], answer: 1 },
+            { q: "12. 上海长宁区网上预约登记名额在多长时间内被抢空？", options: ["一分钟", "几秒钟", "一小时", "一天"], answer: 1 },
+            { q: "13. 广州集体婚礼在广州塔多高的户外平台举行？", options: ["30米", "40米", "50米", "60米"], answer: 2 },
+            { q: "14. 七夕期间一束20支标准花束价格超过多少？", options: ["50元", "80元", "100元", "200元"], answer: 2 },
+            { q: "15. 鲜花价格指数较节前上涨超过多少？", options: ["30%", "40%", "50%", "60%"], answer: 3 },
+            { q: "16. 昆明国际花卉拍卖交易中心日均供应量超过多少？", options: ["300万支", "400万支", "500万支", "600万支"], answer: 3 },
+            { q: "17. 七夕节根植于什么传说？", options: ["嫦娥奔月", "牛郎织女", "精卫填海", "女娲补天"], answer: 1 },
+            { q: "18. \"两情若是久长时，又岂在朝朝暮暮\"是谁的词句？", options: ["苏轼", "李清照", "秦观", "辛弃疾"], answer: 2 },
+            { q: "19. 各地举办的主题活动叫什么？", options: ["\"我们的节日·七夕\"", "\"浪漫七夕\"", "\"七夕文化节\"", "\"七夕爱情节\""], answer: 0 },
+            { q: "20. 这篇现代文的中心思想是？", options: ["七夕只是消费节日", "七夕节融合传统与现代，承载文化内涵，应传承弘扬", "七夕节不重要", "七夕节只是买花"], answer: 1 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 第18号台风\"沙德尔\"在哪里登陆？", options: ["温州", "台州玉环", "宁波", "杭州"], answer: 1 },
+            { q: "22. 台风登陆时最大风力为几级？", options: ["10级", "11级", "12级", "13级"], answer: 2 },
+            { q: "23. 台州将防台风应急响应提升至几级？", options: ["II级", "III级", "IV级", "I级"], answer: 3 },
+            { q: "24. 中国安能勘察队有多少人？", options: ["10人", "12人", "15人", "20人"], answer: 2 },
+            { q: "25. 勘察队携带了什么设备？", options: ["坦克", "勘察无人机、便携卫星站", "直升机", "潜水器"], answer: 1 },
+            { q: "26. 习近平将出席什么峰会？", options: ["G20", "APEC", "上海合作组织峰会", "联合国大会"], answer: 2 },
+            { q: "27. 上合峰会在哪里举行？", options: ["北京", "比什凯克", "莫斯科", "开罗"], answer: 1 },
+            { q: "28. 习近平还将访问哪两个国家？", options: ["日本和韩国", "美国和加拿大", "吉尔吉斯斯坦和埃及", "法国和德国"], answer: 2 },
+            { q: "29. 习近平近日作出重要指示的主题是？", options: ["经济发展", "树立和践行正确政绩观", "环境保护", "教育改革"], answer: 1 },
+            { q: "30. 中央党的建设工作领导小组何时召开会议？", options: ["8月20日", "8月22日", "8月24日", "8月26日"], answer: 2 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《迢迢牵牛星》选自哪部作品？", options: ["《诗经》", "《楚辞》", "《古诗十九首》", "《乐府诗集》"], answer: 2 },
+            { q: "2. \"迢迢\"在诗中的意思是？", options: ["明亮", "遥远", "纤细", "清澈"], answer: 1 },
+            { q: "3. \"皎皎河汉女\"中\"皎皎\"形容什么？", options: ["牵牛星", "织女星明亮", "银河清澈", "织布机声"], answer: 1 },
+            { q: "4. 牵牛星位于哪个星座？", options: ["天琴座", "天鹰座", "仙女座", "仙后座"], answer: 1 },
+            { q: "5. \"纤纤擢素手\"中\"擢\"的意思是？", options: ["放下", "举起", "握住", "洗"], answer: 1 },
+            { q: "6. \"札札弄机杼\"中\"杼\"指的是什么？", options: ["织布机", "梭子", "布匹", "丝线"], answer: 1 },
+            { q: "7. \"终日不成章\"中\"章\"指什么？", options: ["文章", "布匹经纬纹理", "乐章", "印章"], answer: 1 },
+            { q: "8. \"泣涕零如雨\"中\"零\"的意思是？", options: ["数字零", "落下", "稀少", "破碎"], answer: 1 },
+            { q: "9. \"盈盈一水间\"中\"盈盈\"形容什么？", options: ["水清浅的样子", "银河宽广", "泪水多", "星星密集"], answer: 0 },
+            { q: "10. \"脉脉不得语\"中\"脉脉\"的意思是？", options: ["血脉", "含情相视的样子", "脉动", "沉默"], answer: 1 },
+            { q: "11. 《迢迢牵牛星》运用了几组叠字？", options: ["三组", "四组", "五组", "六组"], answer: 3 },
+            { q: "12. 《鹊桥仙·纤云弄巧》的作者是？", options: ["苏轼", "辛弃疾", "秦观", "李清照"], answer: 2 },
+            { q: "13. 秦观属于哪个词派？", options: ["豪放派", "婉约派", "田园派", "边塞派"], answer: 1 },
+            { q: "14. \"纤云弄巧\"中\"弄\"的意思是？", options: ["玩耍", "变幻", "放弃", "取得"], answer: 1 },
+            { q: "15. \"飞星传恨\"中\"飞星\"指什么？", options: ["牵牛星", "织女星", "流星", "北斗星"], answer: 2 },
+            { q: "16. \"银汉迢迢暗度\"中\"银汉\"指什么？", options: ["银河", "大海", "天空", "云彩"], answer: 0 },
+            { q: "17. \"金风玉露一相逢\"中\"金风\"指什么风？", options: ["春风", "夏风", "秋风", "冬风"], answer: 2 },
+            { q: "18. \"金风玉露\"象征什么？", options: ["秋天", "七夕佳期，高洁美好的相逢", "寒冷天气", "丰收季节"], answer: 1 },
+            { q: "19. \"便胜却人间无数\"表达了什么？", options: ["人间很好", "七夕相逢胜过人间无数次相聚", "人间相聚更好", "人间相聚无数"], answer: 1 },
+            { q: "20. \"两情若是久长时，又岂在朝朝暮暮\"表达了怎样的爱情观？", options: ["追求朝夕相处", "爱情重在精神契合而非朝夕相聚", "及时行乐", "悲观消极"], answer: 1 },
+            { q: "21. 2026年七夕节是公历几月几日？", options: ["8月28日", "8月29日", "8月30日", "8月7日"], answer: 1 },
+            { q: "22. 上海长宁区婚姻登记预约名额多长时间被抢空？", options: ["一分钟", "几秒钟", "一小时", "一天"], answer: 1 },
+            { q: "23. 广州集体婚礼在广州塔多高举行？", options: ["30米", "40米", "50米", "60米"], answer: 2 },
+            { q: "24. 七夕期间20支标准花束价格超过多少？", options: ["50元", "80元", "100元", "200元"], answer: 2 },
+            { q: "25. 鲜花价格指数较节前上涨超过多少？", options: ["30%", "40%", "50%", "60%"], answer: 3 },
+            { q: "26. 昆明花卉交易中心日均供应量超过多少？", options: ["300万支", "400万支", "500万支", "600万支"], answer: 3 },
+            { q: "27. 七夕节根植于什么传说？", options: ["嫦娥奔月", "牛郎织女", "精卫填海", "女娲补天"], answer: 1 },
+            { q: "28. 各地举办的主题活动叫什么？", options: ["\"我们的节日·七夕\"", "\"浪漫七夕\"", "\"七夕文化节\"", "\"七夕爱情节\""], answer: 0 },
+            { q: "29. 台风\"沙德尔\"在哪里登陆？", options: ["温州", "台州玉环", "宁波", "杭州"], answer: 1 },
+            { q: "30. 台风登陆时最大风力为几级？", options: ["10级", "11级", "12级", "13级"], answer: 2 },
+            { q: "31. 台州将防台风应急响应提升至几级？", options: ["II级", "III级", "IV级", "I级"], answer: 3 },
+            { q: "32. 中国安能勘察队有多少人？", options: ["10人", "12人", "15人", "20人"], answer: 2 },
+            { q: "33. 勘察队携带了什么设备？", options: ["坦克", "勘察无人机、便携卫星站", "直升机", "潜水器"], answer: 1 },
+            { q: "34. 习近平将出席什么峰会？", options: ["G20", "APEC", "上海合作组织峰会", "联合国大会"], answer: 2 },
+            { q: "35. 上合峰会在哪里举行？", options: ["北京", "比什凯克", "莫斯科", "开罗"], answer: 1 },
+            { q: "36. 习近平还将访问哪两个国家？", options: ["日本和韩国", "美国和加拿大", "吉尔吉斯斯坦和埃及", "法国和德国"], answer: 2 },
+            { q: "37. 习近平近日作出指示的主题是？", options: ["经济发展", "树立和践行正确政绩观", "环境保护", "教育改革"], answer: 1 },
+            { q: "38. 中央党的建设工作领导小组何时召开会议？", options: ["8月20日", "8月22日", "8月24日", "8月26日"], answer: 2 },
+            { q: "39. 下列词语中没有错别字的一项是：", options: ["迢迢牵牛星", "条条牵牛星", "调调牵牛星", "迢迢牵牛猩"], answer: 0 },
+            { q: "40. \"盈盈一水间，脉脉不得语\"运用的修辞手法是？", options: ["比喻", "叠字", "夸张", "排比"], answer: 1 },
+            { q: "41. 下列句子没有语病的是：", options: ["通过学习七夕诗词，使我深受感动", "学习七夕诗词使我深受感动", "七夕诗词使我通过学习深受感动", "通过七夕诗词的学习，使我感动"], answer: 1 },
+            { q: "42. \"金风玉露一相逢\"中\"金\"和\"玉\"的修辞效果是？", options: ["比喻", "借代秋天白露，以高洁之物衬托相逢", "夸张", "拟人"], answer: 1 },
+            { q: "43. 叠字修辞的作用是？", options: ["增加字数", "增强音韵美和形象美", "使句子变长", "显得华丽"], answer: 1 },
+            { q: "44. \"忍顾鹊桥归路\"中\"忍顾\"的意思是？", options: ["忍心回顾", "怎么忍心回顾", "忍受回顾", "停止回顾"], answer: 1 },
+            { q: "45. 对秦观爱情观理解正确的是？", options: ["追求朝夕相处", "爱情重在精神契合，超越朝暮", "及时行乐", "悲观消极"], answer: 1 },
+            { q: "46. \"柔情似水，佳期如梦\"用了什么修辞？", options: ["比喻", "排比", "拟人", "夸张"], answer: 0 },
+            { q: "47. \"牛郎织女\"传说的文化意义是？", options: ["只是爱情故事", "承载中华民族对忠贞爱情的向往与歌颂", "只是神话传说", "只是节日由来"], answer: 1 },
+            { q: "48. 秦观与苏轼、辛弃疾的区别是？", options: ["同时代", "秦观属婉约派，苏轼、辛弃疾属豪放派", "同一词派", "师生关系"], answer: 1 },
+            { q: "49. 七夕节被称为什么？", options: ["春节", "中国情人节", "中秋节", "重阳节"], answer: 1 },
+            { q: "50. 对本日全部内容理解最准确的一项是？", options: ["古诗词与现代文无关", "古诗词咏七夕深情，现代文写七夕传承，时文记国家大事，共同激励青年传承文化报效国家", "时文只是新闻报道", "现代文与古诗词没有联系"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            let idx;
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

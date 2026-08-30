@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学学习 - 2026年8月25日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #1565C0;
+            border-bottom: 3px solid #2196F3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .tip-box {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .tip-box h3 { color: #0D47A1; margin-bottom: 10px; }
+        .tip-box ul { padding-left: 20px; }
+        .tip-box li { margin: 5px 0; color: #333; }
+        .question {
+            margin: 15px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        .question .q-text {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.1em;
+        }
+        .question .q-num {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        .answer-input {
+            width: 200px;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.2s;
+        }
+        .answer-input:focus { border-color: #2196F3; outline: none; }
+        .answer-input.correct { border-color: #4CAF50; background: #E8F5E9; }
+        .answer-input.wrong { border-color: #f44336; background: #FFEBEE; }
+        .check-btn {
+            padding: 8px 20px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            margin-left: 10px;
+            transition: background 0.2s;
+        }
+        .check-btn:hover { background: #1976D2; }
+        .feedback {
+            display: none;
+            margin-top: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #C8E6C9; color: #1b5e20; }
+        .feedback.wrong { background: #FFCDD2; color: #b71c1c; }
+        .feedback .solution { margin-top: 5px; font-size: 0.9em; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(33,150,243,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #BBDEFB; color: #0D47A1; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #42A5F5);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #E3F2FD;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #1565C0; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+        .formula-box {
+            background: #FFF3E0;
+            border: 1px solid #FFE082;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            color: #E65100;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月25日 · 数学</span>
+            <a href="../index.html">📚 数学目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="section">
+            <h2>📐 简便运算技巧</h2>
+            <div class="tip-box">
+                <h3>💡 简便运算常用方法</h3>
+                <ul>
+                    <li><strong>乘法分配律</strong>：a×(b+c) = a×b + a×c，如 25×(40+4) = 25×40 + 25×4</li>
+                    <li><strong>乘法结合律</strong>：a×b×c = (a×b)×c = a×(b×c)，如 25×7×4 = (25×4)×7</li>
+                    <li><strong>凑整法</strong>：把接近整十、整百的数凑整，如 99 = 100-1</li>
+                    <li><strong>拆分法</strong>：把一个数拆成两个便于计算的数，如 32 = 8×4</li>
+                    <li><strong>提取公因数</strong>：a×b + a×c = a×(b+c)</li>
+                    <li><strong>平方差公式</strong>：a²-b² = (a+b)(a-b)</li>
+                </ul>
+            </div>
+            <div class="formula-box">
+                📝 关键公式：<br>
+                25×4 = 100 &nbsp;&nbsp;|&nbsp;&nbsp; 125×8 = 1000 &nbsp;&nbsp;|&nbsp;&nbsp; 25×8 = 200 &nbsp;&nbsp;|&nbsp;&nbsp; 50×2 = 100
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✏️ 简便运算练习（20题）</h2>
+            <p style="margin-bottom:15px; color:#666;">初一水平 · 请在输入框中填写答案，点击"检查"验证</p>
+            <div id="questionsContainer"></div>
+            <div style="text-align:center; margin-top:20px;">
+                <button class="btn" onclick="submitAll()">提交全部</button>
+            </div>
+            <div class="result-box" id="finalResult"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_math_2026-08-25';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-25',
+            subject: 'math',
+            answers: {},
+            checked: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 20道简便运算题 ============
+        const mathQuestions = [
+            { q: "25 × 44", answer: "1100", solution: "25×44 = 25×(40+4) = 25×40 + 25×4 = 1000 + 100 = 1100（乘法分配律）" },
+            { q: "125 × 32", answer: "4000", solution: "125×32 = 125×(8×4) = (125×8)×4 = 1000×4 = 4000（乘法结合律+拆分法）" },
+            { q: "99 × 37", answer: "3663", solution: "99×37 = (100-1)×37 = 100×37 - 1×37 = 3700 - 37 = 3663（凑整法+乘法分配律）" },
+            { q: "101 × 85", answer: "8585", solution: "101×85 = (100+1)×85 = 100×85 + 1×85 = 8500 + 85 = 8585（凑整法+乘法分配律）" },
+            { q: "36 × 25", answer: "900", solution: "36×25 = 9×4×25 = 9×(4×25) = 9×100 = 900（拆分法+乘法结合律）" },
+            { q: "25 × 7 × 4", answer: "700", solution: "25×7×4 = (25×4)×7 = 100×7 = 700（乘法交换律+结合律）" },
+            { q: "125 × 8 × 7", answer: "7000", solution: "125×8×7 = (125×8)×7 = 1000×7 = 7000（乘法结合律）" },
+            { q: "48 × 125", answer: "6000", solution: "48×125 = 6×8×125 = 6×(8×125) = 6×1000 = 6000（拆分法+乘法结合律）" },
+            { q: "999 + 99 + 9", answer: "1107", solution: "999+99+9 = (1000-1)+(100-1)+(10-1) = 1000+100+10-3 = 1110-3 = 1107（凑整法）" },
+            { q: "73 × 99 + 73", answer: "7300", solution: "73×99+73 = 73×99+73×1 = 73×(99+1) = 73×100 = 7300（提取公因数）" },
+            { q: "125 × 25 × 32", answer: "100000", solution: "125×25×32 = 125×25×(8×4) = (125×8)×(25×4) = 1000×100 = 100000（拆分法+结合律）" },
+            { q: "98 × 102", answer: "9996", solution: "98×102 = (100-2)(100+2) = 100²-2² = 10000-4 = 9996（平方差公式）" },
+            { q: "35 × 2 × 5", answer: "350", solution: "35×2×5 = 35×(2×5) = 35×10 = 350（乘法结合律）" },
+            { q: "25 × 24", answer: "600", solution: "25×24 = 25×(4×6) = (25×4)×6 = 100×6 = 600（拆分法+结合律）" },
+            { q: "125 × 16", answer: "2000", solution: "125×16 = 125×(8×2) = (125×8)×2 = 1000×2 = 2000（拆分法+结合律）" },
+            { q: "199 × 201", answer: "39999", solution: "199×201 = (200-1)(200+1) = 200²-1² = 40000-1 = 39999（平方差公式）" },
+            { q: "56 + 99 × 56", answer: "5600", solution: "56+99×56 = 56×1+56×99 = 56×(1+99) = 56×100 = 5600（提取公因数）" },
+            { q: "25 × 8 × 125 × 4", answer: "1000000", solution: "25×8×125×4 = (25×4)×(8×125) = 100×1000 = 100000（乘法交换律+结合律）" },
+            { q: "99 × 99 + 99", answer: "9900", solution: "99×99+99 = 99×(99+1) = 99×100 = 9900（提取公因数）" },
+            { q: "1001 × 78 - 78", answer: "78000", solution: "1001×78-78 = 78×(1001-1) = 78×1000 = 78000（提取公因数）" }
+        ];
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            mathQuestions.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                const savedAns = savedData.answers['q_' + i] || '';
+                const isChecked = savedData.checked['q_' + i];
+                let inputClass = '';
+                if (isChecked) {
+                    inputClass = savedAns === item.answer ? 'correct' : 'wrong';
+                }
+                div.innerHTML = `
+                    <div class="q-text">
+                        <span class="q-num">${i+1}</span>
+                        ${item.q} = 
+                        <input type="text" class="answer-input ${inputClass}" id="input_${i}" value="${savedAns}" placeholder="填写答案" oninput="saveAnswer(${i}, this.value)">
+                        <button class="check-btn" onclick="checkAnswer(${i})">检查</button>
+                    </div>
+                    <div class="feedback ${isChecked ? 'show' : ''} ${isChecked ? (savedAns === item.answer ? 'correct' : 'wrong') : ''}" id="feedback_${i}">
+                        ${isChecked ? (savedAns === item.answer ? '✅ 正确！' : '❌ 不对，再想想') : ''}
+                        ${isChecked && savedAns !== item.answer ? '<div class="solution">💡 解题思路：' + item.solution + '</div>' : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function saveAnswer(qIndex, value) {
+            savedData.answers['q_' + qIndex] = value;
+            // 如果已检查过，取消检查状态
+            if (savedData.checked['q_' + qIndex]) {
+                delete savedData.checked['q_' + qIndex];
+                const input = document.getElementById('input_' + qIndex);
+                input.classList.remove('correct', 'wrong');
+                const feedback = document.getElementById('feedback_' + qIndex);
+                feedback.className = 'feedback';
+                feedback.innerHTML = '';
+            }
+            saveData();
+        }
+
+        function checkAnswer(qIndex) {
+            const input = document.getElementById('input_' + qIndex);
+            const value = input.value.trim();
+            if (!value) {
+                alert('请先填写答案！');
+                return;
+            }
+            const item = mathQuestions[qIndex];
+            const isCorrect = value === item.answer;
+            savedData.checked['q_' + qIndex] = true;
+            saveData();
+
+            input.classList.remove('correct', 'wrong');
+            input.classList.add(isCorrect ? 'correct' : 'wrong');
+
+            const feedback = document.getElementById('feedback_' + qIndex);
+            feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+            feedback.innerHTML = isCorrect 
+                ? '✅ 正确！太棒了！' 
+                : '❌ 不对，再想想<div class="solution">💡 解题思路：' + item.solution + '</div>';
+        }
+
+        function submitAll() {
+            let correct = 0;
+            let answered = 0;
+            mathQuestions.forEach((item, i) => {
+                const ans = savedData.answers['q_' + i];
+                if (ans) {
+                    answered++;
+                    // 自动检查未检查的题
+                    if (!savedData.checked['q_' + i]) {
+                        savedData.checked['q_' + i] = true;
+                        if (ans === item.answer) {
+                            correct++;
+                            const input = document.getElementById('input_' + i);
+                            input.classList.add('correct');
+                            const feedback = document.getElementById('feedback_' + i);
+                            feedback.className = 'feedback show correct';
+                            feedback.innerHTML = '✅ 正确！';
+                        } else {
+                            const input = document.getElementById('input_' + i);
+                            input.classList.add('wrong');
+                            const feedback = document.getElementById('feedback_' + i);
+                            feedback.className = 'feedback show wrong';
+                            feedback.innerHTML = '❌ 不对，再想想<div class="solution">💡 解题思路：' + item.solution + '</div>';
+                        }
+                    } else if (ans === item.answer) {
+                        correct++;
+                    }
+                }
+            });
+
+            if (answered === 0) {
+                alert('请先完成至少一道题！');
+                return;
+            }
+
+            saveData();
+            const score = Math.round((correct / mathQuestions.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('finalResult');
+            result.className = 'result-box show ' + (score >= 60 ? 'pass' : 'fail');
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${mathQuestions.length}</p>
+                <p>完成率：${answered}/${mathQuestions.length}</p>
+                <p>${score === 100 ? '满分！太厉害了！🏆' : score >= 90 ? '非常棒！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，多做练习会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const answered = Object.keys(savedData.answers).filter(k => k.startsWith('q_')).length;
+            let correct = 0;
+            mathQuestions.forEach((item, i) => {
+                if (savedData.checked['q_' + i] && savedData.answers['q_' + i] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = answered;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = answered > 0 ? Math.round((correct/answered)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (answered / mathQuestions.length * 100) + '%';
+        }
+
+        loadData();
+        renderQuestions();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

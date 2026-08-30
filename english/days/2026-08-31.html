@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月31日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月31日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>President Xi Departs for SCO Summit in Bishkek, State Visits to Kyrgyzstan and Egypt</h3>
+                    <p>On August 30, 2026, Chinese President Xi Jinping left Beijing to attend the 2026 Shanghai Cooperation Organization (SCO) Summit in Bishkek, the capital of Kyrgyzstan, and to pay state visits to Kyrgyzstan and Egypt. The trip, lasting from August 30 to September 3, marks President Xi's first visit to Kyrgyzstan in seven years.</p>
+                    <p>Upon arriving at Manas International Airport in Bishkek, President Xi was welcomed by China's Ambassador to Kyrgyzstan, Liu Jiangping, along with Kyrgyz officials. The streets of Bishkek were decorated with Chinese and Kyrgyz national flags and welcome banners, as local people from all walks of life eagerly anticipated the visit. Students and faculty at Kyrgyz National University, home to the first overseas book room dedicated to Xi Jinping's works in Central Asia, expressed great enthusiasm and high expectations for the visit.</p>
+                    <p>At the SCO Summit, scheduled for August 31 and September 1, President Xi will discuss deepening cooperation among member states as well as major international and regional issues. The summit brings together leaders from China, Russia, Kyrgyzstan, and other member states to strengthen the Shanghai Spirit of mutual trust, mutual benefit, equality, and respect for diverse civilizations.</p>
+                    <p>For Kyrgyzstan, the visit holds particular significance. Beyond the signed documents and diplomatic statements, the two sides are expected to reach concrete agreements in areas such as export, production, and infrastructure. President Xi's state visit to Egypt, the final leg of his trip, will further strengthen China's relations with Arab and African nations.</p>
+                    <span class="source">Source: Xinhua, China Daily, CCTV News, 2026-08-30</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Xizang Mudslide Disaster: 16 Dead, 546 Missing, Massive Rescue Operation Underway</h3>
+                    <p>On August 30, 2026, the government of the Xizang Autonomous Region held a press conference in Gyirong Town to provide updates on the "8·26" mudslide disaster that struck the Gyirong border port. As of 6:00 p.m. on August 29, the disaster had claimed 16 lives, with 546 people still missing. Among the missing, 261 are foreign nationals from 23 countries, including Nepal (104), India (49), the United States (18), and Latvia (33).</p>
+                    <p>The disaster originated on the Nepal side of the China-Nepal border. At approximately 10:52 a.m. Beijing time on August 26, a glacier broke off at an altitude of about 5,200 meters on the northern slope of the Langtang Lirung peak in Nepal. The ice-rock avalanche fell rapidly from 5,200 meters to about 4,000 meters, scouring the mountainside and forming a massive mudslide that traveled approximately 22 kilometers along the Purungpu Tsangpo and Donglin Tsangpo rivers, reaching the Gyirong port at an altitude of about 1,800 meters. The entire event took only about 6 to 7 minutes.</p>
+                    <p>The mudslide leveled approximately 0.7 square kilometers of land, destroying 27 buildings and their associated facilities. Roads, communications, and power lines leading to the Gyirong port were completely severed. A barrier lake formed at the port, with a dam averaging 60 meters in height, 1,100 meters in length, and 300 meters in width. By August 28, the barrier lake had begun overflowing, and as of August 30, it had essentially drained.</p>
+                    <p>The rescue operation has mobilized 2,141 personnel, including the People's Liberation Army, armed police, China Fire and Rescue, border defense, public security, and China Anneng. A total of 269 rescue vehicles and 3,922 pieces of equipment have been deployed. The rescue forces are advancing into the core disaster area via "water, land, and air" routes. The Ministry of Finance and the Ministry of Emergency Management allocated 120 million yuan, while the National Development and Reform Commission arranged 100 million yuan to support rescue and post-disaster recovery.</p>
+                    <span class="source">Source: China Daily, CCTV News, Xinhua, 2026-08-30</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-08-31';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-31',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. When did President Xi Jinping leave Beijing for the SCO Summit?", options: ["August 28, 2026", "August 29, 2026", "August 30, 2026", "August 31, 2026"], answer: 2 },
+            { q: "2. Where is the 2026 SCO Summit being held?", options: ["Beijing", "Bishkek", "Cairo", "Moscow"], answer: 1 },
+            { q: "3. Bishkek is the capital of which country?", options: ["Kazakhstan", "Uzbekistan", "Kyrgyzstan", "Tajikistan"], answer: 2 },
+            { q: "4. How long does President Xi's trip last?", options: ["August 30 to September 1", "August 30 to September 3", "August 28 to September 3", "August 30 to September 5"], answer: 1 },
+            { q: "5. This marks President Xi's first visit to Kyrgyzstan in how many years?", options: ["Five years", "Seven years", "Ten years", "Three years"], answer: 1 },
+            { q: "6. Who welcomed President Xi at Manas International Airport?", options: ["The Kyrgyz President", "China's Ambassador Liu Jiangping", "The SCO Secretary-General", "The Egyptian President"], answer: 1 },
+            { q: "7. When is the SCO Summit scheduled to take place?", options: ["August 30 and 31", "August 31 and September 1", "September 1 and 2", "August 30 and September 1"], answer: 1 },
+            { q: "8. What will President Xi discuss at the SCO Summit?", options: ["Trade wars only", "Deepening cooperation and major international issues", "Military alliances", "Climate change only"], answer: 1 },
+            { q: "9. Which university is home to the first overseas book room for Xi Jinping's works in Central Asia?", options: ["Bishkek State University", "Kyrgyz National University", "Kyrgyz-Russian Slavic University", "American University of Central Asia"], answer: 1 },
+            { q: "10. Which country will President Xi visit as the final leg of his trip?", options: ["Kyrgyzstan", "Russia", "Egypt", "Saudi Arabia"], answer: 2 }
+        ];
+
+        const reading2Data = [
+            { q: "11. Where was the press conference on the mudslide disaster held?", options: ["Lhasa", "Gyirong Town", "Beijing", "Shigatse"], answer: 1 },
+            { q: "12. As of August 29, how many people had died in the disaster?", options: ["10", "16", "26", "50"], answer: 1 },
+            { q: "13. How many people were reported missing?", options: ["261", "499", "546", "2141"], answer: 2 },
+            { q: "14. How many foreign nationals are among the missing?", options: ["104", "23", "261", "18"], answer: 2 },
+            { q: "15. Which country had the most missing foreign nationals?", options: ["India", "The United States", "Nepal", "Latvia"], answer: 2 },
+            { q: "16. Where did the disaster originate?", options: ["The China side of the border", "The Nepal side of the border", "Tibet interior", "India side"], answer: 1 },
+            { q: "17. At what altitude did the glacier break off?", options: ["About 1,800 meters", "About 4,000 meters", "About 5,200 meters", "About 6,000 meters"], answer: 2 },
+            { q: "18. How long did the ice-rock avalanche take to reach Gyirong port?", options: ["About 2 minutes", "About 6-7 minutes", "About 15 minutes", "About 30 minutes"], answer: 1 },
+            { q: "19. How far did the mudslide travel along the rivers?", options: ["About 10 km", "About 22 km", "About 50 km", "About 100 km"], answer: 1 },
+            { q: "20. How many rescue personnel have been mobilized?", options: ["499", "1,000", "2,141", "5,000"], answer: 2 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "summit", phonetic: "/ˈsʌmɪt/", meaning: "n. 峰会；顶点" },
+            { word: "depart", phonetic: "/dɪˈpɑːrt/", meaning: "v. 出发；离开" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作" },
+            { word: "mutual", phonetic: "/ˈmjuːtʃuəl/", meaning: "adj. 相互的；共同的" },
+            { word: "civilization", phonetic: "/ˌsɪvələˈzeɪʃən/", meaning: "n. 文明" },
+            { word: "significance", phonetic: "/sɪɡˈnɪfɪkəns/", meaning: "n. 重要性；意义" },
+            { word: "infrastructure", phonetic: "/ˈɪnfrəstrʌktʃər/", meaning: "n. 基础设施" },
+            { word: "mudslide", phonetic: "/ˈmʌdslaɪd/", meaning: "n. 泥石流" },
+            { word: "avalanche", phonetic: "/ˈævəlæntʃ/", meaning: "n. 雪崩；山崩" },
+            { word: "glacier", phonetic: "/ˈɡleɪʃər/", meaning: "n. 冰川" },
+            { word: "barrier lake", phonetic: "/ˈbæriər leɪk/", meaning: "n. 堰塞湖" },
+            { word: "mobilize", phonetic: "/ˈmoʊbəlaɪz/", meaning: "v. 动员；调动" },
+            { word: "personnel", phonetic: "/ˌpɜːrsəˈnel/", meaning: "n. 人员；职员" },
+            { word: "allocate", phonetic: "/ˈæləkeɪt/", meaning: "v. 分配；拨给" },
+            { word: "recovery", phonetic: "/rɪˈkʌvəri/", meaning: "n. 恢复；复苏" },
+            { word: "anticipate", phonetic: "/ænˈtɪsɪpeɪt/", meaning: "v. 期待；预料" },
+            { word: "diplomatic", phonetic: "/ˌdɪpləˈmætɪk/", meaning: "adj. 外交的" },
+            { word: "enthusiasm", phonetic: "/ɪnˈθuːziæzəm/", meaning: "n. 热情；热忱" },
+            { word: "sever", phonetic: "/ˈsɛvər/", meaning: "v. 切断；断绝" },
+            { word: "overflow", phonetic: "/ˌoʊvərˈfloʊ/", meaning: "v./n. 溢出；泛滥" }
+        ];
+
+        const oldVocabData = [
+            { word: "president", phonetic: "/ˈprɛzɪdənt/", meaning: "n. 总统；主席" },
+            { word: "capital", phonetic: "/ˈkæpɪtəl/", meaning: "n. 首都；资本" },
+            { word: "visit", phonetic: "/ˈvɪzɪt/", meaning: "n./v. 访问；参观" },
+            { word: "country", phonetic: "/ˈkʌntri/", meaning: "n. 国家" },
+            { word: "meeting", phonetic: "/ˈmiːtɪŋ/", meaning: "n. 会议" },
+            { word: "leader", phonetic: "/ˈliːdər/", meaning: "n. 领导人" },
+            { word: "region", phonetic: "/ˈriːdʒən/", meaning: "n. 地区；区域" },
+            { word: "disaster", phonetic: "/dɪˈzæstər/", meaning: "n. 灾难" },
+            { word: "rescue", phonetic: "/ˈrɛskjuː/", meaning: "n./v. 救援" },
+            { word: "border", phonetic: "/ˈbɔːrdər/", meaning: "n. 边境；边界" },
+            { word: "missing", phonetic: "/ˈmɪsɪŋ/", meaning: "adj. 失踪的" },
+            { word: "foreign", phonetic: "/ˈfɔːrɪn/", meaning: "adj. 外国的" },
+            { word: "national", phonetic: "/ˈnæʃənəl/", meaning: "adj. 国家的；民族的" },
+            { word: "altitude", phonetic: "/ˈæltɪtuːd/", meaning: "n. 海拔；高度" },
+            { word: "mountain", phonetic: "/ˈmaʊntɪn/", meaning: "n. 山" },
+            { word: "river", phonetic: "/ˈrɪvər/", meaning: "n. 河流" },
+            { word: "building", phonetic: "/ˈbɪldɪŋ/", meaning: "n. 建筑物" },
+            { word: "road", phonetic: "/roʊd/", meaning: "n. 道路" },
+            { word: "power", phonetic: "/ˈpaʊər/", meaning: "n. 电力；力量" },
+            { word: "communication", phonetic: "/kəˌmjuːnɪˈkeɪʃən/", meaning: "n. 通信" },
+            { word: "equipment", phonetic: "/ɪˈkwɪpmənt/", meaning: "n. 装备；设备" },
+            { word: "vehicle", phonetic: "/ˈviːəkəl/", meaning: "n. 车辆" },
+            { word: "government", phonetic: "/ˈɡʌvərnmənt/", meaning: "n. 政府" },
+            { word: "press", phonetic: "/prɛs/", meaning: "n. 新闻；媒体" },
+            { word: "conference", phonetic: "/ˈkɒnfərəns/", meaning: "n. 会议" },
+            { word: "ambassador", phonetic: "/æmˈbæsədər/", meaning: "n. 大使" },
+            { word: "airport", phonetic: "/ˈɛrpɔːrt/", meaning: "n. 机场" },
+            { word: "student", phonetic: "/ˈstuːdənt/", meaning: "n. 学生" },
+            { word: "university", phonetic: "/ˌjuːnɪˈvɜːrsɪti/", meaning: "n. 大学" },
+            { word: "agreement", phonetic: "/əˈɡriːmənt/", meaning: "n. 协议" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. President Xi ___ Beijing on August 30 to attend the SCO Summit.", type: "choice", options: ["leave", "left", "leaves", "leaving"], answer: 1 },
+            { q: "2. The trip ___ from August 30 to September 3.", type: "choice", options: ["last", "lasts", "lasted", "lasting"], answer: 1 },
+            { q: "3. This ___ President Xi's first visit to Kyrgyzstan in seven years.", type: "choice", options: ["mark", "marks", "marked", "marking"], answer: 1 },
+            { q: "4. President Xi ___ by Ambassador Liu Jiangping at the airport.", type: "choice", options: ["welcome", "welcomed", "was welcomed", "welcomes"], answer: 2 },
+            { q: "5. The streets of Bishkek ___ with Chinese and Kyrgyz flags.", type: "choice", options: ["decorate", "decorated", "were decorated", "decorates"], answer: 2 },
+            { q: "6. At the summit, President Xi ___ deepening cooperation.", type: "choice", options: ["discuss", "will discuss", "discussed", "discusses"], answer: 1 },
+            { q: "7. The SCO Summit ___ in Bishkek.", type: "choice", options: ["hold", "held", "was held", "holds"], answer: 2 },
+            { q: "8. The mudslide ___ on August 26.", type: "choice", options: ["occur", "occurred", "occurs", "occurring"], answer: 1 },
+            { q: "9. As of August 29, 16 people ___ dead.", type: "choice", options: ["confirm", "confirmed", "were confirmed", "confirms"], answer: 2 },
+            { q: "10. The disaster ___ 546 people missing.", type: "choice", options: ["leave", "left", "leaves", "leaving"], answer: 1 },
+            { q: "11. A glacier ___ off at an altitude of 5,200 meters.", type: "choice", options: ["break", "broke", "breaks", "breaking"], answer: 1 },
+            { q: "12. The mudslide ___ about 22 kilometers.", type: "choice", options: ["travel", "traveled", "travels", "traveling"], answer: 1 },
+            { q: "13. Roads, communications, and power ___ completely severed.", type: "choice", options: ["was", "were", "is", "are"], answer: 1 },
+            { q: "14. A barrier lake ___ at the port.", type: "choice", options: ["form", "formed", "forms", "forming"], answer: 1 },
+            { q: "15. By August 28, the barrier lake ___ overflowing.", type: "choice", options: ["begin", "began", "begins", "beginning"], answer: 1 },
+            { q: "16. The rescue operation ___ 2,141 personnel.", type: "choice", options: ["mobilize", "mobilized", "mobilizes", "mobilizing"], answer: 1 },
+            { q: "17. The Ministry of Finance ___ 120 million yuan.", type: "choice", options: ["allocate", "allocated", "allocates", "allocating"], answer: 1 },
+            { q: "18. Local people ___ President Xi's visit.", type: "choice", options: ["anticipate", "anticipated", "anticipates", "anticipating"], answer: 1 },
+            { q: "19. The barrier lake ___ essentially drained by August 30.", type: "choice", options: ["has", "had", "have", "having"], answer: 1 },
+            { q: "20. Students at the university ___ great enthusiasm.", type: "choice", options: ["express", "expressed", "expresses", "expressing"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. A ___ is a meeting of heads of state.", type: "choice", options: ["summit", "valley", "river", "glacier"], answer: 0 },
+            { q: "22. To ___ means to leave or set out on a journey.", type: "choice", options: ["arrive", "depart", "stay", "return"], answer: 1 },
+            { q: "23. ___ means working together toward a common goal.", type: "choice", options: ["Cooperation", "Competition", "Conflict", "Confusion"], answer: 0 },
+            { q: "24. ___ means felt by both sides equally.", type: "choice", options: ["Mutual", "Single", "One-sided", "Partial"], answer: 0 },
+            { q: "25. A ___ is an advanced stage of human society.", type: "choice", options: ["civilization", "wilderness", "jungle", "desert"], answer: 0 },
+            { q: "26. The ___ of an event is its importance.", type: "choice", options: ["significance", "size", "color", "cost"], answer: 0 },
+            { q: "27. ___ refers to roads, bridges, and utilities.", type: "choice", options: ["Infrastructure", "Nature", "Weather", "Agriculture"], answer: 0 },
+            { q: "28. A ___ is a flow of wet earth downhill.", type: "choice", options: ["mudslide", "rainbow", "breeze", "earthquake"], answer: 0 },
+            { q: "29. An ___ is a mass of snow falling down a mountain.", type: "choice", options: ["avalanche", "iceberg", "glacier", "boulder"], answer: 0 },
+            { q: "30. A ___ is a large mass of ice on land.", type: "choice", options: ["glacier", "volcano", "river", "lake"], answer: 0 },
+            { q: "31. A ___ forms when a landslide blocks a river.", type: "choice", options: ["barrier lake", "hot spring", "waterfall", "geyser"], answer: 0 },
+            { q: "32. To ___ means to organize and prepare for action.", type: "choice", options: ["mobilize", "relax", "ignore", "forget"], answer: 0 },
+            { q: "33. ___ refers to the staff or workers of an organization.", type: "choice", options: ["Personnel", "Equipment", "Budget", "Schedule"], answer: 0 },
+            { q: "34. To ___ means to distribute or assign resources.", type: "choice", options: ["allocate", "waste", "hide", "lose"], answer: 0 },
+            { q: "35. ___ means returning to normal after a disaster.", type: "choice", options: ["Recovery", "Disaster", "Decline", "Collapse"], answer: 0 },
+            { q: "36. To ___ means to look forward to something.", type: "choice", options: ["anticipate", "dread", "avoid", "ignore"], answer: 0 },
+            { q: "37. ___ affairs refer to relations between countries.", type: "choice", options: ["Diplomatic", "Domestic", "Personal", "Private"], answer: 0 },
+            { q: "38. ___ means great eagerness and excitement.", type: "choice", options: ["Enthusiasm", "Boredom", "Anger", "Sadness"], answer: 0 },
+            { q: "39. To ___ means to cut off completely.", type: "choice", options: ["sever", "connect", "join", "attach"], answer: 0 },
+            { q: "40. To ___ means to flow over the edge.", type: "choice", options: ["overflow", "drain", "empty", "dry"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. President Xi left Beijing ___ August 30.", type: "choice", options: ["in", "on", "at", "by"], answer: 1 },
+            { q: "42. The trip lasts ___ August 30 to September 3.", type: "choice", options: ["from", "between", "at", "in"], answer: 0 },
+            { q: "43. He was welcomed ___ the airport.", type: "choice", options: ["in", "at", "on", "by"], answer: 1 },
+            { q: "44. The streets were decorated ___ flags.", type: "choice", options: ["by", "with", "of", "for"], answer: 1 },
+            { q: "45. Students expressed enthusiasm ___ the visit.", type: "choice", options: ["for", "of", "at", "by"], answer: 0 },
+            { q: "46. The SCO Summit brings ___ leaders from member states.", type: "choice", options: ["in", "together", "out", "up"], answer: 1 },
+            { q: "47. The disaster originated ___ the Nepal side.", type: "choice", options: ["in", "on", "at", "by"], answer: 1 },
+            { q: "48. A glacier broke ___ at 5,200 meters.", type: "choice", options: ["out", "off", "in", "up"], answer: 1 },
+            { q: "49. The mudslide traveled ___ 22 kilometers.", type: "choice", options: ["about", "around", "over", "above"], answer: 0 },
+            { q: "50. Roads were ___ severed.", type: "choice", options: ["complete", "completely", "completing", "completed"], answer: 1 },
+            { q: "51. A barrier lake formed ___ the port.", type: "choice", options: ["at", "in", "on", "by"], answer: 0 },
+            { q: "52. The rescue forces advanced ___ three routes.", type: "choice", options: ["in", "via", "with", "by"], answer: 1 },
+            { q: "53. The ministry allocated funds ___ support recovery.", type: "choice", options: ["to", "for", "at", "with"], answer: 0 },
+            { q: "54. ___ the difficulty, rescue efforts continued.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "55. The barrier lake had begun overflowing ___ August 28.", type: "choice", options: ["by", "in", "at", "on"], answer: 0 },
+            { q: "56. The visit holds particular ___ for Kyrgyzstan.", type: "choice", options: ["significance", "significant", "signify", "significantly"], answer: 0 },
+            { q: "57. President Xi will discuss deepening cooperation ___ major issues.", type: "choice", options: ["as well as", "but", "or", "nor"], answer: 0 },
+            { q: "58. The streets, ___ were decorated with flags, looked festive.", type: "choice", options: ["that", "which", "who", "what"], answer: 1 },
+            { q: "59. It is ___ most important diplomatic event this month.", type: "choice", options: ["the", "a", "an", "/"], answer: 0 },
+            { q: "60. ___ a historic visit it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. When did President Xi leave Beijing?", type: "choice", options: ["August 28", "August 29", "August 30", "August 31"], answer: 2 },
+            { q: "62. Where is the SCO Summit held?", type: "choice", options: ["Beijing", "Bishkek", "Cairo", "Moscow"], answer: 1 },
+            { q: "63. How many years since Xi's last visit to Kyrgyzstan?", type: "choice", options: ["5", "7", "10", "3"], answer: 1 },
+            { q: "64. Who welcomed Xi at the airport?", type: "choice", options: ["The Kyrgyz President", "Ambassador Liu Jiangping", "The SCO Secretary", "The Egyptian President"], answer: 1 },
+            { q: "65. When is the SCO Summit scheduled?", type: "choice", options: ["Aug 30-31", "Aug 31-Sep 1", "Sep 1-2", "Aug 30-Sep 1"], answer: 1 },
+            { q: "66. Which university has the first Xi book room in Central Asia?", type: "choice", options: ["Bishkek State", "Kyrgyz National University", "Slavic University", "American University"], answer: 1 },
+            { q: "67. Which country is the final leg of the trip?", type: "choice", options: ["Kyrgyzstan", "Russia", "Egypt", "Saudi Arabia"], answer: 2 },
+            { q: "68. How many people died in the mudslide as of Aug 29?", type: "choice", options: ["10", "16", "26", "50"], answer: 1 },
+            { q: "69. How many people are missing?", type: "choice", options: ["261", "499", "546", "2141"], answer: 2 },
+            { q: "70. How many foreign nationals are missing?", type: "choice", options: ["104", "23", "261", "18"], answer: 2 },
+            { q: "71. Which country has the most missing nationals?", type: "choice", options: ["India", "USA", "Nepal", "Latvia"], answer: 2 },
+            { q: "72. Where did the disaster originate?", type: "choice", options: ["China side", "Nepal side", "India side", "Tibet interior"], answer: 1 },
+            { q: "73. At what altitude did the glacier break off?", type: "choice", options: ["1,800m", "4,000m", "5,200m", "6,000m"], answer: 2 },
+            { q: "74. How long did the avalanche take to reach the port?", type: "choice", options: ["2 minutes", "6-7 minutes", "15 minutes", "30 minutes"], answer: 1 },
+            { q: "75. How far did the mudslide travel?", type: "choice", options: ["10 km", "22 km", "50 km", "100 km"], answer: 1 },
+            { q: "76. How many rescue personnel were mobilized?", type: "choice", options: ["499", "1,000", "2,141", "5,000"], answer: 2 },
+            { q: "77. How many rescue vehicles were deployed?", type: "choice", options: ["100", "269", "500", "1,000"], answer: 1 },
+            { q: "78. How much did the Ministry of Finance allocate?", type: "choice", options: ["50 million", "100 million", "120 million", "200 million"], answer: 2 },
+            { q: "79. What formed at the Gyirong port?", type: "choice", options: ["A dam", "A barrier lake", "A waterfall", "A bridge"], answer: 1 },
+            { q: "80. By August 30, what happened to the barrier lake?", type: "choice", options: ["It grew larger", "It essentially drained", "It collapsed", "Nothing changed"], answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '习近平主席离开北京出席上合组织峰会。'", type: "choice", options: ["President Xi Jinping left Beijing to attend the SCO Summit.", "President Xi Beijing left SCO Summit attend.", "President Xi leaving Beijing SCO.", "President Xi left Beijing attend SCO Summit."], answer: 0 },
+            { q: "82. 'The streets were decorated with flags.' 'decorated' means ___.", type: "choice", options: ["adorned", "removed", "destroyed", "painted over"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["President Xi was welcomed at the airport.", "President Xi welcomed at airport.", "President Xi is welcome airport.", "President Xi were welcomed at airport."], answer: 0 },
+            { q: "84. 'The disaster claimed 16 lives.' 'claimed' means ___.", type: "choice", options: ["took", "saved", "found", "helped"], answer: 0 },
+            { q: "85. Choose the correct translation: '冰川在海拔5200米处断裂。'", type: "choice", options: ["A glacier broke off at an altitude of 5,200 meters.", "A glacier break 5,200 meters.", "Glacier broke altitude 5,200.", "A glacier breaking off 5,200 meter altitude."], answer: 0 },
+            { q: "86. 'Roads were severed.' This is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The passive voice of 'The glacier formed a mudslide' is ___.", type: "choice", options: ["A mudslide was formed by the glacier", "A mudslide formed the glacier", "A mudslide forms the glacier", "A mudslide is form by glacier"], answer: 0 },
+            { q: "88. 'The rescue operation mobilized 2,141 personnel.' The subject is ___.", type: "choice", options: ["The rescue operation", "mobilized", "2,141", "personnel"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The trip is significant, ___?'", type: "choice", options: ["isn't it", "is it", "doesn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Neither the difficulty ___ the danger stopped the rescue.' Fill in the blank.", type: "choice", options: ["or", "nor", "and", "but"], answer: 1 },
+            { q: "91. Choose the correct translation: '救援力量从三个方向推进。'", type: "choice", options: ["Rescue forces advanced from three directions.", "Rescue forces advance three direction.", "Rescue force advancing three directions.", "Rescue forces advanced from three direction."], answer: 0 },
+            { q: "92. 'water, land, and air routes' means ___.", type: "choice", options: ["three types of rescue approaches", "three roads", "three rivers", "three airports"], answer: 0 },
+            { q: "93. 'If the barrier lake collapses, flooding will occur.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The mudslide destroyed 27 buildings.", "The mudslide destroy 27 building.", "The mudslide destroying 27 buildings.", "The mudslide destroyed of 27 buildings."], answer: 0 },
+            { q: "95. '___ the extreme difficulty, rescue efforts continued.' Fill in the blank.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "96. The indirect speech of 'He said, \"The summit will be successful.\"' is ___.", type: "choice", options: ["He said the summit would be successful.", "He said the summit will successful.", "He says the summit would successful.", "He said the summit is successful."], answer: 0 },
+            { q: "97. 'Students expressed enthusiasm.' 'expressed' means ___.", type: "choice", options: ["showed", "hid", "denied", "cancelled"], answer: 0 },
+            { q: "98. 'Funds have been allocated.' 'have been allocated' is ___ tense.", type: "choice", options: ["present perfect passive", "past", "future", "present"], answer: 0 },
+            { q: "99. 'The rescue team continued working.' The verb is ___.", type: "choice", options: ["continued", "the", "rescue", "team"], answer: 0 },
+            { q: "100. 'I'm looking forward to ___ the summit results.'", type: "choice", options: ["seeing", "see", "saw", "sees"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月30日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月30日 星期日 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">观沧海</div>
+                    <div class="author">东汉 · 曹操</div>
+                    <div class="content">
+                        东临碣石，以观沧海。<br>
+                        水何澹澹，山岛竦峙。<br>
+                        树木丛生，百草丰茂。<br>
+                        秋风萧瑟，洪波涌起。<br>
+                        日月之行，若出其中；<br>
+                        星汉灿烂，若出其里。<br>
+                        幸甚至哉，歌以咏志。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>临</strong>：登上，有游览的意思。<strong>碣石</strong>：山名，在今河北省秦皇岛市昌黎县。</p>
+                        <p>② <strong>沧海</strong>：大海。沧：青绿色。</p>
+                        <p>③ <strong>澹澹</strong>：水波荡漾的样子。</p>
+                        <p>④ <strong>竦峙</strong>：高高耸立。竦：高。峙：挺立。</p>
+                        <p>⑤ <strong>萧瑟</strong>：形容风吹树木发出的声音。</p>
+                        <p>⑥ <strong>洪波</strong>：巨大的波浪。</p>
+                        <p>⑦ <strong>日月之行</strong>：太阳和月亮的运行。<strong>若出其中</strong>：好像是从大海中出来的。</p>
+                        <p>⑧ <strong>星汉</strong>：银河。<strong>若出其里</strong>：好像从大海里出来的。</p>
+                        <p>⑨ <strong>幸甚至哉</strong>：幸运得很啊。<strong>歌以咏志</strong>：用诗歌来表达自己的志向。</p>
+                        <br>
+                        <p><strong>译文：</strong>登上碣石山，来观赏浩瀚的大海。海水波荡漾动，山岛高耸挺立。树木丛生在一起，百草丰茂旺盛。秋风发出萧瑟之声，巨大的波浪涌起。太阳和月亮的运行，好像从大海中出来；银河灿烂辉煌，好像从大海里产生。幸运极了啊，用诗歌来表达自己的志向。</p>
+                        <br>
+                        <p><strong>赏析：</strong>建安十二年（207年），曹操北征乌桓胜利班师，途经碣石山，写下此诗。全诗以"观"字统领，描绘了大海的壮阔景象。"日月之行，若出其中；星汉灿烂，若出其里"四句最为精彩，诗人以夸张的手法，将日月星辰都包容在沧海之中，营造出吞吐宇宙的宏大气象，表达了诗人开阔的胸襟和统一天下的雄心壮志。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">次北固山下</div>
+                    <div class="author">唐 · 王湾</div>
+                    <div class="content">
+                        客路青山外，行舟绿水前。<br>
+                        潮平两岸阔，风正一帆悬。<br>
+                        海日生残夜，江春入旧年。<br>
+                        乡书何处达？归雁洛阳边。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>次</strong>：停宿，停泊。<strong>北固山</strong>：在今江苏省镇江市北。</p>
+                        <p>② <strong>客路</strong>：旅途。<strong>青山</strong>：指北固山。</p>
+                        <p>③ <strong>潮平两岸阔</strong>：潮水涨满，两岸看起来更加宽阔。</p>
+                        <p>④ <strong>风正一帆悬</strong>：风向正顺，船帆高高悬挂。</p>
+                        <p>⑤ <strong>海日生残夜</strong>：夜还未尽，一轮红日已从海上升起。<strong>残夜</strong>：夜将尽未尽之时。</p>
+                        <p>⑥ <strong>江春入旧年</strong>：江上春早，未到新年春已到来。</p>
+                        <p>⑦ <strong>乡书</strong>：家书。<strong>归雁洛阳边</strong>：托归雁将家信带到洛阳。</p>
+                        <br>
+                        <p><strong>译文：</strong>旅途经过青山之外，行舟在绿水之前。潮水涨满，两岸显得宽阔，风向正顺，一面白帆高悬。夜还未尽，海上已升起红日，江上春早，旧年未过新年已来。家信寄往何处呢？托归雁带到洛阳城边。</p>
+                        <br>
+                        <p><strong>赏析：</strong>此诗是王湾的代表作，以"海日生残夜，江春入旧年"一联最为著名。诗人通过描绘北固山下所见之景，抒发羁旅思乡之情。"海日生残夜"写夜未尽而日已出，"江春入旧年"写年未至而春已来，以自然规律的不可阻挡，暗含时光流逝的感慨和对故乡的思念。"归雁洛阳边"以鸿雁传书的典故，寄托了诗人深切的乡愁。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>探索星辰大海：从"观沧海"到地月激光通信</h3>
+                    <p>2026年8月29日，我国在航天科技领域取得重大突破——成功在超过40万公里的地月距离上建立起双向激光链路，首次实现地月双向高速激光通信。这标志着我国空间激光通信正式从近地轨道迈入地月空间，为后续载人登月、月球科研站建设和深空探测任务奠定了通信根基。</p>
+                    <p>近一千八百年前，曹操站在碣石山上，望着浩瀚的大海，写下"日月之行，若出其中；星汉灿烂，若出其里"的千古名句。他以恢弘的想象，将日月星辰都包容在沧海之中，表达了吞吐宇宙的豪迈胸襟。如今，中国科学家用激光在地球与月球之间搭建起信息通道，让曹操的想象以科技的方式成为现实——我们不再只是"观"沧海，而是开始"通"宇宙。</p>
+                    <p>地月激光通信的难度超乎想象。激光束需要精准指向40万公里外的目标，这相当于在几十公里外"穿针引线"。中国科研团队突破了远距离干扰、动态跟踪和信号衰减等技术瓶颈，实现了稳定高效的双向数据传输。与传统的无线电通信相比，激光通信带宽更大、传输速度更快，将一张8K月面照片的传输时间从5分钟缩短到12秒。</p>
+                    <p>王湾在《次北固山下》中写道"海日生残夜，江春入旧年"，以新事物在旧时代中的萌发，暗含了时间不可阻挡的更替。中国航天事业的每一次突破，也如同"海日"和"江春"一样，是旧有技术格局被超越、新纪元开启的标志。从"东方红一号"到"嫦娥"探月，从"天宫"空间站到地月激光通信，中国航天人一步步将先人的仰望星空变为足迹所至。</p>
+                    <p>曹操"歌以咏志"，王湾寄情"归雁"，古人以诗歌寄托对天地的感悟与乡愁。今天的我们，以科学技术丈量宇宙的尺度，以通信链路连接地球与月球。古诗词的意境与航天科技的壮举，共同构成了中华民族探索星辰大海的宏大叙事——从碣石山上的远望，到40万公里外的精准通信，文明的脚步从未停歇。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>我国首次实现地月双向高速激光通信 西藏吉隆泥石流救援持续推进 APEC第三次高官会在大连举行</h3>
+                    <p>8月29日，记者从中国科学院空间应用工程与技术中心获悉，我国在地月激光通信试验任务中取得重要突破，成功在超过40万公里的地月距离上建立起双向激光链路，首次实现地月双向高速激光通信。这标志着我国空间激光通信正式从近地轨道迈入地月空间，为后续载人登月、月球科研站建设和深空探测等任务奠定了通信根基。</p>
+                    <p>在西藏自治区，吉隆口岸泥石流灾害救援工作持续推进。8月29日，应急管理部前方工作组有关负责人介绍，截至29日1时，已救出热索村群众2人。中国安能全力打通通往吉隆口岸两公里内道路，为后续抢险处置工作高效开展提供保障。习近平总书记主持召开中共中央政治局会议，研究部署西藏日喀则市吉隆县泥石流灾害抢险救援工作。</p>
+                    <p>2026年亚太经合组织（APEC）第三次高官会8月27日至28日在辽宁省大连市举行。外交部副部长马朝旭出席会议并致辞，表示APEC"中国年"为各经济体友好协商、聚同化异搭建重要平台。会议梳理总结了APEC"中国年"工作，为11月举行的APEC领导人非正式会议做好准备。与会各经济体期待与中方深化合作，为亚太共同体建设作出积极贡献。</p>
+                    <p>三部门联合印发通知，完善商品住房销售制度，有力有序推行商品住房现房销售。专家分析认为，办法指导金融机构设立专门的"城市更新项目贷款"品种，有助于增强金融服务城市更新的精准性。国家发展改革委紧急安排1亿元，支持浙江福建台风灾害灾后应急恢复。</p>
+                    <div class="source">来源：综合央视新闻、中国日报、新华网（2026年8月29日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-08-30';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-30',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《观沧海》的作者是？", options: ["曹丕", "曹操", "曹植", "曹叡"], answer: 1 },
+            { q: "2. 曹操是哪个时期的政治家、军事家、诗人？", options: ["西汉", "东汉末年", "西晋", "南北朝"], answer: 1 },
+            { q: "3. \"东临碣石\"中\"临\"的意思是？", options: ["靠近", "登上，游览", "面对", "到达"], answer: 1 },
+            { q: "4. \"水何澹澹\"中\"澹澹\"形容什么？", options: ["山高", "水波荡漾的样子", "风吹树木", "星光闪烁"], answer: 1 },
+            { q: "5. \"日月之行，若出其中\"表达了怎样的意境？", options: ["日月很小", "日月星辰都包容在大海中，气势宏大", "大海容纳日月", "日月在海中升起"], answer: 1 },
+            { q: "6. 《次北固山下》的作者是？", options: ["王维", "王勃", "王湾", "王之涣"], answer: 2 },
+            { q: "7. \"次北固山下\"中\"次\"的意思是？", options: ["其次", "停泊，停宿", "次数", "排列"], answer: 1 },
+            { q: "8. \"海日生残夜\"中\"残夜\"指什么？", options: ["残留的夜", "夜将尽未尽之时", "黑夜", "深夜"], answer: 1 },
+            { q: "9. \"海日生残夜，江春入旧年\"表达了什么哲理？", options: ["时光流逝不可阻挡，新事物终将取代旧事物", "夜很长", "春天来得早", "太阳从海上升起"], answer: 0 },
+            { q: "10. \"乡书何处达？归雁洛阳边\"用了什么典故？", options: ["鸿雁传书", "鲤鱼传书", "青鸟传信", "飞鸽传书"], answer: 0 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 我国首次实现地月双向高速激光通信是在什么日期？", options: ["8月28日", "8月29日", "8月30日", "8月27日"], answer: 1 },
+            { q: "12. 地月激光通信的距离超过多少？", options: ["30万公里", "40万公里", "50万公里", "60万公里"], answer: 1 },
+            { q: "13. 曹操《观沧海》中\"日月之行，若出其中\"写于哪一年？", options: ["公元207年", "公元208年", "公元220年", "公元196年"], answer: 0 },
+            { q: "14. 文章中用\"穿针引线\"比喻什么？", options: ["激光束精准指向40万公里外的目标", "缝衣服", "天文观测", "导航定位"], answer: 0 },
+            { q: "15. 8K月面照片传输时间从多少缩短到多少？", options: ["从5分钟到12秒", "从10分钟到5秒", "从3分钟到1秒", "从8分钟到10秒"], answer: 0 },
+            { q: "16. 激光通信与无线电通信相比有什么优势？", options: ["带宽更大、速度更快", "更便宜", "更简单", "更安全"], answer: 0 },
+            { q: "17. \"海日生残夜\"在文章中被用来比喻什么？", options: ["天气变化", "旧有技术格局被超越，新纪元开启", "海上日出", "季节交替"], answer: 1 },
+            { q: "18. 文章提到的中国航天成就不包括以下哪个？", options: ["东方红一号", "嫦娥探月", "天宫空间站", "火星移民"], answer: 3 },
+            { q: "19. 文章的中心思想是？", options: ["科技发展很快", "古诗词意境与航天科技共同构成探索星辰大海的叙事", "曹操是伟大诗人", "激光通信很重要"], answer: 1 },
+            { q: "20. \"歌以咏志\"在现代语境中对应什么？", options: ["用诗歌表达志向", "以科学技术丈量宇宙尺度", "唱歌", "写文章"], answer: 1 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 地月激光通信试验由哪个机构发布消息？", options: ["航天科技集团", "中国科学院空间应用工程与技术中心", "国家航天局", "国防科工局"], answer: 1 },
+            { q: "22. 截至8月29日1时，吉隆泥石流已救出多少群众？", options: ["1人", "2人", "5人", "10人"], answer: 1 },
+            { q: "23. 中国安能的主要目标是什么？", options: ["搜救失踪人员", "打通通往吉隆口岸两公里内道路", "搭建临时住所", "运送物资"], answer: 1 },
+            { q: "24. 习近平主持什么会议研究吉隆泥石流抢险？", options: ["国务院会议", "中共中央政治局会议", "中央军委会议", "全国人大会议"], answer: 1 },
+            { q: "25. APEC第三次高官会在哪个城市举行？", options: ["北京", "大连", "上海", "深圳"], answer: 1 },
+            { q: "26. APEC第三次高官会的举行时间是？", options: ["8月25-26日", "8月27-28日", "8月29-30日", "8月30-31日"], answer: 1 },
+            { q: "27. 出席APEC高官会并致辞的中国官员是？", options: ["外交部长", "外交部副部长马朝旭", "国务院总理", "国家主席"], answer: 1 },
+            { q: "28. APEC领导人非正式会议计划在几月举行？", options: ["9月", "10月", "11月", "12月"], answer: 2 },
+            { q: "29. 三部门联合印发通知完善什么制度？", options: ["教育制度", "商品住房销售制度", "医疗制度", "税收制度"], answer: 1 },
+            { q: "30. 国家发改委紧急安排多少资金支持台风灾后恢复？", options: ["5000万元", "1亿元", "2亿元", "5亿元"], answer: 1 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《观沧海》的作者是？", options: ["曹丕", "曹操", "曹植", "曹叡"], answer: 1 },
+            { q: "2. 曹操属于哪个时期的诗人？", options: ["西汉", "东汉末年", "西晋", "东晋"], answer: 1 },
+            { q: "3. \"东临碣石\"中\"临\"的意思是？", options: ["靠近", "登上，游览", "面对", "到达"], answer: 1 },
+            { q: "4. \"水何澹澹\"中\"澹澹\"形容什么？", options: ["山高耸", "水波荡漾的样子", "风吹树声", "星光闪烁"], answer: 1 },
+            { q: "5. \"竦峙\"的意思是？", options: ["低矮", "高高耸立", "宽阔", "平坦"], answer: 1 },
+            { q: "6. \"秋风萧瑟\"中\"萧瑟\"形容什么声音？", options: ["海浪声", "风吹树木的声音", "鸟叫声", "雷声"], answer: 1 },
+            { q: "7. \"日月之行，若出其中\"运用了什么修辞？", options: ["比喻", "夸张", "拟人", "排比"], answer: 1 },
+            { q: "8. \"星汉灿烂\"中\"星汉\"指什么？", options: ["星星", "银河", "银河系", "北斗星"], answer: 1 },
+            { q: "9. \"幸甚至哉\"的意思是？", options: ["很不幸", "幸运极了", "幸好", "幸亏"], answer: 1 },
+            { q: "10. 《观沧海》表达了诗人怎样的情感？", options: ["悲伤", "开阔胸襟和统一天下的雄心", "思乡", "隐逸"], answer: 1 },
+            { q: "11. 《次北固山下》的作者是？", options: ["王维", "王勃", "王湾", "王之涣"], answer: 2 },
+            { q: "12. \"次北固山下\"中\"次\"的意思是？", options: ["其次", "停泊，停宿", "次数", "排列"], answer: 1 },
+            { q: "13. 北固山在今天的哪个城市？", options: ["南京", "镇江", "扬州", "苏州"], answer: 1 },
+            { q: "14. \"潮平两岸阔\"描绘了怎样的景象？", options: ["潮水退去", "潮水涨满，两岸显得宽阔", "潮水很大", "两岸很窄"], answer: 1 },
+            { q: "15. \"海日生残夜\"中\"残夜\"指什么？", options: ["黑夜", "夜将尽未尽之时", "深夜", "黎明"], answer: 1 },
+            { q: "16. \"江春入旧年\"中\"旧年\"指什么？", options: ["过去的年份", "旧的一年（还没到新年）", "旧时代", "往年"], answer: 1 },
+            { q: "17. \"海日生残夜，江春入旧年\"表达了什么哲理？", options: ["时光短暂", "时光流逝不可阻挡，新事物终将取代旧事物", "夜很长", "春来早"], answer: 1 },
+            { q: "18. \"乡书何处达\"中\"乡书\"指什么？", options: ["乡间的书", "家书", "信", "乡政府文件"], answer: 1 },
+            { q: "19. \"归雁洛阳边\"用了什么典故？", options: ["鸿雁传书", "鲤鱼传书", "青鸟传信", "飞鸽传书"], answer: 0 },
+            { q: "20. 《次北固山下》表达了诗人什么情感？", options: ["喜悦", "羁旅思乡之情", "壮志", "隐逸"], answer: 1 },
+            { q: "21. 我国首次实现地月双向高速激光通信是什么日期？", options: ["8月28日", "8月29日", "8月30日", "8月27日"], answer: 1 },
+            { q: "22. 地月激光通信的距离超过多少？", options: ["30万公里", "40万公里", "50万公里", "60万公里"], answer: 1 },
+            { q: "23. 地月激光通信的消息由哪个机构发布？", options: ["国家航天局", "中国科学院空间应用工程与技术中心", "航天科技集团", "国防科工局"], answer: 1 },
+            { q: "24. 8K月面照片传输从多少缩短到12秒？", options: ["3分钟", "5分钟", "8分钟", "10分钟"], answer: 1 },
+            { q: "25. 曹操写《观沧海》是哪一年？", options: ["公元207年", "公元208年", "公元220年", "公元196年"], answer: 0 },
+            { q: "26. 曹操北征谁胜利班师时途经碣石山？", options: ["袁绍", "乌桓", "刘备", "孙权"], answer: 1 },
+            { q: "27. 吉隆泥石流截至8月29日1时已救出几人？", options: ["1人", "2人", "5人", "10人"], answer: 1 },
+            { q: "28. 中国安能的主要目标是什么？", options: ["搜救", "打通通往吉隆口岸两公里内道路", "搭建住所", "运送物资"], answer: 1 },
+            { q: "29. 习近平主持什么会议研究泥石流抢险？", options: ["国务院会议", "中共中央政治局会议", "军委会议", "人大会议"], answer: 1 },
+            { q: "30. APEC第三次高官会在哪个城市举行？", options: ["北京", "大连", "上海", "深圳"], answer: 1 },
+            { q: "31. APEC第三次高官会的举行日期是？", options: ["8月25-26日", "8月27-28日", "8月29-30日", "8月30-31日"], answer: 1 },
+            { q: "32. 出席APEC高官会致辞的中国官员是？", options: ["外交部长", "外交部副部长马朝旭", "总理", "主席"], answer: 1 },
+            { q: "33. APEC领导人非正式会议计划在几月举行？", options: ["9月", "10月", "11月", "12月"], answer: 2 },
+            { q: "34. 三部门联合印发通知完善什么制度？", options: ["教育制度", "商品住房销售制度", "医疗制度", "税收制度"], answer: 1 },
+            { q: "35. 国家发改委安排多少资金支持台风灾后恢复？", options: ["5000万元", "1亿元", "2亿元", "5亿元"], answer: 1 },
+            { q: "36. 下列词语中没有错别字的是：", options: ["星汗灿烂", "星汉灿烂", "星寒灿烂", "星汉烂灿"], answer: 1 },
+            { q: "37. \"日月之行，若出其中\"中\"若\"的意思是？", options: ["如果", "好像", "你", "如此"], answer: 1 },
+            { q: "38. 下列句子没有语病的是：", options: ["通过学习古诗词，使我深受感动", "学习古诗词使我深受感动", "古诗词使我通过学习深受感动", "通过古诗词学习，使我感动"], answer: 1 },
+            { q: "39. \"水何澹澹\"中\"何\"的用法是？", options: ["疑问代词，多么", "副词，为什么", "连词，那么", "代词，什么"], answer: 0 },
+            { q: "40. \"树木丛生\"与\"百草丰茂\"构成什么关系？", options: ["对比", "并列", "递进", "转折"], answer: 1 },
+            { q: "41. 《观沧海》全诗以哪个字统领？", options: ["临", "观", "望", "看"], answer: 1 },
+            { q: "42. \"风正一帆悬\"中\"正\"的意思是？", options: ["正好", "正顺，方向对", "正在", "正确"], answer: 1 },
+            { q: "43. 王湾是哪个朝代的诗人？", options: ["初唐", "盛唐", "中唐", "晚唐"], answer: 0 },
+            { q: "44. 地月激光通信标志着我国空间激光通信从哪里迈入哪里？", options: ["从地球到太空", "从近地轨道迈入地月空间", "从月球到火星", "从地面到太空"], answer: 1 },
+            { q: "45. \"日月之行，若出其中\"与地月激光通信的联系是？", options: ["都是看太阳", "古代想象与现代科技实现，都体现吞吐宇宙的胸怀", "都与海有关", "都与月亮有关"], answer: 1 },
+            { q: "46. \"歌以咏志\"在现代语境中对应什么？", options: ["写诗", "以科学技术丈量宇宙尺度", "唱歌", "写文章"], answer: 1 },
+            { q: "47. 下列对《观沧海》理解正确的是？", options: ["纯写景", "借景抒情，以沧海吞吐日月星辰的意象抒发壮志", "表达悲伤", "表达思乡"], answer: 1 },
+            { q: "48. \"归雁洛阳边\"暗示诗人故乡在哪里？", options: ["镇江", "洛阳", "北京", "南京"], answer: 1 },
+            { q: "49. 中国航天成就不包括以下哪个？", options: ["东方红一号", "嫦娥探月", "天宫空间站", "火星移民"], answer: 3 },
+            { q: "50. 对本日全部内容理解最准确的一项是？", options: ["古诗词与科技无关", "古诗词咏壮志抒乡愁，现代文写科技与诗意交融，时文记国家大事，共同激励青年传承文化与探索精神", "时文只是新闻", "现代文与古诗词没有联系"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            let idx;
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

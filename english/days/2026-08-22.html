@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月22日 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { color: #666; font-size: 1.2em; }
+        .progress-bar { background: #e0e0e0; border-radius: 10px; height: 30px; margin-top: 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .section { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .section-title { color: #667eea; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: #764ba2; }
+        .reading-passage { background: #f8f9fa; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .passage-title { color: #333; font-size: 1.4em; margin-bottom: 15px; font-weight: bold; }
+        .passage-content { color: #555; line-height: 2; font-size: 1.1em; }
+        .question-item { background: #fff; border: 2px solid #e0e0e0; border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+        .question-text { color: #333; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
+        .options { display: grid; gap: 10px; }
+        .option { padding: 15px 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option:hover { background: #e8eaf6; border-color: #667eea; }
+        .option.selected { background: #667eea; color: white; border-color: #667eea; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .word-card { background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf6 100%); border-radius: 15px; padding: 20px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .word-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); border-color: #667eea; }
+        .word-card .word { font-size: 1.5em; color: #667eea; font-weight: bold; margin-bottom: 10px; }
+        .word-card .pronunciation { color: #888; font-size: 0.9em; margin-bottom: 10px; }
+        .word-card .meaning { color: #555; font-size: 1.1em; }
+        .word-card .example { color: #888; font-size: 0.9em; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; font-style: italic; }
+        .word-card.memorized { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); }
+        .word-card.memorized .word { color: #2e7d32; }
+        .btn { padding: 15px 40px; border: none; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+        .btn-primary { background: linear-gradient(90deg, #667eea, #764ba2); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: linear-gradient(90deg, #4caf50, #45a049); color: white; }
+        .btn-success:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 25px; text-align: center; color: white; }
+        .stat-card .number { font-size: 3em; font-weight: bold; }
+        .stat-card .label { font-size: 1.1em; opacity: 0.9; }
+        .test-timer { background: #fff3e0; border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .test-timer .time { font-size: 3em; color: #ff9800; font-weight: bold; }
+        .test-timer .label { color: #666; }
+        .result-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .result-content { background: white; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; width: 90%; }
+        .result-score { font-size: 5em; color: #667eea; font-weight: bold; }
+        .result-message { font-size: 1.5em; color: #333; margin: 20px 0; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 15px 30px; background: white; border: 2px solid #e0e0e0; border-radius: 30px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .tab:hover { border-color: #667eea; }
+        .tab.active { background: linear-gradient(90deg, #667eea, #764ba2); color: white; border-color: transparent; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #f5f5f5; border-radius: 10px; color: #666; text-decoration: none; margin-bottom: 20px; transition: all 0.3s; }
+        .back-btn:hover { background: #e0e0e0; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } .section-title { font-size: 1.4em; } .word-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回英语首页</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> 英语学习</h1>
+            <p class="date">2026年8月22日 星期五</p>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('reading')">📖 阅读理解</div>
+            <div class="tab" onclick="showSection('vocab')">📚 单词学习</div>
+            <div class="tab" onclick="showSection('test')">📝 综合测试</div>
+        </div>
+        
+        <!-- 阅读理解部分 -->
+        <div id="readingSection" class="section">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 阅读理解 (2篇)</h2>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 1: China and Switzerland Complete FTA Upgrade Negotiations</h3>
+                <p class="passage-content">
+                    On August 21, 2026, China and Switzerland announced the completion of negotiations to upgrade their free trade agreement (FTA). Chinese Commerce Minister Wang Wentao and Swiss President Guy Parmelin jointly announced the completion in Bern and signed a memorandum of understanding. Under the revised deal, 99.8% of Switzerland's current exports to China will benefit from duty-free access after agreed phase-out periods. The negotiations began in September 2024 and concluded after five rounds of discussions.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">1. When did China and Switzerland announce the completion of FTA upgrade negotiations?</p>
+                <div class="options">
+                    <div class="option" data-key="1_1" data-answer="A" onclick="selectOption(this, 'reading', 1, 1, 'A')">A. August 19, 2026</div>
+                    <div class="option" data-key="1_1" data-answer="B" onclick="selectOption(this, 'reading', 1, 1, 'B')">B. August 20, 2026</div>
+                    <div class="option" data-key="1_1" data-answer="C" onclick="selectOption(this, 'reading', 1, 1, 'C')">C. August 21, 2026</div>
+                    <div class="option" data-key="1_1" data-answer="D" onclick="selectOption(this, 'reading', 1, 1, 'D')">D. August 22, 2026</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">2. Who is the Chinese Commerce Minister mentioned in the passage?</p>
+                <div class="options">
+                    <div class="option" data-key="1_2" data-answer="A" onclick="selectOption(this, 'reading', 1, 2, 'A')">A. Wang Wenbin</div>
+                    <div class="option" data-key="1_2" data-answer="B" onclick="selectOption(this, 'reading', 1, 2, 'B')">B. Wang Wentao</div>
+                    <div class="option" data-key="1_2" data-answer="C" onclick="selectOption(this, 'reading', 1, 2, 'C')">C. Wang Yi</div>
+                    <div class="option" data-key="1_2" data-answer="D" onclick="selectOption(this, 'reading', 1, 2, 'D')">D. Li Qiang</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">3. Who is the Swiss President that signed the memorandum?</p>
+                <div class="options">
+                    <div class="option" data-key="1_3" data-answer="A" onclick="selectOption(this, 'reading', 1, 3, 'A')">A. Guy Parmelin</div>
+                    <div class="option" data-key="1_3" data-answer="B" onclick="selectOption(this, 'reading', 1, 3, 'B')">B. Viola Amherd</div>
+                    <div class="option" data-key="1_3" data-answer="C" onclick="selectOption(this, 'reading', 1, 3, 'C')">C. Alain Berset</div>
+                    <div class="option" data-key="1_3" data-answer="D" onclick="selectOption(this, 'reading', 1, 3, 'D')">D. Ignazio Cassis</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">4. What percentage of Switzerland's current exports to China will benefit from duty-free access?</p>
+                <div class="options">
+                    <div class="option" data-key="1_4" data-answer="A" onclick="selectOption(this, 'reading', 1, 4, 'A')">A. 95.8%</div>
+                    <div class="option" data-key="1_4" data-answer="B" onclick="selectOption(this, 'reading', 1, 4, 'B')">B. 97.8%</div>
+                    <div class="option" data-key="1_4" data-answer="C" onclick="selectOption(this, 'reading', 1, 4, 'C')">C. 98.8%</div>
+                    <div class="option" data-key="1_4" data-answer="D" onclick="selectOption(this, 'reading', 1, 4, 'D')">D. 99.8%</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">5. How many rounds of discussions did the negotiations conclude after?</p>
+                <div class="options">
+                    <div class="option" data-key="1_5" data-answer="A" onclick="selectOption(this, 'reading', 1, 5, 'A')">A. Three rounds</div>
+                    <div class="option" data-key="1_5" data-answer="B" onclick="selectOption(this, 'reading', 1, 5, 'B')">B. Four rounds</div>
+                    <div class="option" data-key="1_5" data-answer="C" onclick="selectOption(this, 'reading', 1, 5, 'C')">C. Five rounds</div>
+                    <div class="option" data-key="1_5" data-answer="D" onclick="selectOption(this, 'reading', 1, 5, 'D')">D. Six rounds</div>
+                </div>
+            </div>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 2: China's Free Final-Year Kindergarten Policy Benefits 24 Million Children</h3>
+                <p class="passage-content">
+                    On August 21, 2026, the Ministry of Finance announced that about 24 million children enrolled in kindergartens across China have benefited from a policy waiving childcare and education fees for the final year of preschool. More than 25 million infants and toddlers have received childcare subsidies for 2026. China introduced a nationwide childcare subsidy program in 2025, offering an annual tax-free subsidy of 3,600 yuan (about $530) for each child under three. These policies are among China's broader efforts to build a birth-friendly society.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">6. How many children have benefited from the free final-year kindergarten policy?</p>
+                <div class="options">
+                    <div class="option" data-key="2_1" data-answer="A" onclick="selectOption(this, 'reading', 2, 1, 'A')">A. About 20 million children</div>
+                    <div class="option" data-key="2_1" data-answer="B" onclick="selectOption(this, 'reading', 2, 1, 'B')">B. About 22 million children</div>
+                    <div class="option" data-key="2_1" data-answer="C" onclick="selectOption(this, 'reading', 2, 1, 'C')">C. About 24 million children</div>
+                    <div class="option" data-key="2_1" data-answer="D" onclick="selectOption(this, 'reading', 2, 1, 'D')">D. About 26 million children</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">7. How many infants and toddlers have received childcare subsidies for 2026?</p>
+                <div class="options">
+                    <div class="option" data-key="2_2" data-answer="A" onclick="selectOption(this, 'reading', 2, 2, 'A')">A. More than 20 million</div>
+                    <div class="option" data-key="2_2" data-answer="B" onclick="selectOption(this, 'reading', 2, 2, 'B')">B. More than 23 million</div>
+                    <div class="option" data-key="2_2" data-answer="C" onclick="selectOption(this, 'reading', 2, 2, 'C')">C. More than 25 million</div>
+                    <div class="option" data-key="2_2" data-answer="D" onclick="selectOption(this, 'reading', 2, 2, 'D')">D. More than 27 million</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">8. When did China introduce the nationwide childcare subsidy program?</p>
+                <div class="options">
+                    <div class="option" data-key="2_3" data-answer="A" onclick="selectOption(this, 'reading', 2, 3, 'A')">A. In 2023</div>
+                    <div class="option" data-key="2_3" data-answer="B" onclick="selectOption(this, 'reading', 2, 3, 'B')">B. In 2024</div>
+                    <div class="option" data-key="2_3" data-answer="C" onclick="selectOption(this, 'reading', 2, 3, 'C')">C. In 2025</div>
+                    <div class="option" data-key="2_3" data-answer="D" onclick="selectOption(this, 'reading', 2, 3, 'D')">D. In 2026</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">9. What is the annual tax-free subsidy amount for each child under three?</p>
+                <div class="options">
+                    <div class="option" data-key="2_4" data-answer="A" onclick="selectOption(this, 'reading', 2, 4, 'A')">A. 2,600 yuan (about $380)</div>
+                    <div class="option" data-key="2_4" data-answer="B" onclick="selectOption(this, 'reading', 2, 4, 'B')">B. 3,000 yuan (about $440)</div>
+                    <div class="option" data-key="2_4" data-answer="C" onclick="selectOption(this, 'reading', 2, 4, 'C')">C. 3,600 yuan (about $530)</div>
+                    <div class="option" data-key="2_4" data-answer="D" onclick="selectOption(this, 'reading', 2, 4, 'D')">D. 4,200 yuan (about $620)</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">10. What kind of society is China trying to build through these policies?</p>
+                <div class="options">
+                    <div class="option" data-key="2_5" data-answer="A" onclick="selectOption(this, 'reading', 2, 5, 'A')">A. A birth-friendly society</div>
+                    <div class="option" data-key="2_5" data-answer="B" onclick="selectOption(this, 'reading', 2, 5, 'B')">B. A technology-focused society</div>
+                    <div class="option" data-key="2_5" data-answer="C" onclick="selectOption(this, 'reading', 2, 5, 'C')">C. An export-oriented society</div>
+                    <div class="option" data-key="2_5" data-answer="D" onclick="selectOption(this, 'reading', 2, 5, 'D')">D. A consumption-driven society</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitReadingAnswers()"><i class="fas fa-check"></i> 提交阅读答案</button>
+            </div>
+        </div>
+        
+        <!-- 单词学习部分 -->
+        <div id="vocabSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-book"></i> 单词学习</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #4caf50; margin-bottom: 20px;"><i class="fas fa-history"></i> 复习单词 (30个)</h3>
+                <div class="word-grid" id="oldWordsGrid"></div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-star"></i> 新学单词 (20个)</h3>
+                <div class="word-grid" id="newWordsGrid"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="saveVocabProgress()"><i class="fas fa-save"></i> 保存学习进度</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试部分 -->
+        <div id="testSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 综合测试 (100题)</h2>
+            
+            <div class="test-timer">
+                <div class="time" id="timer">60:00</div>
+                <div class="label">剩余时间</div>
+            </div>
+            
+            <div id="testQuestions"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitTest()"><i class="fas fa-paper-plane"></i> 提交测试</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card"><div class="number" id="readingScore">-</div><div class="label">阅读理解得分</div></div>
+            <div class="stat-card"><div class="number" id="vocabProgress">0/50</div><div class="label">单词掌握进度</div></div>
+            <div class="stat-card"><div class="number" id="testScore">-</div><div class="label">测试得分</div></div>
+            <div class="stat-card"><div class="number" id="totalProgress">0%</div><div class="label">总体完成度</div></div>
+        </div>
+    </div>
+    
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="result-score" id="finalScore">0</div>
+            <div class="result-message" id="resultMessage">继续努力！</div>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">确定</button>
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'xiaokai_english_2026_08_22';
+        
+        // 老单词数据（30个基础常用词 - 复习巩固）
+        const oldWords = [
+            { word: 'announce', pronunciation: '/əˈnaʊns/', meaning: '宣布', example: 'China and Switzerland announced the completion of negotiations.' },
+            { word: 'complete', pronunciation: '/kəmˈpliːt/', meaning: '完成', example: 'They completed the FTA upgrade negotiations.' },
+            { word: 'agreement', pronunciation: '/əˈɡriːmənt/', meaning: '协议', example: 'They upgraded their free trade agreement.' },
+            { word: 'minister', pronunciation: '/ˈmɪnɪstə/', meaning: '部长', example: 'Wang Wentao is the Commerce Minister.' },
+            { word: 'president', pronunciation: '/ˈprezɪdənt/', meaning: '总统', example: 'Guy Parmelin is the Swiss President.' },
+            { word: 'sign', pronunciation: '/saɪn/', meaning: '签署', example: 'They signed a memorandum of understanding.' },
+            { word: 'export', pronunciation: '/ˈekspɔːt/', meaning: '出口', example: "Switzerland's exports to China will be duty-free." },
+            { word: 'access', pronunciation: '/ˈækses/', meaning: '准入；机会', example: 'They will benefit from duty-free access.' },
+            { word: 'begin', pronunciation: '/bɪˈɡɪn/', meaning: '开始', example: 'The negotiations began in September 2024.' },
+            { word: 'conclude', pronunciation: '/kənˈkluːd/', meaning: '结束；达成', example: 'The talks concluded after five rounds.' },
+            { word: 'round', pronunciation: '/raʊnd/', meaning: '轮', example: 'There were five rounds of discussions.' },
+            { word: 'discussion', pronunciation: '/dɪˈskʌʃn/', meaning: '讨论', example: 'They held five rounds of discussions.' },
+            { word: 'finance', pronunciation: '/ˈfaɪnæns/', meaning: '财政', example: 'The Ministry of Finance announced the policy.' },
+            { word: 'child', pronunciation: '/tʃaɪld/', meaning: '儿童', example: 'About 24 million children benefited from the policy.' },
+            { word: 'policy', pronunciation: '/ˈpɒləsi/', meaning: '政策', example: 'The free kindergarten policy helps many families.' },
+            { word: 'fee', pronunciation: '/fiː/', meaning: '费用', example: 'The policy waives childcare and education fees.' },
+            { word: 'year', pronunciation: '/jɪə/', meaning: '年', example: 'It covers the final year of preschool.' },
+            { word: 'million', pronunciation: '/ˈmɪljən/', meaning: '百万', example: 'About 24 million children benefited.' },
+            { word: 'program', pronunciation: '/ˈprəʊɡræm/', meaning: '计划；项目', example: 'China introduced a childcare subsidy program.' },
+            { word: 'offer', pronunciation: '/ˈɒfə/', meaning: '提供', example: 'The program offers an annual tax-free subsidy.' },
+            { word: 'society', pronunciation: '/səˈsaɪəti/', meaning: '社会', example: 'China is building a birth-friendly society.' },
+            { word: 'build', pronunciation: '/bɪld/', meaning: '建设', example: 'These efforts build a better society.' },
+            { word: 'benefit', pronunciation: '/ˈbenɪfɪt/', meaning: '受益', example: '24 million children benefit from the policy.' },
+            { word: 'national', pronunciation: '/ˈnæʃənl/', meaning: '全国的', example: 'China introduced a nationwide program.' },
+            { word: 'annual', pronunciation: '/ˈænjuəl/', meaning: '年度的', example: 'They offer an annual subsidy of 3,600 yuan.' },
+            { word: 'trade', pronunciation: '/treɪd/', meaning: '贸易', example: 'They upgraded their free trade agreement.' },
+            { word: 'free', pronunciation: '/friː/', meaning: '自由的', example: 'It is a free trade agreement.' },
+            { word: 'revise', pronunciation: '/rɪˈvaɪz/', meaning: '修订', example: 'Under the revised deal, exports will be duty-free.' },
+            { word: 'current', pronunciation: '/ˈkʌrənt/', meaning: '当前的', example: "Switzerland's current exports will benefit." },
+            { word: 'jointly', pronunciation: '/ˈdʒɔɪntli/', meaning: '共同地', example: 'They jointly announced the completion.' }
+        ];
+        
+        // 新单词数据（20个与新闻相关）
+        const newWords = [
+            { word: 'upgrade', pronunciation: '/ˌʌpˈɡreɪd/', meaning: '升级', example: 'China and Switzerland completed FTA upgrade negotiations.' },
+            { word: 'negotiation', pronunciation: '/nɪˌɡəʊʃiˈeɪʃn/', meaning: '谈判', example: 'The negotiations began in September 2024.' },
+            { word: 'commerce', pronunciation: '/ˈkɒmɜːs/', meaning: '商业；商务', example: 'Wang Wentao is the Commerce Minister.' },
+            { word: 'memorandum', pronunciation: '/ˌmeməˈrændəm/', meaning: '备忘录', example: 'They signed a memorandum of understanding.' },
+            { word: 'understanding', pronunciation: '/ˌʌndəˈstændɪŋ/', meaning: '谅解；理解', example: 'They signed a memorandum of understanding.' },
+            { word: 'duty-free', pronunciation: '/ˌduːtiˈfriː/', meaning: '免关税的', example: '99.8% of exports will have duty-free access.' },
+            { word: 'phase-out', pronunciation: '/ˈfeɪzaʊt/', meaning: '分阶段取消', example: 'Duty-free access comes after phase-out periods.' },
+            { word: 'kindergarten', pronunciation: '/ˈkɪndəɡɑːtn/', meaning: '幼儿园', example: '24 million children are enrolled in kindergartens.' },
+            { word: 'preschool', pronunciation: '/ˈpriːskuːl/', meaning: '学前班', example: 'It covers the final year of preschool.' },
+            { word: 'childcare', pronunciation: '/ˈtʃaɪldkeə/', meaning: '儿童保育', example: 'The policy waives childcare fees.' },
+            { word: 'subsidy', pronunciation: '/ˈsʌbsədi/', meaning: '补贴', example: 'They received childcare subsidies for 2026.' },
+            { word: 'tax-free', pronunciation: '/ˌtæksˈfriː/', meaning: '免税的', example: 'It offers a tax-free subsidy of 3,600 yuan.' },
+            { word: 'infant', pronunciation: '/ˈɪnfənt/', meaning: '婴儿', example: 'More than 25 million infants received subsidies.' },
+            { word: 'toddler', pronunciation: '/ˈtɒdlə/', meaning: '幼儿', example: 'Infants and toddlers received childcare subsidies.' },
+            { word: 'waive', pronunciation: '/weɪv/', meaning: '免除', example: 'The policy waives childcare and education fees.' },
+            { word: 'birth-friendly', pronunciation: '/bɜːθˈfrendli/', meaning: '生育友好的', example: 'China is building a birth-friendly society.' },
+            { word: 'enroll', pronunciation: '/ɪnˈrəʊl/', meaning: '注册；入学', example: 'Children enrolled in kindergartens benefited.' },
+            { word: 'broader', pronunciation: '/ˈbrɔːdə/', meaning: '更广泛的', example: 'These are among broader efforts.' },
+            { word: 'revise', pronunciation: '/rɪˈvaɪz/', meaning: '修订', example: 'Under the revised deal, exports will be duty-free.' },
+            { word: 'Bern', pronunciation: '/bɜːn/', meaning: '伯尔尼（瑞士首都）', example: 'They announced the completion in Bern.' }
+        ];
+        
+        // 阅读理解答案
+        const readingAnswers = {
+            1: ['C', 'B', 'A', 'D', 'C'],
+            2: ['C', 'C', 'C', 'C', 'A']
+        };
+        
+        // 用户答案存储
+        let userAnswers = { reading: {}, vocab: { old: [], new: [] }, test: {} };
+        
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    userAnswers = JSON.parse(saved);
+                    if (!userAnswers.reading) userAnswers.reading = {};
+                    if (!userAnswers.vocab) userAnswers.vocab = { old: [], new: [] };
+                    if (!userAnswers.test) userAnswers.test = {};
+                } catch (e) {
+                    userAnswers = { reading: {}, vocab: { old: [], new: [] }, test: {} };
+                }
+            }
+            updateProgress();
+        }
+        
+        function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers)); }
+        
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('readingSection').style.display = section === 'reading' ? 'block' : 'none';
+            document.getElementById('vocabSection').style.display = section === 'vocab' ? 'block' : 'none';
+            document.getElementById('testSection').style.display = section === 'test' ? 'block' : 'none';
+        }
+        
+        function selectOption(element, type, passageNum, questionNum, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            const key = `${passageNum}_${questionNum}`;
+            userAnswers.reading[key] = answer;
+            saveData();
+        }
+        
+        function restoreReadingSelections() {
+            document.querySelectorAll('#readingSection .option').forEach(opt => {
+                const key = opt.getAttribute('data-key');
+                const answer = opt.getAttribute('data-answer');
+                if (key && answer && userAnswers.reading[key] === answer) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
+        
+        function submitReadingAnswers() {
+            let correct = 0;
+            let total = 10;
+            for (let passage = 1; passage <= 2; passage++) {
+                for (let q = 1; q <= 5; q++) {
+                    const key = `${passage}_${q}`;
+                    const userAnswer = userAnswers.reading[key];
+                    const correctAnswer = readingAnswers[passage][q - 1];
+                    if (userAnswer === correctAnswer) correct++;
+                }
+            }
+            userAnswers.readingScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('readingScore').textContent = correct + '/' + total;
+            alert(`阅读理解完成！得分：${correct}/${total}`);
+        }
+        
+        function renderWords() {
+            const oldGrid = document.getElementById('oldWordsGrid');
+            const newGrid = document.getElementById('newWordsGrid');
+            oldGrid.innerHTML = '';
+            newGrid.innerHTML = '';
+            
+            oldWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.old.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('old', i, card);
+                oldGrid.appendChild(card);
+            });
+            
+            newWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.new.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('new', i, card);
+                newGrid.appendChild(card);
+            });
+        }
+        
+        function toggleWordMemorized(type, index, element) {
+            const arr = userAnswers.vocab[type];
+            const idx = arr.indexOf(index);
+            if (idx === -1) { arr.push(index); element.classList.add('memorized'); }
+            else { arr.splice(idx, 1); element.classList.remove('memorized'); }
+            saveData();
+            updateVocabProgress();
+        }
+        
+        function updateVocabProgress() {
+            const total = userAnswers.vocab.old.length + userAnswers.vocab.new.length;
+            document.getElementById('vocabProgress').textContent = total + '/50';
+        }
+        
+        function saveVocabProgress() {
+            saveData();
+            updateProgress();
+            updateVocabProgress();
+            alert('单词学习进度已保存！');
+        }
+        
+        function generateTestQuestions() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            const questions = [];
+            const allWords = [...oldWords, ...newWords];
+            
+            // 单词选择题（50题）
+            for (let i = 0; i < 50; i++) {
+                const word = allWords[i % allWords.length];
+                const wrongMeanings = ['快乐', '悲伤', '快速', '慢速', '简单', '困难', '美丽', '聪明', '年轻', '古老', '现代', '安全', '危险', '昂贵', '便宜', '重要', '次要', '正确', '错误', '强大'];
+                const correctMeaning = word.meaning;
+                let wrongOptions = wrongMeanings.filter(m => m !== correctMeaning).slice(0, 3);
+                // 补充其他单词释义作为干扰项
+                if (wrongOptions.length < 3) {
+                    const otherMeanings = allWords.map(w => w.meaning).filter(m => m !== correctMeaning && !wrongOptions.includes(m));
+                    while (wrongOptions.length < 3 && otherMeanings.length > 0) {
+                        wrongOptions.push(otherMeanings.shift());
+                    }
+                }
+                const options = [correctMeaning, ...wrongOptions].sort(() => Math.random() - 0.5);
+                questions.push({ type: 'vocab', question: `"${word.word}" 的意思是？`, options: options, answer: correctMeaning });
+            }
+            
+            // 语法选择题（30题）
+            const grammarQuestions = [
+                { q: 'China and Switzerland ___ the completion of negotiations.', opts: ['announce', 'announces', 'announced', 'announcing'], a: 'announced' },
+                { q: 'They ___ to upgrade their free trade agreement.', opts: ['complete', 'completes', 'completed', 'completing'], a: 'completed' },
+                { q: 'Wang Wentao and Guy Parmelin ___ the completion in Bern.', opts: ['announce', 'announces', 'announced', 'announcing'], a: 'announced' },
+                { q: 'They ___ a memorandum of understanding.', opts: ['sign', 'signs', 'signed', 'signing'], a: 'signed' },
+                { q: "99.8% of Switzerland's exports ___ from duty-free access.", opts: ['benefit', 'benefits', 'will benefit', 'benefiting'], a: 'will benefit' },
+                { q: 'The negotiations ___ in September 2024.', opts: ['begin', 'begins', 'began', 'beginning'], a: 'began' },
+                { q: 'The talks ___ after five rounds of discussions.', opts: ['conclude', 'concludes', 'concluded', 'concluding'], a: 'concluded' },
+                { q: 'Wang Wentao is the Chinese Commerce ___.', opts: ['Minister', 'Ministers', "Minister's", 'Ministers\''], a: 'Minister' },
+                { q: 'Guy Parmelin is the Swiss ___.', opts: ['President', 'Presidents', "President's", 'Presidents\''], a: 'President' },
+                { q: 'The Ministry of Finance ___ the policy on August 21.', opts: ['announce', 'announces', 'announced', 'announcing'], a: 'announced' },
+                { q: 'About 24 million children ___ from the policy.', opts: ['benefit', 'benefits', 'have benefited', 'benefiting'], a: 'have benefited' },
+                { q: 'More than 25 million infants and toddlers ___ childcare subsidies.', opts: ['receive', 'receives', 'have received', 'receiving'], a: 'have received' },
+                { q: 'China ___ a nationwide childcare subsidy program in 2025.', opts: ['introduce', 'introduces', 'introduced', 'introducing'], a: 'introduced' },
+                { q: 'The program ___ an annual tax-free subsidy of 3,600 yuan.', opts: ['offer', 'offers', 'offered', 'offering'], a: 'offers' },
+                { q: 'These policies ___ among broader efforts.', opts: ['are', 'is', 'was', 'being'], a: 'are' },
+                { q: 'China ___ to build a birth-friendly society.', opts: ['aim', 'aims', 'is aiming', 'aiming'], a: 'is aiming' },
+                { q: 'The policy ___ childcare and education fees.', opts: ['waive', 'waives', 'waived', 'waiving'], a: 'waives' },
+                { q: 'Children ___ in kindergartens across China.', opts: ['enroll', 'enrolls', 'are enrolled', 'enrolling'], a: 'are enrolled' },
+                { q: 'Under the revised deal, exports ___ duty-free access.', opts: ['have', 'has', 'will have', 'having'], a: 'will have' },
+                { q: 'The negotiations ___ five rounds of discussions.', opts: ['include', 'includes', 'included', 'including'], a: 'included' },
+                { q: 'The FTA upgrade ___ after long negotiations.', opts: ['complete', 'completes', 'was completed', 'completing'], a: 'was completed' },
+                { q: 'They ___ the memorandum in Bern.', opts: ['sign', 'signs', 'signed', 'signing'], a: 'signed' },
+                { q: 'The subsidy program ___ in 2025.', opts: ['introduce', 'introduces', 'was introduced', 'introducing'], a: 'was introduced' },
+                { q: 'The fee waiver ___ to the final year of preschool.', opts: ['apply', 'applies', 'applied', 'applying'], a: 'applies' },
+                { q: 'About 24 million children ___ in kindergartens.', opts: ['enroll', 'enrolls', 'are enrolled', 'enrolling'], a: 'are enrolled' },
+                { q: 'China ___ to build a birth-friendly society.', opts: ['try', 'tries', 'is trying', 'tried'], a: 'is trying' },
+                { q: 'The subsidy ___ 3,600 yuan per child.', opts: ['amount', 'amounts', 'amounted', 'amounting'], a: 'amounts' },
+                { q: 'The phase-out periods ___ over several years.', opts: ['extend', 'extends', 'extended', 'extending'], a: 'extend' },
+                { q: 'They ___ the completion jointly.', opts: ['announce', 'announces', 'announced', 'announcing'], a: 'announced' },
+                { q: 'The revised deal ___ duty-free access to 99.8% of exports.', opts: ['give', 'gives', 'gave', 'giving'], a: 'gives' }
+            ];
+            
+            for (let i = 0; i < 30; i++) {
+                const gq = grammarQuestions[i % grammarQuestions.length];
+                questions.push({ type: 'grammar', question: gq.q, options: gq.opts, answer: gq.a });
+            }
+            
+            // 阅读理解题（20题）
+            const readingTestQuestions = [
+                { q: 'China and Switzerland announced the FTA upgrade completion on ___.', opts: ['August 19, 2026', 'August 20, 2026', 'August 21, 2026', 'August 22, 2026'], a: 'August 21, 2026' },
+                { q: 'The Chinese Commerce Minister is ___.', opts: ['Wang Wenbin', 'Wang Wentao', 'Wang Yi', 'Li Qiang'], a: 'Wang Wentao' },
+                { q: 'The Swiss President is ___.', opts: ['Guy Parmelin', 'Viola Amherd', 'Alain Berset', 'Ignazio Cassis'], a: 'Guy Parmelin' },
+                { q: 'The memorandum was signed in ___.', opts: ['Geneva', 'Zurich', 'Bern', 'Beijing'], a: 'Bern' },
+                { q: 'What percentage of exports will be duty-free?', opts: ['95.8%', '97.8%', '98.8%', '99.8%'], a: '99.8%' },
+                { q: 'The negotiations began in ___.', opts: ['September 2023', 'September 2024', 'September 2025', 'September 2026'], a: 'September 2024' },
+                { q: 'How many rounds of discussions were held?', opts: ['Three', 'Four', 'Five', 'Six'], a: 'Five' },
+                { q: 'They signed a memorandum of ___.', opts: ['agreement', 'understanding', 'cooperation', 'partnership'], a: 'understanding' },
+                { q: 'The free final-year kindergarten policy benefits about ___ children.', opts: ['20 million', '22 million', '24 million', '26 million'], a: '24 million' },
+                { q: 'More than ___ infants and toddlers received childcare subsidies.', opts: ['20 million', '23 million', '25 million', '27 million'], a: '25 million' },
+                { q: 'China introduced the nationwide childcare subsidy program in ___.', opts: ['2023', '2024', '2025', '2026'], a: '2025' },
+                { q: 'The annual tax-free subsidy is ___ yuan per child under three.', opts: ['2,600', '3,000', '3,600', '4,200'], a: '3,600' },
+                { q: '3,600 yuan is about ___ dollars.', opts: ['$380', '$440', '$530', '$620'], a: '$530' },
+                { q: 'The policy waives fees for the final year of ___.', opts: ['primary school', 'middle school', 'preschool', 'high school'], a: 'preschool' },
+                { q: 'The policy waives ___ fees.', opts: ['only education', 'only childcare', 'childcare and education', 'transportation'], a: 'childcare and education' },
+                { q: 'These policies aim to build a ___ society.', opts: ['birth-friendly', 'technology-focused', 'export-oriented', 'consumption-driven'], a: 'birth-friendly' },
+                { q: 'The Ministry of ___ announced the kindergarten policy.', opts: ['Education', 'Finance', 'Health', 'Commerce'], a: 'Finance' },
+                { q: 'The subsidy is for each child under ___.', opts: ['two', 'three', 'four', 'five'], a: 'three' },
+                { q: 'The FTA is a ___ trade agreement.', opts: ['free', 'fair', 'fixed', 'formal'], a: 'free' },
+                { q: 'Duty-free access comes after agreed ___ periods.', opts: ['phase-out', 'time-out', 'break', 'waiting'], a: 'phase-out' }
+            ];
+            
+            for (let i = 0; i < 20; i++) {
+                const rq = readingTestQuestions[i];
+                questions.push({ type: 'reading', question: rq.q, options: rq.opts, answer: rq.a });
+            }
+            
+            // 渲染题目
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                const optsHtml = q.options.map((opt, j) => {
+                    const selectedClass = (userAnswers.test[i] === opt) ? ' selected' : '';
+                    return `<div class="option${selectedClass}" onclick="selectTestOption(this, ${i}, '${opt.replace(/'/g, "\\'")}')">${String.fromCharCode(65 + j)}. ${opt}</div>`;
+                }).join('');
+                div.innerHTML = `
+                    <p class="question-text">${i + 1}. ${q.question}</p>
+                    <div class="options">
+                        ${optsHtml}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            return questions;
+        }
+        
+        let testQuestions = [];
+        let timerInterval = null;
+        let timeLeft = 3600;
+        
+        function selectTestOption(element, questionIndex, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            userAnswers.test[questionIndex] = answer;
+            saveData();
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+            }, 1000);
+        }
+        
+        function submitTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            let correct = 0;
+            testQuestions.forEach((q, i) => { if (userAnswers.test[i] === q.answer) correct++; });
+            userAnswers.testScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('testScore').textContent = correct + '/100';
+            document.getElementById('finalScore').textContent = correct;
+            
+            let message = '';
+            if (correct >= 90) message = '太棒了！你做得非常好！';
+            else if (correct >= 80) message = '很好！继续保持！';
+            else if (correct >= 70) message = '不错，还有进步空间！';
+            else if (correct >= 60) message = '及格了，继续努力！';
+            else message = '需要加油哦！多练习吧！';
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+        
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
+        
+        function updateProgress() {
+            let progress = 0;
+            if (userAnswers.readingScore !== undefined) progress += 25;
+            if (userAnswers.vocab.old.length > 0 || userAnswers.vocab.new.length > 0) {
+                progress += 25 * (userAnswers.vocab.old.length + userAnswers.vocab.new.length) / 50;
+            }
+            if (userAnswers.testScore !== undefined) progress += 50;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressFill').textContent = Math.round(progress) + '%';
+            document.getElementById('totalProgress').textContent = Math.round(progress) + '%';
+            
+            if (userAnswers.readingScore !== undefined) {
+                document.getElementById('readingScore').textContent = userAnswers.readingScore + '/10';
+            }
+            if (userAnswers.testScore !== undefined) {
+                document.getElementById('testScore').textContent = userAnswers.testScore + '/100';
+            }
+        }
+        
+        window.onload = function() {
+            loadData();
+            renderWords();
+            testQuestions = generateTestQuestions();
+            restoreReadingSelections();
+            startTimer();
+            updateVocabProgress();
+        };
+    </script>
+</body>
+</html>

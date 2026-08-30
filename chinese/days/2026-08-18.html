@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月18日 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', 'SimSun', serif; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .header h1 { color: #e74c3c; font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { color: #666; font-size: 1.2em; }
+        .progress-bar { background: #e0e0e0; border-radius: 10px; height: 30px; margin-top: 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #e74c3c, #c0392b); height: 100%; width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .section { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .section-title { color: #e74c3c; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: #c0392b; }
+        .poem-box { background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%); border-radius: 15px; padding: 30px; margin-bottom: 20px; border-left: 5px solid #e74c3c; }
+        .poem-title { color: #333; font-size: 1.6em; margin-bottom: 10px; text-align: center; }
+        .poem-author { color: #666; font-size: 1.1em; text-align: center; margin-bottom: 20px; }
+        .poem-content { font-size: 1.3em; line-height: 2.5; text-align: center; color: #333; }
+        .poem-content p { margin: 10px 0; }
+        .modern-article { background: #f8f9fa; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .article-title { color: #333; font-size: 1.4em; margin-bottom: 15px; font-weight: bold; }
+        .article-content { color: #555; line-height: 2; font-size: 1.1em; text-indent: 2em; }
+        .current-news { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 15px; padding: 25px; margin-bottom: 20px; border-left: 5px solid #4caf50; }
+        .news-badge { display: inline-block; background: #4caf50; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; margin-bottom: 15px; }
+        .question-item { background: #fff; border: 2px solid #e0e0e0; border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+        .question-text { color: #333; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
+        .options { display: grid; gap: 10px; }
+        .option { padding: 15px 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option:hover { background: #ffebee; border-color: #e74c3c; }
+        .option.selected { background: #e74c3c; color: white; border-color: #e74c3c; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .btn { padding: 15px 40px; border: none; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+        .btn-primary { background: linear-gradient(90deg, #e74c3c, #c0392b); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4); }
+        .btn-success { background: linear-gradient(90deg, #4caf50, #45a049); color: white; }
+        .btn-success:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .stat-card { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border-radius: 15px; padding: 25px; text-align: center; color: white; }
+        .stat-card .number { font-size: 3em; font-weight: bold; }
+        .stat-card .label { font-size: 1.1em; opacity: 0.9; }
+        .test-timer { background: #fff3e0; border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .test-timer .time { font-size: 3em; color: #e74c3c; font-weight: bold; }
+        .test-timer .label { color: #666; }
+        .result-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .result-content { background: white; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; width: 90%; }
+        .result-score { font-size: 5em; color: #e74c3c; font-weight: bold; }
+        .result-message { font-size: 1.5em; color: #333; margin: 20px 0; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 15px 30px; background: white; border: 2px solid #e0e0e0; border-radius: 30px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .tab:hover { border-color: #e74c3c; }
+        .tab.active { background: linear-gradient(90deg, #e74c3c, #c0392b); color: white; border-color: transparent; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #f5f5f5; border-radius: 10px; color: #666; text-decoration: none; margin-bottom: 20px; transition: all 0.3s; }
+        .back-btn:hover { background: #e0e0e0; }
+        .annotation-box { background: #fff; border: 2px dashed #e74c3c; border-radius: 10px; padding: 20px; margin-top: 20px; }
+        .annotation-title { color: #e74c3c; font-weight: bold; margin-bottom: 10px; }
+        .annotation-content { color: #555; line-height: 1.8; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } .section-title { font-size: 1.4em; } .poem-content { font-size: 1.1em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回语文首页</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-pen-fancy"></i> 语文学习</h1>
+            <p class="date">2026年8月18日 星期一</p>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('poem')">古诗词</div>
+            <div class="tab" onclick="showSection('modern')">现代文</div>
+            <div class="tab" onclick="showSection('news')">时文阅读</div>
+            <div class="tab" onclick="showSection('test')">综合测试</div>
+        </div>
+        
+        <!-- 古诗词部分 -->
+        <div id="poemSection" class="section">
+            <h2 class="section-title"><i class="fas fa-scroll"></i> 古诗词学习</h2>
+            
+            <div class="poem-box">
+                <h3 class="poem-title">登飞来峰</h3>
+                <p class="poem-author">【宋】王安石</p>
+                <div class="poem-content">
+                    <p>飞来山上千寻塔，闻说鸡鸣见日升。</p>
+                    <p>不畏浮云遮望眼，自缘身在最高层。</p>
+                </div>
+            </div>
+            
+            <div class="annotation-box">
+                <p class="annotation-title">【注释】</p>
+                <div class="annotation-content">
+                    <p><strong>飞来峰</strong>：即飞来山，在今浙江杭州西湖边。</p>
+                    <p><strong>千寻塔</strong>：形容塔很高。寻，古代长度单位。</p>
+                    <p><strong>闻说</strong>：听说。</p>
+                    <p><strong>浮云</strong>：比喻奸佞小人。</p>
+                    <p><strong>遮望眼</strong>：遮挡视线。</p>
+                    <p><strong>自缘</strong>：因为。</p>
+                    <p><strong>最高层</strong>：比喻政治上的高位，也指站得高看得远。</p>
+                </div>
+            </div>
+            
+            <div class="poem-box">
+                <h3 class="poem-title">题西林壁</h3>
+                <p class="poem-author">【宋】苏轼</p>
+                <div class="poem-content">
+                    <p>横看成岭侧成峰，远近高低各不同。</p>
+                    <p>不识庐山真面目，只缘身在此山中。</p>
+                </div>
+            </div>
+            
+            <div class="annotation-box">
+                <p class="annotation-title">【注释】</p>
+                <div class="annotation-content">
+                    <p><strong>西林</strong>：西林寺，在今江西庐山。</p>
+                    <p><strong>横看</strong>：从正面看。</p>
+                    <p><strong>侧</strong>：从侧面看。</p>
+                    <p><strong>各不同</strong>：形状各不相同。</p>
+                    <p><strong>不识</strong>：不能认识，不能辨认。</p>
+                    <p><strong>真面目</strong>：指庐山真实的景色、全貌。</p>
+                    <p><strong>缘</strong>：因为。</p>
+                    <p><strong>身在此山中</strong>：意思是处于庐山之中，视野被庐山的峰峦所局限。</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="savePoemProgress()"><i class="fas fa-check"></i> 已掌握古诗词</button>
+            </div>
+        </div>
+        
+        <!-- 现代文部分 -->
+        <div id="modernSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-book"></i> 现代文阅读</h2>
+            
+            <div class="modern-article">
+                <h3 class="article-title">背影（节选）</h3>
+                <p class="article-content">
+                    我说道："爸爸，你走吧。"他往车外看了看，说："我买几个橘子去。你就在此地，不要走动。"我看那边月台的栅栏外有几个卖东西的等着顾客。走到那边月台，须穿过铁道，须跳下去又爬上去。父亲是一个胖子，走过去自然要费事些。我本来要去的，他不肯，只好让他去。
+                </p>
+                <p class="article-content">
+                    我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去，尚不大难。可是他穿过铁道，要爬上那边月台，就不容易了。他用两手攀着上面，两脚再向上缩；他肥胖的身子向左微倾，显出努力的样子。这时我看见他的背影，我的泪很快地流下来了。我赶紧拭干了泪，怕他看见，也怕别人看见。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">1. "蹒跚"一词表现了什么？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'A')">A. 父亲身体很健康</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'B')">B. 父亲年纪大、身体胖，走路困难</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'C')">C. 父亲走得很轻松</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 1, 'D')">D. 父亲在锻炼身体</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">2. 作者为什么流泪？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'A')">A. 因为橘子不好吃</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'B')">B. 因为看到父亲为自己辛苦奔波而感动</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'C')">C. 因为眼睛不舒服</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 2, 'D')">D. 因为天气太冷</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">3. "他肥胖的身子向左微倾，显出努力的样子"运用了什么描写？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'A')">A. 语言描写</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'B')">B. 动作描写</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'C')">C. 心理描写</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 3, 'D')">D. 环境描写</div>
+                </div>
+            </div>
+            
+            <div class="modern-article">
+                <h3 class="article-title">济南的冬天（节选）</h3>
+                <p class="article-content">
+                    设若单单是有阳光，那也算不了出奇。请闭上眼睛想：一个老城，有山有水，全在天底下晒着阳光，暖和安适地睡着，只等春风来把它们唤醒，这是不是个理想的境界？小山整把济南围了个圈儿，只有北边缺着点口儿。这一圈小山在冬天特别可爱，好像是把济南放在一个小摇篮里，它们全安静不动地低声说："你们放心吧，这儿准保暖和。"
+                </p>
+                <p class="article-content">
+                    最妙的是下点小雪呀。看吧，山上的矮松越发的青黑，树尖上顶着一髻儿白花，好像日本看护妇。山尖全白了，给蓝天镶上一道银边。山坡上，有的地方雪厚点，有的地方雪薄点，有的地方草色还露着，这样，一道儿白，一道儿暗黄，给山们穿上一件带水纹的花衣。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">4. "小摇篮"比喻什么？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'A')">A. 真正的摇篮</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'B')">B. 围着济南的小山</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'C')">C. 济南的房子</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 4, 'D')">D. 济南的街道</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">5. 文中描写了济南冬天的什么特点？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'A')">A. 寒冷刺骨</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'B')">B. 暖和安适</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'C')">C. 酷热难耐</div>
+                    <div class="option" onclick="selectOption(this, 'modern', 5, 'D')">D. 多风多雨</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitModernAnswers()"><i class="fas fa-check"></i> 提交现代文答案</button>
+            </div>
+        </div>
+        
+        <!-- 时文阅读部分 -->
+        <div id="newsSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 时文阅读</h2>
+            
+            <div class="current-news">
+                <span class="news-badge">2026年8月17日 央视新闻</span>
+                <h3 class="article-title">中国成功发射新卫星</h3>
+                <p class="article-content">
+                    2026年8月17日，中国成功发射一颗新卫星，标志着中国航天发展计划又一个重要里程碑。卫星从中国航天中心发射，顺利进入预定轨道。此次发射展示了中国在航天技术的持续进步和在卫星部署方面不断增强的能力。新卫星将用于电信、地球观测和科学研究等多种用途。中国航天部门确认所有系统运行正常，卫星表现符合预期。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">6. 卫星发射的时间是？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'A')">A. 8月15日</div>
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'B')">B. 8月17日</div>
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'C')">C. 8月18日</div>
+                    <div class="option" onclick="selectOption(this, 'news', 6, 'D')">D. 8月19日</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">7. 卫星将用于什么用途？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'A')">A. 仅用于娱乐</div>
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'B')">B. 电信、地球观测和科学研究</div>
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'C')">C. 仅用于军事</div>
+                    <div class="option" onclick="selectOption(this, 'news', 7, 'D')">D. 仅用于气象预报</div>
+                </div>
+            </div>
+            
+            <div class="current-news">
+                <span class="news-badge">2026年8月17日 China Daily</span>
+                <h3 class="article-title">菲律宾极端天气影响超过500万人</h3>
+                <p class="article-content">
+                    2026年8月17日，据中国日报报道，菲律宾极端天气已影响超过500万人。恶劣天气对基础设施造成大范围破坏，数千家庭被迫迁移。当地政府正与国际组织合作向受影响社区提供紧急救济。这一极端天气事件凸显了气候变化对脆弱地区日益加剧的影响。紧急救援队已被派往协助救援和救济行动，并为流离失所者建立了临时庇护所。
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">8. 极端天气影响了多少人？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'A')">A. 超过500万人</div>
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'B')">B. 不到100万人</div>
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'C')">C. 约200万人</div>
+                    <div class="option" onclick="selectOption(this, 'news', 8, 'D')">D. 约300万人</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">9. 这一事件凸显了什么问题？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'A')">A. 旅游业的重要性</div>
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'B')">B. 气候变化对脆弱地区的影响</div>
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'C')">C. 经济增长</div>
+                    <div class="option" onclick="selectOption(this, 'news', 9, 'D')">D. 人口增长</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">10. 为流离失所者建立了什么？</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'A')">A. 永久住房</div>
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'B')">B. 临时庇护所</div>
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'C')">C. 酒店</div>
+                    <div class="option" onclick="selectOption(this, 'news', 10, 'D')">D. 没有提供帮助</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitNewsAnswers()"><i class="fas fa-check"></i> 提交时文答案</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试部分 -->
+        <div id="testSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 综合测试 (50题)</h2>
+            
+            <div class="test-timer">
+                <div class="time" id="timer">45:00</div>
+                <div class="label">剩余时间</div>
+            </div>
+            
+            <div id="testQuestions"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitTest()"><i class="fas fa-paper-plane"></i> 提交测试</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card"><div class="number" id="poemScore">-</div><div class="label">古诗词掌握</div></div>
+            <div class="stat-card"><div class="number" id="readingScore">-</div><div class="label">阅读理解得分</div></div>
+            <div class="stat-card"><div class="number" id="testScore">-</div><div class="label">测试得分</div></div>
+            <div class="stat-card"><div class="number" id="totalProgress">0%</div><div class="label">总体完成度</div></div>
+        </div>
+    </div>
+    
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="result-score" id="finalScore">0</div>
+            <div class="result-message" id="resultMessage">继续努力！</div>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">确定</button>
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'xiaokai_chinese_2026_08_18';
+        
+        const answers = {
+            modern: { 1: 'B', 2: 'B', 3: 'B', 4: 'B', 5: 'B' },
+            news: { 6: 'B', 7: 'B', 8: 'A', 9: 'B', 10: 'B' }
+        };
+        
+        let userData = { poemLearned: false, modernAnswers: {}, newsAnswers: {}, testAnswers: {} };
+        
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) { userData = JSON.parse(saved); updateProgress(); }
+        }
+        
+        function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(userData)); }
+        
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('poemSection').style.display = section === 'poem' ? 'block' : 'none';
+            document.getElementById('modernSection').style.display = section === 'modern' ? 'block' : 'none';
+            document.getElementById('newsSection').style.display = section === 'news' ? 'block' : 'none';
+            document.getElementById('testSection').style.display = section === 'test' ? 'block' : 'none';
+        }
+        
+        function selectOption(element, type, questionNum, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            if (type === 'modern') userData.modernAnswers[questionNum] = answer;
+            else if (type === 'news') userData.newsAnswers[questionNum] = answer;
+            saveData();
+        }
+        
+        function savePoemProgress() {
+            userData.poemLearned = true;
+            saveData();
+            updateProgress();
+            document.getElementById('poemScore').textContent = '已掌握';
+            alert('古诗词学习进度已保存！');
+        }
+        
+        function submitModernAnswers() {
+            let correct = 0;
+            for (let i = 1; i <= 5; i++) { if (userData.modernAnswers[i] === answers.modern[i]) correct++; }
+            userData.modernScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('readingScore').textContent = correct + '/10';
+            alert('现代文阅读完成！得分：' + correct + '/5');
+        }
+        
+        function submitNewsAnswers() {
+            let correct = 0;
+            for (let i = 6; i <= 10; i++) { if (userData.newsAnswers[i] === answers.news[i]) correct++; }
+            userData.newsScore = correct;
+            saveData();
+            updateProgress();
+            const totalReading = (userData.modernScore || 0) + correct;
+            document.getElementById('readingScore').textContent = totalReading + '/10';
+            alert('时文阅读完成！得分：' + correct + '/5');
+        }
+        
+        function generateTestQuestions() {
+            const container = document.getElementById('testQuestions');
+            const questions = [
+                // 字音字形（10题）
+                { q: '"飞来峰"中"飞来"指的是：', opts: ['鸟飞来', '山峰的传说', '飞机', '云彩'], a: '山峰的传说' },
+                { q: '"千寻塔"中"寻"是：', opts: ['寻找', '古代长度单位', '普通', '询问'], a: '古代长度单位' },
+                { q: '"不畏浮云遮望眼"中"浮云"比喻：', opts: ['真正的云', '奸佞小人', '朋友', '天气'], a: '奸佞小人' },
+                { q: '"自缘身在最高层"表达了诗人：', opts: ['悲观', '自信和远见', '害怕', '懒惰'], a: '自信和远见' },
+                { q: '《登飞来峰》的作者是：', opts: ['李白', '杜甫', '王安石', '苏轼'], a: '王安石' },
+                { q: '《题西林壁》的作者是：', opts: ['李白', '杜甫', '王安石', '苏轼'], a: '苏轼' },
+                { q: '"横看成岭侧成峰"说明：', opts: ['庐山只有岭', '角度不同景色不同', '庐山很平', '只有峰'], a: '角度不同景色不同' },
+                { q: '"不识庐山真面目"的原因是：', opts: ['眼睛不好', '身在山中视野受限', '庐山不好看', '天气不好'], a: '身在山中视野受限' },
+                { q: '两首诗的共同点是：', opts: ['都是唐诗', '都写山', '都是七绝', '都写水'], a: '都是七绝' },
+                { q: '"只缘身在此山中"的哲理是：', opts: ['要身在山中', '认识事物要客观全面', '山中很好', '不要出山'], a: '认识事物要客观全面' },
+                
+                // 古诗词理解（15题）
+                { q: '《登飞来峰》描写的地点在今：', opts: ['北京', '杭州', '南京', '上海'], a: '杭州' },
+                { q: '"闻说鸡鸣见日升"描写的是：', opts: ['傍晚', '清晨', '中午', '深夜'], a: '清晨' },
+                { q: '《题西林壁》描写的山是：', opts: ['泰山', '华山', '庐山', '黄山'], a: '庐山' },
+                { q: '"远近高低各不同"说明庐山：', opts: ['不好看', '景色多变', '很平', '很小'], a: '景色多变' },
+                { q: '"千寻塔"形容塔：', opts: ['很小', '很高', '很旧', '很破'], a: '很高' },
+                { q: '"不畏浮云遮望眼"表达诗人：', opts: ['畏难', '不畏艰难、勇往直前', '害怕', '退缩'], a: '不畏艰难、勇往直前' },
+                { q: '"自缘身在最高层"中"最高层"比喻：', opts: ['楼顶', '政治上的高位或远见', '天空', '山顶'], a: '政治上的高位或远见' },
+                { q: '《题西林壁》是写在：', opts: ['墙上', '西林寺壁上', '纸上', '石头上'], a: '西林寺壁上' },
+                { q: '两首诗都是：', opts: ['律诗', '绝句', '词', '赋'], a: '绝句' },
+                { q: '"横看"的意思是：', opts: ['斜看', '从正面看', '俯视', '仰视'], a: '从正面看' },
+                { q: '"真面目"指的是：', opts: ['人脸', '庐山真实全貌', '假面', '面具'], a: '庐山真实全貌' },
+                { q: '《登飞来峰》的主题是：', ops: ['写景', '抒发政治抱负', '思乡', '送别'], a: '抒发政治抱负' },
+                { q: '《题西林壁》的主题是：', opts: ['写景', '蕴含哲理', '思乡', '送别'], a: '蕴含哲理' },
+                { q: '"各不同"指的是：', opts: ['时间不同', '庐山景色各不相同', '人不同', '天气不同'], a: '庐山景色各不相同' },
+                { q: '"缘"的意思是：', opts: ['缘分', '因为', '缘故', '边缘'], a: '因为' },
+                
+                // 现代文理解（15题）
+                { q: '《背影》的作者是：', opts: ['鲁迅', '老舍', '朱自清', '巴金'], a: '朱自清' },
+                { q: '"蹒跚"表现父亲：', opts: ['健康', '年迈体胖走路困难', '年轻', '强壮'], a: '年迈体胖走路困难' },
+                { q: '"我的泪很快地流下来了"是因为：', opts: ['眼睛进沙', '被父爱感动', '天气冷', '被打'], a: '被父爱感动' },
+                { q: '"背影"指的是：', opts: ['作者背影', '父亲买橘子的背影', '路人背影', '母亲背影'], a: '父亲买橘子的背影' },
+                { q: '父亲买橘子时：', opts: ['很轻松', '很艰难', '不去了', '跑着去'], a: '很艰难' },
+                { q: '《济南的冬天》的作者是：', opts: ['鲁迅', '老舍', '朱自清', '巴金'], a: '老舍' },
+                { q: '"小摇篮"比喻：', opts: ['真正的摇篮', '围着济南的小山', '济南的房子', '济南的河'], a: '围着济南的小山' },
+                { q: '济南冬天的特点是：', opts: ['寒冷', '暖和安适', '酷热', '多雨'], a: '暖和安适' },
+                { q: '"日本看护妇"比喻：', opts: ['日本人', '树上的雪', '护士', '游客'], a: '树上的雪' },
+                { q: '"带水纹的花衣"指的是：', opts: ['真花衣', '雪和草色相间的山坡', '衣服', '水'], a: '雪和草色相间的山坡' },
+                { q: '《背影》的主题是：', opts: ['写景', '父爱', '思乡', '送别'], a: '父爱' },
+                { q: '《济南的冬天》的主题是：', opts: ['赞美济南冬天', '批判济南', '思乡', '送别'], a: '赞美济南冬天' },
+                { q: '"显出努力的样子"运用了：', opts: ['比喻', '动作描写', '夸张', '排比'], a: '动作描写' },
+                { q: '"怕他看见"说明作者：', opts: ['不想让父亲担心', '讨厌父亲', '不关心父亲', '害怕父亲'], a: '不想让父亲担心' },
+                { q: '济南在冬天是：', opts: ['寒冷的', '温暖安适的', '炎热的', '多雨的'], a: '温暖安适的' },
+                
+                // 时文阅读（5题）
+                { q: '中国发射新卫星的时间是：', opts: ['8月15日', '8月17日', '8月18日', '8月19日'], a: '8月17日' },
+                { q: '极端天气影响了菲律宾多少人？', opts: ['100万', '300万', '500万', '1000万'], a: '500万' },
+                { q: '卫星将用于什么？', opts: ['仅娱乐', '电信、观测和科研', '仅军事', '仅气象'], a: '电信、观测和科研' },
+                { q: '极端天气凸显了什么？', opts: ['旅游', '气候变化影响', '经济', '人口'], a: '气候变化影响' },
+                { q: '为灾民建立了什么？', opts: ['酒店', '临时庇护所', '没有帮助', '永久住房'], a: '临时庇护所' },
+                
+                // 语言运用（5题）
+                { q: '下列句子没有语病的是：', opts: ['通过学习使我进步', '他做事认真负责', '我们要发扬优点', '他办事认真负责'], a: '他办事认真负责' },
+                { q: '下列成语使用正确的是：', opts: ['他办事斤斤计较', '他学习孜孜不倦', '他为人斤斤计较', '他工作无所事事'], a: '他学习孜孜不倦' },
+                { q: '下列句子是比喻句的是：', opts: ['他好像很累', '他像他父亲', '弯弯的月亮像小船', '大家像一家人'], a: '弯弯的月亮像小船' },
+                { q: '"不畏浮云遮望眼"的修辞是：', opts: ['比喻', '拟人', '夸张', '排比'], a: '比喻' },
+                { q: '下列词语书写正确的是：', opts: ['惦记', '掂记', '惦记', '惦记'], a: '惦记' }
+            ];
+            
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <p class="question-text">${i + 1}. ${q.q}</p>
+                    <div class="options">
+                        ${q.opts.map((opt, j) => `<div class="option" onclick="selectTestOption(this, ${i}, '${opt}')">${String.fromCharCode(65 + j)}. ${opt}</div>`).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            return questions;
+        }
+        
+        let testQuestions = [];
+        let timerInterval = null;
+        let timeLeft = 2700;
+        
+        function selectTestOption(element, questionIndex, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            userData.testAnswers[questionIndex] = answer;
+            saveData();
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+            }, 1000);
+        }
+        
+        function submitTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            let correct = 0;
+            testQuestions.forEach((q, i) => { if (userData.testAnswers[i] === q.a) correct++; });
+            userData.testScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('testScore').textContent = correct + '/50';
+            document.getElementById('finalScore').textContent = correct;
+            
+            let message = '';
+            if (correct >= 45) message = '太棒了！你真是语文小能手！';
+            else if (correct >= 40) message = '很好！继续保持！';
+            else if (correct >= 35) message = '不错，还有进步空间！';
+            else if (correct >= 30) message = '及格了，继续努力！';
+            else message = '需要加油哦！多读多练！';
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+        
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
+        
+        function updateProgress() {
+            let progress = 0;
+            if (userData.poemLearned) progress += 30;
+            if (userData.modernScore) progress += 20;
+            if (userData.newsScore) progress += 20;
+            if (userData.testScore) progress += 30;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressFill').textContent = Math.round(progress) + '%';
+            document.getElementById('totalProgress').textContent = Math.round(progress) + '%';
+            if (userData.poemLearned) document.getElementById('poemScore').textContent = '已掌握';
+        }
+        
+        window.onload = function() {
+            loadData();
+            testQuestions = generateTestQuestions();
+            startTimer();
+        };
+    </script>
+</body>
+</html>

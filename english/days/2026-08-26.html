@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月26日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月26日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>Pressure Mounts as US Sanctions Set to Kick In</h3>
+                    <p>On August 24, 2026, US Treasury Secretary Bessent announced a new round of "economic isolation" sanctions against Iran. The sanctions target five key areas: digital assets, technology, gold, aviation, and shipping.</p>
+                    <p>Approximately 60 Iranian-related entities, individuals, and vessels were added to the sanctions list, covering nuclear and missile technology, cyber operations, and oil trade.</p>
+                    <p>Iran's Supreme National Security Council Secretary Mohsen Rezaei warned that if the economic war continues, not a single drop of oil will be exported from the Persian Gulf. Iran's Foreign Minister Araghchi called the US threats "old-style bullying tactics."</p>
+                    <p>Iran's parliament passed regulations related to the Strait of Hormuz, requiring service fees from eligible transit vessels.</p>
+                    <p>The US and Iran signed a memorandum of understanding on June 17, but the 60-day negotiation window has expired and formal talks have been suspended.</p>
+                    <p>Iran's currency, the rial, hit a record low of 2.02 million rials per US dollar in the open market, while the central bank's official rate is about 1.5 million rials per dollar.</p>
+                    <span class="source">Source: China Daily, 2026-08-25</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Asia Shares Fall on Tech Nerves; Oil Prices Slip</h3>
+                    <p>Asian stocks fell on Tuesday, August 25, 2026, and oil prices continued their decline.</p>
+                    <p>Markets were watching whether the US would implement its "economic D-Day" sanctions threat against Iran, and awaiting Nvidia's earnings report on Wednesday.</p>
+                    <p>Analysts generally expected Nvidia's quarterly revenue to approach $92 billion, with full-year earnings guidance between $103 billion and $105 billion.</p>
+                    <p>The MSCI Asia-Pacific excluding Japan index fell 0.5%, Japan's Nikkei fell 0.9%, and South Korea's Kospi fell 2.7%.</p>
+                    <p>Alibaba launched a $10.2 billion discounted share placement to support its AI strategy. Samsung Electronics' shareholder return plan disappointed investors, further affecting tech stock sentiment.</p>
+                    <p>Brent crude futures fell 0.1% to $92.08 per barrel, and US crude rose 0.1% to $85.09 per barrel.</p>
+                    <p>Reports that the US Treasury might use its cash account to finance debt buybacks also pushed US Treasury yields lower.</p>
+                    <span class="source">Source: Reuters, 2026-08-25</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、阅读理解、完形填空、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-08-26';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-26',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. When did US Treasury Secretary Bessent announce the new sanctions?", options: ["August 22, 2026", "August 23, 2026", "August 24, 2026", "August 25, 2026"], answer: 2 },
+            { q: "2. What did Bessent call the new round of sanctions against Iran?", options: ["\"economic warfare\"", "\"economic isolation\"", "\"economic blockade\"", "\"economic embargo\""], answer: 1 },
+            { q: "3. How many key areas do the sanctions target?", options: ["Three", "Four", "Five", "Six"], answer: 2 },
+            { q: "4. Which of the following is NOT one of the five key areas targeted by the sanctions?", options: ["Gold", "Aviation", "Agriculture", "Shipping"], answer: 2 },
+            { q: "5. Approximately how many Iranian-related entities, individuals, and vessels were added to the sanctions list?", options: ["About 40", "About 50", "About 60", "About 70"], answer: 2 },
+            { q: "6. Who warned that not a single drop of oil would be exported from the Persian Gulf?", options: ["Foreign Minister Araghchi", "Mohsen Rezaei", "The parliament speaker", "The central bank governor"], answer: 1 },
+            { q: "7. What did Iran's Foreign Minister Araghchi call the US threats?", options: ["\"modern warfare\"", "\"old-style bullying tactics\"", "\"new diplomacy\"", "\"empty words\""], answer: 1 },
+            { q: "8. What did Iran's parliament pass regulations related to?", options: ["The Strait of Hormuz", "The Persian Gulf", "The central bank", "Oil exports"], answer: 0 },
+            { q: "9. When was the memorandum of understanding between the US and Iran signed?", options: ["May 17", "June 17", "July 17", "August 17"], answer: 1 },
+            { q: "10. What was the open market rate of the rial per US dollar?", options: ["1.5 million rials", "2.02 million rials", "2.5 million rials", "3 million rials"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. When did Asian stocks fall?", options: ["Monday", "Tuesday", "Wednesday", "Thursday"], answer: 1 },
+            { q: "12. What were markets awaiting on Wednesday?", options: ["Apple's earnings report", "Nvidia's earnings report", "Samsung's earnings report", "Alibaba's earnings report"], answer: 1 },
+            { q: "13. What was Nvidia's expected quarterly revenue?", options: ["$82 billion", "$92 billion", "$102 billion", "$112 billion"], answer: 1 },
+            { q: "14. What was the full-year earnings guidance range?", options: ["$83-85 billion", "$93-95 billion", "$103-105 billion", "$113-115 billion"], answer: 2 },
+            { q: "15. How much did the MSCI Asia-Pacific excluding Japan index fall?", options: ["0.3%", "0.5%", "0.9%", "2.7%"], answer: 1 },
+            { q: "16. Which index fell the most?", options: ["MSCI Asia-Pacific", "Nikkei", "Kospi", "Hang Seng"], answer: 2 },
+            { q: "17. How much was Alibaba's discounted share placement?", options: ["$5.2 billion", "$7.2 billion", "$10.2 billion", "$12.2 billion"], answer: 2 },
+            { q: "18. What was the purpose of Alibaba's share placement?", options: ["To pay off debts", "To support its AI strategy", "To buy a competitor", "To expand overseas"], answer: 1 },
+            { q: "19. What disappointed investors about Samsung Electronics?", options: ["Its new product launch", "Its shareholder return plan", "Its CEO change", "Its revenue drop"], answer: 1 },
+            { q: "20. What was the price of Brent crude futures?", options: ["$85.09 per barrel", "$88.08 per barrel", "$92.08 per barrel", "$95.08 per barrel"], answer: 2 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "sanction", phonetic: "/ˈsæŋkʃn/", meaning: "n. 制裁 v. 批准" },
+            { word: "treasury", phonetic: "/ˈtreʒəri/", meaning: "n. 财政部；金库" },
+            { word: "isolation", phonetic: "/ˌaɪsəˈleɪʃn/", meaning: "n. 隔离；孤立" },
+            { word: "entity", phonetic: "/ˈentəti/", meaning: "n. 实体" },
+            { word: "vessel", phonetic: "/ˈvesl/", meaning: "n. 船只；容器" },
+            { word: "nuclear", phonetic: "/ˈnjuːkliə(r)/", meaning: "adj. 核的；核能的" },
+            { word: "missile", phonetic: "/ˈmɪsaɪl/", meaning: "n. 导弹" },
+            { word: "cyber", phonetic: "/ˈsaɪbə(r)/", meaning: "adj. 网络的" },
+            { word: "tariff", phonetic: "/ˈtærɪf/", meaning: "n. 关税" },
+            { word: "currency", phonetic: "/ˈkʌrənsi/", meaning: "n. 货币" },
+            { word: "rial", phonetic: "/riˈæl/", meaning: "n. 里亚尔（伊朗货币）" },
+            { word: "fluctuate", phonetic: "/ˈflʌktʃueɪt/", meaning: "v. 波动；起伏" },
+            { word: "revenue", phonetic: "/ˈrevənjuː/", meaning: "n. 收入；税收" },
+            { word: "semiconductor", phonetic: "/ˌsemikənˈdʌktə(r)/", meaning: "n. 半导体" },
+            { word: "placement", phonetic: "/ˈpleɪsmənt/", meaning: "n. 配售；安置" },
+            { word: "shareholder", phonetic: "/ˈʃeəhəʊldə(r)/", meaning: "n. 股东" },
+            { word: "yield", phonetic: "/jiːld/", meaning: "n. 收益率 v. 产生" },
+            { word: "crude", phonetic: "/kruːd/", meaning: "adj. 原油的；粗糙的" },
+            { word: "barrel", phonetic: "/ˈbærəl/", meaning: "n. 桶" },
+            { word: "diplomatic", phonetic: "/ˌdɪpləˈmætɪk/", meaning: "adj. 外交的" }
+        ];
+
+        const oldVocabData = [
+            { word: "environment", phonetic: "/ɪnˈvaɪrənmənt/", meaning: "n. 环境" },
+            { word: "technology", phonetic: "/tekˈnɒlədʒi/", meaning: "n. 技术" },
+            { word: "economy", phonetic: "/ɪˈkɒnəmi/", meaning: "n. 经济" },
+            { word: "policy", phonetic: "/ˈpɒləsi/", meaning: "n. 政策" },
+            { word: "government", phonetic: "/ˈɡʌvənmənt/", meaning: "n. 政府" },
+            { word: "international", phonetic: "/ˌɪntəˈnæʃənl/", meaning: "adj. 国际的" },
+            { word: "develop", phonetic: "/dɪˈveləp/", meaning: "v. 发展" },
+            { word: "production", phonetic: "/prəˈdʌkʃn/", meaning: "n. 生产" },
+            { word: "market", phonetic: "/ˈmɑːkɪt/", meaning: "n. 市场" },
+            { word: "trade", phonetic: "/treɪd/", meaning: "n. 贸易" },
+            { word: "industry", phonetic: "/ˈɪndəstri/", meaning: "n. 工业；行业" },
+            { word: "progress", phonetic: "/ˈprəʊɡres/", meaning: "n. 进步" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" },
+            { word: "opportunity", phonetic: "/ˌɒpəˈtjuːnəti/", meaning: "n. 机会" },
+            { word: "solution", phonetic: "/səˈluːʃn/", meaning: "n. 解决方案" },
+            { word: "success", phonetic: "/səkˈses/", meaning: "n. 成功" },
+            { word: "future", phonetic: "/ˈfjuːtʃə(r)/", meaning: "n. 未来" },
+            { word: "knowledge", phonetic: "/ˈnɒlɪdʒ/", meaning: "n. 知识" },
+            { word: "education", phonetic: "/ˌedʒuˈkeɪʃn/", meaning: "n. 教育" },
+            { word: "science", phonetic: "/ˈsaɪəns/", meaning: "n. 科学" },
+            { word: "research", phonetic: "/rɪˈsɜːtʃ/", meaning: "n. 研究" },
+            { word: "computer", phonetic: "/kəmˈpjuːtə(r)/", meaning: "n. 计算机" },
+            { word: "internet", phonetic: "/ˈɪntənet/", meaning: "n. 互联网" },
+            { word: "communication", phonetic: "/kəˌmjuːnɪˈkeɪʃn/", meaning: "n. 交流" },
+            { word: "information", phonetic: "/ˌɪnfəˈmeɪʃn/", meaning: "n. 信息" },
+            { word: "digital", phonetic: "/ˈdɪdʒɪtl/", meaning: "adj. 数字的" },
+            { word: "global", phonetic: "/ˈɡləʊbl/", meaning: "adj. 全球的" },
+            { word: "society", phonetic: "/səˈsaɪəti/", meaning: "n. 社会" },
+            { word: "culture", phonetic: "/ˈkʌltʃə(r)/", meaning: "n. 文化" },
+            { word: "history", phonetic: "/ˈhɪstri/", meaning: "n. 历史" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. The sanctions ___ against Iran last week.", type: "choice", options: ["announced", "were announced", "have announced", "are announcing"], answer: 1 },
+            { q: "2. Oil prices ___ in recent weeks.", type: "choice", options: ["fall", "fell", "have fallen", "are falling"], answer: 2 },
+            { q: "3. He ___ in Beijing since 2015.", type: "choice", options: ["lives", "lived", "has lived", "is living"], answer: 2 },
+            { q: "4. The report ___ by the analyst yesterday.", type: "choice", options: ["wrote", "was written", "written", "writing"], answer: 1 },
+            { q: "5. Neither the US ___ Iran wants a full war.", type: "choice", options: ["or", "nor", "and", "but"], answer: 1 },
+            { q: "6. She is ___ honest person I know.", type: "choice", options: ["a", "an", "the", "that"], answer: 1 },
+            { q: "7. ___ the weather is fine, we will go out.", type: "choice", options: ["If", "Unless", "Because", "Although"], answer: 0 },
+            { q: "8. He asked ___ the meeting would start.", type: "choice", options: ["what", "when", "which", "why"], answer: 1 },
+            { q: "9. The book is ___ the table.", type: "choice", options: ["in", "on", "at", "under"], answer: 1 },
+            { q: "10. I ___ my homework when he called me.", type: "choice", options: ["do", "did", "was doing", "doing"], answer: 2 },
+            { q: "11. There ___ many ships in the gulf.", type: "choice", options: ["is", "are", "was", "be"], answer: 1 },
+            { q: "12. He ___ to the office every morning.", type: "choice", options: ["go", "goes", "going", "went"], answer: 1 },
+            { q: "13. She has ___ finished her report.", type: "choice", options: ["yet", "already", "still", "just"], answer: 1 },
+            { q: "14. This is the ___ interesting article I have read.", type: "choice", options: ["more", "most", "much", "very"], answer: 1 },
+            { q: "15. ___ you like some coffee?", type: "choice", options: ["Do", "Would", "Are", "Is"], answer: 1 },
+            { q: "16. He is taller ___ his brother.", type: "choice", options: ["as", "than", "like", "of"], answer: 1 },
+            { q: "17. The teacher told us ___ quiet.", type: "choice", options: ["be", "being", "to be", "to being"], answer: 2 },
+            { q: "18. I will go to the park ___ it doesn't rain.", type: "choice", options: ["if", "unless", "because", "since"], answer: 0 },
+            { q: "19. She ___ English for five years.", type: "choice", options: ["studies", "studied", "has studied", "is studying"], answer: 2 },
+            { q: "20. ___ sunny day it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. The opposite of 'cheap' is ___.", type: "choice", options: ["expensive", "free", "rich", "poor"], answer: 0 },
+            { q: "22. A person who buys shares is a ___.", type: "choice", options: ["seller", "buyer", "shareholder", "trader"], answer: 2 },
+            { q: "23. The amount of oil is often measured in ___.", type: "choice", options: ["bottles", "barrels", "boxes", "bags"], answer: 1 },
+            { q: "24. The ___ is the money used in a country.", type: "choice", options: ["coin", "currency", "cash", "check"], answer: 1 },
+            { q: "25. A ___ is a ship or large boat.", type: "choice", options: ["vehicle", "vessel", "car", "truck"], answer: 1 },
+            { q: "26. ___ power is produced by splitting atoms.", type: "choice", options: ["Solar", "Wind", "Nuclear", "Hydro"], answer: 2 },
+            { q: "27. A ___ is a weapon that flies through the air.", type: "choice", options: ["gun", "missile", "sword", "knife"], answer: 1 },
+            { q: "28. ___ attacks happen on the internet.", type: "choice", options: ["Cyber", "Physical", "Mental", "Social"], answer: 0 },
+            { q: "29. A ___ is a tax on imported goods.", type: "choice", options: ["fee", "tariff", "fine", "bill"], answer: 1 },
+            { q: "30. The ___ is the government department that manages money.", type: "choice", options: ["treasury", "bank", "office", "store"], answer: 0 },
+            { q: "31. To ___ means to go up and down in value.", type: "choice", options: ["rise", "fall", "fluctuate", "stay"], answer: 2 },
+            { q: "32. The ___ is the income from business activities.", type: "choice", options: ["cost", "revenue", "profit", "loss"], answer: 1 },
+            { q: "33. A ___ is a tiny electronic part used in computers.", type: "choice", options: ["semiconductor", "wire", "cable", "switch"], answer: 0 },
+            { q: "34. A ___ is a large container used to store oil.", type: "choice", options: ["bottle", "barrel", "box", "bag"], answer: 1 },
+            { q: "35. ___ relations deal with countries talking to each other.", type: "choice", options: ["Diplomatic", "Social", "Personal", "Private"], answer: 0 },
+            { q: "36. The opposite of 'connection' is ___.", type: "choice", options: ["link", "isolation", "join", "attach"], answer: 1 },
+            { q: "37. A business or organization is called an ___.", type: "choice", options: ["entity", "animal", "object", "idea"], answer: 0 },
+            { q: "38. The ___ is the unit of money used in Iran.", type: "choice", options: ["dollar", "euro", "rial", "yen"], answer: 2 },
+            { q: "39. The ___ of an investment is the return it produces.", type: "choice", options: ["yield", "cost", "loss", "risk"], answer: 0 },
+            { q: "40. ___ oil is unrefined petroleum.", type: "choice", options: ["Crude", "Clean", "Refined", "Pure"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. The sun ___ in the east.", type: "choice", options: ["rise", "rises", "rose", "rising"], answer: 1 },
+            { q: "42. I have ___ money in my pocket.", type: "choice", options: ["a few", "few", "a little", "little"], answer: 2 },
+            { q: "43. She is afraid ___ dogs.", type: "choice", options: ["of", "to", "from", "with"], answer: 0 },
+            { q: "44. The train ___ at 8 a.m. every day.", type: "choice", options: ["leave", "leaves", "left", "leaving"], answer: 1 },
+            { q: "45. He spent two hours ___ his homework.", type: "choice", options: ["do", "does", "did", "doing"], answer: 3 },
+            { q: "46. This problem is ___ difficult for me.", type: "choice", options: ["very", "too", "so", "quite"], answer: 1 },
+            { q: "47. We must ___ our classroom clean.", type: "choice", options: ["keep", "let", "make", "have"], answer: 0 },
+            { q: "48. The story happened ___ a rainy night.", type: "choice", options: ["in", "on", "at", "for"], answer: 1 },
+            { q: "49. I ___ my keys. I can't find them.", type: "choice", options: ["lose", "lost", "have lost", "losing"], answer: 2 },
+            { q: "50. There are ___ days in a week.", type: "choice", options: ["five", "six", "seven", "eight"], answer: 2 },
+            { q: "51. He is ___ honest boy.", type: "choice", options: ["a", "an", "the", "/"], answer: 1 },
+            { q: "52. ___ interesting the story is!", type: "choice", options: ["What", "What an", "How", "How an"], answer: 2 },
+            { q: "53. I don't know ___ to do next.", type: "choice", options: ["what", "which", "how", "where"], answer: 0 },
+            { q: "54. She speaks English as ___ as her sister.", type: "choice", options: ["good", "well", "better", "best"], answer: 1 },
+            { q: "55. The boy ___ parents are teachers is my friend.", type: "choice", options: ["who", "which", "whose", "whom"], answer: 2 },
+            { q: "56. I will go to the park if it ___ tomorrow.", type: "choice", options: ["doesn't rain", "won't rain", "didn't rain", "not rain"], answer: 0 },
+            { q: "57. He was ___ tired ___ he couldn't walk.", type: "choice", options: ["so; that", "too; to", "very; that", "such; that"], answer: 0 },
+            { q: "58. ___ of the students passed the exam.", type: "choice", options: ["Each", "Every", "All", "Both"], answer: 2 },
+            { q: "59. This room is three times ___ as that one.", type: "choice", options: ["big", "bigger", "biggest", "as big"], answer: 3 },
+            { q: "60. He decided ___ a new car.", type: "choice", options: ["buy", "buying", "to buy", "bought"], answer: 2 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. US Treasury Secretary ___ announced the new sanctions.", type: "choice", options: ["Biden", "Bessent", "Trump", "Powell"], answer: 1 },
+            { q: "62. The sanctions target ___ key areas.", type: "choice", options: ["three", "four", "five", "six"], answer: 2 },
+            { q: "63. About ___ Iranian-related entities were added to the list.", type: "choice", options: ["40", "50", "60", "70"], answer: 2 },
+            { q: "64. The sanctions cover nuclear and missile technology, cyber operations, and ___ trade.", type: "choice", options: ["wheat", "coal", "oil", "cotton"], answer: 2 },
+            { q: "65. Iran's ___ warned about oil exports from the Persian Gulf.", type: "choice", options: ["President", "Foreign Minister", "Supreme National Security Council Secretary", "Parliament Speaker"], answer: 2 },
+            { q: "66. Iran's Foreign Minister called the US threats \"___\".", type: "choice", options: ["modern warfare", "old-style bullying tactics", "new diplomacy", "empty words"], answer: 1 },
+            { q: "67. Iran's parliament passed regulations about the Strait of ___.", type: "choice", options: ["Hormuz", "Malacca", "Georgia", "Florida"], answer: 0 },
+            { q: "68. The US and Iran signed a memorandum of understanding on ___.", type: "choice", options: ["May 17", "June 17", "July 17", "August 17"], answer: 1 },
+            { q: "69. The rial hit a record low of ___ million per US dollar in the open market.", type: "choice", options: ["1.5", "2.02", "2.5", "3"], answer: 1 },
+            { q: "70. The central bank's official rate is about ___ million rials per dollar.", type: "choice", options: ["1", "1.5", "2", "2.5"], answer: 1 },
+            { q: "71. Asian stocks fell on ___, August 25, 2026.", type: "choice", options: ["Monday", "Tuesday", "Wednesday", "Thursday"], answer: 1 },
+            { q: "72. Markets were awaiting ___ earnings report on Wednesday.", type: "choice", options: ["Apple's", "Nvidia's", "Microsoft's", "Google's"], answer: 1 },
+            { q: "73. Analysts expected Nvidia's quarterly revenue to approach ___ billion.", type: "choice", options: ["82", "92", "102", "112"], answer: 1 },
+            { q: "74. The full-year earnings guidance was between ___ and ___ billion.", type: "choice", options: ["93, 95", "103, 105", "113, 115", "123, 125"], answer: 1 },
+            { q: "75. South Korea's Kospi fell ___.", type: "choice", options: ["0.5%", "0.9%", "1.7%", "2.7%"], answer: 3 },
+            { q: "76. Alibaba launched a ___ billion discounted share placement.", type: "choice", options: ["5.2", "7.2", "10.2", "12.2"], answer: 2 },
+            { q: "77. Alibaba's share placement was to support its ___ strategy.", type: "choice", options: ["AI", "Cloud", "Mobile", "Banking"], answer: 0 },
+            { q: "78. ___ shareholder return plan disappointed investors.", type: "choice", options: ["Samsung's", "Sony's", "Apple's", "Intel's"], answer: 0 },
+            { q: "79. Brent crude futures fell to ___ per barrel.", type: "choice", options: ["$85.09", "$88.08", "$92.08", "$95.08"], answer: 2 },
+            { q: "80. US crude rose to ___ per barrel.", type: "choice", options: ["$85.09", "$87.09", "$92.08", "$95.09"], answer: 0 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '美国对伊朗实施了制裁。'", type: "choice", options: ["The US imposed sanctions on Iran.", "The US impose sanctions Iran.", "The US imposing sanctions to Iran.", "The US imposed sanction Iran."], answer: 0 },
+            { q: "82. 'The rial hit a record low.' means the rial ___.", type: "choice", options: ["reached its lowest point ever", "reached its highest point", "stayed the same", "disappeared"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["He don't likes sanctions.", "He doesn't like sanctions.", "He not like sanctions.", "He doesn't likes sanctions."], answer: 1 },
+            { q: "84. 'Oil prices continued their decline.' means oil prices ___.", type: "choice", options: ["kept going up", "kept going down", "stopped changing", "started rising"], answer: 1 },
+            { q: "85. Choose the correct translation: '亚洲股市下跌。'", type: "choice", options: ["Asian stocks fell.", "Asian stocks rise.", "Asian market big.", "Asian shares up."], answer: 0 },
+            { q: "86. 'Nvidia's earnings report is expected on Wednesday.' In reported speech: He said Nvidia's earnings report ___ on Wednesday.", type: "choice", options: ["is expected", "was expected", "will be expected", "expected"], answer: 1 },
+            { q: "87. The passive voice of 'Analysts expect Nvidia's revenue to approach $92 billion' is ___.", type: "choice", options: ["Nvidia's revenue is expected to approach $92 billion", "Nvidia's revenue expects to approach $92 billion", "Nvidia's revenue was expected approach $92 billion", "Nvidia's revenue is expecting to approach $92 billion"], answer: 0 },
+            { q: "88. 'Not a single drop of oil will be exported.' This sentence uses the ___ voice.", type: "choice", options: ["active", "passive", "conditional", "imperative"], answer: 1 },
+            { q: "89. Choose the correct question tag: 'The sanctions target five areas, ___?'", type: "choice", options: ["don't they", "do they", "doesn't it", "isn't it"], answer: 0 },
+            { q: "90. 'Neither the US nor Iran ___ willing to compromise.' Fill in the blank.", type: "choice", options: ["is", "are", "were", "be"], answer: 0 },
+            { q: "91. Choose the correct translation: '油价继续下跌。'", type: "choice", options: ["Oil prices continued to fall.", "Oil prices continue up.", "Oil price stopped.", "Oil prices rising fast."], answer: 0 },
+            { q: "92. 'The rial hit a record low of 2.02 million rials per dollar.' 'record low' means ___.", type: "choice", options: ["a new high", "the lowest ever", "a normal level", "a small change"], answer: 1 },
+            { q: "93. 'He warned that if the economic war continues, oil exports will stop.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The sanctions was announced yesterday.", "The sanctions were announced yesterday.", "The sanctions is announced yesterday.", "The sanctions are announced yesterday."], answer: 1 },
+            { q: "95. '___ the US nor Iran wants war.' Fill in the blank.", type: "choice", options: ["Either", "Neither", "Both", "Either"], answer: 1 },
+            { q: "96. The indirect speech of 'He said, \"I am busy.\"' is ___.", type: "choice", options: ["He said he is busy.", "He said he was busy.", "He says he was busy.", "He said I was busy."], answer: 1 },
+            { q: "97. 'The 60-day negotiation window has expired.' 'expired' means ___.", type: "choice", options: ["started", "ended", "been extended", "been cancelled"], answer: 1 },
+            { q: "98. 'Brent crude futures fell 0.1% to $92.08 per barrel.' 'fell' is the ___ tense of 'fall'.", type: "choice", options: ["present", "past", "past participle", "gerund"], answer: 1 },
+            { q: "99. 'The sanctions target five key areas.' The subject of the sentence is ___.", type: "choice", options: ["sanctions", "target", "five", "areas"], answer: 0 },
+            { q: "100. 'I'm looking forward to ___ the earnings report.'", type: "choice", options: ["see", "seeing", "saw", "seen"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

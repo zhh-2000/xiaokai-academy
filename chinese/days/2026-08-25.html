@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月25日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月25日 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">使至塞上</div>
+                    <div class="author">唐 · 王维</div>
+                    <div class="content">
+                        单车欲问边，属国过居延。<br>
+                        征蓬出汉塞，归雁入胡天。<br>
+                        大漠孤烟直，长河落日圆。<br>
+                        萧关逢候骑，都护在燕然。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>问边</strong>：到边疆去视察。</p>
+                        <p>② <strong>属国</strong>：指附属国。居延：地名，在今甘肃。</p>
+                        <p>③ <strong>征蓬</strong>：随风远飞的蓬草，喻诗人自己。</p>
+                        <p>④ <strong>长河</strong>：黄河。</p>
+                        <p>⑤ <strong>萧关</strong>：古关名。候骑：骑马的侦察兵。</p>
+                        <p>⑥ <strong>都护</strong>：边疆的最高长官。</p>
+                        <br>
+                        <p><strong>译文：</strong>轻车简从去边疆慰问，经过居延属国。像蓬草一样飘出汉塞，像归雁一样飞入胡天。茫茫大漠中一缕烽烟笔直升起，滔滔黄河上一轮落日浑圆。在萧关遇到侦察的骑兵，得知都护正在燕然山前线。</p>
+                        <br>
+                        <p><strong>赏析：</strong>"大漠孤烟直，长河落日圆"被王国维誉为"千古壮观"的名句。一个"直"字，一个"圆"字，不仅准确地描绘了塞外奇特壮丽的风光，还巧妙地融入了诗人孤寂的情感。画面开阔，意境雄浑，充分体现了王维"诗中有画，画中有诗"的艺术特色。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>沙漠中的绿色希望</h3>
+                    <p>在毛乌素沙漠的深处，有一位名叫殷玉珍的妇女。她不是科学家，不是工程师，而是一个普通的农民。然而，就是这位普通的妇女，用三十多年的时间，在荒凉的沙漠中种下了数百万棵树，把一片黄沙变成了绿洲。</p>
+                    <p>1985年，殷玉珍嫁到了毛乌素沙漠腹地的一个小村庄。那时候，她每天推开门，看到的只有无边无际的黄沙。风沙吞噬了农田，掩埋了道路，甚至连房子都被沙子堆到了窗台。面对这样的环境，很多人选择了离开，但殷玉珍没有。</p>
+                    <p>她开始了种树。最初，她一个人扛着树苗，翻过一道又一道沙丘，把树苗种在沙地里。但是，风沙太大了，种下的树苗常常一夜之间就被连根拔起。殷玉珍没有灰心，她一遍遍地补种，一遍遍地浇水。她说："树活着，我就活着；树死了，我还种。"</p>
+                    <p>1999年，一位名叫罗纳德·萨科尔斯基的美国教师了解到殷玉珍的故事。他被她的精神深深打动，筹集了五千美元寄给了殷玉珍。这笔钱在当时不是小数目，殷玉珍用这笔钱购买了大量的树苗，和丈夫一起在沙漠中种下了五万多棵树。如今，这些树苗已经长成了参天大树。</p>
+                    <p>2000年，罗纳德亲自来到毛乌素沙漠，和殷玉珍一起种树。两位不同肤色、不同语言的人，在黄沙中种下了友谊的种子。此后，他们失去了联系。二十多年过去了，殷玉珍一直没有忘记这位远方的朋友。2026年5月，她通过网络发布了一段视频，寻找这位美国友人。在无数网友的帮助下，2026年8月23日，两人在内蒙古鄂尔多斯重逢。那一刻，两位老人相拥而泣，二十多年的牵挂化作了泪水。</p>
+                    <p>殷玉珍的故事告诉我们：一个人的力量也许很小，但只要坚持不懈，就能改变世界。她种下的不仅仅是树，更是希望，是信念，是人与自然和谐共生的美好愿景。罗纳德与殷玉珍的友谊，也证明了善良和执着可以跨越千山万水，连接不同国度和文化的人们。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>罕见"四台共舞"来袭 华南华东全力迎战</h3>
+                    <p>2026年8月下旬，西北太平洋和南海海域出现罕见的"四台共舞"局面。第18号超强台风"沙德尔"、第19号台风"紫檀"、第20号台风"简拉维"和第21号台风"艾莎尼"四个台风同时活跃，影响我国华南、华东多个省份。</p>
+                    <p>据中央气象台消息，"沙德尔"于8月24日晨已达超强台风级，正加速奔向我国。预计8月26日进入东海，8月27日可能在浙江、福建沿海登陆。浙江已启动海上防台风应急响应，沿海各地组织渔船回港避风、人员上岸避险。</p>
+                    <p>"紫檀"目前在北部湾海面"打转"，持续给广西、广东、海南带来风雨。广西南宁受"紫檀"及上游降雨影响，邕江水位持续上涨，江边公园及步道多处被淹。广西宁明县、防城港市上思县等地出现汛情，消防救援人员全力开展搜救疏散工作。</p>
+                    <p>"简拉维"已影响福建、浙江、台湾等地，预计8月24日在台湾海峡减弱消散。"艾莎尼"于8月24日上午生成，为热带风暴级。</p>
+                    <p>中央气象台首席预报员张玲分析指出，截至目前，今年西北太平洋和南海已生成20个台风，较历史同期偏多8个。这主要与当前的厄尔尼诺状态密切相关，在厄尔尼诺背景下，西太平洋台风活动更加活跃。</p>
+                    <p>另据新华社报道，同日8时26分，四川宜宾市长宁县发生4.7级地震，震源深度5公里。截至发稿时暂未收到人员伤亡报告。中国地震局已启动四级应急响应。</p>
+                    <div class="source">来源：综合央视新闻、新华社、澎湃新闻（2026年8月24日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-08-25';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-25',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《使至塞上》的作者是谁？", options: ["李白", "杜甫", "王维", "白居易"], answer: 2 },
+            { q: "2. \"单车欲问边\"中的\"问边\"是什么意思？", options: ["问路", "到边疆视察", "询问边境", "边问边走"], answer: 1 },
+            { q: "3. \"征蓬\"在诗中比喻什么？", options: ["出征的士兵", "随风飞舞的蓬草，喻诗人自己", "远行的马车", "归来的大雁"], answer: 1 },
+            { q: "4. \"大漠孤烟直\"中\"孤烟\"指的是什么？", options: ["炊烟", "烽烟", "雾气", "云彩"], answer: 1 },
+            { q: "5. \"长河\"在诗中指哪条河？", options: ["长江", "黄河", "渭河", "汉水"], answer: 1 },
+            { q: "6. \"都护在燕然\"中的\"都护\"是什么身份？", options: ["将军", "边疆最高长官", "皇帝", "商人"], answer: 1 },
+            { q: "7. \"大漠孤烟直，长河落日圆\"被谁誉为\"千古壮观\"？", options: ["李白", "苏轼", "王国维", "鲁迅"], answer: 2 },
+            { q: "8. 这首诗表达了诗人怎样的情感？", options: ["喜悦", "孤寂与壮阔", "悲伤", "愤怒"], answer: 1 },
+            { q: "9. 王维的诗被评价为\"诗中有画，画中有诗\"，这是谁说的？", options: ["李白", "杜甫", "苏轼", "王安石"], answer: 2 },
+            { q: "10. 以下哪个词最能概括本诗的画面特点？", options: ["凄凉", "开阔雄浑", "细腻柔美", "喧嚣热闹"], answer: 1 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 殷玉珍是哪里人？", options: ["北京", "上海", "毛乌素沙漠", "内蒙古鄂尔多斯"], answer: 2 },
+            { q: "12. 殷玉珍用多少年时间种树？", options: ["10年", "20年", "30多年", "50年"], answer: 2 },
+            { q: "13. 殷玉珍最初嫁到沙漠时，面对的是什么景象？", options: ["绿洲", "农田", "无边无际的黄沙", "森林"], answer: 2 },
+            { q: "14. 美国教师罗纳德筹集了多少钱帮助殷玉珍？", options: ["1000美元", "3000美元", "5000美元", "10000美元"], answer: 2 },
+            { q: "15. 用这笔钱种下了多少棵树？", options: ["5000棵", "1万棵", "5万多棵", "50万棵"], answer: 2 },
+            { q: "16. 罗纳德什么时候来中国和殷玉珍一起种树？", options: ["1999年", "2000年", "2026年", "2005年"], answer: 1 },
+            { q: "17. 殷玉珍和罗纳德什么时候重逢？", options: ["2026年5月", "2026年8月23日", "2026年8月24日", "2025年"], answer: 1 },
+            { q: "18. 殷玉珍在哪里发布寻找罗纳德的视频？", options: ["电视", "报纸", "网络", "广播"], answer: 2 },
+            { q: "19. \"树活着，我就活着；树死了，我还种。\"这句话体现了殷玉珍什么品质？", options: ["固执", "坚持不懈的精神", "盲目", "无奈"], answer: 1 },
+            { q: "20. 这篇文章的中心思想是什么？", options: ["种树很重要", "坚持可以改变世界，善良可以跨越国界", "沙漠很危险", "外国人都很好"], answer: 1 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 2026年8月下旬出现了几个台风同时活跃？", options: ["2个", "3个", "4个", "5个"], answer: 2 },
+            { q: "22. 第18号台风叫什么名字？", options: ["紫檀", "沙德尔", "简拉维", "艾莎尼"], answer: 1 },
+            { q: "23. \"沙德尔\"达到了什么级别？", options: ["热带风暴", "台风", "强台风", "超强台风"], answer: 3 },
+            { q: "24. \"沙德尔\"预计在哪里登陆？", options: ["广东广西", "浙江福建", "海南", "台湾"], answer: 1 },
+            { q: "25. \"紫檀\"在哪里\"打转\"？", options: ["东海", "南海", "北部湾", "台湾海峡"], answer: 2 },
+            { q: "26. 哪条河流因台风上涨？", options: ["珠江", "邕江", "长江", "闽江"], answer: 1 },
+            { q: "27. 哪个县发生了4.7级地震？", options: ["长宁县", "宁明县", "上思县", "宜宾县"], answer: 0 },
+            { q: "28. 今年台风比历史同期偏多几个？", options: ["3个", "5个", "8个", "10个"], answer: 2 },
+            { q: "29. 台风偏多主要与什么有关？", options: ["拉尼娜", "厄尔尼诺", "季风", "全球变暖"], answer: 1 },
+            { q: "30. 浙江启动了什么应急响应？", options: ["一级", "二级", "三级", "海上防台风"], answer: 3 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. \"单车欲问边\"的\"单车\"指什么？", options: ["一辆车", "轻车简从", "自行车", "马车"], answer: 1 },
+            { q: "2. \"归雁入胡天\"中的\"归雁\"比喻什么？", options: ["大雁", "诗人自己", "士兵", "旅客"], answer: 1 },
+            { q: "3. \"大漠孤烟直\"用了什么修辞手法？", options: ["比喻", "拟人", "对偶", "夸张"], answer: 2 },
+            { q: "4. 王维是什么朝代的诗人？", options: ["宋", "唐", "汉", "明"], answer: 1 },
+            { q: "5. \"萧关逢候骑\"的\"候骑\"指什么人？", options: ["候客", "骑马的侦察兵", "骑兵", "将军"], answer: 1 },
+            { q: "6. 殷玉珍在沙漠种树多少年？", options: ["10年", "20年", "30多年", "40年"], answer: 2 },
+            { q: "7. 罗纳德是哪个国家的教师？", options: ["英国", "法国", "美国", "加拿大"], answer: 2 },
+            { q: "8. 两人重逢在哪里？", options: ["北京", "鄂尔多斯", "上海", "西安"], answer: 1 },
+            { q: "9. 殷玉珍筹集到的善款种了多少棵树？", options: ["5万", "10万", "50万", "5000"], answer: 0 },
+            { q: "10. \"四台共舞\"出现在哪一年8月？", options: ["2024", "2025", "2026", "2027"], answer: 2 },
+            { q: "11. 下列哪个不是四个台风之一？", options: ["沙德尔", "紫檀", "梅花", "艾莎尼"], answer: 2 },
+            { q: "12. \"沙德尔\"预计在几号进入东海？", options: ["24日", "25日", "26日", "27日"], answer: 2 },
+            { q: "13. \"紫檀\"在哪个海域打转？", options: ["东海", "南海", "北部湾", "渤海"], answer: 2 },
+            { q: "14. 受台风影响哪条河水位上涨？", options: ["珠江", "邕江", "闽江", "钱塘江"], answer: 1 },
+            { q: "15. 四川宜宾发生几级地震？", options: ["4.0", "4.5", "4.7", "5.0"], answer: 2 },
+            { q: "16. 下列哪个字读音正确？\"属国过居延\"中\"属\"读", options: ["shǔ", "shǔ/zhǔ", "zhǔ", "shù"], answer: 2 },
+            { q: "17. \"征蓬出汉塞\"中\"征蓬\"的\"征\"意思是？", options: ["出征", "征收", "征召", "征途"], answer: 0 },
+            { q: "18. 殷玉珍被授予什么称号？", options: ["劳动模范", "全国劳动模范", "种树英雄", "治沙英雄"], answer: 1 },
+            { q: "19. 两人初次见面在沙漠是哪一年？", options: ["1999", "2000", "2001", "2026"], answer: 1 },
+            { q: "20. 两人失去联系多少年？", options: ["10多年", "15年", "20多年", "30年"], answer: 2 },
+            { q: "21. 下列词语中，字形完全正确的是：", options: ["震憾", "震撼", "振憾", "震憾"], answer: 1 },
+            { q: "22. \"坚持不懈\"的近义词是：", options: ["半途而废", "持之以恒", "浅尝辄止", "三天打鱼"], answer: 1 },
+            { q: "23. 下列句子没有语病的是：", options: ["通过这次活动，使我受到了教育", "通过这次活动，我受到了教育", "这次活动，使我受到了教育", "通过这次活动使我受教育"], answer: 1 },
+            { q: "24. \"大漠孤烟直\"与\"长河落日圆\"构成什么关系？", options: ["比喻", "对偶", "拟人", "排比"], answer: 1 },
+            { q: "25. 王维的诗与什么艺术相通？", options: ["音乐", "绘画", "书法", "雕塑"], answer: 1 },
+            { q: "26. 下列对\"属国\"解释正确的是：", options: ["属于国家", "附属国", "国家属性", "管理国家"], answer: 1 },
+            { q: "27. \"孤烟直\"的\"直\"字有何妙处？", options: ["写出烟的形状", "体现荒凉单调又挺拔", "形容烟很高", "形容烟很快"], answer: 1 },
+            { q: "28. \"落日圆\"的\"圆\"字有何妙处？", options: ["形容太阳大", "给人温暖浑圆之感，与孤烟的直线形成对比", "说明太阳很圆", "说明天色已晚"], answer: 1 },
+            { q: "29. 殷玉珍种树最初遇到的困难是：", options: ["没有钱", "树苗被风沙连根拔起", "没有水", "没有人帮忙"], answer: 1 },
+            { q: "30. 殷玉珍说\"树死了，我还种\"体现什么精神？", options: ["固执", "百折不挠", "愚蠢", "无奈"], answer: 1 },
+            { q: "31. \"四台共舞\"这一说法用了什么修辞？", options: ["比喻", "拟人", "夸张", "借代"], answer: 1 },
+            { q: "32. \"紫檀在北部湾打转\"中\"打转\"的意思是：", options: ["旋转", "原地徘徊不动", "跳舞", "转动"], answer: 1 },
+            { q: "33. \"渔船回港避风\"说明什么？", options: ["渔民怕风", "防台风的安全措施", "渔民回家了", "船坏了"], answer: 1 },
+            { q: "34. \"厄尔尼诺\"是什么现象？", options: ["文化", "气候", "历史", "地理"], answer: 1 },
+            { q: "35. \"全力迎战\"体现了什么态度？", options: ["害怕", "积极应对", "无奈", "消极"], answer: 1 },
+            { q: "36. 下列哪个成语最适合形容殷玉珍？", options: ["半途而废", "锲而不舍", "随遇而安", "得过且过"], answer: 1 },
+            { q: "37. \"相拥而泣\"中\"拥\"的意思是：", options: ["拥有", "拥抱", "拥挤", "拥护"], answer: 1 },
+            { q: "38. \"跨越千山万水\"的意思是：", options: ["爬山涉水", "克服巨大距离和困难", "旅行", "运动"], answer: 1 },
+            { q: "39. 下列对\"人uo自然和谐共生\"理解正确的是：", options: ["人征服自然", "人与自然和平共处", "人远离自然", "自然保护人"], answer: 1 },
+            { q: "40. 文章中\"参天大树\"形容树：", options: ["到了天上", "高大茂盛", "很多", "很老"], answer: 1 },
+            { q: "41. \"候骑\"的\"候\"意思是：", options: ["等待", "侦察、巡视", "时间", "问候"], answer: 1 },
+            { q: "42. 下列哪个不是王维的作品？", options: ["使至塞上", "鹿柴", "春望", "山居秋暝"], answer: 2 },
+            { q: "43. \"单车欲问边\"交代了什么？", options: ["出行方式轻简和目的", "交通工具", "路途远近", "心情"], answer: 0 },
+            { q: "44. 诗中\"归雁\"暗示诗人怎样的心情？", options: ["高兴回家", "被排挤出京的惆怅", "想念家乡", "向往边疆"], answer: 1 },
+            { q: "45. 殷玉珍的故事告诉我们什么道理？", options: ["种树能赚钱", "坚持可以改变世界", "沙漠可怕", "外国朋友好"], answer: 1 },
+            { q: "46. \"四台共舞\"给我们的启示是：", options: ["台风不可怕", "要重视自然灾害防范", "少出门", "台风很好看"], answer: 1 },
+            { q: "47. 罗纳德和殷玉珍的友谊说明：", options: ["有钱就能交朋友", "善良和执着能跨越国界", "外国人好", "种树能交朋友"], answer: 1 },
+            { q: "48. 下列句中加点词语使用不当的是：", options: ["殷玉珍锲而不舍地种树", "台风来势汹汹，令人震撼", "他坚持不懈，终于成功", "面对困难，他浅尝辄止，终获成功"], answer: 3 },
+            { q: "49. \"萧关逢候骑\"在诗中的作用是：", options: ["交代行踪和目的地", "写景", "抒情", "议论"], answer: 0 },
+            { q: "50. 对全文理解最准确的一项是：", options: ["殷玉珍只是种树", "殷玉珍用坚持改变环境，用善良连接世界", "罗纳德是英雄", "种树很简单"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月30日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月30日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>China Achieves First Two-Way Laser Communication Between Earth and Moon</h3>
+                    <p>On August 29, 2026, China announced a major breakthrough in space technology: the country had successfully established a two-way laser communication link over a distance of more than 400,000 kilometers between Earth and the moon. This achievement marks China's first two-way high-speed laser communication in cislunar space, transitioning from near-Earth orbit to the Earth-moon realm.</p>
+                    <p>The breakthrough was reported by the Science and Technology Daily, citing the Technology and Engineering Center for Space Utilization under the Chinese Academy of Sciences. The new laser communication system overcame technical bottlenecks including long-distance interference, dynamic tracking, and signal attenuation in lunar-Earth communication, achieving stable and efficient two-way data transmission across the Earth-moon orbital distance.</p>
+                    <p>Unlike traditional radio communication, the laser system offers significantly higher bandwidth and faster transmission speeds. For example, transmitting an 8K-resolution photo of the lunar surface previously took about five minutes using radio signals, but the new laser system can accomplish the same task in just twelve seconds. This dramatic improvement will be crucial for China's future crewed lunar landings, the construction of lunar research stations, and deep-space exploration missions.</p>
+                    <p>The achievement drew comparisons to the ancient Chinese poem "Viewing the Sea" by Cao Cao, written in the year 207 AD, which contains the famous lines: "The sun and moon's journey seems to emerge from it; the Milky Way's brilliance seems to arise from within it." Nearly 1,800 years later, Chinese scientists have turned this poetic imagination into technological reality, connecting the Earth and the moon with a beam of light.</p>
+                    <span class="source">Source: China Daily, Science and Technology Daily, 2026-08-29</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>APEC Senior Officials' Meeting Held in Dalian, Xizang Rescue Efforts Continue</h3>
+                    <p>The Third Senior Officials' Meeting of the 2026 Asia-Pacific Economic Cooperation (APEC) was held in Dalian, Liaoning Province, from August 27 to 28, 2026. Vice Foreign Minister Ma Zhaoxu attended the meeting and delivered a speech, stating that APEC's "China Year" has provided an important platform for economies to engage in friendly consultations and bridge differences.</p>
+                    <p>The meeting reviewed and summarized the work of APEC's "China Year" and prepared for the APEC Economic Leaders' Meeting scheduled for November. Participants from various economies expressed their desire to deepen cooperation with China and contribute to building an Asia-Pacific community.</p>
+                    <p>Meanwhile, rescue and relief efforts continued in the Xizang autonomous region following the devastating mudslide that struck the Gyirong border port on August 26. As of 1:00 a.m. on August 29, two villagers from Resuo Village had been rescued. China Anneng, a State-owned engineering and rescue enterprise, was working to reopen a two-kilometer road leading to the Gyirong port, providing crucial access for subsequent rescue operations.</p>
+                    <p>President Xi Jinping chaired a meeting of the Political Bureau of the CPC Central Committee to study and deploy rescue operations for the Gyirong mudslide disaster. The meeting emphasized the extreme difficulty of the rescue due to the high-altitude, cold-plateau terrain, steep valleys, and numerous glacier and geological hazard risks in the surrounding area.</p>
+                    <p>In addition, three departments jointly issued a notice to improve the commercial housing sales system, promoting the orderly implementation of pre-sale housing. The National Development and Reform Commission also allocated 100 million yuan in emergency funds to support post-disaster recovery in Zhejiang and Fujian provinces following typhoon damage.</p>
+                    <span class="source">Source: China Daily, Xinhua, 2026-08-29</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-08-30';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-30',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. When did China announce the two-way laser communication breakthrough?", options: ["August 27, 2026", "August 28, 2026", "August 29, 2026", "August 30, 2026"], answer: 2 },
+            { q: "2. Over what distance was the laser communication link established?", options: ["More than 300,000 km", "More than 400,000 km", "More than 500,000 km", "More than 600,000 km"], answer: 1 },
+            { q: "3. This achievement marks China's first two-way high-speed laser communication in ___.", options: ["near-Earth orbit", "cislunar space", "deep space", "lunar orbit"], answer: 1 },
+            { q: "4. Which institution reported the breakthrough?", options: ["The National Space Administration", "Science and Technology Daily", "Xinhua News Agency", "China Daily"], answer: 1 },
+            { q: "5. The center responsible for the achievement is under which organization?", options: ["Chinese Academy of Sciences", "Chinese Academy of Engineering", "National Space Administration", "Ministry of Science"], answer: 0 },
+            { q: "6. How long did transmitting an 8K lunar photo take with radio signals?", options: ["About 3 minutes", "About 5 minutes", "About 8 minutes", "About 10 minutes"], answer: 1 },
+            { q: "7. How long does the new laser system take for the same 8K photo?", options: ["5 seconds", "8 seconds", "12 seconds", "20 seconds"], answer: 2 },
+            { q: "8. The ancient poem 'Viewing the Sea' was written by whom?", options: ["Cao Pi", "Cao Cao", "Cao Zhi", "Li Bai"], answer: 1 },
+            { q: "9. In what year was 'Viewing the Sea' written?", options: ["207 AD", "208 AD", "220 AD", "196 AD"], answer: 0 },
+            { q: "10. How many years passed between the poem and the laser achievement?", options: ["About 1,000 years", "About 1,500 years", "About 1,800 years", "About 2,000 years"], answer: 2 }
+        ];
+
+        const reading2Data = [
+            { q: "11. Where was the APEC Third Senior Officials' Meeting held?", options: ["Beijing", "Dalian", "Shanghai", "Shenzhen"], answer: 1 },
+            { q: "12. When was the APEC meeting held?", options: ["August 25-26", "August 27-28", "August 29-30", "August 30-31"], answer: 1 },
+            { q: "13. Who attended the APEC meeting and delivered a speech?", options: ["Foreign Minister", "Vice Foreign Minister Ma Zhaoxu", "Premier", "President Xi"], answer: 1 },
+            { q: "14. The APEC Economic Leaders' Meeting is scheduled for which month?", options: ["September", "October", "November", "December"], answer: 2 },
+            { q: "15. When did the mudslide strike the Gyirong border port?", options: ["August 24", "August 25", "August 26", "August 27"], answer: 2 },
+            { q: "16. As of August 29, how many villagers had been rescued?", options: ["One", "Two", "Five", "Ten"], answer: 1 },
+            { q: "17. What is China Anneng working to reopen?", options: ["A bridge", "A two-kilometer road", "A tunnel", "A port"], answer: 1 },
+            { q: "18. Who chaired the Political Bureau meeting about the rescue?", options: ["Premier Li Qiang", "President Xi Jinping", "A provincial governor", "The Foreign Minister"], answer: 1 },
+            { q: "19. How much did the NDRRC allocate for typhoon recovery?", options: ["50 million yuan", "100 million yuan", "200 million yuan", "500 million yuan"], answer: 1 },
+            { q: "20. Which provinces received emergency funds for typhoon recovery?", options: ["Zhejiang and Fujian", "Guangdong and Guangxi", "Jiangsu and Anhui", "Shandong and Hebei"], answer: 0 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "breakthrough", phonetic: "/ˈbreɪkθruː/", meaning: "n. 突破；重大进展" },
+            { word: "laser", phonetic: "/ˈleɪzər/", meaning: "n. 激光" },
+            { word: "communication", phonetic: "/kəˌmjuːnɪˈkeɪʃən/", meaning: "n. 通信；交流" },
+            { word: "cislunar", phonetic: "/sɪsˈluːnər/", meaning: "adj. 地月之间的" },
+            { word: "orbit", phonetic: "/ˈɔːrbɪt/", meaning: "n./v. 轨道；环绕" },
+            { word: "bandwidth", phonetic: "/ˈbændwɪdθ/", meaning: "n. 带宽" },
+            { word: "transmission", phonetic: "/trænsˈmɪʃən/", meaning: "n. 传输；传送" },
+            { word: "attenuation", phonetic: "/əˌtɛnjuˈeɪʃən/", meaning: "n. 衰减；减弱" },
+            { word: "interference", phonetic: "/ˌɪntərˈfɪərəns/", meaning: "n. 干扰；干涉" },
+            { word: "dynamic", phonetic: "/daɪˈnæmɪk/", meaning: "adj. 动态的；动力的" },
+            { word: "crucial", phonetic: "/ˈkruːʃəl/", meaning: "adj. 关键的；至关重要的" },
+            { word: "crewed", phonetic: "/kruːd/", meaning: "adj. 载人的" },
+            { word: "lunar", phonetic: "/ˈluːnər/", meaning: "adj. 月球的；月亮的" },
+            { word: "deep-space", phonetic: "/diːp speɪs/", meaning: "adj. 深空的" },
+            { word: "brilliance", phonetic: "/ˈbrɪliəns/", meaning: "n. 灿烂；光辉" },
+            { word: "devastating", phonetic: "/ˈdɛvəsteɪtɪŋ/", meaning: "adj. 毁灭性的" },
+            { word: "mudslide", phonetic: "/ˈmʌdslaɪd/", meaning: "n. 泥石流" },
+            { word: "enterprise", phonetic: "/ˈɛntərpraɪz/", meaning: "n. 企业；事业" },
+            { word: "allocate", phonetic: "/ˈæləkeɪt/", meaning: "v. 分配；拨给" },
+            { word: "emergency", phonetic: "/ɪˈmɜːrdʒənsi/", meaning: "n. 紧急情况；突发事件" }
+        ];
+
+        const oldVocabData = [
+            { word: "achieve", phonetic: "/əˈtʃiːv/", meaning: "v. 实现；达到" },
+            { word: "success", phonetic: "/səkˈsɛs/", meaning: "n. 成功" },
+            { word: "distance", phonetic: "/ˈdɪstəns/", meaning: "n. 距离" },
+            { word: "moon", phonetic: "/muːn/", meaning: "n. 月亮" },
+            { word: "earth", phonetic: "/ɜːrθ/", meaning: "n. 地球" },
+            { word: "space", phonetic: "/speɪs/", meaning: "n. 空间；太空" },
+            { word: "technology", phonetic: "/tɛkˈnɒlədʒi/", meaning: "n. 技术" },
+            { word: "science", phonetic: "/ˈsaɪəns/", meaning: "n. 科学" },
+            { word: "research", phonetic: "/rɪˈsɜːrtʃ/", meaning: "n./v. 研究" },
+            { word: "station", phonetic: "/ˈsteɪʃən/", meaning: "n. 站；站点" },
+            { word: "photo", phonetic: "/ˈfoʊtoʊ/", meaning: "n. 照片" },
+            { word: "speed", phonetic: "/spiːd/", meaning: "n. 速度" },
+            { word: "fast", phonetic: "/fɑːst/", meaning: "adj./adv. 快的(地)" },
+            { word: "slow", phonetic: "/sloʊ/", meaning: "adj./adv. 慢的(地)" },
+            { word: "poem", phonetic: "/ˈpoʊəm/", meaning: "n. 诗歌" },
+            { word: "ancient", phonetic: "/ˈeɪnʃənt/", meaning: "adj. 古老的；古代的" },
+            { word: "modern", phonetic: "/ˈmɒdərn/", meaning: "adj. 现代的" },
+            { word: "meeting", phonetic: "/ˈmiːtɪŋ/", meaning: "n. 会议" },
+            { word: "official", phonetic: "/əˈfɪʃəl/", meaning: "n./adj. 官员；官方的" },
+            { word: "province", phonetic: "/ˈprɒvɪns/", meaning: "n. 省" },
+            { word: "rescue", phonetic: "/ˈrɛskjuː/", meaning: "n./v. 救援" },
+            { word: "village", phonetic: "/ˈvɪlɪdʒ/", meaning: "n. 村庄" },
+            { word: "road", phonetic: "/roʊd/", meaning: "n. 道路" },
+            { word: "president", phonetic: "/ˈprɛzɪdənt/", meaning: "n. 总统；主席" },
+            { word: "funds", phonetic: "/fʌndz/", meaning: "n. 资金；基金" },
+            { word: "system", phonetic: "/ˈsɪstəm/", meaning: "n. 系统" },
+            { word: "housing", phonetic: "/ˈhaʊzɪŋ/", meaning: "n. 住房" },
+            { word: "disaster", phonetic: "/dɪˈzæstər/", meaning: "n. 灾难" },
+            { word: "support", phonetic: "/səˈpɔːrt/", meaning: "n./v. 支持" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. China ___ a two-way laser communication link over 400,000 km.", type: "choice", options: ["establish", "established", "establishes", "is establishing"], answer: 1 },
+            { q: "2. This achievement ___ China's first two-way high-speed laser communication in cislunar space.", type: "choice", options: ["mark", "marks", "marked", "marking"], answer: 1 },
+            { q: "3. The breakthrough ___ by the Science and Technology Daily.", type: "choice", options: ["report", "reports", "was reported", "reporting"], answer: 2 },
+            { q: "4. The laser system ___ traditional radio communication in bandwidth.", type: "choice", options: ["surpass", "surpasses", "surpassed", "surpassing"], answer: 1 },
+            { q: "5. Transmitting an 8K photo ___ about five minutes with radio signals.", type: "choice", options: ["take", "takes", "took", "taking"], answer: 2 },
+            { q: "6. The new system can ___ the same task in just twelve seconds.", type: "choice", options: ["accomplish", "accomplished", "accomplishes", "accomplishing"], answer: 0 },
+            { q: "7. The APEC meeting ___ in Dalian from August 27 to 28.", type: "choice", options: ["hold", "held", "was held", "holds"], answer: 2 },
+            { q: "8. Vice Foreign Minister Ma Zhaoxu ___ a speech at the meeting.", type: "choice", options: ["deliver", "delivered", "delivers", "delivering"], answer: 1 },
+            { q: "9. Rescue efforts ___ in the Xizang autonomous region.", type: "choice", options: ["continue", "continued", "continues", "continuing"], answer: 0 },
+            { q: "10. Two villagers ___ as of August 29.", type: "choice", options: ["rescue", "rescued", "were rescued", "rescues"], answer: 2 },
+            { q: "11. President Xi Jinping ___ a meeting of the Political Bureau.", type: "choice", options: ["chair", "chaired", "chairs", "chairing"], answer: 1 },
+            { q: "12. The NDRCC ___ 100 million yuan in emergency funds.", type: "choice", options: ["allocate", "allocated", "allocates", "allocating"], answer: 1 },
+            { q: "13. The funds ___ to support post-disaster recovery.", type: "choice", options: ["use", "used", "were used", "uses"], answer: 2 },
+            { q: "14. The poem 'Viewing the Sea' ___ by Cao Cao in 207 AD.", type: "choice", options: ["write", "wrote", "was written", "writes"], answer: 2 },
+            { q: "15. Nearly 1,800 years ___, Chinese scientists turned imagination into reality.", type: "choice", options: ["late", "later", "latter", "lately"], answer: 1 },
+            { q: "16. The laser beam ___ precisely at a target 400,000 km away.", type: "choice", options: ["point", "points", "pointed", "is pointed"], answer: 3 },
+            { q: "17. The team ___ technical bottlenecks in lunar-Earth communication.", type: "choice", options: ["overcome", "overcame", "overcomes", "overcoming"], answer: 1 },
+            { q: "18. China Anneng ___ to reopen a two-kilometer road.", type: "choice", options: ["work", "works", "worked", "was working"], answer: 3 },
+            { q: "19. Three departments ___ a notice to improve the housing sales system.", type: "choice", options: ["issue", "issued", "issues", "issuing"], answer: 1 },
+            { q: "20. Participants ___ to deepen cooperation with China.", type: "choice", options: ["express", "expressed", "expresses", "expressing"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. A ___ is a major progress or discovery.", type: "choice", options: ["breakthrough", "setback", "failure", "problem"], answer: 0 },
+            { q: "22. A ___ is a device that produces a narrow beam of light.", type: "choice", options: ["laser", "radio", "lamp", "torch"], answer: 0 },
+            { q: "23. ___ refers to the exchange of information.", type: "choice", options: ["Communication", "Competition", "Confusion", "Construction"], answer: 0 },
+            { q: "24. ___ means relating to the space between Earth and the moon.", type: "choice", options: ["Cislunar", "Lunar", "Solar", "Stellar"], answer: 0 },
+            { q: "25. The path of an object around a star is called its ___.", type: "choice", options: ["orbit", "route", "track", "path"], answer: 0 },
+            { q: "26. ___ is the capacity for data transmission.", type: "choice", options: ["Bandwidth", "Speed", "Width", "Length"], answer: 0 },
+            { q: "27. The act of sending data is called ___.", type: "choice", options: ["transmission", "reception", "creation", "deletion"], answer: 0 },
+            { q: "28. ___ means the weakening of a signal.", type: "choice", options: ["Attenuation", "Amplification", "Strengthening", "Boost"], answer: 0 },
+            { q: "29. ___ is unwanted disturbance in a signal.", type: "choice", options: ["Interference", "Clarity", "Signal", "Help"], answer: 0 },
+            { q: "30. ___ means changing or active rather than static.", type: "choice", options: ["Dynamic", "Static", "Fixed", "Still"], answer: 0 },
+            { q: "31. Something ___ is extremely important or necessary.", type: "choice", options: ["crucial", "minor", "trivial", "optional"], answer: 0 },
+            { q: "32. A ___ mission has human astronauts on board.", type: "choice", options: ["crewed", "unmanned", "automatic", "remote"], answer: 0 },
+            { q: "33. ___ means relating to the moon.", type: "choice", options: ["Lunar", "Solar", "Earthly", "Stellar"], answer: 0 },
+            { q: "34. ___ exploration refers to traveling far beyond Earth.", type: "choice", options: ["Deep-space", "Near-Earth", "Ground", "Surface"], answer: 0 },
+            { q: "35. ___ means great brightness or splendor.", type: "choice", options: ["Brilliance", "Darkness", "Dimness", "Shadow"], answer: 0 },
+            { q: "36. Something ___ causes great damage.", type: "choice", options: ["devastating", "minor", "helpful", "gentle"], answer: 0 },
+            { q: "37. A ___ is a landslide of wet earth flowing downhill.", type: "choice", options: ["mudslide", "rainbow", "breeze", "earthquake"], answer: 0 },
+            { q: "38. An ___ is a business organization.", type: "choice", options: ["enterprise", "accident", "idea", "object"], answer: 0 },
+            { q: "39. To ___ means to distribute or assign resources.", type: "choice", options: ["allocate", "waste", "hide", "lose"], answer: 0 },
+            { q: "40. An ___ is an unexpected and dangerous situation.", type: "choice", options: ["emergency", "routine", "plan", "schedule"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. The breakthrough was reported ___ Science and Technology Daily.", type: "choice", options: ["by", "in", "at", "for"], answer: 0 },
+            { q: "42. The system overcame bottlenecks ___ long-distance interference.", type: "choice", options: ["including", "excluding", "besides", "except"], answer: 0 },
+            { q: "43. The laser system is different ___ traditional radio communication.", type: "choice", options: ["from", "with", "to", "of"], answer: 0 },
+            { q: "44. This improvement will be crucial ___ future missions.", type: "choice", options: ["for", "of", "at", "by"], answer: 0 },
+            { q: "45. The poem contains the famous ___ 'the Milky Way's brilliance'.", type: "choice", options: ["lines", "words", "letters", "pages"], answer: 0 },
+            { q: "46. Scientists turned imagination ___ technological reality.", type: "choice", options: ["into", "to", "in", "at"], answer: 0 },
+            { q: "47. The meeting was held ___ August 27 to 28.", type: "choice", options: ["from", "between", "at", "in"], answer: 0 },
+            { q: "48. Participants expressed their desire to ___ cooperation.", type: "choice", options: ["deepen", "shallow", "stop", "reduce"], answer: 0 },
+            { q: "49. The mudslide struck the port ___ August 26.", type: "choice", options: ["on", "in", "at", "by"], answer: 0 },
+            { q: "50. Two villagers had been rescued ___ 1:00 a.m.", type: "choice", options: ["as of", "by", "at", "in"], answer: 0 },
+            { q: "51. China Anneng was working ___ reopen the road.", type: "choice", options: ["to", "for", "at", "in"], answer: 0 },
+            { q: "52. The meeting emphasized the extreme difficulty ___ the rescue.", type: "choice", options: ["of", "for", "at", "with"], answer: 0 },
+            { q: "53. Three departments jointly issued a notice ___ improve the system.", type: "choice", options: ["to", "for", "at", "with"], answer: 0 },
+            { q: "54. The funds were allocated to support recovery ___ the typhoon.", type: "choice", options: ["after", "before", "during", "without"], answer: 0 },
+            { q: "55. ___ a great achievement it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 0 },
+            { q: "56. The system achieved ___ efficient data transmission.", type: "choice", options: ["stable and", "stably and", "stable, but", "stably, but"], answer: 0 },
+            { q: "57. The laser beam is ___ precise ___ it can hit a target 400,000 km away.", type: "choice", options: ["so; that", "too; to", "very; that", "such; that"], answer: 0 },
+            { q: "58. ___ the difficulty, the rescue team continued working.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "59. The meeting, ___ was held in Dalian, reviewed APEC's work.", type: "choice", options: ["that", "which", "who", "what"], answer: 1 },
+            { q: "60. It is ___ most important breakthrough this year.", type: "choice", options: ["the", "a", "an", "/"], answer: 0 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. When did China announce the laser communication breakthrough?", type: "choice", options: ["August 27", "August 28", "August 29", "August 30"], answer: 2 },
+            { q: "62. Over what distance was the link established?", type: "choice", options: ["300,000 km", "400,000 km", "500,000 km", "600,000 km"], answer: 1 },
+            { q: "63. China's first two-way high-speed laser communication was in ___ space.", type: "choice", options: ["near-Earth", "cislunar", "deep", "lunar"], answer: 1 },
+            { q: "64. Which daily newspaper reported the breakthrough?", type: "choice", options: ["China Daily", "Science and Technology Daily", "Xinhua", "People's Daily"], answer: 1 },
+            { q: "65. The center is under which academy?", type: "choice", options: ["Chinese Academy of Sciences", "Chinese Academy of Engineering", "National Academy", "Space Academy"], answer: 0 },
+            { q: "66. 8K photo with radio took about ___ minutes.", type: "choice", options: ["3", "5", "8", "10"], answer: 1 },
+            { q: "67. 8K photo with laser takes ___ seconds.", type: "choice", options: ["5", "8", "12", "20"], answer: 2 },
+            { q: "68. 'Viewing the Sea' was written by ___ in 207 AD.", type: "choice", options: ["Cao Pi", "Cao Cao", "Cao Zhi", "Li Bai"], answer: 1 },
+            { q: "69. The APEC meeting was held in ___.", type: "choice", options: ["Beijing", "Dalian", "Shanghai", "Shenzhen"], answer: 1 },
+            { q: "70. Who delivered a speech at the APEC meeting?", type: "choice", options: ["Foreign Minister", "Vice Foreign Minister Ma Zhaoxu", "Premier", "President"], answer: 1 },
+            { q: "71. The APEC Leaders' Meeting is scheduled for ___.", type: "choice", options: ["September", "October", "November", "December"], answer: 2 },
+            { q: "72. The mudslide hit Gyirong on ___.", type: "choice", options: ["August 24", "August 25", "August 26", "August 27"], answer: 2 },
+            { q: "73. How many villagers were rescued by August 29?", type: "choice", options: ["One", "Two", "Five", "Ten"], answer: 1 },
+            { q: "74. China Anneng was reopening a ___ road.", type: "choice", options: ["1-km", "2-km", "5-km", "10-km"], answer: 1 },
+            { q: "75. Who chaired the Political Bureau meeting?", type: "choice", options: ["Premier Li", "President Xi", "A governor", "The Minister"], answer: 1 },
+            { q: "76. The NDRCC allocated ___ million yuan.", type: "choice", options: ["50", "100", "200", "500"], answer: 1 },
+            { q: "77. Typhoon recovery funds went to ___ and Fujian.", type: "choice", options: ["Zhejiang", "Guangdong", "Jiangsu", "Shandong"], answer: 0 },
+            { q: "78. The poem describes the sun and moon emerging from ___.", type: "choice", options: ["the sea", "the sky", "the mountain", "the clouds"], answer: 0 },
+            { q: "79. About ___ years passed between the poem and the laser achievement.", type: "choice", options: ["1,000", "1,500", "1,800", "2,000"], answer: 2 },
+            { q: "80. The laser system offers higher ___ than radio.", type: "choice", options: ["bandwidth", "cost", "weight", "size"], answer: 0 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '中国首次实现了地月双向高速激光通信。'", type: "choice", options: ["China achieved its first two-way high-speed laser communication between Earth and the moon.", "China first laser communication Earth moon.", "China achieve first laser communication.", "China achieving laser communication Earth moon first."], answer: 0 },
+            { q: "82. 'The system overcame technical bottlenecks.' 'overcame' means ___.", type: "choice", options: ["defeated", "created", "ignored", "avoided"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["The meeting was held in Dalian from August 27 to 28.", "The meeting held in Dalian from August 27 to 28.", "The meeting is hold in Dalian August 27 to 28.", "The meeting were held Dalian August 27 to 28."], answer: 0 },
+            { q: "84. 'The funds were allocated to support recovery.' 'allocated' means ___.", type: "choice", options: ["distributed", "collected", "hidden", "wasted"], answer: 0 },
+            { q: "85. Choose the correct translation: '习近平主席主持了政治局会议。'", type: "choice", options: ["President Xi Jinping chaired a meeting of the Political Bureau.", "President Xi Jinping chair meeting Political Bureau.", "President Xi Jinping chaired of Political Bureau meeting.", "President Xi Jinping meeting chair Political Bureau."], answer: 0 },
+            { q: "86. 'Two villagers had been rescued.' This is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The passive voice of 'The team overcame bottlenecks' is ___.", type: "choice", options: ["Bottlenecks were overcome by the team", "Bottlenecks overcame the team", "Bottlenecks have overcome the team", "Bottlenecks is overcome by team"], answer: 0 },
+            { q: "88. 'The laser system offers higher bandwidth.' The subject is ___.", type: "choice", options: ["The laser system", "offers", "higher", "bandwidth"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The breakthrough is remarkable, ___?'", type: "choice", options: ["isn't it", "is it", "doesn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Neither the distance ___ the difficulty stopped the team.' Fill in the blank.", type: "choice", options: ["or", "nor", "and", "but"], answer: 1 },
+            { q: "91. Choose the correct translation: '科学家们将想象变成了现实。'", type: "choice", options: ["Scientists turned imagination into reality.", "Scientists turn imagination reality.", "Scientists turning imagination to real.", "Scientists imagination turned reality."], answer: 0 },
+            { q: "92. 'all-out rescue efforts' means ___.", type: "choice", options: ["complete and full rescue efforts", "half-hearted tries", "small attempts", "no effort"], answer: 0 },
+            { q: "93. 'If the laser beam misses the target, communication fails.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The meeting reviewed the work of APEC's China Year.", "The meeting review work APEC China Year.", "The meeting reviewed of APEC China Year work.", "The meeting is reviewing APEC work China Year."], answer: 0 },
+            { q: "95. '___ the extreme difficulty, rescue efforts continued.' Fill in the blank.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "96. The indirect speech of 'He said, \"The system works.\"' is ___.", type: "choice", options: ["He said the system worked.", "He said the system works.", "He says the system worked.", "He said I worked."], answer: 0 },
+            { q: "97. 'Participants expressed their desire.' 'expressed' means ___.", type: "choice", options: ["stated", "hid", "denied", "cancelled"], answer: 0 },
+            { q: "98. 'The funds have been allocated.' 'have been allocated' is ___ tense.", type: "choice", options: ["present perfect passive", "past", "future", "present"], answer: 0 },
+            { q: "99. 'The rescue team continued working.' The verb is ___.", type: "choice", options: ["continued", "the", "rescue", "team"], answer: 0 },
+            { q: "100. 'I'm looking forward to ___ the new system.'", type: "choice", options: ["using", "use", "used", "uses"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

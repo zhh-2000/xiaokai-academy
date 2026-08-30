@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'SimSun', serif;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #e74c3c;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 10px;
+            color: #e74c3c;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .back-link:hover {
+            background: #f5f5f5;
+        }
+        
+        .day-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .day-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(231, 76, 60, 0.2);
+        }
+        
+        .day-card.new {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+        
+        .day-card.new .day-title {
+            color: white;
+        }
+        
+        .day-card.new .day-date {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .day-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .day-date {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        
+        .day-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .content-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        .day-card.new .content-tag {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .new-badge {
+            background: #ff5722;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .stats-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .stats-title {
+            color: #e74c3c;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .day-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> 返回首页
+        </a>
+        
+        <div class="header">
+            <h1><i class="fas fa-pen-fancy"></i> 语文学习</h1>
+            <p>古诗词 · 现代文 · 时文阅读</p>
+        </div>
+        
+        <div class="day-grid">
+            <a href="days/2026-08-31.html" class="day-card new">
+                <div class="day-title">8月31日学习内容 <span class="new-badge">NEW</span></div>
+                <div class="day-date">2026年8月31日 星期一</div>
+                <div class="day-content">
+                    <span class="content-tag">使至塞上</span>
+                    <span class="content-tag">闻王昌龄左迁龙标遥有此寄</span>
+                    <span class="content-tag">大漠孤烟与明月寄心：从边塞诗到上合峰会</span>
+                    <span class="content-tag">上合峰会+吉隆泥石流+海警巡逻</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-30.html" class="day-card">
+                <div class="day-title">8月30日学习内容</div>
+                <div class="day-date">2026年8月30日 星期日</div>
+                <div class="day-content">
+                    <span class="content-tag">观沧海</span>
+                    <span class="content-tag">次北固山下</span>
+                    <span class="content-tag">星辰大海：从观沧海到激光通信</span>
+                    <span class="content-tag">地月激光+吉隆救援+APEC大连</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-29.html" class="day-card">
+                <div class="day-title">8月29日学习内容</div>
+                <div class="day-date">2026年8月29日 星期六</div>
+                <div class="day-content">
+                    <span class="content-tag">迢迢牵牛星</span>
+                    <span class="content-tag">鹊桥仙·纤云弄巧</span>
+                    <span class="content-tag">七夕节文化传承</span>
+                    <span class="content-tag">台风沙德尔+上合峰会</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-28.html" class="day-card">
+                <div class="day-title">8月28日学习内容</div>
+                <div class="day-date">2026年8月28日 星期五</div>
+                <div class="day-content">
+                    <span class="content-tag">泊秦淮</span>
+                    <span class="content-tag">过零丁洋</span>
+                    <span class="content-tag">快递业数字变革</span>
+                    <span class="content-tag">吉隆泥石流+台风沙德尔</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-27.html" class="day-card">
+                <div class="day-title">8月27日学习内容</div>
+                <div class="day-date">2026年8月27日 星期四</div>
+                <div class="day-content">
+                    <span class="content-tag">闻王昌龄左迁龙标遥有此寄</span>
+                    <span class="content-tag">夜雨寄北</span>
+                    <span class="content-tag">科技自立自强</span>
+                    <span class="content-tag">上合峰会+AI标准</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+
+            <a href="days/2026-08-25.html" class="day-card">
+                <div class="day-title">8月25日学习内容</div>
+                <div class="day-date">2026年8月25日 星期二</div>
+                <div class="day-content">
+                    <span class="content-tag">使至塞上</span>
+                    <span class="content-tag">沙漠中的绿色希望</span>
+                    <span class="content-tag">四台共舞+宜宾地震</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-24.html" class="day-card">
+                <div class="day-title">8月24日学习内容</div>
+                <div class="day-date">2026年8月24日 星期一</div>
+                <div class="day-content">
+                    <span class="content-tag">使至塞上</span>
+                    <span class="content-tag">黄鹤楼</span>
+                    <span class="content-tag">落花生/从百草园到三味书屋</span>
+                    <span class="content-tag">俄罗斯无人机袭击</span>
+                    <span class="content-tag">台风紫檀救灾</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-23.html" class="day-card">
+                <div class="day-title">8月23日学习内容</div>
+                <div class="day-date">2026年8月23日 星期六</div>
+                <div class="day-content">
+                    <span class="content-tag">饮酒·其五</span>
+                    <span class="content-tag">行路难·其一</span>
+                    <span class="content-tag">紫藤萝瀑布/雨巷</span>
+                    <span class="content-tag">台风暴雨双预警</span>
+                    <span class="content-tag">中国考古机构赴南美</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            <a href="days/2026-08-22.html" class="day-card">
+                <div class="day-title">8月22日学习内容</div>
+                <div class="day-date">2026年8月22日 星期五</div>
+                <div class="day-content">
+                    <span class="content-tag">钱塘湖春行</span>
+                    <span class="content-tag">破阵子·为陈同甫赋壮词</span>
+                    <span class="content-tag">春/济南的冬天</span>
+                    <span class="content-tag">黄岩岛领空事件</span>
+                    <span class="content-tag">中瑞自贸协定升级</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-21.html" class="day-card">
+                <div class="day-title">8月21日学习内容</div>
+                <div class="day-date">2026年8月21日 星期四</div>
+                <div class="day-content">
+                    <span class="content-tag">酬乐天扬州初逢席上见赠</span>
+                    <span class="content-tag">水调歌头·明月几时有</span>
+                    <span class="content-tag">荷塘月色/背影</span>
+                    <span class="content-tag">习近平祝贺赞比亚总统</span>
+                    <span class="content-tag">中国挤压论被驳斥</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-20.html" class="day-card">
+                <div class="day-title">8月20日学习内容</div>
+                <div class="day-date">2026年8月20日 星期三</div>
+                <div class="day-content">
+                    <span class="content-tag">望岳/春望</span>
+                    <span class="content-tag">济南的冬天/白杨礼赞</span>
+                    <span class="content-tag">火箭陆地回收</span>
+                    <span class="content-tag">清华学子支教</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-19.html" class="day-card">
+                <div class="day-title">8月19日学习内容</div>
+                <div class="day-date">2026年8月19日 星期二</div>
+                <div class="day-content">
+                    <span class="content-tag">游山西村/己亥杂诗</span>
+                    <span class="content-tag">世界机器人大会</span>
+                    <span class="content-tag">量子技术标准</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-18.html" class="day-card">
+                <div class="day-title">8月18日学习内容</div>
+                <div class="day-date">2026年8月18日 星期一</div>
+                <div class="day-content">
+                    <span class="content-tag">登飞来峰/题西林壁</span>
+                    <span class="content-tag">中国发射新卫星</span>
+                    <span class="content-tag">菲律宾极端天气</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-16.html" class="day-card">
+                <div class="day-title">8月16日学习内容</div>
+                <div class="day-date">2026年8月16日 星期六</div>
+                <div class="day-content">
+                    <span class="content-tag">望岳/春望</span>
+                    <span class="content-tag">中国援助哥伦比亚</span>
+                    <span class="content-tag">糖尿病新研究</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-15.html" class="day-card">
+                <div class="day-title">8月15日学习内容</div>
+                <div class="day-date">2026年8月15日 星期五</div>
+                <div class="day-content">
+                    <span class="content-tag">游山西村/己亥杂诗</span>
+                    <span class="content-tag">反腐败斗争</span>
+                    <span class="content-tag">未来科学大奖</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-14.html" class="day-card">
+                <div class="day-title">8月14日学习内容</div>
+                <div class="day-date">2026年8月14日 星期四</div>
+                <div class="day-content">
+                    <span class="content-tag">登飞来峰/题西林壁</span>
+                    <span class="content-tag">C919国际航线</span>
+                    <span class="content-tag">新能源汽车</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+            
+            <a href="days/2026-08-13.html" class="day-card">
+                <div class="day-title">8月13日学习内容</div>
+                <div class="day-date">2026年8月13日 星期三</div>
+                <div class="day-content">
+                    <span class="content-tag">2首古诗词</span>
+                    <span class="content-tag">现代文阅读</span>
+                    <span class="content-tag">时文阅读</span>
+                    <span class="content-tag">50题测试</span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="stats-section">
+            <h2 class="stats-title"><i class="fas fa-chart-line"></i> 学习统计</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalPoems">0</div>
+                    <div class="stat-label">古诗词掌握</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalReading">0</div>
+                    <div class="stat-label">阅读篇数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalTests">0</div>
+                    <div class="stat-label">完成测试</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="avgScore">-</div>
+                    <div class="stat-label">平均分数</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 计算统计数据
+        function calculateStats() {
+            let totalPoems = 0;
+            let totalReading = 0;
+            let totalTests = 0;
+            let totalScore = 0;
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('xiaokai_chinese_') || key.startsWith('xiaokai_cn_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        if (data.poemLearned) totalPoems += 2;
+                        if (data.modernScore) {
+                            totalReading++;
+                            totalScore += data.modernScore;
+                        }
+                        if (data.newsScore) {
+                            totalReading++;
+                            totalScore += data.newsScore;
+                        }
+                        if (data.testScore !== undefined) {
+                            totalTests++;
+                        }
+                    } catch (e) {}
+                }
+            }
+            
+            document.getElementById('totalPoems').textContent = totalPoems;
+            document.getElementById('totalReading').textContent = totalReading;
+            document.getElementById('totalTests').textContent = totalTests;
+            document.getElementById('avgScore').textContent = totalReading > 0 ? Math.round(totalScore / totalReading) : '-';
+        }
+        
+        window.onload = calculateStats;
+    </script>
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月17日 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { color: #666; font-size: 1.2em; }
+        .progress-bar { background: #e0e0e0; border-radius: 10px; height: 30px; margin-top: 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .section { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .section-title { color: #667eea; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: #764ba2; }
+        .reading-passage { background: #f8f9fa; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .passage-title { color: #333; font-size: 1.4em; margin-bottom: 15px; font-weight: bold; }
+        .passage-content { color: #555; line-height: 2; font-size: 1.1em; }
+        .question-item { background: #fff; border: 2px solid #e0e0e0; border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+        .question-text { color: #333; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
+        .options { display: grid; gap: 10px; }
+        .option { padding: 15px 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option:hover { background: #e8eaf6; border-color: #667eea; }
+        .option.selected { background: #667eea; color: white; border-color: #667eea; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .word-card { background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf6 100%); border-radius: 15px; padding: 20px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .word-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); border-color: #667eea; }
+        .word-card .word { font-size: 1.5em; color: #667eea; font-weight: bold; margin-bottom: 10px; }
+        .word-card .pronunciation { color: #888; font-size: 0.9em; margin-bottom: 10px; }
+        .word-card .meaning { color: #555; font-size: 1.1em; }
+        .word-card .example { color: #888; font-size: 0.9em; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; font-style: italic; }
+        .word-card.memorized { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); }
+        .word-card.memorized .word { color: #2e7d32; }
+        .btn { padding: 15px 40px; border: none; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+        .btn-primary { background: linear-gradient(90deg, #667eea, #764ba2); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: linear-gradient(90deg, #4caf50, #45a049); color: white; }
+        .btn-success:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 25px; text-align: center; color: white; }
+        .stat-card .number { font-size: 3em; font-weight: bold; }
+        .stat-card .label { font-size: 1.1em; opacity: 0.9; }
+        .test-timer { background: #fff3e0; border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .test-timer .time { font-size: 3em; color: #ff9800; font-weight: bold; }
+        .test-timer .label { color: #666; }
+        .result-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .result-content { background: white; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; width: 90%; }
+        .result-score { font-size: 5em; color: #667eea; font-weight: bold; }
+        .result-message { font-size: 1.5em; color: #333; margin: 20px 0; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 15px 30px; background: white; border: 2px solid #e0e0e0; border-radius: 30px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .tab:hover { border-color: #667eea; }
+        .tab.active { background: linear-gradient(90deg, #667eea, #764ba2); color: white; border-color: transparent; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #f5f5f5; border-radius: 10px; color: #666; text-decoration: none; margin-bottom: 20px; transition: all 0.3s; }
+        .back-btn:hover { background: #e0e0e0; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } .section-title { font-size: 1.4em; } .word-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回英语首页</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> 英语学习</h1>
+            <p class="date">2026年8月17日 星期日</p>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('reading')">📖 阅读理解</div>
+            <div class="tab" onclick="showSection('vocab')">📚 单词学习</div>
+            <div class="tab" onclick="showSection('test')">📝 综合测试</div>
+        </div>
+        
+        <!-- 阅读理解部分 -->
+        <div id="readingSection" class="section">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 阅读理解 (2篇)</h2>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 1: China Successfully Launches Satellite Internet Low-Orbit 24 Group</h3>
+                <p class="passage-content">
+                    At 12:10 Beijing time on August 16, 2026, China successfully launched the Satellite Internet Low-Orbit 24 Group satellites using a Long March-12 carrier rocket at the Hainan Commercial Space Launch Site. The satellites successfully entered their predetermined orbits, and the launch mission was a complete success. This marks another significant milestone in China's satellite internet development. The Hainan Commercial Space Launch Site, China's first commercial spaceport, continues to play a crucial role in the country's growing space industry. The satellite internet constellation will provide enhanced global communication capabilities and support various applications including telecommunications, navigation, and data services.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">1. When was the satellite launch?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. August 10, 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. August 16, 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. August 17, 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. August 20, 2026</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">2. What rocket was used for the launch?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Long March-5</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Long March-7</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Long March-12</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Long March-9</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">3. Where was the launch conducted?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Jiuquan Satellite Launch Center</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Xichang Satellite Launch Center</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Hainan Commercial Space Launch Site</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Taiyuan Satellite Launch Center</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">4. What type of satellites were launched?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Weather satellites</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Navigation satellites</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Satellite internet satellites</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Scientific research satellites</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">5. What is special about the Hainan launch site?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. It is the largest in the world</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. It is China's first commercial spaceport</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. It only launches manned missions</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. It is located in Beijing</div>
+                </div>
+            </div>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 2: China Becomes "World Innovation Laboratory"</h3>
+                <p class="passage-content">
+                    China is becoming a "World Innovation Laboratory" where new technologies accelerate from development to real-world application, according to a CCTV News report on August 16, 2026. From large language models and robots to innovative drug development, Chinese products are gaining popularity among global users. The latest developments in China's artificial intelligence and other cutting-edge industries have become a focus of attention for enterprises worldwide. The report highlights China's rapid progress in transforming research achievements into practical applications, demonstrating the country's growing innovative capacity and its important role in global technology development. Experts note that China's innovation ecosystem continues to attract international attention and investment.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">6. What is China becoming according to the report?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. A manufacturing center</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. A "World Innovation Laboratory"</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. A financial hub</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. A tourist destination</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">7. Which areas are mentioned as examples of innovation?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Large language models, robots, and drug development</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Only manufacturing</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Agriculture and fishing</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Entertainment and sports</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">8. How are Chinese products received globally?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. They are ignored</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. They face strong opposition</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. They are gaining popularity</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. They are only sold domestically</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">9. Who is paying attention to China's AI developments?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Only Chinese companies</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Enterprises worldwide</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. No one</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Only governments</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">10. What does China's innovation ecosystem attract?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Only tourists</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. International attention and investment</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Nothing</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Only students</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitReadingAnswers()"><i class="fas fa-check"></i> 提交阅读答案</button>
+            </div>
+        </div>
+        
+        <!-- 单词学习部分 -->
+        <div id="vocabSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-book"></i> 单词学习</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #4caf50; margin-bottom: 20px;"><i class="fas fa-history"></i> 复习单词 (30个)</h3>
+                <div class="word-grid" id="oldWordsGrid"></div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-star"></i> 新学单词 (20个)</h3>
+                <div class="word-grid" id="newWordsGrid"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="saveVocabProgress()"><i class="fas fa-save"></i> 保存学习进度</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试部分 -->
+        <div id="testSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 综合测试 (100题)</h2>
+            
+            <div class="test-timer">
+                <div class="time" id="timer">60:00</div>
+                <div class="label">剩余时间</div>
+            </div>
+            
+            <div id="testQuestions"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitTest()"><i class="fas fa-paper-plane"></i> 提交测试</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card"><div class="number" id="readingScore">-</div><div class="label">阅读理解得分</div></div>
+            <div class="stat-card"><div class="number" id="vocabProgress">0/50</div><div class="label">单词掌握进度</div></div>
+            <div class="stat-card"><div class="number" id="testScore">-</div><div class="label">测试得分</div></div>
+            <div class="stat-card"><div class="number" id="totalProgress">0%</div><div class="label">总体完成度</div></div>
+        </div>
+    </div>
+    
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="result-score" id="finalScore">0</div>
+            <div class="result-message" id="resultMessage">继续努力！</div>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">确定</button>
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'xiaokai_english_2026_08_17';
+        
+        // 老单词数据（30个基础常用词）
+        const oldWords = [
+            { word: 'important', pronunciation: '/ɪmˈpɔːtənt/', meaning: '重要的', example: 'It is important to study English every day.' },
+            { word: 'different', pronunciation: '/ˈdɪfərənt/', meaning: '不同的', example: 'Each country has different customs.' },
+            { word: 'beautiful', pronunciation: '/ˈbjuːtɪfl/', meaning: '美丽的', example: 'The sunset is beautiful.' },
+            { word: 'interesting', pronunciation: '/ˈɪntrəstɪŋ/', meaning: '有趣的', example: 'This book is very interesting.' },
+            { word: 'wonderful', pronunciation: '/ˈwʌndəfl/', meaning: '精彩的', example: 'What a wonderful trip!' },
+            { word: 'necessary', pronunciation: '/ˈnesəseri/', meaning: '必要的', example: 'Water is necessary for life.' },
+            { word: 'knowledge', pronunciation: '/ˈnɒlɪdʒ/', meaning: '知识', example: 'Knowledge is power.' },
+            { word: 'environment', pronunciation: '/ɪnˈvaɪrənmənt/', meaning: '环境', example: 'We should protect the environment.' },
+            { word: 'experience', pronunciation: '/ɪkˈspɪəriəns/', meaning: '经验；经历', example: 'I have much experience in teaching.' },
+            { word: 'understand', pronunciation: '/ˌʌndəˈstænd/', meaning: '理解', example: 'I understand your feelings.' },
+            { word: 'remember', pronunciation: '/rɪˈmembə/', meaning: '记得', example: 'Please remember to bring your book.' },
+            { word: 'practice', pronunciation: '/ˈpræktɪs/', meaning: '练习', example: 'Practice makes perfect.' },
+            { word: 'improve', pronunciation: '/ɪmˈpruːv/', meaning: '提高', example: 'I want to improve my English.' },
+            { word: 'achieve', pronunciation: '/əˈtʃiːv/', meaning: '实现', example: 'You can achieve your dreams.' },
+            { word: 'success', pronunciation: '/səkˈses/', meaning: '成功', example: 'Hard work leads to success.' },
+            { word: 'problem', pronunciation: '/ˈprɒbləm/', meaning: '问题', example: 'We need to solve this problem.' },
+            { word: 'solution', pronunciation: '/səˈluːʃn/', meaning: '解决方案', example: 'We found a good solution.' },
+            { word: 'opportunity', pronunciation: '/ˌɒpəˈtjuːnəti/', meaning: '机会', example: 'This is a great opportunity.' },
+            { word: 'challenge', pronunciation: '/ˈtʃælɪndʒ/', meaning: '挑战', example: 'Life is full of challenges.' },
+            { word: 'development', pronunciation: '/dɪˈveləpmənt/', meaning: '发展', example: 'Rapid development is happening.' },
+            { word: 'technology', pronunciation: '/tekˈnɒlədʒi/', meaning: '技术', example: 'Technology changes our lives.' },
+            { word: 'information', pronunciation: '/ˌɪnfəˈmeɪʃn/', meaning: '信息', example: 'I need more information.' },
+            { word: 'communication', pronunciation: '/kəˌmjuːnɪˈkeɪʃn/', meaning: '交流', example: 'Good communication is important.' },
+            { word: 'education', pronunciation: '/ˌedʒuˈkeɪʃn/', meaning: '教育', example: 'Education is the key to success.' },
+            { word: 'government', pronunciation: '/ˈɡʌvənmənt/', meaning: '政府', example: 'The government made new policies.' },
+            { word: 'international', pronunciation: '/ˌɪntəˈnæʃnəl/', meaning: '国际的', example: 'This is an international event.' },
+            { word: 'community', pronunciation: '/kəˈmjuːnəti/', meaning: '社区', example: 'Our community is very friendly.' },
+            { word: 'responsible', pronunciation: '/rɪˈspɒnsəbl/', meaning: '负责的', example: 'He is a responsible person.' },
+            { word: 'comfortable', pronunciation: '/ˈkʌmftəbl/', meaning: '舒适的', example: 'This seat is very comfortable.' },
+            { word: 'available', pronunciation: '/əˈveɪləbl/', meaning: '可用的', example: 'Is this room available?' }
+        ];
+        
+        // 新单词数据（20个与新闻相关）
+        const newWords = [
+            { word: 'satellite', pronunciation: '/ˈsætəlaɪt/', meaning: '卫星', example: 'China successfully launched the satellite.' },
+            { word: 'launch', pronunciation: '/lɔːntʃ/', meaning: '发射', example: 'The rocket launch was successful.' },
+            { word: 'orbit', pronunciation: '/ˈɔːbɪt/', meaning: '轨道', example: 'The satellites entered their orbits.' },
+            { word: 'carrier', pronunciation: '/ˈkæriə/', meaning: '运载工具', example: 'A carrier rocket was used.' },
+            { word: 'commercial', pronunciation: '/kəˈmɜːʃl/', meaning: '商业的', example: 'Hainan commercial space launch site.' },
+            { word: 'constellation', pronunciation: '/ˌkɒnstəˈleɪʃn/', meaning: '星座；卫星群', example: 'The satellite constellation will provide services.' },
+            { word: 'innovation', pronunciation: '/ˌɪnəˈveɪʃn/', meaning: '创新', example: 'China becomes a world innovation laboratory.' },
+            { word: 'laboratory', pronunciation: '/ləˈbɒrətri/', meaning: '实验室', example: 'A world innovation laboratory.' },
+            { word: 'artificial', pronunciation: '/ˌɑːtɪˈfɪʃl/', meaning: '人工的', example: 'Artificial intelligence is advancing.' },
+            { word: 'intelligence', pronunciation: '/ɪnˈtelɪdʒəns/', meaning: '智能；智力', example: 'AI stands for artificial intelligence.' },
+            { word: 'application', pronunciation: '/ˌæplɪˈkeɪʃn/', meaning: '应用', example: 'New technologies have practical applications.' },
+            { word: 'cutting-edge', pronunciation: '/ˌkʌtɪŋ ˈedʒ/', meaning: '前沿的', example: 'Cutting-edge industries attract attention.' },
+            { word: 'enterprise', pronunciation: '/ˈentəpraɪz/', meaning: '企业', example: 'Enterprises worldwide are watching.' },
+            { word: 'ecosystem', pronunciation: '/ˈiːkəʊsɪstəm/', meaning: '生态系统', example: 'China\'s innovation ecosystem.' },
+            { word: 'investment', pronunciation: '/ɪnˈvestmənt/', meaning: '投资', example: 'International attention and investment.' },
+            { word: 'achieve', pronunciation: '/əˈtʃiːv/', meaning: '实现', example: 'Research achievements become applications.' },
+            { word: 'transform', pronunciation: '/trænsˈfɔːm/', meaning: '转变', example: 'Transform research into products.' },
+            { word: 'capacity', pronunciation: '/kəˈpæsəti/', meaning: '能力', example: 'China\'s growing innovative capacity.' },
+            { word: 'telecommunication', pronunciation: '/ˌtelɪkəˌmjuːnɪˈkeɪʃn/', meaning: '电信', example: 'Global telecommunication capabilities.' },
+            { word: 'navigation', pronunciation: '/ˌnævɪˈɡeɪʃn/', meaning: '导航', example: 'Navigation and data services.' }
+        ];
+        
+        // 阅读理解答案
+        const readingAnswers = {
+            1: ['B', 'C', 'C', 'C', 'B'],
+            2: ['B', 'A', 'C', 'B', 'B']
+        };
+        
+        // 用户答案存储
+        let userAnswers = { reading: {}, vocab: { old: [], new: [] }, test: {} };
+        
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) { userAnswers = JSON.parse(saved); updateProgress(); }
+        }
+        
+        function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers)); }
+        
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('readingSection').style.display = section === 'reading' ? 'block' : 'none';
+            document.getElementById('vocabSection').style.display = section === 'vocab' ? 'block' : 'none';
+            document.getElementById('testSection').style.display = section === 'test' ? 'block' : 'none';
+        }
+        
+        function selectOption(element, type, passageNum, questionNum, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            const key = `${passageNum}_${questionNum}`;
+            userAnswers.reading[key] = answer;
+            saveData();
+        }
+        
+        function submitReadingAnswers() {
+            let correct = 0;
+            let total = 10;
+            for (let passage = 1; passage <= 2; passage++) {
+                for (let q = 1; q <= 5; q++) {
+                    const key = `${passage}_${q}`;
+                    const userAnswer = userAnswers.reading[key];
+                    const correctAnswer = readingAnswers[passage][q - 1];
+                    if (userAnswer === correctAnswer) correct++;
+                }
+            }
+            userAnswers.readingScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('readingScore').textContent = correct + '/' + total;
+            alert(`阅读理解完成！得分：${correct}/${total}`);
+        }
+        
+        function renderWords() {
+            const oldGrid = document.getElementById('oldWordsGrid');
+            const newGrid = document.getElementById('newWordsGrid');
+            
+            oldWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.old.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('old', i, card);
+                oldGrid.appendChild(card);
+            });
+            
+            newWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.new.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('new', i, card);
+                newGrid.appendChild(card);
+            });
+        }
+        
+        function toggleWordMemorized(type, index, element) {
+            const arr = userAnswers.vocab[type];
+            const idx = arr.indexOf(index);
+            if (idx === -1) { arr.push(index); element.classList.add('memorized'); }
+            else { arr.splice(idx, 1); element.classList.remove('memorized'); }
+            saveData();
+            updateVocabProgress();
+        }
+        
+        function updateVocabProgress() {
+            const total = userAnswers.vocab.old.length + userAnswers.vocab.new.length;
+            document.getElementById('vocabProgress').textContent = total + '/50';
+        }
+        
+        function saveVocabProgress() {
+            saveData();
+            updateProgress();
+            updateVocabProgress();
+            alert('单词学习进度已保存！');
+        }
+        
+        function generateTestQuestions() {
+            const container = document.getElementById('testQuestions');
+            const questions = [];
+            const allWords = [...oldWords, ...newWords];
+            
+            // 单词选择题（50题）
+            for (let i = 0; i < 50; i++) {
+                const word = allWords[i % allWords.length];
+                const wrongMeanings = ['快乐', '悲伤', '快速', '慢速', '重要', '简单', '困难', '美丽', '聪明', '年轻', '古老', '现代'];
+                const correctMeaning = word.meaning;
+                const wrongOptions = wrongMeanings.filter(m => m !== correctMeaning).slice(0, 3);
+                const options = [correctMeaning, ...wrongOptions].sort(() => Math.random() - 0.5);
+                questions.push({ type: 'vocab', question: `"${word.word}" 的意思是？`, options: options, answer: correctMeaning });
+            }
+            
+            // 语法选择题（30题）
+            const grammarQuestions = [
+                { q: 'China ___ launched the satellite.', opts: ['have', 'has', 'had', 'having'], a: 'has' },
+                { q: 'The rocket ___ at Hainan.', opts: ['launch', 'launches', 'was launched', 'launched'], a: 'was launched' },
+                { q: 'The satellites ___ their orbits.', opts: ['enter', 'enters', 'entered', 'entering'], a: 'entered' },
+                { q: 'This ___ a significant milestone.', opts: ['mark', 'marks', 'marked', 'marking'], a: 'marks' },
+                { q: 'China ___ becoming a world innovation laboratory.', opts: ['is', 'are', 'was', 'were'], a: 'is' },
+                { q: 'The launch ___ at 12:10 Beijing time.', opts: ['happen', 'happens', 'happened', 'happening'], a: 'happened' },
+                { q: 'The mission ___ a complete success.', opts: ['is', 'are', 'was', 'were'], a: 'was' },
+                { q: 'Products ___ popularity globally.', opts: ['gain', 'gains', 'gained', 'gaining'], a: 'are gaining' },
+                { q: 'Enterprises worldwide ___ attention.', opts: ['pay', 'pays', 'paid', 'paying'], a: 'are paying' },
+                { q: 'China ___ a crucial role.', opts: ['play', 'plays', 'played', 'playing'], a: 'plays' },
+                { q: 'The satellites ___ various applications.', opts: ['support', 'supports', 'supported', 'supporting'], a: 'support' },
+                { q: 'This ___ China\'s first commercial spaceport.', opts: ['is', 'are', 'was', 'were'], a: 'is' },
+                { q: 'Technologies ___ to real-world application.', opts: ['accelerate', 'accelerates', 'accelerated', 'accelerating'], a: 'accelerate' },
+                { q: 'The constellation ___ global communication.', opts: ['provide', 'provides', 'provided', 'providing'], a: 'provides' },
+                { q: 'Experts ___ China\'s innovation capacity.', opts: ['note', 'notes', 'noted', 'noting'], a: 'note' },
+                { q: 'The launch site ___ in Hainan.', opts: ['locate', 'locates', 'is located', 'located'], a: 'is located' },
+                { q: 'China ___ significant progress.', opts: ['make', 'makes', 'made', 'making'], a: 'has made' },
+                { q: 'Products ___ global users.', opts: ['attract', 'attracts', 'attracted', 'attracting'], a: 'attract' },
+                { q: 'The report ___ China\'s progress.', opts: ['highlight', 'highlights', 'highlighted', 'highlighting'], a: 'highlights' },
+                { q: 'Investment ___ international attention.', opts: ['attract', 'attracts', 'attracted', 'attracting'], a: 'attracts' },
+                { q: 'China ___ satellite internet development.', opts: ['advance', 'advances', 'advanced', 'advancing'], a: 'advances' },
+                { q: 'The launch ___ on August 16.', opts: ['occur', 'occurs', 'occurred', 'occurring'], a: 'occurred' },
+                { q: 'Satellites ___ communication capabilities.', opts: ['enhance', 'enhances', 'enhanced', 'enhancing'], a: 'enhance' },
+                { q: 'China ___ a growing innovative capacity.', opts: ['have', 'has', 'had', 'having'], a: 'has' },
+                { q: 'The ecosystem ___ international attention.', opts: ['draw', 'draws', 'drew', 'drawing'], a: 'draws' },
+                { q: 'Technologies ___ from development to application.', opts: ['move', 'moves', 'moved', 'moving'], a: 'move' },
+                { q: 'China ___ an important role in global technology.', opts: ['play', 'plays', 'played', 'playing'], a: 'plays' },
+                { q: 'The launch ___ successful.', opts: ['be', 'is', 'was', 'were'], a: 'was' },
+                { q: 'Applications ___ telecommunications and navigation.', opts: ['include', 'includes', 'included', 'including'], a: 'include' },
+                { q: 'China ___ products for global users.', opts: ['develop', 'develops', 'developed', 'developing'], a: 'develops' }
+            ];
+            
+            for (let i = 0; i < 30; i++) {
+                const gq = grammarQuestions[i % grammarQuestions.length];
+                questions.push({ type: 'grammar', question: gq.q, options: gq.opts, answer: gq.a });
+            }
+            
+            // 阅读理解题（20题）
+            const readingTestQuestions = [
+                { q: 'The launch was at ___ Beijing time.', opts: ['10:10', '11:10', '12:10', '13:10'], a: '12:10' },
+                { q: 'The launch date was August ___, 2026.', opts: ['15', '16', '17', '18'], a: '16' },
+                { q: 'The rocket used was Long March-___.', opts: ['5', '7', '9', '12'], a: '12' },
+                { q: 'The launch site is in ___.', opts: ['Beijing', 'Shanghai', 'Hainan', 'Guangdong'], a: 'Hainan' },
+                { q: 'The satellites are for ___ internet.', opts: ['mobile', 'satellite', 'fiber', 'cable'], a: 'satellite' },
+                { q: 'China is becoming a world ___ laboratory.', opts: ['research', 'innovation', 'science', 'technology'], a: 'innovation' },
+                { q: 'Products are gaining ___ globally.', opts: ['criticism', 'popularity', 'opposition', 'attention'], a: 'popularity' },
+                { q: 'Areas of innovation include language models and ___.', opts: ['cars', 'robots', 'houses', 'food'], a: 'robots' },
+                { q: 'The launch site is China\'s first ___ spaceport.', opts: ['military', 'government', 'commercial', 'international'], a: 'commercial' },
+                { q: 'Enterprises worldwide are paying ___.', opts: ['money', 'visits', 'attention', 'taxes'], a: 'attention' },
+                { q: 'The launch mission was a ___ success.', opts: ['partial', 'complete', 'minor', 'temporary'], a: 'complete' },
+                { q: 'Satellites entered their ___ orbits.', opts: ['random', 'predetermined', 'unknown', 'changing'], a: 'predetermined' },
+                { q: 'China shows growing ___ capacity.', opts: ['manufacturing', 'innovative', 'population', 'land'], a: 'innovative' },
+                { q: 'The ecosystem attracts international ___.', opts: ['tourists', 'students', 'attention and investment', 'workers'], a: 'attention and investment' },
+                { q: 'Applications include telecommunications and ___.', opts: ['education', 'navigation', 'entertainment', 'agriculture'], a: 'navigation' },
+                { q: 'China accelerates technologies to ___ application.', opts: ['research', 'real-world', 'theoretical', 'academic'], a: 'real-world' },
+                { q: 'The satellite group is number ___.', opts: ['12', '20', '24', '30'], a: '24' },
+                { q: 'Hainan launch site is a ___ spaceport.', opts: ['military', 'commercial', 'private', 'foreign'], a: 'commercial' },
+                { q: 'China demonstrates innovative ___.', opts: ['products', 'capacity', 'prices', 'sizes'], a: 'capacity' },
+                { q: 'The report highlights China\'s ___.', opts: ['population', 'progress', 'weather', 'geography'], a: 'progress' }
+            ];
+            
+            for (let i = 0; i < 20; i++) {
+                const rq = readingTestQuestions[i];
+                questions.push({ type: 'reading', question: rq.q, options: rq.opts, answer: rq.a });
+            }
+            
+            // 渲染题目
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <p class="question-text">${i + 1}. ${q.question}</p>
+                    <div class="options">
+                        ${q.options.map((opt, j) => `<div class="option" onclick="selectTestOption(this, ${i}, '${opt}')">${String.fromCharCode(65 + j)}. ${opt}</div>`).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            return questions;
+        }
+        
+        let testQuestions = [];
+        let timerInterval = null;
+        let timeLeft = 3600;
+        
+        function selectTestOption(element, questionIndex, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            userAnswers.test[questionIndex] = answer;
+            saveData();
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+            }, 1000);
+        }
+        
+        function submitTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            let correct = 0;
+            testQuestions.forEach((q, i) => { if (userAnswers.test[i] === q.answer) correct++; });
+            userAnswers.testScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('testScore').textContent = correct + '/100';
+            document.getElementById('finalScore').textContent = correct;
+            
+            let message = '';
+            if (correct >= 90) message = '太棒了！你做得非常好！';
+            else if (correct >= 80) message = '很好！继续保持！';
+            else if (correct >= 70) message = '不错，还有进步空间！';
+            else if (correct >= 60) message = '及格了，继续努力！';
+            else message = '需要加油哦！多练习吧！';
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+        
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
+        
+        function updateProgress() {
+            let progress = 0;
+            if (userAnswers.readingScore) progress += 25;
+            if (userAnswers.vocab.old.length > 0 || userAnswers.vocab.new.length > 0) {
+                progress += 25 * (userAnswers.vocab.old.length + userAnswers.vocab.new.length) / 50;
+            }
+            if (userAnswers.testScore) progress += 50;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressFill').textContent = Math.round(progress) + '%';
+            document.getElementById('totalProgress').textContent = Math.round(progress) + '%';
+        }
+        
+        window.onload = function() {
+            loadData();
+            renderWords();
+            testQuestions = generateTestQuestions();
+            startTimer();
+            updateVocabProgress();
+        };
+    </script>
+</body>
+</html>

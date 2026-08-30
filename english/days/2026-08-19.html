@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月19日 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .header .date { color: #666; font-size: 1.2em; }
+        .progress-bar { background: #e0e0e0; border-radius: 10px; height: 30px; margin-top: 20px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .section { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .section-title { color: #667eea; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: #764ba2; }
+        .reading-passage { background: #f8f9fa; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .passage-title { color: #333; font-size: 1.4em; margin-bottom: 15px; font-weight: bold; }
+        .passage-content { color: #555; line-height: 2; font-size: 1.1em; }
+        .question-item { background: #fff; border: 2px solid #e0e0e0; border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+        .question-text { color: #333; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
+        .options { display: grid; gap: 10px; }
+        .option { padding: 15px 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option:hover { background: #e8eaf6; border-color: #667eea; }
+        .option.selected { background: #667eea; color: white; border-color: #667eea; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .word-card { background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf6 100%); border-radius: 15px; padding: 20px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .word-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); border-color: #667eea; }
+        .word-card .word { font-size: 1.5em; color: #667eea; font-weight: bold; margin-bottom: 10px; }
+        .word-card .pronunciation { color: #888; font-size: 0.9em; margin-bottom: 10px; }
+        .word-card .meaning { color: #555; font-size: 1.1em; }
+        .word-card .example { color: #888; font-size: 0.9em; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; font-style: italic; }
+        .word-card.memorized { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); }
+        .word-card.memorized .word { color: #2e7d32; }
+        .btn { padding: 15px 40px; border: none; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+        .btn-primary { background: linear-gradient(90deg, #667eea, #764ba2); color: white; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: linear-gradient(90deg, #4caf50, #45a049); color: white; }
+        .btn-success:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 25px; text-align: center; color: white; }
+        .stat-card .number { font-size: 3em; font-weight: bold; }
+        .stat-card .label { font-size: 1.1em; opacity: 0.9; }
+        .test-timer { background: #fff3e0; border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .test-timer .time { font-size: 3em; color: #ff9800; font-weight: bold; }
+        .test-timer .label { color: #666; }
+        .result-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .result-content { background: white; border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; width: 90%; }
+        .result-score { font-size: 5em; color: #667eea; font-weight: bold; }
+        .result-message { font-size: 1.5em; color: #333; margin: 20px 0; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 15px 30px; background: white; border: 2px solid #e0e0e0; border-radius: 30px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .tab:hover { border-color: #667eea; }
+        .tab.active { background: linear-gradient(90deg, #667eea, #764ba2); color: white; border-color: transparent; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #f5f5f5; border-radius: 10px; color: #666; text-decoration: none; margin-bottom: 20px; transition: all 0.3s; }
+        .back-btn:hover { background: #e0e0e0; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } .section-title { font-size: 1.4em; } .word-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回英语首页</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> 英语学习</h1>
+            <p class="date">2026年8月19日 星期二</p>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('reading')">📖 阅读理解</div>
+            <div class="tab" onclick="showSection('vocab')">📚 单词学习</div>
+            <div class="tab" onclick="showSection('test')">📝 综合测试</div>
+        </div>
+        
+        <!-- 阅读理解部分 -->
+        <div id="readingSection" class="section">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 阅读理解 (2篇)</h2>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 1: 2026 World Robot Conference Opens in Beijing</h3>
+                <p class="passage-content">
+                    On August 19, 2026, the World Robot Conference opened in Beijing, marking a significant milestone in the global robotics industry. The conference brings together leading experts, researchers, and companies from around the world to showcase the latest advancements in robotics technology. Unitree Robotics, China's first humanoid robot company to list on the STAR Market, unveiled its latest "Superman" humanoid robot at the event. The robot can achieve a 2-meter standing vertical jump and a top running speed of 12.66 meters per second, surpassing world records held by humans. Industry experts believe this conference will accelerate the development of humanoid robots for industrial inspection and commercial service applications.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">1. When did the World Robot Conference open?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. August 17, 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. August 18, 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. August 19, 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. August 20, 2026</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">2. What is special about Unitree Robotics?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. It is the first drone company in China</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. It is the first humanoid robot company listed on STAR Market</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. It is a foreign company</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. It only makes toys</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">3. What can the "Superman" robot do?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Fly in the air</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Jump 2 meters high and run at 12.66 m/s</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Only walk slowly</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Swim underwater</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">4. Where was the conference held?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Shanghai</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Shenzhen</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Beijing</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Guangzhou</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">5. What will the conference accelerate?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Space exploration</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Development of humanoid robots for industrial and commercial use</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Medical research</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Weather forecasting</div>
+                </div>
+            </div>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 2: China Advances Quantum Technology Standards</h3>
+                <p class="passage-content">
+                    On August 18, 2026, China achieved significant progress in quantum technology international standards. The international standard proposal "Overview and Analysis of Randomness Quality and Testing Methodology for Quantum Entropy Sources" led by China was officially approved for establishment. This marks an important step for China in the international standard setting for quantum core devices. Additionally, China is advancing data sector international cooperation pilots, with the first batch of pilots launched in Shanghai, Hainan, Fujian, Hunan, Guangdong, and Guangxi. Experts believe these initiatives will strengthen China's position in global technology governance and promote international cooperation in emerging technologies.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">6. What was approved on August 18, 2026?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. A new satellite launch</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. A quantum technology international standard proposal</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. A space mission</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. A sports event</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">7. Which areas are NOT mentioned as pilot locations?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Shanghai</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Hainan</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Beijing</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Guangdong</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">8. What does the approval mark for China?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. An end to research</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. An important step in quantum core device standard setting</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. A decline in technology</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. A temporary pause</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">9. What will these initiatives strengthen?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. China's position in global technology governance</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Agricultural production</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Tourism industry</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Entertainment sector</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">10. What type of technology is the standard about?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Traditional manufacturing</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Quantum technology</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Textile industry</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Food processing</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitReadingAnswers()"><i class="fas fa-check"></i> 提交阅读答案</button>
+            </div>
+        </div>
+        
+        <!-- 单词学习部分 -->
+        <div id="vocabSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-book"></i> 单词学习</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #4caf50; margin-bottom: 20px;"><i class="fas fa-history"></i> 复习单词 (30个)</h3>
+                <div class="word-grid" id="oldWordsGrid"></div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-star"></i> 新学单词 (20个)</h3>
+                <div class="word-grid" id="newWordsGrid"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="saveVocabProgress()"><i class="fas fa-save"></i> 保存学习进度</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试部分 -->
+        <div id="testSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 综合测试 (100题)</h2>
+            
+            <div class="test-timer">
+                <div class="time" id="timer">60:00</div>
+                <div class="label">剩余时间</div>
+            </div>
+            
+            <div id="testQuestions"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitTest()"><i class="fas fa-paper-plane"></i> 提交测试</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card"><div class="number" id="readingScore">-</div><div class="label">阅读理解得分</div></div>
+            <div class="stat-card"><div class="number" id="vocabProgress">0/50</div><div class="label">单词掌握进度</div></div>
+            <div class="stat-card"><div class="number" id="testScore">-</div><div class="label">测试得分</div></div>
+            <div class="stat-card"><div class="number" id="totalProgress">0%</div><div class="label">总体完成度</div></div>
+        </div>
+    </div>
+    
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="result-score" id="finalScore">0</div>
+            <div class="result-message" id="resultMessage">继续努力！</div>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">确定</button>
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'xiaokai_english_2026_08_19';
+        
+        // 老单词数据（30个基础常用词）
+        const oldWords = [
+            { word: 'important', pronunciation: '/ɪmˈpɔːtənt/', meaning: '重要的', example: 'It is important to study English every day.' },
+            { word: 'different', pronunciation: '/ˈdɪfərənt/', meaning: '不同的', example: 'Each country has different customs.' },
+            { word: 'beautiful', pronunciation: '/ˈbjuːtɪfl/', meaning: '美丽的', example: 'The sunset is beautiful.' },
+            { word: 'interesting', pronunciation: '/ˈɪntrəstɪŋ/', meaning: '有趣的', example: 'This book is very interesting.' },
+            { word: 'wonderful', pronunciation: '/ˈwʌndəfl/', meaning: '精彩的', example: 'What a wonderful trip!' },
+            { word: 'necessary', pronunciation: '/ˈnesəseri/', meaning: '必要的', example: 'Water is necessary for life.' },
+            { word: 'knowledge', pronunciation: '/ˈnɒlɪdʒ/', meaning: '知识', example: 'Knowledge is power.' },
+            { word: 'environment', pronunciation: '/ɪnˈvaɪrənmənt/', meaning: '环境', example: 'We should protect the environment.' },
+            { word: 'experience', pronunciation: '/ɪkˈspɪəriəns/', meaning: '经验；经历', example: 'I have much experience in teaching.' },
+            { word: 'understand', pronunciation: '/ˌʌndəˈstænd/', meaning: '理解', example: 'I understand your feelings.' },
+            { word: 'remember', pronunciation: '/rɪˈmembə/', meaning: '记得', example: 'Please remember to bring your book.' },
+            { word: 'practice', pronunciation: '/ˈpræktɪs/', meaning: '练习', example: 'Practice makes perfect.' },
+            { word: 'improve', pronunciation: '/ɪmˈpruːv/', meaning: '提高', example: 'I want to improve my English.' },
+            { word: 'achieve', pronunciation: '/əˈtʃiːv/', meaning: '实现', example: 'You can achieve your dreams.' },
+            { word: 'success', pronunciation: '/səkˈses/', meaning: '成功', example: 'Hard work leads to success.' },
+            { word: 'problem', pronunciation: '/ˈprɒbləm/', meaning: '问题', example: 'We need to solve this problem.' },
+            { word: 'solution', pronunciation: '/səˈluːʃn/', meaning: '解决方案', example: 'We found a good solution.' },
+            { word: 'opportunity', pronunciation: '/ˌɒpəˈtjuːnəti/', meaning: '机会', example: 'This is a great opportunity.' },
+            { word: 'challenge', pronunciation: '/ˈtʃælɪndʒ/', meaning: '挑战', example: 'Life is full of challenges.' },
+            { word: 'development', pronunciation: '/dɪˈveləpmənt/', meaning: '发展', example: 'Rapid development is happening.' },
+            { word: 'technology', pronunciation: '/tekˈnɒlədʒi/', meaning: '技术', example: 'Technology changes our lives.' },
+            { word: 'information', pronunciation: '/ˌɪnfəˈmeɪʃn/', meaning: '信息', example: 'I need more information.' },
+            { word: 'communication', pronunciation: '/kəˌmjuːnɪˈkeɪʃn/', meaning: '交流', example: 'Good communication is important.' },
+            { word: 'education', pronunciation: '/ˌedʒuˈkeɪʃn/', meaning: '教育', example: 'Education is the key to success.' },
+            { word: 'government', pronunciation: '/ˈɡʌvənmənt/', meaning: '政府', example: 'The government made new policies.' },
+            { word: 'international', pronunciation: '/ˌɪntəˈnæʃnəl/', meaning: '国际的', example: 'This is an international event.' },
+            { word: 'community', pronunciation: '/kəˈmjuːnəti/', meaning: '社区', example: 'Our community is very friendly.' },
+            { word: 'responsible', pronunciation: '/rɪˈspɒnsəbl/', meaning: '负责的', example: 'He is a responsible person.' },
+            { word: 'comfortable', pronunciation: '/ˈkʌmftəbl/', meaning: '舒适的', example: 'This seat is very comfortable.' },
+            { word: 'available', pronunciation: '/əˈveɪləbl/', meaning: '可用的', example: 'Is this room available?' }
+        ];
+        
+        // 新单词数据（20个与新闻相关）
+        const newWords = [
+            { word: 'robot', pronunciation: '/ˈrəʊbɒt/', meaning: '机器人', example: 'The robot can jump very high.' },
+            { word: 'conference', pronunciation: '/ˈkɒnfərəns/', meaning: '会议', example: 'The World Robot Conference opened in Beijing.' },
+            { word: 'humanoid', pronunciation: '/ˈhjuːmənɔɪd/', meaning: '人形的', example: 'Humanoid robots are becoming more advanced.' },
+            { word: 'unveil', pronunciation: '/ʌnˈveɪl/', meaning: '揭幕；发布', example: 'The company unveiled its latest robot.' },
+            { word: 'vertical', pronunciation: '/ˈvɜːtɪkl/', meaning: '垂直的', example: 'The robot can do a vertical jump.' },
+            { word: 'surpass', pronunciation: '/səˈpɑːs/', meaning: '超过', example: 'The robot surpassed human records.' },
+            { word: 'quantum', pronunciation: '/ˈkwɒntəm/', meaning: '量子', example: 'Quantum technology is advancing rapidly.' },
+            { word: 'standard', pronunciation: '/ˈstændəd/', meaning: '标准', example: 'China led the international standard proposal.' },
+            { word: 'proposal', pronunciation: '/prəˈpəʊzl/', meaning: '提案', example: 'The proposal was approved.' },
+            { word: 'initiative', pronunciation: '/ɪˈnɪʃətɪv/', meaning: '倡议；计划', example: 'These initiatives will strengthen cooperation.' },
+            { word: 'governance', pronunciation: '/ˈɡʌvənəns/', meaning: '治理', example: 'Global technology governance is important.' },
+            { word: 'cooperation', pronunciation: '/kəʊˌɒpəˈreɪʃn/', meaning: '合作', example: 'International cooperation is essential.' },
+            { word: 'expert', pronunciation: '/ˈekspɜːt/', meaning: '专家', example: 'Industry experts attended the conference.' },
+            { word: 'industrial', pronunciation: '/ɪnˈdʌstriəl/', meaning: '工业的', example: 'Robots for industrial inspection.' },
+            { word: 'commercial', pronunciation: '/kəˈmɜːʃl/', meaning: '商业的', example: 'Commercial service applications.' },
+            { word: 'advanced', pronunciation: '/ədˈvɑːnst/', meaning: '先进的', example: 'Advanced robotics technology.' },
+            { word: 'milestone', pronunciation: '/ˈmaɪlstəʊn/', meaning: '里程碑', example: 'This marks a significant milestone.' },
+            { word: 'innovation', pronunciation: '/ˌɪnəˈveɪʃn/', meaning: '创新', example: 'Technology innovation drives progress.' },
+            { word: 'capability', pronunciation: '/ˌkeɪpəˈbɪləti/', meaning: '能力', example: 'The robot has amazing capabilities.' },
+            { word: 'inspection', pronunciation: '/ɪnˈspekʃn/', meaning: '检查', example: 'Robots for industrial inspection.' }
+        ];
+        
+        // 阅读理解答案
+        const readingAnswers = {
+            1: ['C', 'B', 'B', 'C', 'B'],
+            2: ['B', 'C', 'B', 'A', 'B']
+        };
+        
+        // 用户答案存储
+        let userAnswers = { reading: {}, vocab: { old: [], new: [] }, test: {} };
+        
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) { userAnswers = JSON.parse(saved); updateProgress(); }
+        }
+        
+        function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers)); }
+        
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('readingSection').style.display = section === 'reading' ? 'block' : 'none';
+            document.getElementById('vocabSection').style.display = section === 'vocab' ? 'block' : 'none';
+            document.getElementById('testSection').style.display = section === 'test' ? 'block' : 'none';
+        }
+        
+        function selectOption(element, type, passageNum, questionNum, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            const key = `${passageNum}_${questionNum}`;
+            userAnswers.reading[key] = answer;
+            saveData();
+        }
+        
+        function submitReadingAnswers() {
+            let correct = 0;
+            let total = 10;
+            for (let passage = 1; passage <= 2; passage++) {
+                for (let q = 1; q <= 5; q++) {
+                    const key = `${passage}_${q}`;
+                    const userAnswer = userAnswers.reading[key];
+                    const correctAnswer = readingAnswers[passage][q - 1];
+                    if (userAnswer === correctAnswer) correct++;
+                }
+            }
+            userAnswers.readingScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('readingScore').textContent = correct + '/' + total;
+            alert(`阅读理解完成！得分：${correct}/${total}`);
+        }
+        
+        function renderWords() {
+            const oldGrid = document.getElementById('oldWordsGrid');
+            const newGrid = document.getElementById('newWordsGrid');
+            
+            oldWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.old.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('old', i, card);
+                oldGrid.appendChild(card);
+            });
+            
+            newWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.new.includes(i) ? ' memorized' : '');
+                card.innerHTML = `<div class="word">${w.word}</div><div class="pronunciation">${w.pronunciation}</div><div class="meaning">${w.meaning}</div><div class="example">${w.example}</div>`;
+                card.onclick = () => toggleWordMemorized('new', i, card);
+                newGrid.appendChild(card);
+            });
+        }
+        
+        function toggleWordMemorized(type, index, element) {
+            const arr = userAnswers.vocab[type];
+            const idx = arr.indexOf(index);
+            if (idx === -1) { arr.push(index); element.classList.add('memorized'); }
+            else { arr.splice(idx, 1); element.classList.remove('memorized'); }
+            saveData();
+            updateVocabProgress();
+        }
+        
+        function updateVocabProgress() {
+            const total = userAnswers.vocab.old.length + userAnswers.vocab.new.length;
+            document.getElementById('vocabProgress').textContent = total + '/50';
+        }
+        
+        function saveVocabProgress() {
+            saveData();
+            updateProgress();
+            updateVocabProgress();
+            alert('单词学习进度已保存！');
+        }
+        
+        function generateTestQuestions() {
+            const container = document.getElementById('testQuestions');
+            const questions = [];
+            const allWords = [...oldWords, ...newWords];
+            
+            // 单词选择题（50题）
+            for (let i = 0; i < 50; i++) {
+                const word = allWords[i % allWords.length];
+                const wrongMeanings = ['快乐', '悲伤', '快速', '慢速', '重要', '简单', '困难', '美丽', '聪明', '年轻', '古老', '现代'];
+                const correctMeaning = word.meaning;
+                const wrongOptions = wrongMeanings.filter(m => m !== correctMeaning).slice(0, 3);
+                const options = [correctMeaning, ...wrongOptions].sort(() => Math.random() - 0.5);
+                questions.push({ type: 'vocab', question: `"${word.word}" 的意思是？`, options: options, answer: correctMeaning });
+            }
+            
+            // 语法选择题（30题）
+            const grammarQuestions = [
+                { q: 'The conference ___ in Beijing.', opts: ['open', 'opens', 'opened', 'opening'], a: 'opened' },
+                { q: 'Unitree ___ the first humanoid robot company on STAR Market.', opts: ['is', 'are', 'was', 'were'], a: 'is' },
+                { q: 'The robot ___ a 2-meter vertical jump.', opts: ['achieve', 'achieves', 'achieved', 'achieving'], a: 'achieves' },
+                { q: 'It ___ human records.', opts: ['surpass', 'surpasses', 'surpassed', 'surpassing'], a: 'surpasses' },
+                { q: 'China ___ progress in quantum standards.', opts: ['make', 'makes', 'made', 'making'], a: 'made' },
+                { q: 'The proposal ___ approved.', opts: ['is', 'are', 'was', 'were'], a: 'was' },
+                { q: 'These initiatives ___ China\'s position.', opts: ['strengthen', 'strengthens', 'strengthened', 'strengthening'], a: 'will strengthen' },
+                { q: 'Experts ___ the conference.', opts: ['attend', 'attends', 'attended', 'attending'], a: 'attended' },
+                { q: 'The robot ___ for industrial inspection.', opts: ['use', 'uses', 'is used', 'using'], a: 'is used' },
+                { q: 'Technology ___ our lives.', opts: ['change', 'changes', 'changed', 'changing'], a: 'changes' },
+                { q: 'The conference ___ experts together.', opts: ['bring', 'brings', 'brought', 'bringing'], a: 'brought' },
+                { q: 'China ___ the standard proposal.', opts: ['lead', 'leads', 'led', 'leading'], a: 'led' },
+                { q: 'The robot ___ by Unitree.', opts: ['develop', 'develops', 'was developed', 'developing'], a: 'was developed' },
+                { q: 'This ___ a significant milestone.', opts: ['mark', 'marks', 'marked', 'marking'], a: 'marks' },
+                { q: 'Robots ___ for commercial services.', opts: ['use', 'uses', 'are used', 'using'], a: 'are used' },
+                { q: 'The company ___ on August 19.', opts: ['list', 'lists', 'listed', 'listing'], a: 'listed' },
+                { q: 'Quantum technology ___ rapidly.', opts: ['advance', 'advances', 'is advancing', 'advancing'], a: 'is advancing' },
+                { q: 'International cooperation ___ essential.', opts: ['is', 'are', 'was', 'were'], a: 'is' },
+                { q: 'The initiative ___ in Shanghai.', opts: ['launch', 'launches', 'was launched', 'launching'], a: 'was launched' },
+                { q: 'Experts believe this ___ accelerate development.', opts: ['will', 'would', 'shall', 'should'], a: 'will' },
+                { q: 'The robot ___ run at 12.66 m/s.', opts: ['can', 'could', 'may', 'might'], a: 'can' },
+                { q: 'The standard ___ by China.', opts: ['propose', 'proposes', 'was proposed', 'proposing'], a: 'was proposed' },
+                { q: 'This conference ___ important for the industry.', opts: ['is', 'are', 'was', 'were'], a: 'is' },
+                { q: 'Robots ___ many industries.', opts: ['transform', 'transforms', 'transformed', 'transforming'], a: 'are transforming' },
+                { q: 'China ___ its position in technology.', opts: ['strengthen', 'strengthens', 'strengthening', 'strengthened'], a: 'is strengthening' },
+                { q: 'The robot ___ in just three months.', opts: ['develop', 'develops', 'was developed', 'developing'], a: 'was developed' },
+                { q: 'Humanoid robots ___ more common.', opts: ['become', 'becomes', 'are becoming', 'becoming'], a: 'are becoming' },
+                { q: 'The proposal ___ on August 18.', opts: ['approve', 'approves', 'was approved', 'approving'], a: 'was approved' },
+                { q: 'This ___ the company\'s first product.', opts: ['is', 'are', 'was', 'were'], a: 'is' },
+                { q: 'Technology governance ___ global cooperation.', opts: ['require', 'requires', 'required', 'requiring'], a: 'requires' }
+            ];
+            
+            for (let i = 0; i < 30; i++) {
+                const gq = grammarQuestions[i % grammarQuestions.length];
+                questions.push({ type: 'grammar', question: gq.q, options: gq.opts, answer: gq.a });
+            }
+            
+            // 阅读理解题（20题）
+            const readingTestQuestions = [
+                { q: 'The World Robot Conference opened on August ___.', opts: ['17', '18', '19', '20'], a: '19' },
+                { q: 'The conference was held in ___.', opts: ['Shanghai', 'Shenzhen', 'Beijing', 'Guangzhou'], a: 'Beijing' },
+                { q: 'Unitree is the first ___ company on STAR Market.', opts: ['drone', 'humanoid robot', 'AI', 'software'], a: 'humanoid robot' },
+                { q: 'The "Superman" robot can jump ___ meters.', opts: ['1', '1.5', '2', '2.5'], a: '2' },
+                { q: 'The robot can run at ___ m/s.', opts: ['10.5', '11.5', '12.66', '13.5'], a: '12.66' },
+                { q: 'The quantum standard was approved on August ___.', opts: ['17', '18', '19', '20'], a: '18' },
+                { q: 'The standard is about ___ technology.', opts: ['computer', 'quantum', 'mobile', 'internet'], a: 'quantum' },
+                { q: 'Data cooperation pilots were launched in ___ areas.', opts: ['5', '6', '7', '8'], a: '6' },
+                { q: '___ is NOT a pilot location.', opts: ['Shanghai', 'Hainan', 'Beijing', 'Guangdong'], a: 'Beijing' },
+                { q: 'The conference will accelerate ___ robots.', opts: ['industrial', 'humanoid', 'toy', 'medical'], a: 'humanoid' },
+                { q: 'Unitree unveiled the ___ robot.', opts: ['Superman', 'Spiderman', 'Batman', 'Ironman'], a: 'Superman' },
+                { q: 'The robot surpassed ___ records.', opts: ['animal', 'human', 'machine', 'car'], a: 'human' },
+                { q: 'The standard proposal was led by ___.', opts: ['Japan', 'USA', 'China', 'Germany'], a: 'China' },
+                { q: 'The initiative will strengthen global ___.', opts: ['trade', 'technology governance', 'tourism', 'sports'], a: 'technology governance' },
+                { q: 'Robots can be used for industrial ___.', opts: ['inspection', 'entertainment', 'sports', 'cooking'], a: 'inspection' },
+                { q: 'The robot was developed in ___ months.', opts: ['2', '3', '4', '5'], a: '3' },
+                { q: 'The conference brings together ___.', opts: ['students', 'experts and companies', 'tourists', 'athletes'], a: 'experts and companies' },
+                { q: 'China is advancing ___ cooperation pilots.', opts: ['data sector', 'sports', 'entertainment', 'fashion'], a: 'data sector' },
+                { q: 'The quantum standard is for ___ sources.', opts: ['energy', 'entropy', 'water', 'air'], a: 'entropy' },
+                { q: 'Commercial service is a potential ___.', opts: ['problem', 'application', 'issue', 'challenge'], a: 'application' }
+            ];
+            
+            for (let i = 0; i < 20; i++) {
+                const rq = readingTestQuestions[i];
+                questions.push({ type: 'reading', question: rq.q, options: rq.opts, answer: rq.a });
+            }
+            
+            // 渲染题目
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <p class="question-text">${i + 1}. ${q.question}</p>
+                    <div class="options">
+                        ${q.options.map((opt, j) => `<div class="option" onclick="selectTestOption(this, ${i}, '${opt}')">${String.fromCharCode(65 + j)}. ${opt}</div>`).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            return questions;
+        }
+        
+        let testQuestions = [];
+        let timerInterval = null;
+        let timeLeft = 3600;
+        
+        function selectTestOption(element, questionIndex, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            userAnswers.test[questionIndex] = answer;
+            saveData();
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+            }, 1000);
+        }
+        
+        function submitTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            let correct = 0;
+            testQuestions.forEach((q, i) => { if (userAnswers.test[i] === q.answer) correct++; });
+            userAnswers.testScore = correct;
+            saveData();
+            updateProgress();
+            document.getElementById('testScore').textContent = correct + '/100';
+            document.getElementById('finalScore').textContent = correct;
+            
+            let message = '';
+            if (correct >= 90) message = '太棒了！你做得非常好！';
+            else if (correct >= 80) message = '很好！继续保持！';
+            else if (correct >= 70) message = '不错，还有进步空间！';
+            else if (correct >= 60) message = '及格了，继续努力！';
+            else message = '需要加油哦！多练习吧！';
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+        
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
+        
+        function updateProgress() {
+            let progress = 0;
+            if (userAnswers.readingScore) progress += 25;
+            if (userAnswers.vocab.old.length > 0 || userAnswers.vocab.new.length > 0) {
+                progress += 25 * (userAnswers.vocab.old.length + userAnswers.vocab.new.length) / 50;
+            }
+            if (userAnswers.testScore) progress += 50;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressFill').textContent = Math.round(progress) + '%';
+            document.getElementById('totalProgress').textContent = Math.round(progress) + '%';
+        }
+        
+        window.onload = function() {
+            loadData();
+            renderWords();
+            testQuestions = generateTestQuestions();
+            startTimer();
+            updateVocabProgress();
+        };
+    </script>
+</body>
+</html>

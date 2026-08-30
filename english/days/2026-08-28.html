@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月28日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月28日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>Mudslide Hits Tibet Border Port, Rescue Underway</h3>
+                    <p>On August 27, 2026, a serious mudslide hit a border port in southwest China's Xizang (Tibet) Autonomous Region, causing heavy damage.</p>
+                    <p>According to official reports, three people have been confirmed dead, two people have been rescued, and 558 people remain missing as search and rescue operations continue.</p>
+                    <p>Premier Li Qiang arrived at the disaster area to guide rescue and relief efforts, urging all-out efforts to search for the missing and provide support to affected families.</p>
+                    <p>Multiple banks announced financial support measures to help with disaster relief, offering emergency loans and reducing burdens on affected businesses and residents.</p>
+                    <p>The weather forecast predicts rain for the next three days, which may bring new challenges to the ongoing rescue operations in the mountainous region.</p>
+                    <span class="source">Source: China Daily, 2026-08-27</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>China's Express Delivery Industry Reaches New Heights in Digital Era</h3>
+                    <p>On August 27, 2026, it was reported that China's express delivery industry reached a record high in 2025, handling 1,989.5 billion parcels throughout the year.</p>
+                    <p>The volume has grown 34 times compared with 2012, showing the rapid development of China's logistics sector over the past decade.</p>
+                    <p>China has ranked first in the world for express delivery volume for 12 consecutive years, maintaining its position as the largest parcel market globally.</p>
+                    <p>A digital upgrade is improving both the quality and efficiency of delivery services, with automation and smart technologies widely adopted in sorting centers.</p>
+                    <p>The industry continues to embrace innovation, using artificial intelligence and big data to optimize delivery routes and better serve hundreds of millions of consumers.</p>
+                    <span class="source">Source: China Daily, 2026-08-27</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、阅读理解、完形填空、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-08-28';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-28',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. When did the mudslide hit the border port?", options: ["August 25, 2026", "August 26, 2026", "August 27, 2026", "August 28, 2026"], answer: 2 },
+            { q: "2. In which region of China did the mudslide occur?", options: ["Xinjiang", "Xizang (Tibet)", "Yunnan", "Sichuan"], answer: 1 },
+            { q: "3. How many people have been confirmed dead?", options: ["Two", "Three", "Five", "Ten"], answer: 1 },
+            { q: "4. How many people have been rescued?", options: ["Two", "Three", "Five", "Ten"], answer: 0 },
+            { q: "5. How many people remain missing?", options: ["55", "358", "558", "758"], answer: 2 },
+            { q: "6. Who arrived at the disaster area to guide rescue efforts?", options: ["President Xi Jinping", "Premier Li Qiang", "A local mayor", "A foreign leader"], answer: 1 },
+            { q: "7. What did Premier Li Qiang urge?", options: ["Stopping the search", "All-out efforts to search for the missing", "Leaving the area", "Closing the port permanently"], answer: 1 },
+            { q: "8. What did multiple banks announce to help with?", options: ["New products", "Financial support for disaster relief", "Higher interest rates", "Branch closures"], answer: 1 },
+            { q: "9. What does the weather forecast predict for the next three days?", options: ["Sunshine", "Snow", "Rain", "Wind only"], answer: 2 },
+            { q: "10. What may the rain bring to the rescue operations?", options: ["Easier conditions", "New challenges", "No effect", "Faster progress"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. When was it reported that China's express delivery reached a record high?", options: ["August 25, 2026", "August 26, 2026", "August 27, 2026", "August 28, 2026"], answer: 2 },
+            { q: "12. How many parcels did China handle in 2025?", options: ["989.5 billion", "1,500 billion", "1,989.5 billion", "2,500 billion"], answer: 2 },
+            { q: "13. How many times has the volume grown compared with 2012?", options: ["12 times", "20 times", "34 times", "50 times"], answer: 2 },
+            { q: "14. For how many consecutive years has China ranked first in express delivery volume?", options: ["5 years", "8 years", "10 years", "12 years"], answer: 3 },
+            { q: "15. What position does China hold in the global parcel market?", options: ["Second", "Third", "First", "Fourth"], answer: 2 },
+            { q: "16. What is improving the quality and efficiency of delivery services?", options: ["A digital upgrade", "More workers", "Lower prices", "Fewer parcels"], answer: 0 },
+            { q: "17. What technologies are widely adopted in sorting centers?", options: ["Manual sorting only", "Automation and smart technologies", "Old machines", "Paper records"], answer: 1 },
+            { q: "18. What does the industry use to optimize delivery routes?", options: ["Guesswork", "Artificial intelligence and big data", "Random selection", "Old maps only"], answer: 1 },
+            { q: "19. Who does the delivery industry better serve?", options: ["A few companies", "Hundreds of millions of consumers", "Only the government", "Foreign countries only"], answer: 1 },
+            { q: "20. What does the industry continue to embrace?", options: ["Old methods", "Innovation", "Decline", "Closure"], answer: 1 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "mudslide", phonetic: "/ˈmʌdslaɪd/", meaning: "n. 泥石流" },
+            { word: "rescue", phonetic: "/ˈreskjuː/", meaning: "n./v. 救援；营救" },
+            { word: "disaster", phonetic: "/dɪˈzɑːstə(r)/", meaning: "n. 灾难" },
+            { word: "relief", phonetic: "/rɪˈliːf/", meaning: "n. 救援；减轻" },
+            { word: "missing", phonetic: "/ˈmɪsɪŋ/", meaning: "adj. 失踪的" },
+            { word: "confirm", phonetic: "/kənˈfɜːm/", meaning: "v. 确认；证实" },
+            { word: "express", phonetic: "/ɪkˈspres/", meaning: "adj. 快递的；快速的 n. 快递" },
+            { word: "delivery", phonetic: "/dɪˈlɪvəri/", meaning: "n. 投递；交付" },
+            { word: "digital", phonetic: "/ˈdɪdʒɪtl/", meaning: "adj. 数字的" },
+            { word: "parcel", phonetic: "/ˈpɑːsl/", meaning: "n. 包裹" },
+            { word: "logistics", phonetic: "/ləˈdʒɪstɪks/", meaning: "n. 物流" },
+            { word: "automation", phonetic: "/ˌɔːtəˈmeɪʃn/", meaning: "n. 自动化" },
+            { word: "efficiency", phonetic: "/ɪˈfɪʃnsi/", meaning: "n. 效率" },
+            { word: "consecutive", phonetic: "/kənˈsekjətɪv/", meaning: "adj. 连续的" },
+            { word: "upgrade", phonetic: "/ˌʌpˈɡreɪd/", meaning: "n./v. 升级" },
+            { word: "optimize", phonetic: "/ˈɒptɪmaɪz/", meaning: "v. 优化" },
+            { word: "innovation", phonetic: "/ˌɪnəˈveɪʃn/", meaning: "n. 创新" },
+            { word: "consumer", phonetic: "/kənˈsjuːmə(r)/", meaning: "n. 消费者" },
+            { word: "forecast", phonetic: "/ˈfɔːkɑːst/", meaning: "n./v. 预报" },
+            { word: "financial", phonetic: "/faɪˈnænʃl/", meaning: "adj. 金融的；财务的" }
+        ];
+
+        const oldVocabData = [
+            { word: "weather", phonetic: "/ˈweðə(r)/", meaning: "n. 天气" },
+            { word: "rain", phonetic: "/reɪn/", meaning: "n./v. 雨；下雨" },
+            { word: "mountain", phonetic: "/ˈmaʊntən/", meaning: "n. 山" },
+            { word: "river", phonetic: "/ˈrɪvə(r)/", meaning: "n. 河流" },
+            { word: "road", phonetic: "/rəʊd/", meaning: "n. 道路" },
+            { word: "bridge", phonetic: "/brɪdʒ/", meaning: "n. 桥" },
+            { word: "village", phonetic: "/ˈvɪlɪdʒ/", meaning: "n. 村庄" },
+            { word: "city", phonetic: "/ˈsɪti/", meaning: "n. 城市" },
+            { word: "country", phonetic: "/ˈkʌntri/", meaning: "n. 国家；乡村" },
+            { word: "people", phonetic: "/ˈpiːpl/", meaning: "n. 人们" },
+            { word: "family", phonetic: "/ˈfæməli/", meaning: "n. 家庭" },
+            { word: "help", phonetic: "/help/", meaning: "v./n. 帮助" },
+            { word: "safe", phonetic: "/seɪf/", meaning: "adj. 安全的" },
+            { word: "danger", phonetic: "/ˈdeɪndʒə(r)/", meaning: "n. 危险" },
+            { word: "money", phonetic: "/ˈmʌni/", meaning: "n. 钱" },
+            { word: "bank", phonetic: "/bæŋk/", meaning: "n. 银行" },
+            { word: "number", phonetic: "/ˈnʌmbə(r)/", meaning: "n. 数字；号码" },
+            { word: "year", phonetic: "/jɪə(r)/", meaning: "n. 年" },
+            { word: "time", phonetic: "/taɪm/", meaning: "n. 时间" },
+            { word: "work", phonetic: "/wɜːk/", meaning: "v./n. 工作" },
+            { word: "build", phonetic: "/bɪld/", meaning: "v. 建造" },
+            { word: "send", phonetic: "/send/", meaning: "v. 发送；寄送" },
+            { word: "receive", phonetic: "/rɪˈsiːv/", meaning: "v. 收到" },
+            { word: "grow", phonetic: "/ɡrəʊ/", meaning: "v. 增长；生长" },
+            { word: "fast", phonetic: "/fɑːst/", meaning: "adj./adv. 快的(地)" },
+            { word: "large", phonetic: "/lɑːdʒ/", meaning: "adj. 大的" },
+            { word: "world", phonetic: "/wɜːld/", meaning: "n. 世界" },
+            { word: "first", phonetic: "/fɜːst/", meaning: "adj. 第一的" },
+            { word: "record", phonetic: "/ˈrekɔːd/", meaning: "n. 记录 v. 记录" },
+            { word: "service", phonetic: "/ˈsɜːvɪs/", meaning: "n. 服务" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. A mudslide ___ the border port yesterday.", type: "choice", options: ["hit", "hits", "is hitting", "will hit"], answer: 0 },
+            { q: "2. Three people ___ confirmed dead so far.", type: "choice", options: ["have been", "has been", "was", "is"], answer: 0 },
+            { q: "3. Premier Li Qiang ___ at the disaster area to guide rescue.", type: "choice", options: ["arrived", "arrives", "arriving", "arrive"], answer: 0 },
+            { q: "4. The rescue operation ___ continuing now.", type: "choice", options: ["is", "are", "was", "were"], answer: 0 },
+            { q: "5. China ___ 1,989.5 billion parcels in 2025.", type: "choice", options: ["handled", "has handled", "handles", "handling"], answer: 0 },
+            { q: "6. The volume has grown 34 times ___ 2012.", type: "choice", options: ["since", "for", "from", "in"], answer: 0 },
+            { q: "7. China ___ first in the world for 12 consecutive years.", type: "choice", options: ["ranked", "has ranked", "ranks", "ranking"], answer: 1 },
+            { q: "8. She is ___ honest worker.", type: "choice", options: ["a", "an", "the", "that"], answer: 1 },
+            { q: "9. ___ the weather is rainy, rescue teams keep working.", type: "choice", options: ["If", "Although", "Because", "Unless"], answer: 1 },
+            { q: "10. He asked ___ the parcel would arrive.", type: "choice", options: ["what", "when", "which", "who"], answer: 1 },
+            { q: "11. There ___ 558 people missing in the disaster.", type: "choice", options: ["is", "are", "was", "be"], answer: 1 },
+            { q: "12. The bank ___ emergency loans to affected businesses.", type: "choice", options: ["offer", "offers", "offering", "offered"], answer: 1 },
+            { q: "13. They have ___ rescued two people.", type: "choice", options: ["yet", "already", "still", "just"], answer: 1 },
+            { q: "14. This is the ___ serious mudslide this year.", type: "choice", options: ["more", "most", "much", "very"], answer: 1 },
+            { q: "15. ___ you like to help with the rescue?", type: "choice", options: ["Do", "Would", "Are", "Is"], answer: 1 },
+            { q: "16. The parcel volume grew faster ___ last year.", type: "choice", options: ["as", "than", "like", "of"], answer: 1 },
+            { q: "17. The report told us ___ patient during the search.", type: "choice", options: ["be", "being", "to be", "to being"], answer: 2 },
+            { q: "18. We will deliver the parcel ___ the weather clears.", type: "choice", options: ["if", "unless", "because", "since"], answer: 0 },
+            { q: "19. China ___ first in express delivery for 12 years.", type: "choice", options: ["ranked", "ranks", "has ranked", "is ranking"], answer: 2 },
+            { q: "20. ___ terrible disaster it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. A synonym for 'disaster' is ___.", type: "choice", options: ["catastrophe", "success", "benefit", "joy"], answer: 0 },
+            { q: "22. The opposite of 'missing' is ___.", type: "choice", options: ["found", "lost", "gone", "hidden"], answer: 0 },
+            { q: "23. A ___ carries parcels to people's homes.", type: "choice", options: ["delivery worker", "teacher", "doctor", "farmer"], answer: 0 },
+            { q: "24. A ___ is a large mass of mud sliding down a mountain.", type: "choice", options: ["mudslide", "rainbow", "sunshine", "breeze"], answer: 0 },
+            { q: "25. The opposite of 'decline' is ___.", type: "choice", options: ["increase", "fall", "drop", "shrink"], answer: 0 },
+            { q: "26. ___ delivery means fast parcel transport.", type: "choice", options: ["Express", "Slow", "Delayed", "Late"], answer: 0 },
+            { q: "27. A ___ is a wrapped package sent to someone.", type: "choice", options: ["parcel", "mistake", "secret", "guess"], answer: 0 },
+            { q: "28. The opposite of 'failure' is ___.", type: "choice", options: ["success", "loss", "defeat", "error"], answer: 0 },
+            { q: "29. ___ refers to the management of goods transport.", type: "choice", options: ["Logistics", "Agriculture", "Culture", "Nature"], answer: 0 },
+            { q: "30. ___ means using machines to do work without people.", type: "choice", options: ["Automation", "Manual labor", "Hiring", "Rest"], answer: 0 },
+            { q: "31. ___ means doing things well and quickly.", type: "choice", options: ["Efficiency", "Delay", "Waste", "Slowdown"], answer: 0 },
+            { q: "32. ___ means happening one after another without break.", type: "choice", options: ["Consecutive", "Random", "Separate", "Occasional"], answer: 0 },
+            { q: "33. To ___ means to improve to a better version.", type: "choice", options: ["upgrade", "downgrade", "ignore", "destroy"], answer: 0 },
+            { q: "34. To ___ means to make something as good as possible.", type: "choice", options: ["optimize", "worsen", "neglect", "damage"], answer: 0 },
+            { q: "35. ___ means new ideas or methods.", type: "choice", options: ["Innovation", "Tradition", "Old habit", "Routine"], answer: 0 },
+            { q: "36. A ___ is a person who buys and uses products.", type: "choice", options: ["consumer", "producer", "seller", "maker"], answer: 0 },
+            { q: "37. A weather ___ predicts future conditions.", type: "choice", options: ["forecast", "history", "record", "report card"], answer: 0 },
+            { q: "38. ___ means related to money and banking.", type: "choice", options: ["Financial", "Natural", "Technical", "Physical"], answer: 0 },
+            { q: "39. To ___ means to say that something is true.", type: "choice", options: ["confirm", "deny", "doubt", "question"], answer: 0 },
+            { q: "40. ___ means help given to people in trouble.", type: "choice", options: ["Relief", "Burden", "Pressure", "Stress"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. The sun ___ in the east.", type: "choice", options: ["rise", "rises", "rose", "rising"], answer: 1 },
+            { q: "42. I have ___ time to help you.", type: "choice", options: ["a few", "few", "a little", "little"], answer: 2 },
+            { q: "43. She is afraid ___ storms.", type: "choice", options: ["of", "to", "from", "with"], answer: 0 },
+            { q: "44. The delivery truck ___ at 8 a.m. every day.", type: "choice", options: ["leave", "leaves", "left", "leaving"], answer: 1 },
+            { q: "45. He spent two hours ___ the parcels.", type: "choice", options: ["sort", "sorts", "sorted", "sorting"], answer: 3 },
+            { q: "46. This mountain is ___ dangerous to climb.", type: "choice", options: ["very", "too", "so", "quite"], answer: 1 },
+            { q: "47. We must ___ the rescue going.", type: "choice", options: ["keep", "let", "make", "have"], answer: 0 },
+            { q: "48. The mudslide happened ___ a rainy day.", type: "choice", options: ["in", "on", "at", "for"], answer: 1 },
+            { q: "49. I ___ my way in the storm.", type: "choice", options: ["lose", "lost", "have lost", "losing"], answer: 2 },
+            { q: "50. There are ___ days in a week.", type: "choice", options: ["five", "six", "seven", "eight"], answer: 2 },
+            { q: "51. He is ___ honest boy.", type: "choice", options: ["a", "an", "the", "/"], answer: 1 },
+            { q: "52. ___ heavy the rain is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 2 },
+            { q: "53. I don't know ___ to send the parcel.", type: "choice", options: ["what", "which", "how", "where"], answer: 3 },
+            { q: "54. She works as ___ as her brother.", type: "choice", options: ["good", "well", "better", "best"], answer: 1 },
+            { q: "55. The worker ___ hands were hurt is resting.", type: "choice", options: ["who", "which", "whose", "whom"], answer: 2 },
+            { q: "56. We will deliver if it ___ tomorrow.", type: "choice", options: ["doesn't rain", "won't rain", "didn't rain", "not rain"], answer: 0 },
+            { q: "57. The rain was ___ heavy ___ roads were blocked.", type: "choice", options: ["so; that", "too; to", "very; that", "such; that"], answer: 0 },
+            { q: "58. ___ of the parcels arrived on time.", type: "choice", options: ["Each", "Every", "All", "Both"], answer: 2 },
+            { q: "59. This year's volume is three times ___ as last year's.", type: "choice", options: ["big", "bigger", "biggest", "as big"], answer: 3 },
+            { q: "60. They decided ___ a new sorting system.", type: "choice", options: ["buy", "buying", "to buy", "bought"], answer: 2 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. When did the mudslide hit the border port?", type: "choice", options: ["August 25, 2026", "August 26, 2026", "August 27, 2026", "August 28, 2026"], answer: 2 },
+            { q: "62. In which region did the mudslide occur?", type: "choice", options: ["Xinjiang", "Xizang (Tibet)", "Yunnan", "Sichuan"], answer: 1 },
+            { q: "63. How many people were confirmed dead?", type: "choice", options: ["Two", "Three", "Five", "Ten"], answer: 1 },
+            { q: "64. How many people were rescued?", type: "choice", options: ["Two", "Three", "Five", "Ten"], answer: 0 },
+            { q: "65. How many people remain missing?", type: "choice", options: ["55", "358", "558", "758"], answer: 2 },
+            { q: "66. Who arrived to guide rescue efforts?", type: "choice", options: ["President Xi Jinping", "Premier Li Qiang", "A local mayor", "A foreign leader"], answer: 1 },
+            { q: "67. What did Premier Li Qiang urge?", type: "choice", options: ["Stopping the search", "All-out efforts to search", "Leaving the area", "Closing the port"], answer: 1 },
+            { q: "68. What did multiple banks announce?", type: "choice", options: ["New products", "Financial support for relief", "Higher rates", "Branch closures"], answer: 1 },
+            { q: "69. What does the forecast predict for the next three days?", type: "choice", options: ["Sunshine", "Snow", "Rain", "Wind only"], answer: 2 },
+            { q: "70. What may the rain bring to rescue operations?", type: "choice", options: ["Easier conditions", "New challenges", "No effect", "Faster progress"], answer: 1 },
+            { q: "71. When was the express delivery record reported?", type: "choice", options: ["August 25, 2026", "August 26, 2026", "August 27, 2026", "August 28, 2026"], answer: 2 },
+            { q: "72. How many parcels did China handle in 2025?", type: "choice", options: ["989.5 billion", "1,500 billion", "1,989.5 billion", "2,500 billion"], answer: 2 },
+            { q: "73. How many times has the volume grown since 2012?", type: "choice", options: ["12 times", "20 times", "34 times", "50 times"], answer: 2 },
+            { q: "74. For how many consecutive years has China ranked first?", type: "choice", options: ["5 years", "8 years", "10 years", "12 years"], answer: 3 },
+            { q: "75. What position does China hold globally?", type: "choice", options: ["Second", "Third", "First", "Fourth"], answer: 2 },
+            { q: "76. What is improving delivery quality and efficiency?", type: "choice", options: ["A digital upgrade", "More workers", "Lower prices", "Fewer parcels"], answer: 0 },
+            { q: "77. What technologies are adopted in sorting centers?", type: "choice", options: ["Manual only", "Automation and smart tech", "Old machines", "Paper records"], answer: 1 },
+            { q: "78. What optimizes delivery routes?", type: "choice", options: ["Guesswork", "AI and big data", "Random selection", "Old maps"], answer: 1 },
+            { q: "79. Who does the industry better serve?", type: "choice", options: ["A few companies", "Hundreds of millions of consumers", "Only government", "Foreign only"], answer: 1 },
+            { q: "80. What does the industry continue to embrace?", type: "choice", options: ["Old methods", "Innovation", "Decline", "Closure"], answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '李克强总理到达灾区指导救援。'", type: "choice", options: ["Premier Li Qiang arrived at the disaster area to guide rescue.", "Premier Li Qiang arrive disaster area.", "Premier Li Qiang arriving the area guide.", "Premier Li Qiang will arrives disaster area."], answer: 0 },
+            { q: "82. 'Rescue operations continue.' means operations are ___.", type: "choice", options: ["ongoing", "finished", "cancelled", "stopped"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["Three people has been confirmed dead.", "Three people have been confirmed dead.", "Three people has confirmed dead.", "Three people have confirmed dead."], answer: 1 },
+            { q: "84. 'China handled 1,989.5 billion parcels.' means ___.", type: "choice", options: ["China processed about 1,989.5 billion parcels", "China had no parcels", "China will handle parcels", "China destroyed parcels"], answer: 0 },
+            { q: "85. Choose the correct translation: '中国连续12年排名第一。'", type: "choice", options: ["China has ranked first for 12 consecutive years.", "China rank first 12 years.", "China ranking first consecutive 12.", "China has first rank 12 consecutive."], answer: 0 },
+            { q: "86. 'The bank will offer emergency loans.' In reported speech: He said the bank ___ emergency loans.", type: "choice", options: ["will offer", "would offer", "offers", "offered"], answer: 1 },
+            { q: "87. The passive voice of 'Banks announced financial support' is ___.", type: "choice", options: ["Financial support was announced by banks", "Financial support has announced banks", "Financial support announced banks", "Financial support is announce banks"], answer: 0 },
+            { q: "88. '558 people remain missing.' This uses the ___ voice.", type: "choice", options: ["active", "passive", "conditional", "imperative"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The rescue is continuing, ___?'", type: "choice", options: ["isn't it", "is it", "doesn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Neither the rain ___ the mud stopped them.' Fill in the blank.", type: "choice", options: ["or", "nor", "and", "but"], answer: 1 },
+            { q: "91. Choose the correct translation: '数字升级正在提高效率。'", type: "choice", options: ["A digital upgrade is improving efficiency.", "Digital upgrade improve efficient.", "Digital is upgrade efficiency.", "Efficiency upgrade digital is."], answer: 0 },
+            { q: "92. 'all-out efforts' means ___.", type: "choice", options: ["half-hearted tries", "complete and full efforts", "small attempts", "no effort"], answer: 1 },
+            { q: "93. 'If it rains, rescue will be harder.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The parcels has been delivered.", "The parcels have been delivered.", "The parcels has delivered.", "The parcels have delivered by the worker."], answer: 1 },
+            { q: "95. '___ the rain nor the mud stopped them.' Fill in the blank.", type: "choice", options: ["Either", "Neither", "Both", "Or"], answer: 1 },
+            { q: "96. The indirect speech of 'He said, \"I am rescuing people.\"' is ___.", type: "choice", options: ["He said he is rescuing people.", "He said he was rescuing people.", "He says he was rescuing people.", "He said I was rescuing people."], answer: 1 },
+            { q: "97. 'The banks offered emergency loans.' 'offered' means ___.", type: "choice", options: ["refused", "provided", "cancelled", "postponed"], answer: 1 },
+            { q: "98. 'China has ranked first for 12 years.' 'has ranked' is ___ tense.", type: "choice", options: ["present", "past", "present perfect", "future"], answer: 2 },
+            { q: "99. 'The mudslide hit the border port.' The subject is ___.", type: "choice", options: ["The mudslide", "hit", "the", "border port"], answer: 0 },
+            { q: "100. 'I'm looking forward to ___ the parcels.'", type: "choice", options: ["receive", "receiving", "received", "receives"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

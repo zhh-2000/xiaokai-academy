@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月25日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月25日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>A Green Promise Across Oceans</h3>
+                    <p>On August 23, 2026, an American man named Ronald Saccorsky arrived at Ordos Ejin Horo Airport in Inner Mongolia, China. He had traveled for more than thirty hours. When he walked out of the terminal, a Chinese woman named Yin Yuzhen was waiting for him. They hugged each other and cried. It had been more than twenty years since they last met.</p>
+                    <p>The story began in 1999. Ronald was an English teacher in China through a teacher exchange program. He learned about Yin Yuzhen, a woman who had spent her life planting trees in the Mu Us Desert, one of the largest deserts in China. Ronald raised 5,000 US dollars and sent it to Yin Yuzhen to help her buy tree seedlings. With this money, Yin and her husband planted more than 50,000 trees in the desert.</p>
+                    <p>In 2000, Ronald visited Yin Yuzhen in the Mu Us Desert. They planted trees together and took photos. After that visit, they lost contact. For more than twenty years, the trees grew tall and strong, but the two friends could not find each other.</p>
+                    <p>In May 2026, Yin Yuzhen posted a video online, looking for her American friend. She called him "Saikousi" (赛考斯), the Chinese name she had given him. Millions of people watched the video and helped spread the word. Finally, with the help of internet users, Ronald was found. On August 23, 2026, they met again in Ordos. The green promise made decades ago was finally fulfilled.</p>
+                    <p>Yin Yuzhen is now a national labor hero. She has planted millions of trees and turned parts of the desert into green land. Ronald said he was deeply moved by her spirit and determination. "Don't thank me," he said, "thank her. She is the real hero."</p>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Four Typhoons Dance Together</h3>
+                    <p>In late August 2026, an extremely rare weather phenomenon occurred over the Northwest Pacific and South China Sea: four typhoons were active at the same time. They were Shandel (the 18th), Zitan (the 19th), Jianlavi (the 20th), and Aisani (the 21st). This was called "four typhoons dancing together" (四台共舞).</p>
+                    <p>Typhoon Shandel reached super typhoon strength on August 24. It was accelerating toward China and was expected to enter the East China Sea on August 26. It might make landfall along the coast of Zhejiang and Fujian provinces on August 27. The central meteorological station issued a blue typhoon warning.</p>
+                    <p>Typhoon Zitan was hovering over the Beibu Gulf, bringing heavy rain to Guangxi, Guangdong, and Hainan. In Nanning, the capital of Guangxi, the Yong River rose significantly, flooding riverside parks and walkways. Rescue workers in Guangxi helped transfer trapped residents to safe areas.</p>
+                    <p>Typhoon Jianlavi had already affected Fujian, Zhejiang, and Taiwan, and was expected to weaken over the Taiwan Strait on August 24. Typhoon Aisani, a tropical storm, was just formed on the morning of August 24.</p>
+                    <p>The chief forecaster of the Central Meteorological Station explained that so far in 2026, 20 typhoons had formed in the Northwest Pacific and South China Sea, which was 8 more than the historical average for the same period. This was mainly related to the current El Nino conditions. Under El Nino, typhoon activity in the Western Pacific becomes more active.</p>
+                    <p>Local governments in Hainan, Guangxi, and Guangdong organized fishing boats to return to ports and fishermen to come ashore. Scenic spots and construction sites in affected areas were closed. The National Flood Control Headquarters maintained a level-four emergency response for these three provinces.</p>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、阅读理解、完形填空、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-08-25';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-25',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. Where did Ronald Saccorsky arrive in China?", options: ["Beijing", "Shanghai", "Ordos Ejin Horo Airport", "Guangzhou"], answer: 2 },
+            { q: "2. How long had Ronald traveled before arriving?", options: ["10 hours", "20 hours", "More than 30 hours", "More than 40 hours"], answer: 2 },
+            { q: "3. When did the story between Ronald and Yin Yuzhen begin?", options: ["1999", "2000", "2026", "1995"], answer: 0 },
+            { q: "4. How much money did Ronald raise to help Yin Yuzhen?", options: ["3,000 dollars", "5,000 dollars", "10,000 dollars", "50,000 dollars"], answer: 1 },
+            { q: "5. How many trees were planted with Ronald's money?", options: ["5,000", "10,000", "50,000", "500,000"], answer: 2 },
+            { q: "6. When did Ronald first visit Yin Yuzhen in the desert?", options: ["1999", "2000", "2001", "2026"], answer: 1 },
+            { q: "7. What is the Chinese name Yin Yuzhen gave to Ronald?", options: ["Saikao", "Saikousi", "Saikosi", "Saikou"], answer: 1 },
+            { q: "8. When did Yin Yuzhen post the video looking for Ronald?", options: ["March 2026", "April 2026", "May 2026", "June 2026"], answer: 2 },
+            { q: "9. What is Yin Yuzhen's title?", options: ["A teacher", "A farmer", "A national labor hero", "A scientist"], answer: 2 },
+            { q: "10. What did Ronald say about Yin Yuzhen?", options: ["Thank me", "She is the real hero", "I am the hero", "Don't thank her"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. How many typhoons were active at the same time?", options: ["Two", "Three", "Four", "Five"], answer: 2 },
+            { q: "12. Which typhoon reached super typhoon strength?", options: ["Zitan", "Shandel", "Jianlavi", "Aisani"], answer: 1 },
+            { q: "13. When was Shandel expected to enter the East China Sea?", options: ["August 24", "August 25", "August 26", "August 27"], answer: 2 },
+            { q: "14. Where might Shandel make landfall?", options: ["Guangdong and Guangxi", "Zhejiang and Fujian", "Hainan and Guangxi", "Taiwan and Hainan"], answer: 1 },
+            { q: "15. Where was Typhoon Zitan hovering?", options: ["East China Sea", "Taiwan Strait", "Beibu Gulf", "South China Sea"], answer: 2 },
+            { q: "16. Which city's riverside parks were flooded?", options: ["Nanning", "Guangzhou", "Haikou", "Xiamen"], answer: 0 },
+            { q: "17. How many typhoons had formed so far in 2026?", options: ["12", "15", "20", "25"], answer: 2 },
+            { q: "18. How many more typhoons than the historical average?", options: ["3", "5", "8", "10"], answer: 2 },
+            { q: "19. What weather condition was mainly responsible?", options: ["La Nina", "El Nino", "Monsoon", "Drought"], answer: 1 },
+            { q: "20. What level emergency response was maintained?", options: ["Level one", "Level two", "Level three", "Level four"], answer: 3 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "determination", phonetic: "/dɪˌtɜːmɪˈneɪʃn/", meaning: "n. 决心；果断" },
+            { word: "seedling", phonetic: "/ˈsiːdlɪŋ/", meaning: "n. 幼苗；树苗" },
+            { word: "desert", phonetic: "/ˈdezət/", meaning: "n. 沙漠 v. 遗弃" },
+            { word: "terminal", phonetic: "/ˈtɜːmɪnl/", meaning: "n. 航站楼；终端" },
+            { word: "typhoon", phonetic: "/taɪˈfuːn/", meaning: "n. 台风" },
+            { word: "phenomenon", phonetic: "/fəˈnɒmɪnən/", meaning: "n. 现象" },
+            { word: "accelerate", phonetic: "/əkˈseləreɪt/", meaning: "v. 加速" },
+            { word: "hover", phonetic: "/ˈhɒvə(r)/", meaning: "v. 盘旋；徘徊" },
+            { word: "meteorological", phonetic: "/ˌmiːtiərəˈlɒdʒɪkl/", meaning: "adj. 气象的" },
+            { word: "evacuate", phonetic: "/ɪˈvækjueɪt/", meaning: "v. 疏散；撤离" },
+            { word: "extreme", phonetic: "/ɪkˈstriːm/", meaning: "adj. 极端的；极端的" },
+            { word: "fulfill", phonetic: "/fʊlˈfɪl/", meaning: "v. 实现；履行" },
+            { word: "contact", phonetic: "/ˈkɒntækt/", meaning: "n./v. 接触；联系" },
+            { word: "donate", phonetic: "/dəʊˈneɪt/", meaning: "v. 捐赠" },
+            { word: "flood", phonetic: "/flʌd/", meaning: "n. 洪水 v. 淹没" },
+            { word: "rescue", phonetic: "/ˈreskjuː/", meaning: "n./v. 营救" },
+            { word: "warning", phonetic: "/ˈwɔːnɪŋ/", meaning: "n. 警告" },
+            { word: "rare", phonetic: "/reə(r)/", meaning: "adj. 稀有的；罕见的" },
+            { word: "hero", phonetic: "/ˈhɪərəʊ/", meaning: "n. 英雄" },
+            { word: "promise", phonetic: "/ˈprɒmɪs/", meaning: "n. 诺言 v. 承诺" }
+        ];
+
+        const oldVocabData = [
+            { word: "apple", phonetic: "/ˈæpl/", meaning: "n. 苹果" },
+            { word: "beautiful", phonetic: "/ˈbjuːtɪfl/", meaning: "adj. 美丽的" },
+            { word: "country", phonetic: "/ˈkʌntri/", meaning: "n. 国家" },
+            { word: "danger", phonetic: "/ˈdeɪndʒə(r)/", meaning: "n. 危险" },
+            { word: "energy", phonetic: "/ˈenədʒi/", meaning: "n. 能量" },
+            { word: "friend", phonetic: "/frend/", meaning: "n. 朋友" },
+            { word: "garden", phonetic: "/ˈɡɑːdn/", meaning: "n. 花园" },
+            { word: "happy", phonetic: "/ˈhæpi/", meaning: "adj. 快乐的" },
+            { word: "important", phonetic: "/ɪmˈpɔːtnt/", meaning: "adj. 重要的" },
+            { word: "journey", phonetic: "/ˈdʒɜːni/", meaning: "n. 旅程" },
+            { word: "knowledge", phonetic: "/ˈnɒlɪdʒ/", meaning: "n. 知识" },
+            { word: "language", phonetic: "/ˈlæŋɡwɪdʒ/", meaning: "n. 语言" },
+            { word: "mountain", phonetic: "/ˈmaʊntən/", meaning: "n. 山" },
+            { word: "nature", phonetic: "/ˈneɪtʃə(r)/", meaning: "n. 自然" },
+            { word: "ocean", phonetic: "/ˈəʊʃn/", meaning: "n. 海洋" },
+            { word: "people", phonetic: "/ˈpiːpl/", meaning: "n. 人们" },
+            { word: "quiet", phonetic: "/ˈkwaɪət/", meaning: "adj. 安静的" },
+            { word: "river", phonetic: "/ˈrɪvə(r)/", meaning: "n. 河流" },
+            { word: "school", phonetic: "/skuːl/", meaning: "n. 学校" },
+            { word: "teacher", phonetic: "/ˈtiːtʃə(r)/", meaning: "n. 老师" },
+            { word: "understand", phonetic: "/ˌʌndəˈstænd/", meaning: "v. 理解" },
+            { word: "village", phonetic: "/ˈvɪlɪdʒ/", meaning: "n. 村庄" },
+            { word: "water", phonetic: "/ˈwɔːtə(r)/", meaning: "n. 水" },
+            { word: "yellow", phonetic: "/ˈjeləʊ/", meaning: "adj. 黄色的" },
+            { word: "animal", phonetic: "/ˈænɪml/", meaning: "n. 动物" },
+            { word: "bridge", phonetic: "/brɪdʒ/", meaning: "n. 桥" },
+            { word: "clock", phonetic: "/klɒk/", meaning: "n. 钟表" },
+            { word: "dream", phonetic: "/driːm/", meaning: "n./v. 梦想" },
+            { word: "earth", phonetic: "/ɜːθ/", meaning: "n. 地球" },
+            { word: "forest", phonetic: "/ˈfɒrɪst/", meaning: "n. 森林" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. He ___ to school every day.", type: "choice", options: ["go", "goes", "going", "went"], answer: 1 },
+            { q: "2. There ___ a book on the table.", type: "choice", options: ["is", "are", "am", "be"], answer: 0 },
+            { q: "3. I ___ my homework now.", type: "choice", options: ["do", "did", "am doing", "doing"], answer: 2 },
+            { q: "4. She ___ never been to Beijing.", type: "choice", options: ["have", "has", "had", "having"], answer: 1 },
+            { q: "5. The book is ___ the desk.", type: "choice", options: ["in", "on", "at", "under"], answer: 1 },
+            { q: "6. ___ you like tea or coffee?", type: "choice", options: ["Do", "Does", "Are", "Is"], answer: 0 },
+            { q: "7. He is ___ than his brother.", type: "choice", options: ["tall", "taller", "tallest", "more tall"], answer: 1 },
+            { q: "8. This is ___ interesting book.", type: "choice", options: ["a", "an", "the", "/"], answer: 1 },
+            { q: "9. I will call you ___ I arrive.", type: "choice", options: ["if", "when", "because", "although"], answer: 1 },
+            { q: "10. She ___ English for three years.", type: "choice", options: ["studies", "studied", "has studied", "is studying"], answer: 2 },
+            { q: "11. The weather ___ hot yesterday.", type: "choice", options: ["is", "was", "were", "are"], answer: 1 },
+            { q: "12. ___ nice weather it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 0 },
+            { q: "13. He asked me ___ I lived.", type: "choice", options: ["where", "what", "which", "who"], answer: 0 },
+            { q: "14. The teacher told us ___ quiet.", type: "choice", options: ["be", "being", "to be", "to being"], answer: 2 },
+            { q: "15. I prefer reading ___ watching TV.", type: "choice", options: ["than", "to", "for", "with"], answer: 1 },
+            { q: "16. She is ___ girl I have ever seen.", type: "choice", options: ["beautiful", "more beautiful", "the most beautiful", "most beautiful"], answer: 2 },
+            { q: "17. The meeting ___ at 9 o'clock tomorrow.", type: "choice", options: ["start", "starts", "will start", "started"], answer: 2 },
+            { q: "18. Would you like ___ juice?", type: "choice", options: ["some", "any", "much", "many"], answer: 0 },
+            { q: "19. He ___ to the park last Sunday.", type: "choice", options: ["go", "goes", "went", "has gone"], answer: 2 },
+            { q: "20. Neither Tom nor I ___ a student.", type: "choice", options: ["am", "is", "are", "be"], answer: 0 },
+            // 21-40 词汇运用
+            { q: "21. The opposite of 'happy' is ___.", type: "choice", options: ["glad", "sad", "angry", "tired"], answer: 1 },
+            { q: "22. A baby dog is called a ___.", type: "choice", options: ["kitten", "puppy", "calf", "cub"], answer: 1 },
+            { q: "23. The ___ month of the year is December.", type: "choice", options: ["eleventh", "twelfth", "tenth", "ninth"], answer: 1 },
+            { q: "24. We use a ___ to see distant objects.", type: "choice", options: ["microscope", "telescope", "camera", "mirror"], answer: 1 },
+            { q: "25. The plural form of 'child' is ___.", type: "choice", options: ["childs", "children", "childes", "childen"], answer: 1 },
+            { q: "26. Someone who treats patients is a ___.", type: "choice", options: ["teacher", "doctor", "driver", "cook"], answer: 1 },
+            { q: "27. The capital of China is ___.", type: "choice", options: ["Shanghai", "Guangzhou", "Beijing", "Shenzhen"], answer: 2 },
+            { q: "28. 'Big' is a synonym for ___.", type: "choice", options: ["small", "tiny", "large", "short"], answer: 2 },
+            { q: "29. We ___ our teeth twice a day.", type: "choice", options: ["wash", "clean", "brush", "cut"], answer: 2 },
+            { q: "30. The season after spring is ___.", type: "choice", options: ["winter", "summer", "autumn", "fall"], answer: 1 },
+            { q: "31. A ___ is used to measure temperature.", type: "choice", options: ["ruler", "thermometer", "clock", "scale"], answer: 1 },
+            { q: "32. The opposite of 'expensive' is ___.", type: "choice", options: ["cheap", "costly", "rich", "poor"], answer: 0 },
+            { q: "33. We buy bread at a ___.", type: "choice", options: ["butcher's", "baker's", "grocer's", "chemist's"], answer: 1 },
+            { q: "34. The past tense of 'run' is ___.", type: "choice", options: ["runned", "ran", "running", "runs"], answer: 1 },
+            { q: "35. A group of sheep is called a ___.", type: "choice", options: ["herd", "flock", "pack", "swarm"], answer: 1 },
+            { q: "36. 'Quickly' is the ___ form of 'quick'.", type: "choice", options: ["noun", "verb", "adverb", "adjective"], answer: 2 },
+            { q: "37. The word 'determination' means ___.", type: "choice", options: ["giving up", "firm decision", "feeling sad", "being lazy"], answer: 1 },
+            { q: "38. A 'seedling' is a ___.", type: "choice", options: ["young tree", "type of bird", "kind of rock", "sea creature"], answer: 0 },
+            { q: "39. 'Evacuate' means to ___.", type: "choice", options: ["stay", "leave a dangerous place", "sleep", "eat"], answer: 1 },
+            { q: "40. 'Phenomenon' is a ___ word.", type: "choice", options: ["common", "scientific", "informal", "ancient"], answer: 1 },
+            // 41-60 完形填空
+            { q: "41. The sun ___ in the east.", type: "choice", options: ["rise", "rises", "rose", "rising"], answer: 1 },
+            { q: "42. I have ___ money in my pocket.", type: "choice", options: ["a few", "few", "a little", "little"], answer: 2 },
+            { q: "43. She is afraid ___ dogs.", type: "choice", options: ["of", "to", "from", "with"], answer: 0 },
+            { q: "44. The train ___ at 8 a.m. every day.", type: "choice", options: ["leave", "leaves", "left", "leaving"], answer: 1 },
+            { q: "45. He spent two hours ___ his homework.", type: "choice", options: ["do", "does", "did", "doing"], answer: 3 },
+            { q: "46. This problem is ___ difficult for me.", type: "choice", options: ["very", "too", "so", "quite"], answer: 1 },
+            { q: "47. We must ___ our classroom clean.", type: "choice", options: ["keep", "let", "make", "have"], answer: 0 },
+            { q: "48. The story happened ___ a rainy night.", type: "choice", options: ["in", "on", "at", "for"], answer: 1 },
+            { q: "49. I ___ my keys. I can't find them.", type: "choice", options: ["lose", "lost", "have lost", "losing"], answer: 2 },
+            { q: "50. There are ___ days in a week.", type: "choice", options: ["five", "six", "seven", "eight"], answer: 2 },
+            { q: "51. He is ___ honest boy.", type: "choice", options: ["a", "an", "the", "/"], answer: 1 },
+            { q: "52. ___ interesting the story is!", type: "choice", options: ["What", "What an", "How", "How an"], answer: 2 },
+            { q: "53. I don't know ___ to do next.", type: "choice", options: ["what", "which", "how", "where"], answer: 0 },
+            { q: "54. She speaks English as ___ as her sister.", type: "choice", options: ["good", "well", "better", "best"], answer: 1 },
+            { q: "55. The boy ___ parents are teachers is my friend.", type: "choice", options: ["who", "which", "whose", "whom"], answer: 2 },
+            { q: "56. I will go to the park if it ___ tomorrow.", type: "choice", options: ["doesn't rain", "won't rain", "didn't rain", "not rain"], answer: 0 },
+            { q: "57. He was ___ tired ___ he couldn't walk.", type: "choice", options: ["so; that", "too; to", "very; that", "such; that"], answer: 0 },
+            { q: "58. ___ of the students passed the exam.", type: "choice", options: ["Each", "Every", "All", "Both"], answer: 2 },
+            { q: "59. This room is three times ___ as that one.", type: "choice", options: ["big", "bigger", "biggest", "as big"], answer: 3 },
+            { q: "60. He decided ___ a new car.", type: "choice", options: ["buy", "buying", "to buy", "bought"], answer: 2 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. Ronald traveled for ___ hours to reach Ordos.", type: "choice", options: ["20", "25", "over 30", "over 40"], answer: 2 },
+            { q: "62. Yin Yuzhen is from ___ in Inner Mongolia.", type: "choice", options: ["Beijing", "Mu Us Desert", "Shanghai", "Guangzhou"], answer: 1 },
+            { q: "63. Ronald was a ___ in China.", type: "choice", options: ["doctor", "engineer", "English teacher", "businessman"], answer: 2 },
+            { q: "64. The trees planted with Ronald's money grew to ___ trees.", type: "choice", options: ["5,000", "20,000", "50,000", "100,000"], answer: 2 },
+            { q: "65. Yin Yuzhen is a national ___ hero.", type: "choice", options: ["war", "labor", "sport", "film"], answer: 1 },
+            { q: "66. Four typhoons danced together in ___ 2026.", type: "choice", options: ["early", "mid", "late", "mid-autumn"], answer: 2 },
+            { q: "67. Typhoon Shandel reached ___ typhoon strength.", type: "choice", options: ["tropical storm", "super", "strong", "weak"], answer: 1 },
+            { q: "68. ___ typhoon was hovering over the Beibu Gulf.", type: "choice", options: ["Shandel", "Zitan", "Jianlavi", "Aisani"], answer: 1 },
+            { q: "69. The Yong River is in ___.", type: "choice", options: ["Nanning", "Guangzhou", "Xiamen", "Fuzhou"], answer: 0 },
+            { q: "70. ___ typhoon was formed on August 24 morning.", type: "choice", options: ["Shandel", "Zitan", "Jianlavi", "Aisani"], answer: 3 },
+            // 71-80 句型转换/翻译
+            { q: "71. Choose the correct translation: '他每天去上学。'", type: "choice", options: ["He go to school every day.", "He goes to school every day.", "He going to school every day.", "He went to school every day."], answer: 1 },
+            { q: "72. 'I have been studying English for three years.' means ___", type: "choice", options: ["I studied English three years ago", "I started learning English three years ago and still study it", "I will study English for three years", "I studied English for three years but stopped"], answer: 1 },
+            { q: "73. Choose the correct sentence:", type: "choice", options: ["He don't like apples.", "He doesn't likes apples.", "He doesn't like apples.", "He not like apples."], answer: 2 },
+            { q: "74. 'She is taller than ___ in her class.'", type: "choice", options: ["any girl", "any other girl", "other girls", "all girls"], answer: 1 },
+            { q: "75. Choose the correct translation: '我喜欢阅读胜过看电视。'", type: "choice", options: ["I like reading than watching TV.", "I prefer reading to watching TV.", "I prefer reading than watching TV.", "I like reading more watching TV."], answer: 1 },
+            { q: "76. 'What a beautiful flower!' is a(n) ___ sentence.", type: "choice", options: ["declarative", "interrogative", "imperative", "exclamatory"], answer: 3 },
+            { q: "77. The passive voice of 'People speak English in many countries' is ___", type: "choice", options: ["English speaks in many countries", "English is spoken in many countries", "English was spoken in many countries", "English is speaking in many countries"], answer: 1 },
+            { q: "78. 'He said, \"I am busy.\"' in reported speech is ___", type: "choice", options: ["He said he is busy", "He said he was busy", "He says he was busy", "He said I was busy"], answer: 1 },
+            { q: "79. Choose the correct question tag: 'He can swim, ___?'", type: "choice", options: ["can't he", "can he", "doesn't he", "isn't he"], answer: 0 },
+            { q: "80. 'Neither he nor I ___ a doctor.' Fill in the blank.", type: "choice", options: ["am", "is", "are", "be"], answer: 0 },
+            // 81-100 综合
+            { q: "81. The word 'rescue' means ___.", type: "choice", options: ["to help someone in danger", "to run away", "to sleep", "to eat"], answer: 0 },
+            { q: "82. 'Flood' as a verb means ___.", type: "choice", options: ["to dry", "to cover with water", "to clean", "to build"], answer: 1 },
+            { q: "83. 'Hover' means ___.", type: "choice", options: ["to run fast", "to stay in one place in the air", "to sleep", "to eat"], answer: 1 },
+            { q: "84. 'Meteorological' is related to ___.", type: "choice", options: ["medicine", "weather", "music", "math"], answer: 1 },
+            { q: "85. 'El Nino' is a ___ phenomenon.", type: "choice", options: ["cultural", "climate", "historical", "musical"], answer: 1 },
+            { q: "86. The word 'determination' has ___ syllables.", type: "choice", options: ["3", "4", "5", "6"], answer: 2 },
+            { q: "87. 'Fulfill' is closest in meaning to ___.", type: "choice", options: ["break", "achieve", "lose", "forget"], answer: 1 },
+            { q: "88. 'Contact' can be used as both a ___ and a verb.", type: "choice", options: ["adjective", "noun", "adverb", "pronoun"], answer: 1 },
+            { q: "89. 'Donate' means to ___.", type: "choice", options: ["take", "give money or goods", "sell", "buy"], answer: 1 },
+            { q: "90. 'Rare' is the opposite of ___.", type: "choice", options: ["scarce", "common", "unique", "special"], answer: 1 },
+            { q: "91. Which is correct? 'I ___ him since 2020.'", type: "choice", options: ["know", "knew", "have known", "am knowing"], answer: 2 },
+            { q: "92. 'The boy ___ is playing football is my brother.'", type: "choice", options: ["who", "which", "whose", "whom"], answer: 0 },
+            { q: "93. Choose the correct article: '___ sun rises in ___ east.'", type: "choice", options: ["A; the", "The; the", "The; /", "A; an"], answer: 1 },
+            { q: "94. 'I will go ___ it rains tomorrow.'", type: "choice", options: ["if", "unless", "because", "since"], answer: 1 },
+            { q: "95. He is ___ honest person that everyone trusts him.", type: "choice", options: ["so a", "such a", "such an", "so an"], answer: 2 },
+            { q: "96. The correct spelling is ___.", type: "choice", options: ["recieve", "receive", "receeve", "receve"], answer: 1 },
+            { q: "97. '___ did you go yesterday?' 'I went to the library.'", type: "choice", options: ["What", "Where", "When", "Why"], answer: 1 },
+            { q: "98. She has ___ been to Shanghai, has she?", type: "choice", options: ["ever", "never", "already", "just"], answer: 1 },
+            { q: "99. The comparative form of 'good' is ___.", type: "choice", options: ["gooder", "more good", "better", "best"], answer: 2 },
+            { q: "100. 'I'm looking forward to ___ you.'", type: "choice", options: ["see", "seeing", "saw", "seen"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题中。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

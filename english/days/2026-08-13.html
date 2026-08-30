@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年8月13日 | 小剀学苑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header .date {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 30px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #764ba2;
+        }
+        
+        .reading-passage {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .passage-title {
+            color: #333;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .passage-content {
+            color: #555;
+            line-height: 2;
+            font-size: 1.1em;
+        }
+        
+        .question-item {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background: #e8eaf6;
+            border-color: #667eea;
+        }
+        
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .option.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+        
+        .option.wrong {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+        
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .word-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf6 100%);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .word-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+        
+        .word-card .word {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .word-card .pronunciation {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .word-card .meaning {
+            color: #555;
+            font-size: 1.1em;
+        }
+        
+        .word-card .example {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+            font-style: italic;
+        }
+        
+        .word-card.memorized {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+        }
+        
+        .word-card.memorized .word {
+            color: #2e7d32;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, #4caf50, #45a049);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+        }
+        
+        .stat-card .number {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .stat-card .label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .test-timer {
+            background: #fff3e0;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .test-timer .time {
+            font-size: 3em;
+            color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .test-timer .label {
+            color: #666;
+        }
+        
+        .result-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .result-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .result-score {
+            font-size: 5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .result-message {
+            font-size: 1.5em;
+            color: #333;
+            margin: 20px 0;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 15px 30px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab:hover {
+            border-color: #667eea;
+        }
+        
+        .tab.active {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .section-title {
+                font-size: 1.4em;
+            }
+            
+            .word-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回英语首页</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> 英语学习</h1>
+            <p class="date">2026年8月13日 星期三</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('reading')">📖 阅读理解</div>
+            <div class="tab" onclick="showSection('vocab')">📚 单词学习</div>
+            <div class="tab" onclick="showSection('test')">📝 综合测试</div>
+        </div>
+        
+        <!-- 阅读理解部分 -->
+        <div id="readingSection" class="section">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 阅读理解 (2篇)</h2>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 1: China's New Science Education Initiative</h3>
+                <p class="passage-content">
+                    As primary and middle school students across China return to school in September, they will spend more time on hands-on scientific projects, with students in grades four through nine required to complete at least one scientific inquiry project each semester, according to a guideline issued by the Ministry of Education. The guideline, which launches the "learning by doing" initiative and takes effect in the fall semester, aims to address the overemphasis on knowledge transmission and the relative neglect of competency development in science education. This new approach encourages students to explore, think, and practice through actual scientific inquiry activities, fostering their scientific spirit and innovative thinking.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">1. When will the new science education guideline take effect?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. In August 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. In September 2026</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. In January 2027</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. In June 2027</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">2. Which grades are required to complete scientific inquiry projects?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Grades 1-3</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Grades 4-9</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Grades 10-12</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. All grades</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">3. What is the main purpose of the "learning by doing" initiative?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. To increase homework</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. To reduce science classes</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. To balance knowledge and competency development</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. To eliminate exams</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">4. What does the new approach encourage students to do?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Memorize more facts</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Explore, think, and practice</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Watch more videos</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Study alone</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">5. What quality does the initiative aim to foster in students?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'A')">A. Scientific spirit and innovative thinking</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'B')">B. Athletic ability</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'C')">C. Musical talent</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 1, 'D')">D. Artistic skills</div>
+                </div>
+            </div>
+            
+            <div class="reading-passage">
+                <h3 class="passage-title">Passage 2: China's Natural Resource Management</h3>
+                <p class="passage-content">
+                    China is accelerating the construction of a "one map" platform for natural resources, according to the Ministry of Natural Resources. This initiative aims to create a comprehensive digital system that integrates various natural resource data, including land, minerals, forests, and water resources. The platform will enable better monitoring, management, and protection of natural resources across the country. By using advanced technologies such as satellite remote sensing and big data analysis, the system will provide real-time updates on resource conditions, helping decision-makers make more informed choices about sustainable development and environmental protection.
+                </p>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">6. What is China building for natural resource management?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. A new museum</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. A "one map" platform</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. A research center</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. A national park</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">7. What types of resources will be included in the platform?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Only water resources</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Only mineral resources</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Land, minerals, forests, and water</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Only forest resources</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">8. What technologies are used in this system?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Paper maps only</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Satellite remote sensing and big data</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Manual surveys only</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Telephone communications</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">9. What will the platform provide for decision-makers?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. Real-time updates on resource conditions</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Historical data only</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. Entertainment news</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. Weather forecasts</div>
+                </div>
+            </div>
+            
+            <div class="question-item">
+                <p class="question-text">10. What is the ultimate goal of this initiative?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'A')">A. To increase mining</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'B')">B. Sustainable development and environmental protection</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'C')">C. To reduce forests</div>
+                    <div class="option" onclick="selectOption(this, 'reading', 2, 'D')">D. To build more factories</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitReadingAnswers()"><i class="fas fa-check"></i> 提交阅读答案</button>
+            </div>
+        </div>
+        
+        <!-- 单词学习部分 -->
+        <div id="vocabSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-book"></i> 单词学习</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #4caf50; margin-bottom: 20px;"><i class="fas fa-history"></i> 复习单词 (30个)</h3>
+                <div class="word-grid" id="oldWordsGrid">
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-star"></i> 新学单词 (20个)</h3>
+                <div class="word-grid" id="newWordsGrid">
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-success" onclick="saveVocabProgress()"><i class="fas fa-save"></i> 保存学习进度</button>
+            </div>
+        </div>
+        
+        <!-- 综合测试部分 -->
+        <div id="testSection" class="section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 综合测试 (100题)</h2>
+            
+            <div class="test-timer">
+                <div class="time" id="timer">60:00</div>
+                <div class="label">剩余时间</div>
+            </div>
+            
+            <div id="testQuestions">
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="submitTest()"><i class="fas fa-paper-plane"></i> 提交测试</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card">
+                <div class="number" id="readingScore">-</div>
+                <div class="label">阅读理解得分</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="vocabProgress">0/50</div>
+                <div class="label">单词掌握进度</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="testScore">-</div>
+                <div class="label">测试得分</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="totalProgress">0%</div>
+                <div class="label">总体完成度</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="result-score" id="finalScore">0</div>
+            <div class="result-message" id="resultMessage">继续努力！</div>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">确定</button>
+        </div>
+    </div>
+    
+    <script>
+        // 数据初始化
+        const STORAGE_KEY = 'xiaokai_english_2026_08_13';
+        
+        // 老单词数据（30个）
+        const oldWords = [
+            { word: 'important', pronunciation: '/ɪmˈpɔːtənt/', meaning: '重要的', example: 'It is important to study hard.' },
+            { word: 'different', pronunciation: '/ˈdɪfərənt/', meaning: '不同的', example: 'They have different opinions.' },
+            { word: 'beautiful', pronunciation: '/ˈbjuːtɪfl/', meaning: '美丽的', example: 'The flowers are beautiful.' },
+            { word: 'interesting', pronunciation: '/ˈɪntrəstɪŋ/', meaning: '有趣的', example: 'This book is very interesting.' },
+            { word: 'wonderful', pronunciation: '/ˈwʌndəfl/', meaning: '精彩的', example: 'What a wonderful day!' },
+            { word: 'necessary', pronunciation: '/ˈnesəseri/', meaning: '必要的', example: 'Exercise is necessary for health.' },
+            { word: 'knowledge', pronunciation: '/ˈnɒlɪdʒ/', meaning: '知识', example: 'Knowledge is power.' },
+            { word: 'environment', pronunciation: '/ɪnˈvaɪrənmənt/', meaning: '环境', example: 'We should protect the environment.' },
+            { word: 'experience', pronunciation: '/ɪkˈspɪəriəns/', meaning: '经验；经历', example: 'I had a great experience.' },
+            { word: 'understand', pronunciation: '/ˌʌndəˈstænd/', meaning: '理解', example: 'I understand your point.' },
+            { word: 'remember', pronunciation: '/rɪˈmembə/', meaning: '记得', example: 'Please remember to call me.' },
+            { word: 'practice', pronunciation: '/ˈpræktɪs/', meaning: '练习', example: 'Practice makes perfect.' },
+            { word: 'improve', pronunciation: '/ɪmˈpruːv/', meaning: '提高', example: 'I want to improve my English.' },
+            { word: 'achieve', pronunciation: '/əˈtʃiːv/', meaning: '实现', example: 'You can achieve your goals.' },
+            { word: 'success', pronunciation: '/səkˈses/', meaning: '成功', example: 'Hard work leads to success.' },
+            { word: 'problem', pronunciation: '/ˈprɒbləm/', meaning: '问题', example: 'We need to solve this problem.' },
+            { word: 'solution', pronunciation: '/səˈluːʃn/', meaning: '解决方案', example: 'Let\'s find a solution.' },
+            { word: 'opportunity', pronunciation: '/ˌɒpəˈtjuːnəti/', meaning: '机会', example: 'This is a good opportunity.' },
+            { word: 'challenge', pronunciation: '/ˈtʃælɪndʒ/', meaning: '挑战', example: 'I accept the challenge.' },
+            { word: 'development', pronunciation: '/dɪˈveləpmənt/', meaning: '发展', example: 'China\'s development is rapid.' },
+            { word: 'technology', pronunciation: '/tekˈnɒlədʒi/', meaning: '技术', example: 'Technology changes our lives.' },
+            { word: 'information', pronunciation: '/ˌɪnfəˈmeɪʃn/', meaning: '信息', example: 'I need more information.' },
+            { word: 'communication', pronunciation: '/kəˌmjuːnɪˈkeɪʃn/', meaning: '交流', example: 'Communication is important.' },
+            { word: 'education', pronunciation: '/ˌedʒuˈkeɪʃn/', meaning: '教育', example: 'Education is important.' },
+            { word: 'government', pronunciation: '/ˈɡʌvənmənt/', meaning: '政府', example: 'The government made a new policy.' },
+            { word: 'international', pronunciation: '/ˌɪntəˈnæʃnəl/', meaning: '国际的', example: 'This is an international event.' },
+            { word: 'community', pronunciation: '/kəˈmjuːnəti/', meaning: '社区', example: 'We love our community.' },
+            { word: 'responsible', pronunciation: '/rɪˈspɒnsəbl/', meaning: '负责的', example: 'He is a responsible person.' },
+            { word: 'comfortable', pronunciation: '/ˈkʌmftəbl/', meaning: '舒适的', example: 'This chair is very comfortable.' },
+            { word: 'available', pronunciation: '/əˈveɪləbl/', meaning: '可用的', example: 'Is this seat available?' }
+        ];
+        
+        // 新单词数据（20个）
+        const newWords = [
+            { word: 'initiative', pronunciation: '/ɪˈnɪʃətɪv/', meaning: '倡议；主动性', example: 'The government launched a new initiative.' },
+            { word: 'guideline', pronunciation: '/ˈɡaɪdlaɪn/', meaning: '指导方针', example: 'We should follow the guidelines.' },
+            { word: 'competency', pronunciation: '/ˈkɒmpɪtənsi/', meaning: '能力', example: 'This course develops competency.' },
+            { word: 'transmission', pronunciation: '/trænzˈmɪʃn/', meaning: '传播', example: 'Knowledge transmission is important.' },
+            { word: 'neglect', pronunciation: '/nɪˈɡlekt/', meaning: '忽视', example: 'Don\'t neglect your health.' },
+            { word: 'inquiry', pronunciation: '/ɪnˈkwaɪəri/', meaning: '探究；询问', example: 'Scientific inquiry is encouraged.' },
+            { word: 'foster', pronunciation: '/ˈfɒstə/', meaning: '培养', example: 'We should foster creativity.' },
+            { word: 'innovative', pronunciation: '/ˈɪnəvətɪv/', meaning: '创新的', example: 'We need innovative thinking.' },
+            { word: 'comprehensive', pronunciation: '/ˌkɒmprɪˈhensɪv/', meaning: '全面的', example: 'A comprehensive plan is needed.' },
+            { word: 'integrate', pronunciation: '/ˈɪntɪɡreɪt/', meaning: '整合', example: 'We need to integrate different systems.' },
+            { word: 'sustainable', pronunciation: '/səˈsteɪnəbl/', meaning: '可持续的', example: 'Sustainable development is important.' },
+            { word: 'monitoring', pronunciation: '/ˈmɒnɪtərɪŋ/', meaning: '监测', example: 'Environmental monitoring is necessary.' },
+            { word: 'resource', pronunciation: '/rɪˈsɔːs/', meaning: '资源', example: 'Natural resources should be protected.' },
+            { word: 'mineral', pronunciation: '/ˈmɪnərəl/', meaning: '矿物', example: 'China has rich mineral resources.' },
+            { word: 'satellite', pronunciation: '/ˈsætəlaɪt/', meaning: '卫星', example: 'Satellites help us monitor Earth.' },
+            { word: 'remote', pronunciation: '/rɪˈməʊt/', meaning: '远程的', example: 'Remote sensing is useful.' },
+            { word: 'analysis', pronunciation: '/əˈnæləsɪs/', meaning: '分析', example: 'Big data analysis is powerful.' },
+            { word: 'informed', pronunciation: '/ɪnˈfɔːmd/', meaning: '了解情况的', example: 'Make informed decisions.' },
+            { word: 'platform', pronunciation: '/ˈplætfɔːm/', meaning: '平台', example: 'The new platform is helpful.' },
+            { word: 'digital', pronunciation: '/ˈdɪdʒɪtl/', meaning: '数字的', example: 'We live in a digital age.' }
+        ];
+        
+        // 阅读理解答案
+        const readingAnswers = {
+            1: ['B', 'B', 'C', 'B', 'A'],
+            2: ['B', 'C', 'B', 'A', 'B']
+        };
+        
+        // 用户答案存储
+        let userAnswers = {
+            reading: {},
+            vocab: { old: [], new: [] },
+            test: {}
+        };
+        
+        // 加载保存的数据
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                userAnswers = JSON.parse(saved);
+                updateProgress();
+            }
+        }
+        
+        // 保存数据
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers));
+        }
+        
+        // 显示不同部分
+        function showSection(section) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('readingSection').style.display = section === 'reading' ? 'block' : 'none';
+            document.getElementById('vocabSection').style.display = section === 'vocab' ? 'block' : 'none';
+            document.getElementById('testSection').style.display = section === 'test' ? 'block' : 'none';
+        }
+        
+        // 选择答案
+        function selectOption(element, type, passageNum, questionNum, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            const key = `${passageNum}_${questionNum}`;
+            userAnswers.reading[key] = answer;
+            saveData();
+        }
+        
+        // 提交阅读答案
+        function submitReadingAnswers() {
+            let correct = 0;
+            let total = 10;
+            
+            for (let passage = 1; passage <= 2; passage++) {
+                for (let q = 1; q <= 5; q++) {
+                    const key = `${passage}_${q}`;
+                    const userAnswer = userAnswers.reading[key];
+                    const correctAnswer = readingAnswers[passage][q - 1];
+                    
+                    if (userAnswer === correctAnswer) {
+                        correct++;
+                    }
+                }
+            }
+            
+            userAnswers.readingScore = correct;
+            saveData();
+            updateProgress();
+            
+            document.getElementById('readingScore').textContent = correct + '/' + total;
+            alert(`阅读理解完成！得分：${correct}/${total}`);
+        }
+        
+        // 渲染单词卡片
+        function renderWords() {
+            const oldGrid = document.getElementById('oldWordsGrid');
+            const newGrid = document.getElementById('newWordsGrid');
+            
+            oldWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.old.includes(i) ? ' memorized' : '');
+                card.innerHTML = `
+                    <div class="word">${w.word}</div>
+                    <div class="pronunciation">${w.pronunciation}</div>
+                    <div class="meaning">${w.meaning}</div>
+                    <div class="example">${w.example}</div>
+                `;
+                card.onclick = () => toggleWordMemorized('old', i, card);
+                oldGrid.appendChild(card);
+            });
+            
+            newWords.forEach((w, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card' + (userAnswers.vocab.new.includes(i) ? ' memorized' : '');
+                card.innerHTML = `
+                    <div class="word">${w.word}</div>
+                    <div class="pronunciation">${w.pronunciation}</div>
+                    <div class="meaning">${w.meaning}</div>
+                    <div class="example">${w.example}</div>
+                `;
+                card.onclick = () => toggleWordMemorized('new', i, card);
+                newGrid.appendChild(card);
+            });
+        }
+        
+        // 切换单词记忆状态
+        function toggleWordMemorized(type, index, element) {
+            const arr = userAnswers.vocab[type];
+            const idx = arr.indexOf(index);
+            
+            if (idx === -1) {
+                arr.push(index);
+                element.classList.add('memorized');
+            } else {
+                arr.splice(idx, 1);
+                element.classList.remove('memorized');
+            }
+            
+            saveData();
+            updateVocabProgress();
+        }
+        
+        // 更新单词进度
+        function updateVocabProgress() {
+            const total = userAnswers.vocab.old.length + userAnswers.vocab.new.length;
+            document.getElementById('vocabProgress').textContent = total + '/50';
+        }
+        
+        // 保存单词进度
+        function saveVocabProgress() {
+            saveData();
+            updateProgress();
+            updateVocabProgress();
+            alert('单词学习进度已保存！');
+        }
+        
+        // 生成测试题目
+        function generateTestQuestions() {
+            const container = document.getElementById('testQuestions');
+            const questions = [];
+            
+            // 单词选择题（50题）
+            const allWords = [...oldWords, ...newWords];
+            for (let i = 0; i < 50; i++) {
+                const word = allWords[i % allWords.length];
+                const wrongMeanings = ['快乐', '悲伤', '快速', '慢速', '重要', '简单', '困难', '美丽'];
+                const correctMeaning = word.meaning;
+                const wrongOptions = wrongMeanings.filter(m => m !== correctMeaning).slice(0, 3);
+                const options = [correctMeaning, ...wrongOptions].sort(() => Math.random() - 0.5);
+                
+                questions.push({
+                    type: 'vocab',
+                    question: `"${word.word}" 的意思是？`,
+                    options: options,
+                    answer: correctMeaning
+                });
+            }
+            
+            // 语法选择题（30题）
+            const grammarQuestions = [
+                { q: 'He ___ to school every day.', opts: ['go', 'goes', 'going', 'went'], a: 'goes' },
+                { q: 'She ___ English for three years.', opts: ['studies', 'studied', 'has studied', 'will study'], a: 'has studied' },
+                { q: 'The book ___ on the table.', opts: ['is', 'are', 'was', 'were'], a: 'is' },
+                { q: 'They ___ play basketball tomorrow.', opts: ['will', 'would', 'are', 'is'], a: 'will' },
+                { q: 'I ___ my homework already.', opts: ['finish', 'finished', 'have finished', 'will finish'], a: 'have finished' },
+                { q: 'She is good at ___.', opts: ['swim', 'swimming', 'swims', 'swam'], a: 'swimming' },
+                { q: 'There ___ many students in the classroom.', opts: ['is', 'are', 'was', 'be'], a: 'are' },
+                { q: 'The sun ___ in the east.', opts: ['rise', 'rises', 'rising', 'rose'], a: 'rises' },
+                { q: 'I enjoy ___ music.', opts: ['listen', 'listening', 'listens', 'to listen'], a: 'listening' },
+                { q: 'He asked me ___ I was busy.', opts: ['what', 'when', 'if', 'where'], a: 'if' }
+            ];
+            
+            for (let i = 0; i < 30; i++) {
+                const gq = grammarQuestions[i % grammarQuestions.length];
+                questions.push({
+                    type: 'grammar',
+                    question: gq.q,
+                    options: gq.opts,
+                    answer: gq.a
+                });
+            }
+            
+            // 阅读理解题（20题）
+            for (let i = 0; i < 20; i++) {
+                questions.push({
+                    type: 'reading',
+                    question: `Choose the correct form: The students ___ their project last week.`,
+                    options: ['finish', 'finished', 'have finished', 'will finish'],
+                    answer: 'finished'
+                });
+            }
+            
+            // 渲染题目
+            questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <p class="question-text">${i + 1}. ${q.question}</p>
+                    <div class="options">
+                        ${q.options.map((opt, j) => `
+                            <div class="option" onclick="selectTestOption(this, ${i}, '${opt}')">${String.fromCharCode(65 + j)}. ${opt}</div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            return questions;
+        }
+        
+        let testQuestions = [];
+        let timerInterval = null;
+        let timeLeft = 3600;
+        
+        // 选择测试答案
+        function selectTestOption(element, questionIndex, answer) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            userAnswers.test[questionIndex] = answer;
+            saveData();
+        }
+        
+        // 开始计时
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+        
+        // 提交测试
+        function submitTest() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            let correct = 0;
+            testQuestions.forEach((q, i) => {
+                if (userAnswers.test[i] === q.answer) {
+                    correct++;
+                }
+            });
+            
+            userAnswers.testScore = correct;
+            saveData();
+            updateProgress();
+            
+            document.getElementById('testScore').textContent = correct + '/100';
+            document.getElementById('finalScore').textContent = correct;
+            
+            let message = '';
+            if (correct >= 90) message = '太棒了！你做得非常好！';
+            else if (correct >= 80) message = '很好！继续保持！';
+            else if (correct >= 70) message = '不错，还有进步空间！';
+            else if (correct >= 60) message = '及格了，继续努力！';
+            else message = '需要加油哦！多练习吧！';
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+        
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+        }
+        
+        // 更新进度
+        function updateProgress() {
+            let progress = 0;
+            if (userAnswers.readingScore) progress += 25;
+            if (userAnswers.vocab.old.length > 0 || userAnswers.vocab.new.length > 0) {
+                progress += 25 * (userAnswers.vocab.old.length + userAnswers.vocab.new.length) / 50;
+            }
+            if (userAnswers.testScore) progress += 50;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressFill').textContent = Math.round(progress) + '%';
+            document.getElementById('totalProgress').textContent = Math.round(progress) + '%';
+        }
+        
+        // 初始化
+        window.onload = function() {
+            loadData();
+            renderWords();
+            testQuestions = generateTestQuestions();
+            startTimer();
+            updateVocabProgress();
+        };
+    </script>
+</body>
+</html>

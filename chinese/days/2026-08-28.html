@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年8月28日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年8月28日 星期五 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">泊秦淮</div>
+                    <div class="author">晚唐 · 杜牧</div>
+                    <div class="content">
+                        烟笼寒水月笼沙，夜泊秦淮近酒家。<br>
+                        商女不知亡国恨，隔江犹唱后庭花。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>秦淮</strong>：即秦淮河，流经南京，六朝以来为繁华游宴之地。</p>
+                        <p>② <strong>笼</strong>：笼罩。此处用如动词。</p>
+                        <p>③ <strong>商女</strong>：歌女，以卖唱为生的女子。</p>
+                        <p>④ <strong>亡国恨</strong>：指南朝陈后主因荒淫亡国的历史教训。陈后主作《玉树后庭花》，后人视为亡国之音。</p>
+                        <p>⑤ <strong>后庭花</strong>：即《玉树后庭花》的简称，陈后主（陈叔宝）所作，被视为亡国之音。</p>
+                        <p>⑥ <strong>犹</strong>：还，仍然。</p>
+                        <p>⑦ <strong>烟笼寒水月笼沙</strong>：薄雾笼罩着寒水，月光笼罩着沙滩。</p>
+                        <br>
+                        <p><strong>译文：</strong>薄雾笼罩着寒水，月光笼罩着沙滩。夜里停泊在秦淮河畔，靠近岸边的酒家。歌女们不懂得亡国的悲恨，隔着江水还在唱那首《后庭花》。</p>
+                        <br>
+                        <p><strong>赏析：</strong>此诗通过夜泊秦淮的所见所闻，表达了对统治者荒淫昏聩的讽刺和对国家命运的深切忧虑。首句"烟笼寒水月笼沙"以两个"笼"字描绘出一幅迷蒙冷寂的画面，营造出凄清的氛围。次句"夜泊秦淮近酒家"点明地点。后两句借"商女"唱《后庭花》之事，表面批评歌女不知亡国之恨，实则讽刺那些沉溺享乐、不顾国家安危的达官贵人，借古讽今，表达了诗人对晚唐统治者昏庸腐朽的忧虑与愤慨。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">过零丁洋</div>
+                    <div class="author">南宋 · 文天祥</div>
+                    <div class="content">
+                        辛苦遭逢起一经，干戈寥落四周星。<br>
+                        山河破碎风飘絮，身世浮沉雨打萍。<br>
+                        惶恐滩头说惶恐，零丁洋里叹零丁。<br>
+                        人生自古谁无死？留取丹心照汗青。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>遭逢</strong>：遭遇，指遇到朝廷选拔。起一经：指精通一种经书，通过科举入仕。</p>
+                        <p>② <strong>干戈</strong>：兵器，借指战争。寥落：荒凉冷落，指战事频繁而兵力不足。四周星：四年。</p>
+                        <p>③ <strong>风飘絮</strong>：形容山河破碎如风吹柳絮。</p>
+                        <p>④ <strong>雨打萍</strong>：比喻个人身世如雨中浮萍。</p>
+                        <p>⑤ <strong>惶恐滩</strong>：在今江西万安，文天祥兵败后曾经过此地。</p>
+                        <p>⑥ <strong>零丁洋</strong>：即伶仃洋，在今广东珠江口外。文天祥被俘后经此。</p>
+                        <p>⑦ <strong>丹心</strong>：赤诚之心，忠心。汗青：古代用竹简记事，先用火烤竹片出水叫"汗青"，引申为史册。</p>
+                        <p>⑧ <strong>留取</strong>：留下。照：照耀。</p>
+                        <br>
+                        <p><strong>译文：</strong>我辛苦遭遇从研读经书开始，在战乱中度过了四个年头。山河破碎如同风吹柳絮，身世沉浮如同雨中浮萍。在惶恐滩头诉说惶恐，在零丁洋里感叹孤独。人自古以来谁能无死？只愿留下赤诚之心照耀史册。</p>
+                        <br>
+                        <p><strong>赏析：</strong>这是文天祥被俘后途经零丁洋时所作的千古名篇。前两句回忆生平，颔联"山河破碎风飘絮，身世浮沉雨打萍"以双重复喻——国家命运如柳絮飘零，个人身世如浮萍沉浮——将国家之难与个人之苦融为一体。颈联以"惶恐""零丁"双关地名与心情。尾联"人生自古谁无死？留取丹心照汗青"以磅礴的气势，表达了视死如归、忠贞不渝的民族气节，成为千古传诵的爱国名句。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>快递业的数字变革与中国速度</h3>
+                    <p>2026年，中国快递业再次刷新了世界认知。数据显示，2025年中国快递业务量达到1989.5亿件，相比2012年首次突破50亿件时增长了34倍，连续12年稳居世界第一。这一惊人数字的背后，是数字技术深度赋能整个物流产业链的结果。</p>
+                    <p>走进现代化的快递分拣中心，呈现在眼前的是一幅智能化的壮观图景：成百上千台AGV自动导引车在地面穿梭自如，巨型交叉带分拣机以每秒数万件的速度精准分拨，智能图像识别系统自动读取面单信息，机械臂精准抓取包裹。曾经依靠人工分拣的快递行业，如今已蝶变为一个由算法驱动、数据引领的智能产业。</p>
+                    <p>数字化的力量不仅体现在分拣环节。从智能调度系统优化配送路线，到无人机配送解决偏远地区"最后一公里"难题；从物联网传感器实时监控包裹温湿度，到大数据预测高峰期运力需求——每一项技术的应用都在为效率赋能。2025年，中国快递日均服务量超过5亿件，从下单到送达平均仅需48小时，在重点城市甚至实现了当日达、次日达。</p>
+                    <p>中国快递业的高速发展，是数字经济与实体经济深度融合的生动缩影。快递业连接千城百业、沟通供需两端，一头连着田间地头的农产品，一头连着城市消费者的餐桌。2025年，农村快递业务量超过200亿件，带动农产品进城超千亿元，真正实现了"快递进村、产品进城"的双向流通，为乡村振兴注入强劲动力。</p>
+                    <p>然而，成就的背后也蕴含着新的挑战。随着行业规模扩大，绿色包装、碳排放管理、末端配送人力短缺等问题日益凸显。国家邮政局正大力推行"绿色快递"行动，推广可循环快递箱、可降解包装材料，探索新能源配送车辆。这提醒我们：发展不能只看速度，更要注重可持续性。</p>
+                    <p>从"骑马送信"到"无人机配送"，从"人工分拣"到"智能分拨"，快递业的变革映射着中国从"制造大国"向"智造强国"的转型之路。1989.5亿件，不仅是一个数字，更是中国速度、中国效率、中国创新的集中体现。未来，随着人工智能、5G、自动驾驶等技术的进一步应用，快递业将在数字化的道路上走得更远、更快。</p>
+                    <p>作为新时代的中学生，我们既是快递服务的受益者，也是未来科技发展的接班人。每一次收到快递的便捷体验背后，都凝聚着无数科技工作者的智慧与汗水。让我们以快递业的数字变革为启示，努力学习科学文化知识，为建设数字中国贡献自己的力量。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>西藏吉隆泥石流灾害救援持续进行 台风"沙德尔"将来袭</h3>
+                    <p>8月27日，西藏日喀则市吉隆县吉隆口岸泥石流灾害救援工作持续紧张进行。据最新消息，此次泥石流已造成3人死亡，558人失联，2人获救。受习近平总书记委托，国务院总理李强于27日下午抵达吉隆县受灾区域，指导抢险救灾工作，看望救援人员和受灾群众。</p>
+                    <p>多家银行第一时间部署防灾救灾工作，全力做好金融保障。农业银行、工商银行、建设银行、邮储银行等机构已部署应急金融服务，确保抢险救灾资金及时到位。中央气象台预计，吉隆口岸未来三天仍有降雨，28日阴天有小雨，29日降水有增强趋势，给救援工作带来一定挑战。</p>
+                    <p>另据水利部27日消息，今年第18号台风"沙德尔"将于28日登陆。水利部举行专题会商，研判台风发展态势及影响，逐流域分析突出风险，系统安排部署台风暴雨洪水防御工作。浙江台州已将防台风应急响应提升至I级。</p>
+                    <p>此外，中共中央党史和文献研究院编辑的《习近平文化文选》第一卷、第二卷近日由中央文献出版社出版，在全国发行。该文选收入习近平同志2012年11月至2026年2月期间关于文化建设最重要的著作78篇，部分篇目为首次公开发表。</p>
+                    <p>国家统计局8月27日发布数据显示，2025年我国经济发展新动能指数为153.0，比上年增长12.5%，转型升级和创新驱动对总指数增长的贡献较大，显示出中国经济发展新动能持续壮大。</p>
+                    <div class="source">来源：综合央视新闻、中国日报（2026年8月27日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-08-28';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-08-28',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《泊秦淮》的作者是谁？", options: ["李白", "杜甫", "杜牧", "李商隐"], answer: 2 },
+            { q: "2. 杜牧是哪个时期的诗人？", options: ["初唐", "盛唐", "中唐", "晚唐"], answer: 3 },
+            { q: "3. \"烟笼寒水月笼沙\"中两个\"笼\"字的修辞效果是？", options: ["比喻", "双关", "互文", "拟人"], answer: 2 },
+            { q: "4. \"商女\"指的是什么人？", options: ["女商人", "歌女", "宫女", "农女"], answer: 1 },
+            { q: "5. \"后庭花\"指的是什么？", options: ["一种花卉", "陈后主所作亡国之音", "一首民歌", "一种戏曲"], answer: 1 },
+            { q: "6. \"亡国恨\"借指南朝哪个朝代的亡国教训？", options: ["南朝陈", "南朝宋", "南朝齐", "南朝梁"], answer: 0 },
+            { q: "7. \"隔江犹唱后庭花\"表面批评的是谁，实际讽刺的是谁？", options: ["歌女；达官贵人", "歌女；百姓", "皇帝；歌女", "百姓；皇帝"], answer: 0 },
+            { q: "8. 《泊秦淮》表达了诗人怎样的情感？", options: ["对自然的赞美", "对统治者的讽刺和对国家命运的忧虑", "对故乡的思念", "对友情的歌颂"], answer: 1 },
+            { q: "9. 《过零丁洋》的作者是谁？", options: ["岳飞", "文天祥", "陆游", "辛弃疾"], answer: 1 },
+            { q: "10. \"人生自古谁无死？留取丹心照汗青\"表达了什么精神？", options: ["贪生怕死", "视死如归、忠贞不渝的民族气节", "消极避世", "及时行乐"], answer: 1 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 2025年中国快递业务量达到多少？", options: ["约1500亿件", "约1800亿件", "1989.5亿件", "约2000亿件"], answer: 2 },
+            { q: "12. 相比2012年，快递业务量增长了多少倍？", options: ["14倍", "24倍", "34倍", "44倍"], answer: 2 },
+            { q: "13. 中国快递业务量连续多少年稳居世界第一？", options: ["10年", "11年", "12年", "13年"], answer: 2 },
+            { q: "14. 现代化快递分拣中心中，以下哪项不是提到的智能化设备？", options: ["AGV自动导引车", "交叉带分拣机", "智能图像识别系统", "高铁运输线"], answer: 3 },
+            { q: "15. 2025年中国快递日均服务量超过多少？", options: ["3亿件", "4亿件", "5亿件", "6亿件"], answer: 2 },
+            { q: "16. 农村快递业务量在2025年超过多少？", options: ["100亿件", "150亿件", "200亿件", "300亿件"], answer: 2 },
+            { q: "17. 文章提到快递业面临的新挑战不包括以下哪项？", options: ["绿色包装", "碳排放管理", "末端配送人力短缺", "快递价格过低"], answer: 3 },
+            { q: "18. 文章认为快递业的变革映射着中国怎样的转型？", options: ["从制造大国向智造强国", "从农业国到工业国", "从内销到出口", "从城市到农村"], answer: 0 },
+            { q: "19. \"快递进村、产品进城\"实现了怎样的双向流通？", options: ["工业品下乡", "农产品进城", "农产品进城与工业品下乡", "只提到了产品进城"], answer: 2 },
+            { q: "20. 这篇现代文的中心思想是什么？", options: ["快递业发展太慢", "快递业数字变革体现中国速度，激励青年为数字中国贡献力量", "快递业面临太多挑战", "快递业只靠人工就够了"], answer: 1 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 西藏吉隆口岸泥石流灾害已造成多少人死亡？", options: ["1人", "2人", "3人", "5人"], answer: 2 },
+            { q: "22. 此次泥石流灾害中有多少人失联？", options: ["358人", "458人", "558人", "658人"], answer: 2 },
+            { q: "23. 谁于27日下午抵达吉隆指导救灾工作？", options: ["习近平总书记", "李强总理", "王沪宁", "韩正"], answer: 1 },
+            { q: "24. 哪些银行参与了救灾金融保障？", options: ["农行、工行", "建行、邮储", "以上都是", "以上都不是"], answer: 2 },
+            { q: "25. 今年第18号台风叫什么名字？", options: ["沙德尔", "紫檀", "梅花", "海葵"], answer: 0 },
+            { q: "26. 台风\"沙德尔\"将于何时登陆？", options: ["27日", "28日", "29日", "30日"], answer: 1 },
+            { q: "27. 哪个城市将防台风应急响应提升至I级？", options: ["温州", "宁波", "台州", "杭州"], answer: 2 },
+            { q: "28. 《习近平文化文选》共收入多少篇著作？", options: ["56篇", "68篇", "78篇", "88篇"], answer: 2 },
+            { q: "29. 2025年经济发展新动能指数为多少？", options: ["143.0", "153.0", "163.0", "173.0"], answer: 1 },
+            { q: "30. 经济发展新动能指数比上年增长多少？", options: ["10.5%", "11.5%", "12.5%", "13.5%"], answer: 2 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《泊秦淮》的作者是哪个朝代的诗人？", options: ["初唐", "盛唐", "中唐", "晚唐"], answer: 3 },
+            { q: "2. 杜牧与谁合称\"小李杜\"？", options: ["李贺", "李商隐", "李白", "李清照"], answer: 1 },
+            { q: "3. \"烟笼寒水月笼沙\"中\"笼\"的用法是？", options: ["名词", "动词", "形容词", "量词"], answer: 1 },
+            { q: "4. \"秦淮\"指的是什么？", options: ["秦河", "淮河", "秦淮河", "秦岭"], answer: 2 },
+            { q: "5. \"商女\"在诗中指什么人？", options: ["女商人", "歌女", "农女", "宫女"], answer: 1 },
+            { q: "6. \"亡国恨\"指南朝哪个朝代的亡国教训？", options: ["南朝宋", "南朝陈", "南朝梁", "南朝齐"], answer: 1 },
+            { q: "7. \"后庭花\"的全称是什么？", options: ["《前庭花》", "《玉树后庭花》", "《后庭春》", "《后庭月》"], answer: 1 },
+            { q: "8. 《后庭花》是谁创作的？", options: ["李煜", "陈叔宝", "杨广", "赵佶"], answer: 1 },
+            { q: "9. 《泊秦淮》的主要抒情方式是？", options: ["直抒胸臆", "借古讽今", "借景抒情", "托物言志"], answer: 1 },
+            { q: "10. \"隔江犹唱后庭花\"中\"犹\"的意思是？", options: ["已经", "还、仍然", "将要", "或许"], answer: 1 },
+            { q: "11. 《过零丁洋》的作者是？", options: ["岳飞", "文天祥", "陆游", "辛弃疾"], answer: 1 },
+            { q: "12. 文天祥是哪个朝代的人？", options: ["北宋", "南宋", "元朝", "明朝"], answer: 1 },
+            { q: "13. \"起一经\"指的是什么？", options: ["开始读经", "通过科举经书入仕", "写了一部经书", "学习一种经书"], answer: 1 },
+            { q: "14. \"干戈寥落四周星\"中\"四周星\"指多长时间？", options: ["四个星期", "四年", "四个月", "四十年"], answer: 1 },
+            { q: "15. \"山河破碎风飘絮\"用了什么修辞手法？", options: ["拟人", "比喻", "夸张", "排比"], answer: 1 },
+            { q: "16. \"身世浮沉雨打萍\"中\"萍\"比喻什么？", options: ["萍水相逢", "浮萍，比喻个人身世飘泊不定", "一种水草", "人名"], answer: 1 },
+            { q: "17. \"惶恐滩\"和\"零丁洋\"在诗中的作用是？", options: ["单纯地名", "地名与心情双关", "比喻", "夸张"], answer: 1 },
+            { q: "18. \"丹心\"指的是什么？", options: ["红心", "赤诚之心、忠心", "丹药", "画心"], answer: 1 },
+            { q: "19. \"汗青\"在古代原义是什么？", options: ["出汗", "竹简烤制出水，引申为史册", "青色", "竹叶"], answer: 1 },
+            { q: "20. \"人生自古谁无死？留取丹心照汗青\"表达了怎样的精神？", options: ["贪生怕死", "视死如归、忠贞不渝的民族气节", "消极避世", "及时行乐"], answer: 1 },
+            { q: "21. 2025年中国快递业务量达到多少？", options: ["约1500亿件", "约1800亿件", "1989.5亿件", "约2000亿件"], answer: 2 },
+            { q: "22. 相比2012年，快递业务量增长了多少倍？", options: ["14倍", "24倍", "34倍", "44倍"], answer: 2 },
+            { q: "23. 中国快递业务量连续多少年世界第一？", options: ["10年", "11年", "12年", "13年"], answer: 2 },
+            { q: "24. 2025年快递日均服务量超过多少？", options: ["3亿件", "4亿件", "5亿件", "6亿件"], answer: 2 },
+            { q: "25. 农村快递业务量2025年超过多少？", options: ["100亿件", "150亿件", "200亿件", "300亿件"], answer: 2 },
+            { q: "26. 文章提到快递业面临的挑战不包括？", options: ["绿色包装", "碳排放管理", "末端配送人力短缺", "快递价格过低"], answer: 3 },
+            { q: "27. \"快递进村、产品进城\"体现了什么？", options: ["单向流通", "双向流通", "只进不出", "只出不进"], answer: 1 },
+            { q: "28. 文章认为快递业变革映射着怎样的转型？", options: ["制造大国向智造强国", "农业到工业", "内销到出口", "城市到农村"], answer: 0 },
+            { q: "29. 下列哪项不是文中提到的智能化设备？", options: ["AGV自动导引车", "交叉带分拣机", "智能图像识别", "高铁运输"], answer: 3 },
+            { q: "30. 这篇现代文的中心思想是？", options: ["快递业发展太慢", "快递业数字变革体现中国速度，激励青年贡献力量", "快递业面临太多困难", "快递业只靠人工就行"], answer: 1 },
+            { q: "31. 吉隆口岸泥石流造成多少人遇难？", options: ["1人", "2人", "3人", "5人"], answer: 2 },
+            { q: "32. 泥石流中多少人失联？", options: ["358人", "458人", "558人", "658人"], answer: 2 },
+            { q: "33. 谁抵达吉隆指导救灾？", options: ["习近平", "李强", "王沪宁", "韩正"], answer: 1 },
+            { q: "34. 台风\"沙德尔\"将于几号登陆？", options: ["27日", "28日", "29日", "30日"], answer: 1 },
+            { q: "35. 哪个城市将防台风应急响应提升至I级？", options: ["温州", "宁波", "台州", "杭州"], answer: 2 },
+            { q: "36. 《习近平文化文选》共收入多少篇著作？", options: ["56篇", "68篇", "78篇", "88篇"], answer: 2 },
+            { q: "37. 2025年经济发展新动能指数为多少？", options: ["143.0", "153.0", "163.0", "173.0"], answer: 1 },
+            { q: "38. 新动能指数比上年增长多少？", options: ["10.5%", "11.5%", "12.5%", "13.5%"], answer: 2 },
+            { q: "39. 下列词语中没有错别字的一项是：", options: ["零丁洋", "伶丁洋", "零汀洋", "伶定洋"], answer: 0 },
+            { q: "40. \"山河破碎风飘絮\"与\"身世浮沉雨打萍\"构成什么关系？", options: ["并列", "对比", "递进", "因果"], answer: 0 },
+            { q: "41. 下列句子没有语病的是：", options: ["通过学习古诗，使我深受感动", "学习古诗使我深受感动", "古诗使我通过学习深受感动", "通过古诗的学习，使我感动"], answer: 1 },
+            { q: "42. \"借古讽今\"中\"今\"在《泊秦淮》中指什么？", options: ["当今社会", "晚唐统治者的昏庸", "古代社会", "未来社会"], answer: 1 },
+            { q: "43. 互文修辞的特点是？", options: ["上下句相互补充", "打比方", "夸大事实", "赋予人的情感"], answer: 0 },
+            { q: "44. \"惶恐\"在\"惶恐滩头说惶恐\"中第二个\"惶恐\"指什么？", options: ["地名", "心情", "时间", "动作"], answer: 1 },
+            { q: "45. 下列对文天祥精神理解正确的是？", options: ["宁死不屈、忠诚报国", "随遇而安", "明哲保身", "贪生怕死"], answer: 0 },
+            { q: "46. \"向新、向优、向智、向绿\"和\"快递进村、产品进城\"都用了什么修辞？", options: ["比喻", "排比", "拟人", "夸张"], answer: 1 },
+            { q: "47. \"中国速度\"在文中的含义是？", options: ["仅仅指速度快", "中国快递业效率、创新和发展的综合体现", "中国跑步快", "中国车速快"], answer: 1 },
+            { q: "48. 杜牧与杜甫的区别是？", options: ["同一人", "不同时代诗人，杜牧为晚唐，杜甫为盛唐", "兄弟", "师生"], answer: 1 },
+            { q: "49. 文天祥被后世称为什么？", options: ["诗仙", "民族英雄", "诗鬼", "诗佛"], answer: 1 },
+            { q: "50. 对本日全部内容理解最准确的一项是？", options: ["古诗词与现代文无关", "古诗词寄情言志，现代文彰显数字变革力量，时文记录国家大事，共同激励青年报国", "时文只是新闻报道", "现代文与古诗词没有联系"], answer: 1 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            let idx;
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
