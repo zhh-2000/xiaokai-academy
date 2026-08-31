@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月1日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月1日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>Xi Arrives at Harmony Palace in Bishkek, Attends Welcome Ceremony, Discusses Mudslide Rescue</h3>
+                    <p>On the morning of August 31, 2026, local time, Chinese President Xi Jinping arrived by car at the Harmony Palace in Bishkek to attend the welcome ceremony held by Kyrgyz President Sadyr Japarov. This is an important part of President Xi's itinerary for the 2026 Shanghai Cooperation Organization (SCO) Summit.</p>
+                    <p>When meeting with President Japarov, Xi said that China is making every effort to search for Chinese and foreign nationals who are missing in the mudslide disaster in China's Xizang Autonomous Region. China is also taking all necessary measures to relocate and resettle those affected, provide medical treatment for the injured, and prevent secondary disasters, Xi said in his opening remarks.</p>
+                    <p>At the same time, China has sent rescuers to Nepal and provided emergency assistance, he said, adding that China is sincerely grateful to President Japarov for expressing condolences over the disaster. Japarov expressed his sympathies and solidarity with China over the mudslide disaster, demonstrating the friendship between the two countries.</p>
+                    <p>The SCO Summit brings together leaders from China, Russia, Kyrgyzstan, and other member states to strengthen the Shanghai Spirit of mutual trust, mutual benefit, equality, and respect for diverse civilizations. The summit focuses on deepening cooperation among member states and addressing major international and regional issues.</p>
+                    <span class="source">Source: CCTV News, Xinhua, China Daily, 2026-08-31</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>China Dispatches Y-20 Transport Planes with 50 Tons of Relief Supplies to Nepal</h3>
+                    <p>On August 30, 2026, China delivered 50 metric tons of emergency relief supplies to Nepal and dispatched nine tunnel rescue experts to assist with rescue operations following a deadly mudslide on August 26. Two Y-20 transport aircraft operated by the People's Liberation Army Air Force carrying 13,200 relief supplies arrived at Tribhuvan International Airport in Kathmandu on Sunday morning.</p>
+                    <p>The supplies included tents, blankets, sleeping bags, compressed food items, and first-aid kits. They will be distributed in disaster-hit areas to help meet the basic living and emergency medical needs of those affected. Four Chinese tunnel rescue experts and their equipment arrived in Kathmandu with the supplies, while five others had already reached the disaster area by helicopter from Gyirong County in China's Xizang Autonomous Region on Saturday.</p>
+                    <p>The delivery of relief supplies and the expert missions marked the latest progress in implementing China's assistance package for Nepal, which Foreign Minister Wang Yi said during a phone call with his Nepali counterpart Shisir Khanal included emergency cash assistance and humanitarian aid. Wang said a sudden glacier collapse in the China-Nepal border area had triggered severe mudslides, causing significant casualties and leaving people missing on both sides.</p>
+                    <p>Wang described it as the most serious cross-border disaster between the two countries in recent years, adding that the complexity and difficulty of the rescue and relief operations were unprecedented. A meeting of the Political Bureau of the Communist Party of China Central Committee had called for emergency aid to Nepal's disaster-hit areas and international rescue cooperation, noting that it was an important political decision reflecting China's friendship with Nepal.</p>
+                    <span class="source">Source: China Daily, Xinhua, 2026-08-31</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-01';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-01',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. Where did President Xi arrive on August 31?", options: ["The Kremlin", "The Harmony Palace in Bishkek", "The Presidential Palace in Cairo", "The Great Hall of the People"], answer: 1 },
+            { q: "2. Who held the welcome ceremony for Xi?", options: ["The Russian President", "Kyrgyz President Sadyr Japarov", "The Egyptian President", "The SCO Secretary-General"], answer: 1 },
+            { q: "3. What did Xi say China is making every effort to do?", options: ["Win the summit", "Search for missing people in the mudslide", "Build new roads", "Host the next SCO summit"], answer: 1 },
+            { q: "4. The mudslide disaster occurred in which region of China?", options: ["Xinjiang", "Xizang Autonomous Region", "Inner Mongolia", "Guangxi"], answer: 1 },
+            { q: "5. What measures is China taking besides search and rescue?", options: ["Only sending money", "Relocating, treating the injured, and preventing secondary disasters", "Only building houses", "Only sending troops"], answer: 1 },
+            { q: "6. Where did China send rescuers?", options: ["To Russia", "To Nepal", "To Egypt", "To Kazakhstan"], answer: 1 },
+            { q: "7. What did Japarov express over the disaster?", options: ["Anger", "Condolences", "Indifference", "Surprise"], answer: 1 },
+            { q: "8. What does the SCO Summit strengthen?", options: ["Military alliances", "The Shanghai Spirit of mutual trust and mutual benefit", "Trade wars", "Border disputes"], answer: 1 },
+            { q: "9. The SCO Summit focuses on deepening what?", options: ["Military cooperation only", "Cooperation among member states", "Economic sanctions", "Cultural exchange only"], answer: 1 },
+            { q: "10. What does the Shanghai Spirit include?", options: ["Mutual trust only", "Mutual trust, mutual benefit, equality, and respect for diverse civilizations", "Equality only", "Respect for diverse civilizations only"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. How many tons of emergency relief supplies did China deliver to Nepal?", options: ["30 tons", "50 tons", "80 tons", "100 tons"], answer: 1 },
+            { q: "12. How many tunnel rescue experts were dispatched?", options: ["5 experts", "9 experts", "15 experts", "20 experts"], answer: 1 },
+            { q: "13. What type of aircraft carried the relief supplies?", options: ["Boeing 747", "Y-20 transport aircraft", "Airbus A400", "Il-76"], answer: 1 },
+            { q: "14. How many relief supply items were carried?", options: ["5,200", "10,000", "13,200", "20,000"], answer: 2 },
+            { q: "15. Where did the aircraft arrive?", options: ["Pokhara Airport", "Tribhuvan International Airport in Kathmandu", "Lumbini Airport", "Chitwan Airport"], answer: 1 },
+            { q: "16. Which of the following was NOT included in the supplies?", options: ["Tents", "Blankets", "Televisions", "First-aid kits"], answer: 2 },
+            { q: "17. How many experts arrived by helicopter from Gyirong County?", options: ["4 experts", "5 experts", "9 experts", "15 experts"], answer: 1 },
+            { q: "18. Who made a phone call with the Nepali counterpart?", options: ["President Xi", "Foreign Minister Wang Yi", "Premier Li", "Ambassador Zhang"], answer: 1 },
+            { q: "19. What did Wang Yi describe the disaster as?", options: ["A minor incident", "The most serious cross-border disaster in recent years", "A routine flood", "An earthquake"], answer: 1 },
+            { q: "20. What did the CPC Central Committee call for?", options: ["Economic sanctions", "Emergency aid to Nepal and international rescue cooperation", "Military intervention", "Border closures"], answer: 1 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "harmony", phonetic: "/ˈhɑːrməni/", meaning: "n. 和谐；融洽" },
+            { word: "ceremony", phonetic: "/ˈsɛrəˌmoʊni/", meaning: "n. 仪式；典礼" },
+            { word: "relocate", phonetic: "/ˌriːˈloʊkeɪt/", meaning: "v. 重新安置；搬迁" },
+            { word: "resettle", phonetic: "/riːˈsɛtəl/", meaning: "v. 重新定居" },
+            { word: "secondary", phonetic: "/ˈsɛkənˌdɛri/", meaning: "adj. 次生的；次要的" },
+            { word: "condolence", phonetic: "/kənˈdoʊləns/", meaning: "n. 哀悼；慰问" },
+            { word: "solidarity", phonetic: "/ˌsɒlɪˈdærəti/", meaning: "n. 团结；一致" },
+            { word: "dispatch", phonetic: "/dɪˈspætʃ/", meaning: "v. 派遣；发送" },
+            { word: "metric ton", phonetic: "/ˈmɛtrɪk tʌn/", meaning: "n. 公吨" },
+            { word: "tunnel", phonetic: "/ˈtʌnəl/", meaning: "n. 隧道" },
+            { word: "counterpart", phonetic: "/ˈkaʊntərˌpɑːrt/", meaning: "n. 对应的人；同行" },
+            { word: "unprecedented", phonetic: "/ʌnˈprɛsɪˌdɛntɪd/", meaning: "adj. 前所未有的" },
+            { word: "complexity", phonetic: "/kəmˈplɛksəti/", meaning: "n. 复杂性" },
+            { word: "bureau", phonetic: "/ˈbʊroʊ/", meaning: "n. 局；处" },
+            { word: "political", phonetic: "/pəˈlɪtɪkəl/", meaning: "adj. 政治的" },
+            { word: "friendship", phonetic: "/ˈfrɛndʃɪp/", meaning: "n. 友谊" },
+            { word: "humanitarian", phonetic: "/hjuːˌmænɪˈtɛəriən/", meaning: "adj. 人道主义的" },
+            { word: "assistance", phonetic: "/əˈsɪstəns/", meaning: "n. 援助；帮助" },
+            { word: "cash", phonetic: "/kæʃ/", meaning: "n. 现金" },
+            { word: "cross-border", phonetic: "/krɒsˈbɔːrdər/", meaning: "adj. 跨境的" }
+        ];
+
+        const oldVocabData = [
+            { word: "president", phonetic: "/ˈprɛzɪdənt/", meaning: "n. 总统；主席" },
+            { word: "arrival", phonetic: "/əˈraɪvəl/", meaning: "n. 到达" },
+            { word: "welcome", phonetic: "/ˈwɛlkəm/", meaning: "n./v. 欢迎" },
+            { word: "disaster", phonetic: "/dɪˈzæstər/", meaning: "n. 灾难" },
+            { word: "rescue", phonetic: "/ˈrɛskjuː/", meaning: "n./v. 救援" },
+            { word: "missing", phonetic: "/ˈmɪsɪŋ/", meaning: "adj. 失踪的" },
+            { word: "measure", phonetic: "/ˈmɛʒər/", meaning: "n. 措施" },
+            { word: "medical", phonetic: "/ˈmɛdɪkəl/", meaning: "adj. 医疗的" },
+            { word: "treatment", phonetic: "/ˈtriːtmənt/", meaning: "n. 治疗" },
+            { word: "prevent", phonetic: "/prɪˈvɛnt/", meaning: "v. 防止" },
+            { word: "expert", phonetic: "/ˈɛkspɜːrt/", meaning: "n. 专家" },
+            { word: "supply", phonetic: "/səˈplaɪ/", meaning: "n. 物资；供应" },
+            { word: "aircraft", phonetic: "/ˈɛrkræft/", meaning: "n. 飞机" },
+            { word: "airport", phonetic: "/ˈɛrpɔːrt/", meaning: "n. 机场" },
+            { word: "tent", phonetic: "/tɛnt/", meaning: "n. 帐篷" },
+            { word: "blanket", phonetic: "/ˈblæŋkɪt/", meaning: "n. 毛毯" },
+            { word: "equipment", phonetic: "/ɪˈkwɪpmənt/", meaning: "n. 装备" },
+            { word: "minister", phonetic: "/ˈmɪnɪstər/", meaning: "n. 部长；大臣" },
+            { word: "phone call", phonetic: "/foʊn kɔːl/", meaning: "n. 电话" },
+            { word: "sudden", phonetic: "/ˈsʌdən/", meaning: "adj. 突然的" },
+            { word: "glacier", phonetic: "/ˈɡleɪʃər/", meaning: "n. 冰川" },
+            { word: "collapse", phonetic: "/kəˈlæps/", meaning: "n./v. 崩塌" },
+            { word: "casualty", phonetic: "/ˈkæʒuəlti/", meaning: "n. 伤亡" },
+            { word: "decision", phonetic: "/dɪˈsɪʒən/", meaning: "n. 决定" },
+            { word: "reflect", phonetic: "/rɪˈflɛkt/", meaning: "v. 反映；体现" },
+            { word: "member", phonetic: "/ˈmɛmbər/", meaning: "n. 成员" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作" },
+            { word: "region", phonetic: "/ˈriːdʒən/", meaning: "n. 地区" },
+            { word: "effort", phonetic: "/ˈɛfərt/", meaning: "n. 努力" },
+            { word: "search", phonetic: "/sɜːrtʃ/", meaning: "n./v. 搜寻" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. President Xi ___ at the Harmony Palace on August 31.", type: "choice", options: ["arrive", "arrived", "arrives", "arriving"], answer: 1 },
+            { q: "2. The welcome ceremony ___ by President Japarov.", type: "choice", options: ["hold", "held", "was held", "holds"], answer: 2 },
+            { q: "3. China ___ every effort to search for missing people.", type: "choice", options: ["make", "makes", "is making", "made"], answer: 2 },
+            { q: "4. Rescuers ___ to Nepal to assist with rescue operations.", type: "choice", options: ["send", "sent", "were sent", "sends"], answer: 2 },
+            { q: "5. China ___ grateful to President Japarov for his condolences.", type: "choice", options: ["is", "are", "was", "were"], answer: 0 },
+            { q: "6. Two Y-20 transport aircraft ___ 13,200 relief supplies.", type: "choice", options: ["carry", "carried", "carries", "carrying"], answer: 1 },
+            { q: "7. The supplies ___ at Tribhuvan International Airport.", type: "choice", options: ["arrive", "arrived", "arrives", "arriving"], answer: 1 },
+            { q: "8. They ___ in disaster-hit areas.", type: "choice", options: ["distribute", "will be distributed", "distributes", "distributing"], answer: 1 },
+            { q: "9. Four experts ___ in Kathmandu with the supplies.", type: "choice", options: ["arrive", "arrived", "arrives", "arriving"], answer: 1 },
+            { q: "10. Five others ___ the disaster area by helicopter.", type: "choice", options: ["reach", "reached", "reaches", "reaching"], answer: 1 },
+            { q: "11. Wang Yi ___ a phone call with his Nepali counterpart.", type: "choice", options: ["make", "made", "makes", "making"], answer: 1 },
+            { q: "12. A glacier collapse ___ severe mudslides.", type: "choice", options: ["trigger", "triggered", "triggers", "triggering"], answer: 1 },
+            { q: "13. The disaster ___ significant casualties.", type: "choice", options: ["cause", "caused", "causes", "causing"], answer: 1 },
+            { q: "14. It ___ as the most serious cross-border disaster.", type: "choice", options: ["describe", "described", "was described", "describes"], answer: 2 },
+            { q: "15. The CPC Central Committee ___ for emergency aid.", type: "choice", options: ["call", "called", "calls", "calling"], answer: 1 },
+            { q: "16. The decision ___ China's friendship with Nepal.", type: "choice", options: ["reflect", "reflects", "reflected", "reflecting"], answer: 1 },
+            { q: "17. Japarov ___ condolences over the disaster.", type: "choice", options: ["express", "expressed", "expresses", "expressing"], answer: 1 },
+            { q: "18. China ___ all necessary measures to relocate people.", type: "choice", options: ["take", "took", "is taking", "takes"], answer: 2 },
+            { q: "19. The SCO Summit ___ leaders from member states.", type: "choice", options: ["bring", "brings", "brought", "bringing"], answer: 1 },
+            { q: "20. The summit ___ on deepening cooperation.", type: "choice", options: ["focus", "focuses", "focused", "focusing"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. A ___ is a formal event marking a special occasion.", type: "choice", options: ["ceremony", "tent", "blanket", "helicopter"], answer: 0 },
+            { q: "22. To ___ means to move to a new place.", type: "choice", options: ["relocate", "stay", "remain", "refuse"], answer: 0 },
+            { q: "23. A ___ disaster is one that follows another.", type: "choice", options: ["secondary", "primary", "main", "first"], answer: 0 },
+            { q: "24. ___ means expressions of sympathy for someone's loss.", type: "choice", options: ["Condolences", "Congratulations", "Greetings", "Thanks"], answer: 0 },
+            { q: "25. ___ means unity and mutual support.", type: "choice", options: ["Solidarity", "Conflict", "Division", "Separation"], answer: 0 },
+            { q: "26. To ___ means to send someone on a mission.", type: "choice", options: ["dispatch", "receive", "keep", "hold"], answer: 0 },
+            { q: "27. A ___ ton equals 1,000 kilograms.", type: "choice", options: ["metric", "short", "long", "heavy"], answer: 0 },
+            { q: "28. A ___ is an underground passage.", type: "choice", options: ["tunnel", "bridge", "tower", "wall"], answer: 0 },
+            { q: "29. A ___ is a person in the same position in another organization.", type: "choice", options: ["counterpart", "superior", "subordinate", "stranger"], answer: 0 },
+            { q: "30. ___ means never having happened before.", type: "choice", options: ["Unprecedented", "Common", "Frequent", "Regular"], answer: 0 },
+            { q: "31. ___ refers to how complicated something is.", type: "choice", options: ["Complexity", "Simplicity", "Clarity", "Brevity"], answer: 0 },
+            { q: "32. A ___ is a government department.", type: "choice", options: ["bureau", "tent", "blanket", "helicopter"], answer: 0 },
+            { q: "33. ___ affairs relate to government and governance.", type: "choice", options: ["Political", "Personal", "Private", "Commercial"], answer: 0 },
+            { q: "34. ___ is a relationship of mutual affection.", type: "choice", options: ["Friendship", "Enmity", "Rivalry", "Hostility"], answer: 0 },
+            { q: "35. ___ aid focuses on saving lives and reducing suffering.", type: "choice", options: ["Humanitarian", "Military", "Commercial", "Political"], answer: 0 },
+            { q: "36. ___ means help or support.", type: "choice", options: ["Assistance", "Resistance", "Distance", "Instance"], answer: 0 },
+            { q: "37. ___ is money in physical form.", type: "choice", options: ["Cash", "Credit", "Debt", "Loan"], answer: 0 },
+            { q: "38. A ___ disaster spans two or more countries.", type: "choice", options: ["cross-border", "local", "regional", "domestic"], answer: 0 },
+            { q: "39. To ___ means to stop something from happening.", type: "choice", options: ["prevent", "cause", "allow", "permit"], answer: 0 },
+            { q: "40. A ___ is a person with special knowledge.", type: "choice", options: ["expert", "novice", "amateur", "beginner"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. President Xi arrived ___ the Harmony Palace.", type: "choice", options: ["in", "at", "on", "by"], answer: 1 },
+            { q: "42. The ceremony was held ___ President Japarov.", type: "choice", options: ["by", "with", "for", "from"], answer: 0 },
+            { q: "43. China is making every effort ___ search for missing people.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "44. The supplies arrived ___ Kathmandu.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "45. The aircraft departed ___ Chengdu.", type: "choice", options: ["from", "in", "at", "by"], answer: 0 },
+            { q: "46. The experts began working ___ a hydropower station.", type: "choice", options: ["at", "in", "on", "by"], answer: 0 },
+            { q: "47. Wang Yi spoke ___ a phone call.", type: "choice", options: ["during", "in", "at", "on"], answer: 0 },
+            { q: "48. The disaster originated ___ the China-Nepal border area.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "49. The decision reflects China's friendship ___ Nepal.", type: "choice", options: ["with", "for", "to", "at"], answer: 0 },
+            { q: "50. Japarov expressed condolences ___ the disaster.", type: "choice", options: ["over", "about", "for", "at"], answer: 0 },
+            { q: "51. The SCO Summit brings ___ leaders from member states.", type: "choice", options: ["together", "in", "out", "up"], answer: 0 },
+            { q: "52. The supplies will be distributed ___ disaster-hit areas.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "53. Five experts reached the area ___ helicopter.", type: "choice", options: ["by", "in", "on", "at"], answer: 0 },
+            { q: "54. ___ the difficulty, rescue efforts continued.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "55. The operation was unprecedented ___ its complexity.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "56. The summit focuses ___ deepening cooperation.", type: "choice", options: ["on", "in", "at", "by"], answer: 0 },
+            { q: "57. China is grateful ___ Japarov for his condolences.", type: "choice", options: ["to", "for", "at", "with"], answer: 0 },
+            { q: "58. The supplies, ___ included tents and blankets, arrived safely.", type: "choice", options: ["which", "that", "who", "what"], answer: 0 },
+            { q: "59. It is ___ important political decision.", type: "choice", options: ["an", "a", "the", "/"], answer: 0 },
+            { q: "60. ___ a historic moment it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. Where did President Xi arrive on August 31?", type: "choice", options: ["The Kremlin", "The Harmony Palace", "The Presidential Palace", "The Great Hall"], answer: 1 },
+            { q: "62. Who held the welcome ceremony?", type: "choice", options: ["Putin", "President Japarov", "The Egyptian President", "The SCO Secretary"], answer: 1 },
+            { q: "63. What is China making every effort to search for?", type: "choice", options: ["Lost treasure", "Missing people", "New routes", "Oil reserves"], answer: 1 },
+            { q: "64. The mudslide disaster occurred in which region?", type: "choice", options: ["Xinjiang", "Xizang Autonomous Region", "Inner Mongolia", "Guangxi"], answer: 1 },
+            { q: "65. Where did China send rescuers?", type: "choice", options: ["Russia", "Nepal", "Egypt", "Kazakhstan"], answer: 1 },
+            { q: "66. How many tons of supplies were delivered to Nepal?", type: "choice", options: ["30 tons", "50 tons", "80 tons", "100 tons"], answer: 1 },
+            { q: "67. What aircraft carried the supplies?", type: "choice", options: ["Boeing 747", "Y-20 transport aircraft", "Airbus A400", "Il-76"], answer: 1 },
+            { q: "68. How many relief items were carried?", type: "choice", options: ["5,200", "10,000", "13,200", "20,000"], answer: 2 },
+            { q: "69. Where did the aircraft arrive?", type: "choice", options: ["Pokhara", "Tribhuvan International Airport", "Lumbini", "Chitwan"], answer: 1 },
+            { q: "70. How many tunnel rescue experts were dispatched?", type: "choice", options: ["5", "9", "15", "20"], answer: 1 },
+            { q: "71. How many experts arrived by helicopter from Gyirong?", type: "choice", options: ["4", "5", "9", "15"], answer: 1 },
+            { q: "72. Who made a phone call with the Nepali counterpart?", type: "choice", options: ["President Xi", "Foreign Minister Wang Yi", "Premier Li", "Ambassador Zhang"], answer: 1 },
+            { q: "73. What did Wang Yi describe the disaster as?", type: "choice", options: ["Minor", "The most serious cross-border disaster in recent years", "Routine", "An earthquake"], answer: 1 },
+            { q: "74. What did the CPC Central Committee call for?", type: "choice", options: ["Sanctions", "Emergency aid and international rescue cooperation", "Military action", "Border closure"], answer: 1 },
+            { q: "75. What did the decision reflect?", type: "choice", options: ["Economic power", "China's friendship with Nepal", "Military strength", "Diplomatic pressure"], answer: 1 },
+            { q: "76. What did Japarov express over the disaster?", type: "choice", options: ["Anger", "Condolences", "Indifference", "Surprise"], answer: 1 },
+            { q: "77. What does the SCO Summit strengthen?", type: "choice", options: ["Military alliances", "The Shanghai Spirit", "Trade wars", "Border disputes"], answer: 1 },
+            { q: "78. What was NOT included in the relief supplies?", type: "choice", options: ["Tents", "Blankets", "Televisions", "Sleeping bags"], answer: 2 },
+            { q: "79. The two Y-20 aircraft departed from which city?", type: "choice", options: ["Beijing", "Chengdu", "Xi'an", "Kunming"], answer: 1 },
+            { q: "80. What did the experts begin working at?", type: "choice", options: ["A school", "A hospital", "A hydropower station", "A government office"], answer: 2 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '习近平抵达比什凯克和谐宫出席欢迎仪式。'", type: "choice", options: ["President Xi arrived at the Harmony Palace to attend the welcome ceremony.", "President Xi arrive Harmony Palace ceremony.", "President Xi arriving at Harmony Palace.", "President Xi arrived Harmony Palace welcome."], answer: 0 },
+            { q: "82. 'China is making every effort.' 'every effort' means ___.", type: "choice", options: ["all possible efforts", "some efforts", "no effort", "little effort"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["The supplies were delivered to Nepal.", "The supplies deliver to Nepal.", "The supplies delivering to Nepal.", "The supplies was delivered Nepal."], answer: 0 },
+            { q: "84. 'The disaster claimed casualties.' 'claimed' means ___.", type: "choice", options: ["caused", "prevented", "avoided", "reduced"], answer: 0 },
+            { q: "85. Choose the correct translation: '两架运-20运输机搭载了13200件救援物资。'", type: "choice", options: ["Two Y-20 transport aircraft carried 13,200 relief supplies.", "Two Y-20 carry 13,200 supply.", "Two Y-20 carrying 13,200 relief.", "Two Y-20 transported 13,200 goods."], answer: 0 },
+            { q: "86. 'The supplies were distributed.' This is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The passive voice of 'China sent rescuers to Nepal' is ___.", type: "choice", options: ["Rescuers were sent to Nepal by China", "Rescuers sent Nepal", "Nepal sent rescuers", "China sends rescuers Nepal"], answer: 0 },
+            { q: "88. 'Wang Yi described it as the most serious disaster.' The subject is ___.", type: "choice", options: ["Wang Yi", "described", "it", "disaster"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The decision reflects friendship, ___?'", type: "choice", options: ["doesn't it", "does it", "isn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Neither the complexity ___ the difficulty stopped the rescue.' Fill in the blank.", type: "choice", options: ["nor", "or", "and", "but"], answer: 0 },
+            { q: "91. Choose the correct translation: '救援专家已抵达灾区。'", type: "choice", options: ["Rescue experts have arrived at the disaster area.", "Rescue experts arrive disaster.", "Rescue expert arriving area.", "Rescue experts has arrive disaster area."], answer: 0 },
+            { q: "92. 'emergency cash assistance' means ___.", type: "choice", options: ["urgent financial aid", "regular payments", "bank loans", "investments"], answer: 0 },
+            { q: "93. 'If the glacier collapses, mudslides will occur.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The aircraft carried 50 tons of supplies.", "The aircraft carry 50 ton supply.", "The aircraft carrying 50 tons supplies.", "The aircraft carried of 50 tons supplies."], answer: 0 },
+            { q: "95. '___ the unprecedented difficulty, rescue efforts continued.' Fill in the blank.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "96. The indirect speech of 'He said, \"China is making every effort.\"' is ___.", type: "choice", options: ["He said China was making every effort.", "He said China is make effort.", "He says China was effort.", "He said China making effort."], answer: 0 },
+            { q: "97. 'expressed condolences' means ___.", type: "choice", options: ["showed sympathy", "showed anger", "showed joy", "showed fear"], answer: 0 },
+            { q: "98. 'have been dispatched' is ___ tense.", type: "choice", options: ["present perfect passive", "past", "future", "present"], answer: 0 },
+            { q: "99. 'The rescue team continued working.' The verb is ___.", type: "choice", options: ["continued", "the", "rescue", "team"], answer: 0 },
+            { q: "100. 'I'm looking forward to ___ the rescue results.'", type: "choice", options: ["seeing", "see", "saw", "sees"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
