@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月2日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月2日 · 星期三 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>PALLAS-1 Y1 Rocket Succeeds in Maiden Flight</h3>
+                    <p>On September 1, 2026, at 10:00 a.m., the PALLAS-1 Y1 liquid carrier rocket blasted off from the Dongfeng commercial space innovation pilot zone in northwest China and successfully reached its designated orbit. This marked a new milestone in China's commercial space development.</p>
+                    <p>The PALLAS-1 was independently developed by Galactic Energy, a Chinese private rocket company. It is a two-stage configuration rocket with a total length of 52 meters. Its core stage diameter is 3.35 meters, with a lift-off mass of approximately 283 tonnes and a lift-off thrust of 350 tonnes. The rocket is designed to be reused at least 25 times, making it a major expansion of the company's launch capabilities from small and medium-sized solid rockets into the reusable liquid-fueled rocket sector.</p>
+                    <p>The main propulsion system uses the self-developed CQ-50 pintle-type reusable liquid oxygen/kerosene engines, whose accumulated hot-fire test duration exceeds 23,000 seconds. The rocket's first stage adopts a parallel configuration of seven CQ-50 engines, providing powerful and reliable thrust during flight.</p>
+                    <p>The maiden flight has obtained full-vehicle flight data and verified the rocket's overall capabilities. This was the first flight mission of the PALLAS-1 carrier rocket. Galactic Energy next aims to carry out the first-stage vertical landing and recovery, further advancing China's reusable rocket technology.</p>
+                    <span class="source">Source: CGTN, Xinhua, Global Times, 2026-09-01</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Additional Humanitarian Aid Supplies Depart from China for Mudslide-Hit Nepal</h3>
+                    <p>On the afternoon of September 1, 2026, more emergency humanitarian aid supplies provided by the Chinese government departed from Shenzhen Bao'an International Airport in south China's Guangdong Province, bound for mudslide-hit Nepal. The supplies were loaded onto a Chinese Air Force Y-20 large transport aircraft and flown to Tribhuvan International Airport in Kathmandu.</p>
+                    <p>This was the second batch of aid supplies from China to Nepal, with a total weight of approximately 5.8 tonnes. The supplies included water purification equipment, lighting equipment, genetic testing equipment (DNA testing instruments and reagents), and drones — all urgently needed items for the disaster relief effort. These supplies were expected to arrive in Kathmandu on the evening of September 1.</p>
+                    <p>Five experts from Shenzhen accompanied the supplies to the disaster area in Nepal. In addition, Chinese DNA identification experts were to travel to the frontline of the disaster zone to assist Nepal in carrying out their work. To ensure the aid supplies reached the disaster area as quickly as possible, the Ministry of Foreign Affairs, the Ministry of Commerce, the General Administration of Customs, and the China International Development Cooperation Agency coordinated efforts to urgently secure supplies, transport them overnight, and complete loading procedures at Shenzhen airport.</p>
+                    <p>Foreign Ministry spokesperson Guo Jiakun stated at a regular press conference that providing emergency assistance to Nepal's disaster-hit areas and carrying out international rescue cooperation is an important political decision made by China, reflecting its friendly sentiments toward Nepal. "China will stand firmly with Nepal, hand in hand to overcome the difficulties, and interpret the traditional friendship between neighbors with concrete actions," Guo said.</p>
+                    <span class="source">Source: Xinhua, People's Daily, The Paper, 2026-09-01</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-02';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-02',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. When did the PALLAS-1 Y1 rocket blast off?", options: ["September 1, 2026, at 8:00 a.m.", "September 1, 2026, at 10:00 a.m.", "August 31, 2026, at 10:00 a.m.", "September 2, 2026, at 10:00 a.m."], answer: 1 },
+            { q: "2. Where did the PALLAS-1 Y1 rocket launch from?", options: ["The Jiuquan Satellite Launch Center", "The Dongfeng commercial space innovation pilot zone", "The Wenchang Spacecraft Launch Site", "The Taiyuan Satellite Launch Center"], answer: 1 },
+            { q: "3. Which company independently developed the PALLAS-1 rocket?", options: ["SpaceX", "Galactic Energy", "Blue Origin", "CASC"], answer: 1 },
+            { q: "4. What type of rocket is the PALLAS-1?", options: ["A solid-fueled rocket", "A reusable liquid-propellant rocket", "A hybrid rocket", "A nuclear-powered rocket"], answer: 1 },
+            { q: "5. What is the total length of the PALLAS-1 rocket?", options: ["42 meters", "52 meters", "62 meters", "72 meters"], answer: 1 },
+            { q: "6. What is the core stage diameter of the PALLAS-1?", options: ["2.35 meters", "3.35 meters", "4.35 meters", "5.35 meters"], answer: 1 },
+            { q: "7. What is the approximate lift-off mass of the PALLAS-1?", options: ["183 tonnes", "283 tonnes", "383 tonnes", "483 tonnes"], answer: 1 },
+            { q: "8. How many times is the PALLAS-1 designed to be reused?", options: ["At least 5 times", "At least 15 times", "At least 25 times", "At least 50 times"], answer: 2 },
+            { q: "9. How many CQ-50 engines are connected in parallel in the first stage?", options: ["Five engines", "Seven engines", "Nine engines", "Eleven engines"], answer: 1 },
+            { q: "10. What does Galactic Energy next aim to carry out?", options: ["A manned mission", "The first-stage vertical landing and recovery", "A lunar landing", "A Mars mission"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. When did the second batch of aid supplies depart from Shenzhen?", options: ["On the morning of September 1", "On the afternoon of September 1", "On the evening of September 1", "On the morning of September 2"], answer: 1 },
+            { q: "12. Which airport did the supplies depart from?", options: ["Beijing Capital International Airport", "Shenzhen Bao'an International Airport", "Shanghai Pudong International Airport", "Guangzhou Baiyun International Airport"], answer: 1 },
+            { q: "13. What aircraft carried the supplies to Nepal?", options: ["A Boeing 747", "A Chinese Air Force Y-20 large transport aircraft", "An Airbus A400", "An Il-76 transport aircraft"], answer: 1 },
+            { q: "14. What was the total weight of the second batch of aid supplies?", options: ["Approximately 3.8 tonnes", "Approximately 5.8 tonnes", "Approximately 7.8 tonnes", "Approximately 9.8 tonnes"], answer: 1 },
+            { q: "15. Which of the following was NOT included in the supplies?", options: ["Water purification equipment", "Lighting equipment", "Televisions", "Drones"], answer: 2 },
+            { q: "16. What kind of testing equipment was included in the supplies?", options: ["Blood testing equipment", "Genetic testing (DNA) equipment", "Soil testing equipment", "Water quality testing equipment only"], answer: 1 },
+            { q: "17. How many experts from Shenzhen accompanied the supplies?", options: ["Three experts", "Five experts", "Seven experts", "Nine experts"], answer: 1 },
+            { q: "18. What kind of Chinese experts were to travel to the disaster frontline?", options: ["Tunnel rescue experts", "DNA identification experts", "Medical treatment experts", "Engineering experts"], answer: 1 },
+            { q: "19. Who stated that the aid was an important political decision?", options: ["President Xi Jinping", "Foreign Ministry spokesperson Guo Jiakun", "Premier Li Qiang", "Foreign Minister Wang Yi"], answer: 1 },
+            { q: "20. When were the supplies expected to arrive in Kathmandu?", options: ["On the evening of September 1", "On the morning of September 2", "On the evening of September 2", "On the morning of September 3"], answer: 0 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "blast off", phonetic: "/blæst ɒf/", meaning: "v. （火箭）发射升空" },
+            { word: "carrier rocket", phonetic: "/ˈkæriər ˈrɒkɪt/", meaning: "n. 运载火箭" },
+            { word: "milestone", phonetic: "/ˈmaɪlstoʊn/", meaning: "n. 里程碑" },
+            { word: "propulsion", phonetic: "/prəˈpʌlʃən/", meaning: "n. 推进；推进力" },
+            { word: "configuration", phonetic: "/kənˌfɪɡjəˈreɪʃən/", meaning: "n. 构型；配置" },
+            { word: "diameter", phonetic: "/daɪˈæmɪtər/", meaning: "n. 直径" },
+            { word: "thrust", phonetic: "/θrʌst/", meaning: "n. 推力" },
+            { word: "reusable", phonetic: "/riːˈjuːzəbəl/", meaning: "adj. 可重复使用的" },
+            { word: "kerosene", phonetic: "/ˈkɛrəˌsiːn/", meaning: "n. 煤油" },
+            { word: "liquid oxygen", phonetic: "/ˈlɪkwɪd ˈɒksɪdʒən/", meaning: "n. 液氧" },
+            { word: "parallel", phonetic: "/ˈpærəˌlɛl/", meaning: "adj. 并联的；平行的" },
+            { word: "engine", phonetic: "/ˈɛndʒɪn/", meaning: "n. 发动机" },
+            { word: "vertical", phonetic: "/ˈvɜːrtɪkəl/", meaning: "adj. 垂直的" },
+            { word: "recovery", phonetic: "/rɪˈkʌvəri/", meaning: "n. 回收；恢复" },
+            { word: "humanitarian", phonetic: "/hjuːˌmænɪˈtɛəriən/", meaning: "adj. 人道主义的" },
+            { word: "water purification", phonetic: "/ˈwɔːtər ˌpjʊrɪfɪˈkeɪʃən/", meaning: "n. 净水" },
+            { word: "genetic testing", phonetic: "/dʒəˈnɛtɪk ˈtɛstɪŋ/", meaning: "n. 基因检测" },
+            { word: "reagent", phonetic: "/riˈeɪdʒənt/", meaning: "n. 试剂" },
+            { word: "drone", phonetic: "/droʊn/", meaning: "n. 无人机" },
+            { word: "spokesperson", phonetic: "/ˈspoʊksˌpɜːrsən/", meaning: "n. 发言人" }
+        ];
+
+        const oldVocabData = [
+            { word: "rocket", phonetic: "/ˈrɒkɪt/", meaning: "n. 火箭" },
+            { word: "launch", phonetic: "/lɔːntʃ/", meaning: "v./n. 发射" },
+            { word: "orbit", phonetic: "/ˈɔːrbɪt/", meaning: "n. 轨道" },
+            { word: "stage", phonetic: "/steɪdʒ/", meaning: "n. 级（火箭）" },
+            { word: "mass", phonetic: "/mæs/", meaning: "n. 质量" },
+            { word: "company", phonetic: "/ˈkʌmpəni/", meaning: "n. 公司" },
+            { word: "develop", phonetic: "/dɪˈvɛləp/", meaning: "v. 研制；开发" },
+            { word: "design", phonetic: "/dɪˈzaɪn/", meaning: "v./n. 设计" },
+            { word: "data", phonetic: "/ˈdeɪtə/", meaning: "n. 数据" },
+            { word: "verify", phonetic: "/ˈvɛrɪfaɪ/", meaning: "v. 验证" },
+            { word: "supply", phonetic: "/səˈplaɪ/", meaning: "n. 物资；供应" },
+            { word: "emergency", phonetic: "/ɪˈmɜːrdʒənsi/", meaning: "n. 紧急情况" },
+            { word: "disaster", phonetic: "/dɪˈzæstər/", meaning: "n. 灾难" },
+            { word: "rescue", phonetic: "/ˈrɛskjuː/", meaning: "n./v. 救援" },
+            { word: "expert", phonetic: "/ˈɛkspɜːrt/", meaning: "n. 专家" },
+            { word: "airport", phonetic: "/ˈɛrpɔːrt/", meaning: "n. 机场" },
+            { word: "aircraft", phonetic: "/ˈɛrkræft/", meaning: "n. 飞机" },
+            { word: "transport", phonetic: "/trænˈspɔːrt/", meaning: "v./n. 运输" },
+            { word: "arrive", phonetic: "/əˈraɪv/", meaning: "v. 到达" },
+            { word: "include", phonetic: "/ɪnˈkluːd/", meaning: "v. 包括" },
+            { word: "equipment", phonetic: "/ɪˈkwɪpmənt/", meaning: "n. 装备" },
+            { word: "coordinate", phonetic: "/koʊˈɔːrdɪneɪt/", meaning: "v. 协调" },
+            { word: "ministry", phonetic: "/ˈmɪnɪstri/", meaning: "n. 部（政府部门）" },
+            { word: "decision", phonetic: "/dɪˈsɪʒən/", meaning: "n. 决定" },
+            { word: "political", phonetic: "/pəˈlɪtɪkəl/", meaning: "adj. 政治的" },
+            { word: "friendship", phonetic: "/ˈfrɛndʃɪp/", meaning: "n. 友谊" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作" },
+            { word: "assistance", phonetic: "/əˈsɪstəns/", meaning: "n. 援助；帮助" },
+            { word: "frontline", phonetic: "/ˈfrʌntlaɪn/", meaning: "n. 一线；前线" },
+            { word: "action", phonetic: "/ˈækʃən/", meaning: "n. 行动" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. The PALLAS-1 Y1 rocket ___ off from the Dongfeng commercial space innovation pilot zone.", type: "choice", options: ["blast", "blasted", "blasts", "blasting"], answer: 1 },
+            { q: "2. The rocket ___ by Galactic Energy.", type: "choice", options: ["develop", "developed", "was developed", "develops"], answer: 2 },
+            { q: "3. The PALLAS-1 ___ to be reused at least 25 times.", type: "choice", options: ["design", "designed", "is designed", "designs"], answer: 2 },
+            { q: "4. Seven CQ-50 engines ___ in parallel in the first stage.", type: "choice", options: ["connect", "are connected", "connected", "connecting"], answer: 1 },
+            { q: "5. The maiden flight ___ full-vehicle flight data.", type: "choice", options: ["obtain", "obtained", "obtains", "obtaining"], answer: 1 },
+            { q: "6. Galactic Energy next ___ to carry out the first-stage vertical landing.", type: "choice", options: ["aim", "aims", "aimed", "aiming"], answer: 1 },
+            { q: "7. More emergency aid supplies ___ from Shenzhen on September 1.", type: "choice", options: ["depart", "departed", "departs", "departing"], answer: 1 },
+            { q: "8. The supplies ___ onto a Y-20 transport aircraft.", type: "choice", options: ["load", "loaded", "were loaded", "loads"], answer: 2 },
+            { q: "9. Five experts from Shenzhen ___ the supplies to the disaster area.", type: "choice", options: ["accompany", "accompanied", "accompanies", "accompanying"], answer: 1 },
+            { q: "10. Chinese DNA identification experts ___ to the frontline of the disaster zone.", type: "choice", options: ["travel", "were to travel", "travels", "traveling"], answer: 1 },
+            { q: "11. The supplies ___ 5.8 tonnes in total.", type: "choice", options: ["weigh", "weighed", "weighs", "weighing"], answer: 1 },
+            { q: "12. The aid ___ an important political decision by China.", type: "choice", options: ["is", "was", "are", "were"], answer: 1 },
+            { q: "13. China ___ firmly with Nepal to overcome difficulties.", type: "choice", options: ["stand", "stands", "stood", "standing"], answer: 1 },
+            { q: "14. The supplies ___ water purification equipment and drones.", type: "choice", options: ["include", "included", "includes", "including"], answer: 1 },
+            { q: "15. The rocket's first stage ___ a parallel configuration of seven engines.", type: "choice", options: ["adopt", "adopted", "adopts", "adopting"], answer: 2 },
+            { q: "16. The hot-fire test duration ___ 23,000 seconds.", type: "choice", options: ["exceed", "exceeded", "exceeds", "exceeding"], answer: 2 },
+            { q: "17. The supplies ___ to arrive in Kathmandu on the evening of September 1.", type: "choice", options: ["expect", "were expected", "expected", "expects"], answer: 1 },
+            { q: "18. The government ___ every effort to secure the supplies urgently.", type: "choice", options: ["make", "made", "makes", "making"], answer: 1 },
+            { q: "19. The rocket successfully ___ its designated orbit.", type: "choice", options: ["reach", "reached", "reaches", "reaching"], answer: 1 },
+            { q: "20. The decision ___ China's friendly sentiments toward Nepal.", type: "choice", options: ["reflect", "reflects", "reflected", "reflecting"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. To ___ means to launch a rocket into the sky.", type: "choice", options: ["blast off", "take down", "put away", "give up"], answer: 0 },
+            { q: "22. A ___ is a significant event in development.", type: "choice", options: ["milestone", "millstone", "keystone", "grindstone"], answer: 0 },
+            { q: "23. ___ refers to the force that moves a rocket forward.", type: "choice", options: ["Propulsion", "Gravity", "Friction", "Resistance"], answer: 0 },
+            { q: "24. The ___ of a circle is the distance across it.", type: "choice", options: ["diameter", "radius", "circumference", "perimeter"], answer: 0 },
+            { q: "25. ___ is the upward force produced by a rocket engine.", type: "choice", options: ["Thrust", "Drag", "Lift", "Weight"], answer: 0 },
+            { q: "26. A ___ rocket can be used multiple times.", type: "choice", options: ["reusable", "disposable", "single-use", "temporary"], answer: 0 },
+            { q: "27. ___ is a fuel used in many rocket engines.", type: "choice", options: ["Kerosene", "Gasoline", "Diesel", "Ethanol"], answer: 0 },
+            { q: "28. ___ is oxygen in liquid form, used as an oxidizer in rockets.", type: "choice", options: ["Liquid oxygen", "Liquid nitrogen", "Liquid hydrogen", "Liquid helium"], answer: 0 },
+            { q: "29. A ___ configuration means multiple engines are arranged side by side.", type: "choice", options: ["parallel", "serial", "circular", "random"], answer: 0 },
+            { q: "30. A ___ landing is one in which the rocket descends straight down.", type: "choice", options: ["vertical", "horizontal", "diagonal", "curved"], answer: 0 },
+            { q: "31. ___ refers to the retrieval of a rocket's first stage after launch.", type: "choice", options: ["Recovery", "Discovery", "Delivery", "Removal"], answer: 0 },
+            { q: "32. ___ aid focuses on saving lives and reducing suffering.", type: "choice", options: ["Humanitarian", "Military", "Commercial", "Political"], answer: 0 },
+            { q: "33. ___ equipment removes impurities from water.", type: "choice", options: ["Water purification", "Water contamination", "Water pollution", "Water waste"], answer: 0 },
+            { q: "34. ___ testing analyzes DNA to identify individuals.", type: "choice", options: ["Genetic", "Generic", "Genius", "Generous"], answer: 0 },
+            { q: "35. A ___ is a substance used in chemical analysis.", type: "choice", options: ["reagent", "raincoat", "reason", "region"], answer: 0 },
+            { q: "36. A ___ is an unmanned aerial vehicle.", type: "choice", options: ["drone", "phone", "tablet", "laptop"], answer: 0 },
+            { q: "37. A ___ is an official who speaks on behalf of an organization.", type: "choice", options: ["spokesperson", "spokesman", "spokeswoman", "spokeschild"], answer: 0 },
+            { q: "38. A ___ rocket carries payloads into space.", type: "choice", options: ["carrier", "passenger", "cargo", "freight"], answer: 0 },
+            { q: "39. The ___ of a rocket includes its stages and components.", type: "choice", options: ["configuration", "confusion", "confirmation", "confrontation"], answer: 0 },
+            { q: "40. To ___ means to work together effectively.", type: "choice", options: ["coordinate", "compete", "conflict", "contradict"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. The PALLAS-1 blasted ___ from the Dongfeng pilot zone.", type: "choice", options: ["off", "up", "out", "away"], answer: 0 },
+            { q: "42. The rocket was developed ___ Galactic Energy.", type: "choice", options: ["by", "with", "for", "from"], answer: 0 },
+            { q: "43. The first stage adopts a parallel configuration ___ seven engines.", type: "choice", options: ["of", "in", "at", "on"], answer: 0 },
+            { q: "44. The rocket is designed to be reused ___ least 25 times.", type: "choice", options: ["at", "in", "on", "for"], answer: 0 },
+            { q: "45. The supplies departed ___ Shenzhen Bao'an International Airport.", type: "choice", options: ["from", "in", "at", "on"], answer: 0 },
+            { q: "46. The supplies were flown ___ Kathmandu.", type: "choice", options: ["to", "in", "at", "from"], answer: 0 },
+            { q: "47. Five experts accompanied the supplies ___ the disaster area.", type: "choice", options: ["to", "in", "at", "on"], answer: 0 },
+            { q: "48. DNA identification experts were to travel ___ the frontline.", type: "choice", options: ["to", "in", "at", "on"], answer: 0 },
+            { q: "49. The aid reflects China's friendship ___ Nepal.", type: "choice", options: ["with", "for", "to", "at"], answer: 0 },
+            { q: "50. China will stand firmly ___ Nepal.", type: "choice", options: ["with", "for", "to", "at"], answer: 0 },
+            { q: "51. The supplies weighed approximately 5.8 tonnes ___ total.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "52. The supplies were loaded ___ a Y-20 transport aircraft.", type: "choice", options: ["onto", "into", "in", "at"], answer: 0 },
+            { q: "53. The government made every effort ___ secure the supplies.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "54. The decision was made ___ China's leadership.", type: "choice", options: ["by", "with", "for", "from"], answer: 0 },
+            { q: "55. The rocket reached ___ designated orbit.", type: "choice", options: ["its", "it's", "their", "there"], answer: 0 },
+            { q: "56. ___ the difficulty, rescue efforts continued.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "57. The maiden flight verified the rocket's ___ capabilities.", type: "choice", options: ["overall", "over", "above", "under"], answer: 0 },
+            { q: "58. The supplies, ___ included drones, arrived safely.", type: "choice", options: ["which", "that", "who", "what"], answer: 0 },
+            { q: "59. It is ___ important political decision.", type: "choice", options: ["an", "a", "the", "/"], answer: 0 },
+            { q: "60. ___ a historic achievement it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. When did the PALLAS-1 Y1 rocket blast off?", options: ["September 1, at 8:00 a.m.", "September 1, at 10:00 a.m.", "August 31, at 10:00 a.m.", "September 2, at 10:00 a.m."], type: "choice", answer: 1 },
+            { q: "62. Where did the PALLAS-1 launch from?", options: ["Jiuquan Satellite Launch Center", "Dongfeng commercial space innovation pilot zone", "Wenchang Spacecraft Launch Site", "Taiyuan Satellite Launch Center"], type: "choice", answer: 1 },
+            { q: "63. Who developed the PALLAS-1 rocket?", options: ["SpaceX", "Galactic Energy", "Blue Origin", "CASC"], type: "choice", answer: 1 },
+            { q: "64. What is the total length of the PALLAS-1?", options: ["42 meters", "52 meters", "62 meters", "72 meters"], type: "choice", answer: 1 },
+            { q: "65. What is the lift-off mass of the PALLAS-1?", options: ["183 tonnes", "283 tonnes", "383 tonnes", "483 tonnes"], type: "choice", answer: 1 },
+            { q: "66. How many times can the PALLAS-1 be reused?", options: ["At least 5", "At least 15", "At least 25", "At least 50"], type: "choice", answer: 2 },
+            { q: "67. How many CQ-50 engines are in the first stage?", options: ["Five", "Seven", "Nine", "Eleven"], type: "choice", answer: 1 },
+            { q: "68. What fuel does the CQ-50 engine use?", options: ["Liquid hydrogen", "Liquid oxygen/kerosene", "Solid fuel", "Nuclear"], type: "choice", answer: 1 },
+            { q: "69. Where did the second batch of aid supplies depart from?", options: ["Beijing", "Shenzhen Bao'an International Airport", "Shanghai", "Guangzhou"], type: "choice", answer: 1 },
+            { q: "70. What aircraft carried the supplies?", options: ["Boeing 747", "Y-20 transport aircraft", "Airbus A400", "Il-76"], type: "choice", answer: 1 },
+            { q: "71. What was the total weight of the second batch?", options: ["3.8 tonnes", "5.8 tonnes", "7.8 tonnes", "9.8 tonnes"], type: "choice", answer: 1 },
+            { q: "72. Which was NOT included in the supplies?", options: ["Water purification equipment", "Lighting equipment", "Televisions", "Drones"], type: "choice", answer: 2 },
+            { q: "73. How many experts from Shenzhen accompanied the supplies?", options: ["Three", "Five", "Seven", "Nine"], type: "choice", answer: 1 },
+            { q: "74. What kind of experts were to travel to the frontline?", options: ["Tunnel rescue experts", "DNA identification experts", "Medical experts", "Engineering experts"], type: "choice", answer: 1 },
+            { q: "75. Who called the aid an important political decision?", options: ["President Xi", "Guo Jiakun", "Premier Li", "Wang Yi"], type: "choice", answer: 1 },
+            { q: "76. When were the supplies expected to arrive in Kathmandu?", options: ["Evening of September 1", "Morning of September 2", "Evening of September 2", "Morning of September 3"], type: "choice", answer: 0 },
+            { q: "77. What did the maiden flight obtain?", options: ["Financial data", "Full-vehicle flight data", "Weather data", "Population data"], type: "choice", answer: 1 },
+            { q: "78. What does Galactic Energy next aim to carry out?", options: ["A manned mission", "First-stage vertical landing and recovery", "A lunar mission", "A Mars mission"], type: "choice", answer: 1 },
+            { q: "79. How long was the accumulated hot-fire test duration?", options: ["Over 13,000 seconds", "Over 23,000 seconds", "Over 33,000 seconds", "Over 43,000 seconds"], type: "choice", answer: 1 },
+            { q: "80. What did China say it would interpret with concrete actions?", options: ["Economic policy", "The traditional friendship between neighbors", "Military strategy", "Trade agreements"], type: "choice", answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '智神星一号遥一运载火箭在东风商业航天创新试验区发射升空。'", type: "choice", options: ["The PALLAS-1 Y1 carrier rocket blasted off from the Dongfeng commercial space innovation pilot zone.", "The PALLAS-1 Y1 rocket blast off Dongfeng zone.", "The PALLAS-1 rocket launching from Dongfeng.", "PALLAS-1 Y1 carrier rocket departed Dongfeng."], answer: 0 },
+            { q: "82. 'The rocket is designed to be reusable.' 'reusable' means ___.", type: "choice", options: ["able to be used again", "able to be used once", "unable to be used", "expensive to use"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["The supplies were loaded onto a Y-20 transport aircraft.", "The supplies load onto Y-20 aircraft.", "The supplies loading onto a Y-20.", "The supplies was loaded on Y-20."], answer: 0 },
+            { q: "84. 'The rocket verified its capabilities.' 'verified' means ___.", type: "choice", options: ["confirmed", "denied", "questioned", "ignored"], answer: 0 },
+            { q: "85. Choose the correct translation: '本批物资总重约5.8吨。'", type: "choice", options: ["The supplies weighed approximately 5.8 tonnes in total.", "The supplies weigh 5.8 ton total.", "The supplies weighing 5.8 tonnes.", "The supplies is 5.8 tonnes total."], answer: 0 },
+            { q: "86. 'The supplies were loaded.' This is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The passive voice of 'Galactic Energy developed the rocket' is ___.", type: "choice", options: ["The rocket was developed by Galactic Energy", "The rocket developed Galactic Energy", "Galactic Energy was developed by the rocket", "The rocket develops Galactic Energy"], answer: 0 },
+            { q: "88. 'Guo Jiakun stated that the aid was an important political decision.' The subject is ___.", type: "choice", options: ["Guo Jiakun", "stated", "aid", "decision"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The rocket reached its orbit, ___?'", type: "choice", options: ["didn't it", "did it", "isn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Neither the complexity ___ the difficulty stopped the mission.' Fill in the blank.", type: "choice", options: ["nor", "or", "and", "but"], answer: 0 },
+            { q: "91. Choose the correct translation: '中方DNA鉴定专家将奔赴灾区一线。'", type: "choice", options: ["Chinese DNA identification experts were to travel to the frontline of the disaster zone.", "Chinese DNA experts go disaster.", "Chinese experts going frontline.", "DNA experts has go disaster area."], answer: 0 },
+            { q: "92. 'emergency humanitarian aid' means ___.", type: "choice", options: ["urgent humanitarian assistance", "regular humanitarian aid", "commercial aid", "military assistance"], answer: 0 },
+            { q: "93. 'If the rocket reaches orbit, the mission succeeds.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The rocket's first stage adopts a parallel configuration of seven engines.", "The rocket first stage adopt seven engine parallel.", "The rocket's first stage adopting seven engines.", "The rocket first stage adopts of seven engines."], answer: 0 },
+            { q: "95. '___ the unprecedented difficulty, the launch succeeded.' Fill in the blank.", type: "choice", options: ["Despite", "Although", "Because", "Since"], answer: 0 },
+            { q: "96. The indirect speech of 'He said, \"The rocket blasted off.\"' is ___.", type: "choice", options: ["He said the rocket had blasted off.", "He said the rocket blast off.", "He says the rocket blasted.", "He said the rocket blasting off."], answer: 0 },
+            { q: "97. 'blast off' means ___.", type: "choice", options: ["launch into the sky", "land on the ground", "stay in place", "move backward"], answer: 0 },
+            { q: "98. 'were expected to arrive' is ___ tense.", type: "choice", options: ["past passive", "present", "future", "present perfect"], answer: 0 },
+            { q: "99. 'The rocket successfully reached orbit.' The verb is ___.", type: "choice", options: ["reached", "the", "rocket", "successfully"], answer: 0 },
+            { q: "100. 'China will stand firmly with Nepal.' 'stand firmly with' means ___.", type: "choice", options: ["support resolutely", "oppose strongly", "remain neutral", "distance from"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
