@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年9月3日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月3日 星期四 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">黄鹤楼</div>
+                    <div class="author">唐 · 崔颢</div>
+                    <div class="content">
+                        昔人已乘黄鹤去，此地空余黄鹤楼。<br>
+                        黄鹤一去不复返，白云千载空悠悠。<br>
+                        晴川历历汉阳树，芳草萋萋鹦鹉洲。<br>
+                        日暮乡关何处是？烟波江上使人愁。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>黄鹤楼</strong>：故址在今湖北武汉蛇山（黄鹄山）上，临长江。相传有仙人乘黄鹤过此，故名黄鹤楼。</p>
+                        <p>② <strong>昔人</strong>：指传说中骑黄鹤的仙人（一说费文祎，一说王子安）。</p>
+                        <p>③ <strong>空余</strong>：只剩下。<strong>空悠悠</strong>：空荡荡地飘荡。悠悠，飘荡的样子。</p>
+                        <p>④ <strong>历历</strong>：分明可数的样子。<strong>汉阳</strong>：地名，在武昌西，与黄鹤楼隔江相望。</p>
+                        <p>⑤ <strong>萋萋</strong>：草木茂盛的样子。<strong>鹦鹉洲</strong>：长江中的小洲，在黄鹤楼东北，相传因东汉祢衡作《鹦鹉赋》而得名。</p>
+                        <p>⑥ <strong>乡关</strong>：故乡。<strong>烟波</strong>：雾气笼罩的江波。</p>
+                        <br>
+                        <p><strong>译文：</strong>传说中的仙人已经乘着黄鹤飞去，这里只剩下空空的黄鹤楼。黄鹤一去不再返回，千百年来只有白云空荡悠悠。晴日江川分明可见汉阳的树木，鹦鹉洲上芳草茂盛。日暮时分故乡在哪里呢？江上烟波迷茫使人满怀愁绪。</p>
+                        <br>
+                        <p><strong>赏析：</strong>这是崔颢登黄鹤楼所作的七言律诗，被后人推崇为"唐人七律第一"。前四句一气贯注，从传说落笔，"黄鹤"三现，"空"字两用，写尽物是人非、时光流逝的苍茫感慨。颈联"晴川历历汉阳树，芳草萋萋鹦鹉洲"由远及近，写登楼所见开阔明丽之景，与上文渺茫形成对照。尾联"日暮乡关何处是？烟波江上使人愁"以问作结，由景入情，将日暮思乡的愁绪推向高潮。全诗意境开阔，气象苍茫，乡愁与吊古交融，是登楼怀古的千古绝唱。相传李白登黄鹤楼本欲赋诗，见此作而搁笔叹"眼前有景道不得，崔颢题诗在上头"。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">登高</div>
+                    <div class="author">唐 · 杜甫</div>
+                    <div class="content">
+                        风急天高猿啸哀，渚清沙白鸟飞回。<br>
+                        无边落木萧萧下，不尽长江滚滚来。<br>
+                        万里悲秋常作客，百年多病独登台。<br>
+                        艰难苦恨繁霜鬓，潦倒新停浊酒杯。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>登高</strong>：古人有重阳登高饮酒的习俗。此诗作于大历二年（767年）秋，杜甫流寓夔州（今重庆奉节）时。</p>
+                        <p>② <strong>猿啸哀</strong>：猿猴凄凉的叫声。<strong>渚</strong>：水中小洲。<strong>回</strong>：回旋。</p>
+                        <p>③ <strong>落木</strong>：落叶。<strong>萧萧</strong>：风吹落叶声。</p>
+                        <p>④ <strong>不尽</strong>：没有尽头。<strong>滚滚</strong>：江水奔流的样子。</p>
+                        <p>⑤ <strong>万里</strong>：离乡万里。<strong>作客</strong>：客居他乡。<strong>常作客</strong>：长期漂泊在外。</p>
+                        <p>⑥ <strong>百年</strong>：一生，这里指晚年。<strong>多病</strong>：杜甫当时患有多种疾病。<strong>独登台</strong>：独自登高。</p>
+                        <p>⑦ <strong>艰难苦恨</strong>：指国难家愁深重。<strong>繁霜鬓</strong>：白发增多如霜。</p>
+                        <p>⑧ <strong>潦倒</strong>：衰颓不振。<strong>新停</strong>：最近停止。<strong>浊酒杯</strong>：古人重阳登高饮酒，杜甫因肺病新近戒酒，故称"新停浊酒杯"。</p>
+                        <br>
+                        <p><strong>译文：</strong>秋风猛烈天空高远猿猴哀鸣，水清沙白鸟儿盘旋飞回。无边无际的落叶萧萧落下，望不到尽头的长江滚滚奔流而来。离乡万里悲对秋景常作客他乡，一生多病独自登临高台。艰难苦恨使白发如霜般增多，潦倒之中又新近停了浊酒之杯。</p>
+                        <br>
+                        <p><strong>赏析：</strong>这是杜甫晚年流寓夔州时重阳登高所作的七言律诗，被誉为"古今七律第一"。全诗八句皆对仗工整，前四句写景，后四句抒情。首联"风急天高猿啸哀，渚清沙白鸟飞回"一句一景，六种意象叠出，写夔州秋江高远萧瑟之景。颔联"无边落木萧萧下，不尽长江滚滚来"以落叶之萧瑟、江流之奔腾，写尽秋意之肃杀与时光之流逝，气象雄浑，千古传诵。颈联"万里悲秋常作客，百年多病独登台"由景入情，将空间之远（万里）、时间之长（百年）、情感之悲（悲秋）、处境之孤（作客、独登台）层层叠加，沉郁顿挫。尾联"艰难苦恨繁霜鬓，潦倒新停浊酒杯"以国难家愁致白发增多、因病戒酒作结，把忧国伤时、老病孤愁的情怀推向极致。全诗沉郁悲壮，是杜诗"沉郁顿挫"风格的代表作。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>从黄鹤楼到星辰大海：跨越时空的仰望与远行</h3>
+                    <p>2026年9月2日，两条消息同时映入眼帘：中国太阳能装机容量首次超过煤电，成为第一大电源；同日，国家主席习近平在开罗出席埃及总统塞西举行的欢迎仪式。当我们把目光投向一千多年前崔颢笔下的黄鹤楼，会发现古今之间竟有奇妙的呼应。</p>
+                    <p>崔颢登黄鹤楼，写下"昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠"。诗人仰望的，是千年不散的白云，是流逝而不可追的时光，是"日暮乡关何处是"的无尽乡愁。而杜甫登高远眺，写下"无边落木萧萧下，不尽长江滚滚来"，仰望的是高天猿啸，俯瞰的是万里长江，写尽漂泊悲秋、登台望远的孤寂与苍凉。两位唐代诗人，一仰白云，一俯江流，都将目光投向了天地之间。</p>
+                    <p>今天，中国人的仰望已从白云长江延伸到星辰大海。太阳能装机首超煤电，意味着我们对"日"的仰望，已从"日暮乡关"的感伤，化为驭日为电的实践——古人叹日暮乡远，今人借日生光明。而国家主席远赴开罗，跨越万里山河，恰如杜甫"万里悲秋常作客"的远行，但已不再是孤客漂泊，而是大国携手、文明对话的远行。</p>
+                    <p>从黄鹤楼的白云千载，到太阳能板上的亿万光芒；从杜甫独登台的万里悲秋，到中国足迹遍及世界的远行——仰望的姿态跨越千年未变，远行的脚步却愈发坚定有力。这正是中华民族最深处的精神基因：无论身处何世，都要仰望星空，都要走向远方。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>习近平在开罗出席欢迎仪式·中国太阳能装机首超煤电·苹果公司新任CEO上任</h3>
+                    <p>据央视新闻报道，9月2日上午，国家主席习近平在开罗出席埃及总统塞西举行的欢迎仪式。两国元首就深化中埃全面战略伙伴关系交换意见，推动共建"一带一路"合作走深走实，为发展中国家团结合作树立典范。</p>
+                    <p>据China Daily报道，中国太阳能装机容量首次超过煤电，成为第一大电源。截至7月底，全国太阳能装机容量达12.86亿千瓦，历史性地超越煤电装机规模。这一里程碑标志着中国能源结构加速向清洁低碳转型，新能源在中国电力供应中的地位和作用持续提升。</p>
+                    <p>据新华社/China Daily报道，约翰·特努斯接替蒂姆·库克成为苹果公司新任CEO，库克转任执行董事长。这是苹果公司近年来最高级别的人事变动，标志着这家科技巨头进入新一代领导层掌舵的时代。</p>
+                    <div class="source">来源：综合央视新闻、新华社、China Daily（2026年9月2日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-09-03';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-03',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《黄鹤楼》的作者是？", options: ["崔颢", "杜甫", "李白", "王维"], answer: 0 },
+            { q: "2. 黄鹤楼故址在今天哪个城市？", options: ["武汉", "长沙", "南昌", "合肥"], answer: 0 },
+            { q: "3. \"昔人已乘黄鹤去\"中\"昔人\"指？", options: ["传说中的仙人", "前朝的人", "古代的人", "老朋友"], answer: 0 },
+            { q: "4. \"白云千载空悠悠\"中\"悠悠\"的意思是？", options: ["飘荡的样子", "悠闲的样子", "长远的样子", "忧伤的样子"], answer: 0 },
+            { q: "5. \"晴川历历汉阳树\"中\"历历\"的意思是？", options: ["分明的样子", "经历", "日历", "历法"], answer: 0 },
+            { q: "6. \"芳草萋萋鹦鹉洲\"中\"萋萋\"的意思是？", options: ["茂盛的样子", "凄凉的样子", "稀疏的样子", "青色"], answer: 0 },
+            { q: "7. 《黄鹤楼》的体裁是？", options: ["七言律诗", "七言绝句", "五言律诗", "五言绝句"], answer: 0 },
+            { q: "8. 《登高》的作者是？", options: ["杜甫", "李白", "崔颢", "白居易"], answer: 0 },
+            { q: "9. 《登高》描写的季节是？", options: ["秋天", "春天", "夏天", "冬天"], answer: 0 },
+            { q: "10. \"万里悲秋常作客\"中\"作客\"的意思是？", options: ["客居他乡", "做客", "客人", "客居访问"], answer: 0 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 现代文标题中\"星辰大海\"象征什么？", options: ["对太空和未知的探索", "大海航行", "天文观测", "海上贸易"], answer: 0 },
+            { q: "12. 文章提到的9月2日的两条新闻是？", options: ["太阳能装机超煤电、习近平在开罗", "火箭发射、洪水预警", "援助尼泊尔、苹果换帅", "航天发射、木兰溪洪水"], answer: 0 },
+            { q: "13. 崔颢在《黄鹤楼》中仰望的是？", options: ["千年白云", "明月", "高楼", "长江"], answer: 0 },
+            { q: "14. 杜甫在《登高》中俯瞰的是？", options: ["万里长江", "千载白云", "汉阳树", "鹦鹉洲"], answer: 0 },
+            { q: "15. 文章将古人\"日暮乡关\"的感伤与今人什么实践对应？", options: ["驭日为电的太阳能利用", "航天发射", "造楼", "航海"], answer: 0 },
+            { q: "16. 文章认为国家主席远赴开罗体现了什么？", options: ["大国远行、文明对话", "孤客漂泊", "战争远征", "商业贸易"], answer: 0 },
+            { q: "17. 文章认为古今\"仰望\"的姿态如何？", options: ["跨越千年未变", "已经改变", "古代更好", "现代更好"], answer: 0 },
+            { q: "18. \"无边落木萧萧下\"的作者是？", options: ["杜甫", "崔颢", "李白", "白居易"], answer: 0 },
+            { q: "19. 文章将古诗意境与什么相联系？", options: ["当代科技与社会事件", "古代战争", "田园生活", "商业贸易"], answer: 0 },
+            { q: "20. 文章中心思想是？", options: ["从古人仰望天地到今人仰望星空远行世界，体现中华民族探索精神的传承", "黄鹤楼很壮观", "杜甫很悲哀", "太阳能技术先进"], answer: 0 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 习近平主席9月2日在哪个城市出席欢迎仪式？", options: ["开罗", "北京", "纽约", "东京"], answer: 0 },
+            { q: "22. 习近平主席出席的是哪国总统举行的欢迎仪式？", options: ["埃及总统塞西", "法国总统", "美国总统", "日本首相"], answer: 0 },
+            { q: "23. 中国太阳能装机容量首次超过什么？", options: ["煤电", "水电", "核电", "风电"], answer: 0 },
+            { q: "24. 截至7月底中国太阳能装机达多少？", options: ["12.86亿千瓦", "10亿千瓦", "8亿千瓦", "15亿千瓦"], answer: 0 },
+            { q: "25. 太阳能成为我国第几大电源？", options: ["第一", "第二", "第三", "第四"], answer: 0 },
+            { q: "26. 谁接替蒂姆·库克成为苹果公司新任CEO？", options: ["约翰·特努斯", "乔布斯", "马斯克", "比尔·盖茨"], answer: 0 },
+            { q: "27. 蒂姆·库克转任什么职务？", options: ["执行董事长", "董事长", "顾问", "副董事长"], answer: 0 },
+            { q: "28. 习近平在开罗的新闻来源于？", options: ["央视新闻", "新华社", "China Daily", "人民日报"], answer: 0 },
+            { q: "29. 太阳能超煤电的新闻来源于？", options: ["China Daily", "央视新闻", "人民日报", "经济日报"], answer: 0 },
+            { q: "30. 时文报道不包括以下哪个？", options: ["火箭发射", "太阳能超煤电", "苹果换帅", "习近平在开罗"], answer: 0 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《黄鹤楼》的作者是？", options: ["崔颢", "杜甫", "李白", "王维"], answer: 0 },
+            { q: "2. 崔颢是哪个朝代的诗人？", options: ["唐", "宋", "汉", "明"], answer: 0 },
+            { q: "3. 黄鹤楼故址在今天哪个城市？", options: ["武汉", "长沙", "南昌", "合肥"], answer: 0 },
+            { q: "4. \"昔人已乘黄鹤去\"中\"昔人\"指？", options: ["传说中的仙人", "前朝人", "老朋友", "古人"], answer: 0 },
+            { q: "5. \"此地空余黄鹤楼\"中\"空余\"的意思是？", options: ["只剩下", "白白剩下", "空着多余", "空缺"], answer: 0 },
+            { q: "6. \"白云千载空悠悠\"中\"悠悠\"的意思是？", options: ["飘荡的样子", "悠闲", "长远", "忧伤"], answer: 0 },
+            { q: "7. \"晴川历历汉阳树\"中\"历历\"的意思是？", options: ["分明的样子", "经历", "日历", "历法"], answer: 0 },
+            { q: "8. \"芳草萋萋鹦鹉洲\"中\"萋萋\"的意思是？", options: ["茂盛的样子", "凄凉", "稀疏", "青色"], answer: 0 },
+            { q: "9. 鹦鹉洲位于哪里？", options: ["长江中", "洞庭湖", "鄱阳湖", "太湖"], answer: 0 },
+            { q: "10. \"日暮乡关何处是\"主要表达的情感是？", options: ["思乡", "怀古", "忧国", "伤秋"], answer: 0 },
+            { q: "11. 《黄鹤楼》的体裁是？", options: ["七言律诗", "七言绝句", "五言律诗", "五言绝句"], answer: 0 },
+            { q: "12. 相传哪位诗人登黄鹤楼见崔颢题诗而搁笔？", options: ["李白", "杜甫", "白居易", "王维"], answer: 0 },
+            { q: "13. 《登高》的作者是？", options: ["杜甫", "李白", "崔颢", "白居易"], answer: 0 },
+            { q: "14. 杜甫被后人称为？", options: ["诗圣", "诗仙", "诗魔", "诗鬼"], answer: 0 },
+            { q: "15. 《登高》写于哪个地方？", options: ["夔州", "长安", "成都", "武汉"], answer: 0 },
+            { q: "16. 《登高》描写的季节是？", options: ["秋天", "春天", "夏天", "冬天"], answer: 0 },
+            { q: "17. \"无边落木萧萧下\"的下一句是？", options: ["不尽长江滚滚来", "白云千载空悠悠", "渚清沙白鸟飞回", "艰难苦恨繁霜鬓"], answer: 0 },
+            { q: "18. \"万里悲秋常作客\"中\"作客\"的意思是？", options: ["客居他乡", "做客", "客人", "客居访问"], answer: 0 },
+            { q: "19. \"百年多病独登台\"中\"百年\"的意思是？", options: ["一生，这里指晚年", "一百年", "很长时间", "百岁"], answer: 0 },
+            { q: "20. 《登高》被誉为？", options: ["古今七律第一", "古今七绝第一", "古今五律第一", "古今五绝第一"], answer: 0 },
+            { q: "21. 现代文标题中\"星辰大海\"象征什么？", options: ["对太空和未知的探索", "大海航行", "天文观测", "海上贸易"], answer: 0 },
+            { q: "22. 文章提到的9月2日的两条新闻是？", options: ["太阳能装机超煤电、习近平在开罗", "火箭发射、洪水预警", "援助尼泊尔、苹果换帅", "航天发射、木兰溪洪水"], answer: 0 },
+            { q: "23. 崔颢在《黄鹤楼》中仰望的是？", options: ["千年白云", "明月", "高楼", "长江"], answer: 0 },
+            { q: "24. 杜甫在《登高》中俯瞰的是？", options: ["万里长江", "千载白云", "汉阳树", "鹦鹉洲"], answer: 0 },
+            { q: "25. 文章将古人\"日暮乡关\"的感伤与今人什么对应？", options: ["驭日为电的太阳能利用", "航天发射", "造楼", "航海"], answer: 0 },
+            { q: "26. 文章认为国家主席远赴开罗体现了什么？", options: ["大国远行、文明对话", "孤客漂泊", "战争远征", "商业贸易"], answer: 0 },
+            { q: "27. 文章认为古今\"仰望\"的姿态如何？", options: ["跨越千年未变", "已经改变", "古代更好", "现代更好"], answer: 0 },
+            { q: "28. 文章中心思想是？", options: ["从古人仰望天地到今人仰望星空远行世界，体现中华民族探索精神的传承", "黄鹤楼壮观", "杜甫悲哀", "太阳能先进"], answer: 0 },
+            { q: "29. 习近平主席9月2日在哪个城市出席欢迎仪式？", options: ["开罗", "北京", "纽约", "东京"], answer: 0 },
+            { q: "30. 习近平主席出席的是哪国总统举行的欢迎仪式？", options: ["埃及总统塞西", "法国总统", "美国总统", "日本首相"], answer: 0 },
+            { q: "31. 中国太阳能装机容量首次超过什么？", options: ["煤电", "水电", "核电", "风电"], answer: 0 },
+            { q: "32. 截至7月底中国太阳能装机达多少？", options: ["12.86亿千瓦", "10亿千瓦", "8亿千瓦", "15亿千瓦"], answer: 0 },
+            { q: "33. 太阳能成为我国第几大电源？", options: ["第一", "第二", "第三", "第四"], answer: 0 },
+            { q: "34. 谁接替蒂姆·库克成为苹果公司新任CEO？", options: ["约翰·特努斯", "乔布斯", "马斯克", "比尔·盖茨"], answer: 0 },
+            { q: "35. 蒂姆·库克转任什么职务？", options: ["执行董事长", "董事长", "顾问", "副董事长"], answer: 0 },
+            { q: "36. 习近平在开罗的新闻来源于？", options: ["央视新闻", "新华社", "China Daily", "人民日报"], answer: 0 },
+            { q: "37. 太阳能超煤电的新闻来源于？", options: ["China Daily", "央视新闻", "人民日报", "经济日报"], answer: 0 },
+            { q: "38. 时文报道不包括以下哪个？", options: ["火箭发射", "太阳能超煤电", "苹果换帅", "习近平在开罗"], answer: 0 },
+            { q: "39. \"晴川历历汉阳树\"中\"汉阳\"是？", options: ["地名", "人名", "河流名", "山名"], answer: 0 },
+            { q: "40. 下列词语中没有错别字的是？", options: ["萋萋", "凄凄", "萁萁", "漆漆"], answer: 0 },
+            { q: "41. 下列句子没有语病的是？", options: ["崔颢登黄鹤楼写下了千古名篇", "通过登黄鹤楼，使崔颢写下名篇", "黄鹤楼使崔颢通过登写下名篇", "登黄鹤楼使通过崔颢写下名篇"], answer: 0 },
+            { q: "42. \"无边落木萧萧下\"中\"落木\"的意思是？", options: ["落叶", "落下的树木", "木材", "倒下的树"], answer: 0 },
+            { q: "43. \"艰难苦恨繁霜鬓\"中\"繁霜鬓\"的意思是？", options: ["白发增多如霜", "霜染双鬓", "繁多的霜", "寒冷的鬓"], answer: 0 },
+            { q: "44. 杜甫的诗歌风格被概括为？", options: ["沉郁顿挫", "豪放飘逸", "清新明快", "淡泊宁静"], answer: 0 },
+            { q: "45. 崔颢《黄鹤楼》中\"黄鹤\"一词出现几次？", options: ["三次", "一次", "两次", "四次"], answer: 0 },
+            { q: "46. 下列对《黄鹤楼》理解不正确的是？", options: ["表达了对西湖春景的喜爱", "表达了思乡之情", "有吊古之叹", "意境开阔苍茫"], answer: 0 },
+            { q: "47. 下列对《登高》理解正确的是？", options: ["写秋景萧瑟与漂泊悲愁", "写春景明丽", "表达喜悦之情", "描写田园生活"], answer: 0 },
+            { q: "48. \"无边落木萧萧下，不尽长江滚滚来\"运用的修辞手法是？", options: ["对偶", "比喻", "拟人", "夸张"], answer: 0 },
+            { q: "49. 将\"日暮乡关何处是？烟波江上使人愁\"改写，最贴合原意的是？", options: ["夕阳西下，故乡在何方？江上烟波迷茫惹人愁思", "天黑了不知道家乡在哪", "江上烟雾很大", "我很想念家乡"], answer: 0 },
+            { q: "50. 对本日全部内容理解最准确的是？", options: ["古诗词咏登楼远眺与登高悲秋，现代文将古诗意境与当代科技社会相联系，时文记国家大事，共同体现仰望与远行的精神传承", "古诗与时事无关", "时文只是新闻", "现代文与古诗没有联系"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            let idx;
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

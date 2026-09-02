@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月3日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .answer-input:focus { border-color: #4CAF50; outline: none; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .saved-indicator {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月3日 · 星期四 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>China's Solar Power Surpasses Coal as Top Power Source</h3>
+                    <p>By the end of July 2026, China's installed solar power capacity reached 1.286 billion kilowatts, surpassing coal-fired power capacity of 1.285 billion kilowatts for the first time in history. This milestone marks a fundamental transformation in China's energy structure and accelerates the country's green and low-carbon transition.</p>
+                    <p>Solar energy has now become the largest source of power generation capacity in China, overtaking coal which had long dominated the nation's energy mix. The rapid expansion of photovoltaic installations reflects China's strong commitment to renewable energy and its pursuit of carbon neutrality goals.</p>
+                    <p>China's photovoltaic market now far exceeds the combined total of the United States, India, Germany, and the entire European Union. The country continues to lead the world in both the manufacturing and deployment of solar panels, driving down costs and making clean energy more accessible globally.</p>
+                    <p>This historic shift demonstrates that China is accelerating its transition from fossil fuels to clean energy. The surpassing of coal by solar power is expected to significantly reduce carbon emissions and contribute to global efforts against climate change. Industry experts predict that solar capacity will continue to grow rapidly in the coming years, further solidifying China's position as the world leader in renewable energy infrastructure.</p>
+                    <span class="source">Source: China Daily, 2026-09-02</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>John Ternus Succeeds Tim Cook as Apple CEO</h3>
+                    <p>On September 2, 2026, Tuesday, Apple's leadership transition officially took effect as John Ternus succeeded Tim Cook as the company's Chief Executive Officer. This marks a new chapter in the history of one of the world's most valuable technology companies.</p>
+                    <p>Tim Cook transitioned to the role of Executive Chairman of the Board, where he will continue to assist with policy communication and other strategic matters. Cook had served as CEO for approximately 15 years, during which Apple's market capitalization grew from about $350 billion to an astonishing $4 trillion, making it one of the most successful corporate leadership tenures in history.</p>
+                    <p>John Ternus joined Apple's product design team in 2001 and has since played a crucial role in the hardware engineering of several iconic products, including the iPad and AirPods. His deep expertise in product development and engineering has made him a trusted leader within the company. Ternus was widely regarded as a mentor to younger engineers and a key figure in Apple's innovation pipeline.</p>
+                    <p>The leadership handover has been carefully planned over several years, with Cook serving as a mentor to Ternus during the transition period. Industry analysts view this succession as a smooth and well-executed transfer of leadership that ensures continuity in Apple's product strategy and corporate direction. The company's revenue and global market position are expected to remain strong under Ternus's leadership.</p>
+                    <span class="source">Source: Xinhua, China Daily, 2026-09-02</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-03';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-03',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        // 加载已保存的数据
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    savedData = Object.assign(savedData, parsed);
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. By the end of July 2026, what was China's installed solar power capacity?", options: ["1.185 billion kilowatts", "1.286 billion kilowatts", "1.386 billion kilowatts", "1.486 billion kilowatts"], answer: 1 },
+            { q: "2. What was the coal-fired power capacity that solar surpassed?", options: ["1.185 billion kilowatts", "1.285 billion kilowatts", "1.385 billion kilowatts", "1.485 billion kilowatts"], answer: 1 },
+            { q: "3. For the first time, solar power capacity surpassed which energy source?", options: ["Wind power", "Hydropower", "Coal-fired power", "Nuclear power"], answer: 2 },
+            { q: "4. What does this milestone mark according to the passage?", options: ["A temporary change in energy policy", "A fundamental transformation in China's energy structure", "A decline in coal production", "A reduction in electricity demand"], answer: 1 },
+            { q: "5. Solar energy has now become the largest source of what in China?", options: ["Electricity consumption", "Power generation capacity", "Industrial fuel", "Transportation energy"], answer: 1 },
+            { q: "6. Which type of installations drove the rapid expansion?", options: ["Wind turbine installations", "Photovoltaic installations", "Nuclear reactor installations", "Hydroelectric dam installations"], answer: 1 },
+            { q: "7. China's photovoltaic market now far exceeds the combined total of which regions?", options: ["The US, Japan, and Russia", "The US, India, Germany, and the EU", "Brazil, Canada, and Australia", "South Korea, India, and the UK"], answer: 1 },
+            { q: "8. What is China expected to significantly reduce as a result of this shift?", options: ["Carbon emissions", "Industrial output", "Technology imports", "Population growth"], answer: 0 },
+            { q: "9. What does the passage say China is accelerating its transition from?", options: ["Nuclear power to solar power", "Fossil fuels to clean energy", "Solar power to wind power", "Hydropower to nuclear power"], answer: 1 },
+            { q: "10. What position does China hold in renewable energy according to the passage?", options: ["The second-largest producer", "The world leader", "A minor participant", "A regional leader only"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. When did Apple's leadership transition officially take effect?", options: ["September 1, 2026, Monday", "September 2, 2026, Tuesday", "September 3, 2026, Wednesday", "September 2, 2026, Wednesday"], answer: 1 },
+            { q: "12. Who succeeded Tim Cook as Apple's CEO?", options: ["Steve Jobs", "John Ternus", "Craig Federighi", "Eddy Cue"], answer: 1 },
+            { q: "13. What role did Tim Cook transition to?", options: ["Chief Technology Officer", "Executive Chairman of the Board", "Chief Operating Officer", "Senior Advisor"], answer: 1 },
+            { q: "14. In what area will Cook continue to assist?", options: ["Product design and engineering", "Policy communication and strategic matters", "Software development", "Retail operations"], answer: 1 },
+            { q: "15. How long did Tim Cook serve as CEO?", options: ["Approximately 10 years", "Approximately 15 years", "Approximately 20 years", "Approximately 25 years"], answer: 1 },
+            { q: "16. What was Apple's market capitalization when Cook became CEO?", options: ["About $350 billion", "About $350 million", "About $3.5 trillion", "About $35 billion"], answer: 0 },
+            { q: "17. What did Apple's market capitalization grow to under Cook's leadership?", options: ["$1 trillion", "$2 trillion", "$3 trillion", "$4 trillion"], answer: 3 },
+            { q: "18. In what year did John Ternus join Apple?", options: ["1998", "2001", "2005", "2010"], answer: 1 },
+            { q: "19. Which team did Ternus join when he first came to Apple?", options: ["The software engineering team", "The product design team", "The marketing team", "The finance team"], answer: 1 },
+            { q: "20. Which products did Ternus help develop the hardware engineering for?", options: ["The iPhone and Mac", "The iPad and AirPods", "The Apple Watch and TV", "The MacBook and iMac"], answer: 1 }
+        ];
+
+        // 渲染阅读理解题目
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "solar", phonetic: "/ˈsoʊlər/", meaning: "adj. 太阳的；太阳能的" },
+            { word: "capacity", phonetic: "/kəˈpæsəti/", meaning: "n. 容量；装机容量" },
+            { word: "surpass", phonetic: "/sərˈpæs/", meaning: "v. 超越；超过" },
+            { word: "coal", phonetic: "/koʊl/", meaning: "n. 煤；煤炭" },
+            { word: "photovoltaic", phonetic: "/ˌfoʊtoʊvɒlˈteɪɪk/", meaning: "adj. 光伏的" },
+            { word: "emission", phonetic: "/ɪˈmɪʃən/", meaning: "n. 排放；排放物" },
+            { word: "carbon", phonetic: "/ˈkɑːrbən/", meaning: "n. 碳" },
+            { word: "transition", phonetic: "/trænˈzɪʃən/", meaning: "n./v. 转型；过渡" },
+            { word: "succeed", phonetic: "/səkˈsiːd/", meaning: "v. 继任；接替" },
+            { word: "executive", phonetic: "/ɪɡˈzekjətɪv/", meaning: "adj. 执行的；n. 高管" },
+            { word: "leadership", phonetic: "/ˈliːdərʃɪp/", meaning: "n. 领导力；领导层" },
+            { word: "market capitalization", phonetic: "/ˈmɑːrkɪt ˌkæpɪtələˈzeɪʃən/", meaning: "n. 市值" },
+            { word: "revenue", phonetic: "/ˈrevənuː/", meaning: "n. 收入；营收" },
+            { word: "mentor", phonetic: "/ˈmentɔːr/", meaning: "n. 导师；v. 指导" },
+            { word: "hardware", phonetic: "/ˈhɑːrdwer/", meaning: "n. 硬件" },
+            { word: "engineering", phonetic: "/ˌendʒɪˈnɪərɪŋ/", meaning: "n. 工程；工程学" },
+            { word: "renewable", phonetic: "/rɪˈnuːəbəl/", meaning: "adj. 可再生的" },
+            { word: "generation", phonetic: "/ˌdʒenəˈreɪʃən/", meaning: "n. 发电；产生" },
+            { word: "infrastructure", phonetic: "/ˈɪnfrəˌstrʌktʃər/", meaning: "n. 基础设施" },
+            { word: "neutrality", phonetic: "/nuːˈtræləti/", meaning: "n. 中立；中和" }
+        ];
+
+        const oldVocabData = [
+            { word: "news", phonetic: "/nuːz/", meaning: "n. 新闻" },
+            { word: "company", phonetic: "/ˈkʌmpəni/", meaning: "n. 公司" },
+            { word: "develop", phonetic: "/dɪˈvɛləp/", meaning: "v. 研制；开发" },
+            { word: "design", phonetic: "/dɪˈzaɪn/", meaning: "v./n. 设计" },
+            { word: "data", phonetic: "/ˈdeɪtə/", meaning: "n. 数据" },
+            { word: "report", phonetic: "/rɪˈpɔːrt/", meaning: "n./v. 报告" },
+            { word: "technology", phonetic: "/tɛkˈnɒlədʒi/", meaning: "n. 技术" },
+            { word: "environment", phonetic: "/ɪnˈvaɪrənmənt/", meaning: "n. 环境" },
+            { word: "energy", phonetic: "/ˈɛnərdʒi/", meaning: "n. 能源" },
+            { word: "power", phonetic: "/ˈpaʊər/", meaning: "n. 电力；力量" },
+            { word: "change", phonetic: "/tʃeɪndʒ/", meaning: "n./v. 改变" },
+            { word: "leader", phonetic: "/ˈliːdər/", meaning: "n. 领导者" },
+            { word: "product", phonetic: "/ˈprɒdʌkt/", meaning: "n. 产品" },
+            { word: "innovation", phonetic: "/ˌɪnəˈveɪʃən/", meaning: "n. 创新" },
+            { word: "global", phonetic: "/ˈɡloʊbəl/", meaning: "adj. 全球的" },
+            { word: "market", phonetic: "/ˈmɑːrkɪt/", meaning: "n. 市场" },
+            { word: "future", phonetic: "/ˈfjuːtʃər/", meaning: "n. 未来" },
+            { word: "science", phonetic: "/ˈsaɪəns/", meaning: "n. 科学" },
+            { word: "research", phonetic: "/rɪˈsɜːrtʃ/", meaning: "n./v. 研究" },
+            { word: "progress", phonetic: "/ˈprɒɡrɛs/", meaning: "n./v. 进步" },
+            { word: "system", phonetic: "/ˈsɪstəm/", meaning: "n. 系统" },
+            { word: "project", phonetic: "/ˈprɒdʒɛkt/", meaning: "n. 项目" },
+            { word: "build", phonetic: "/bɪld/", meaning: "v. 建设" },
+            { word: "create", phonetic: "/kriˈeɪt/", meaning: "v. 创造" },
+            { word: "improve", phonetic: "/ɪmˈpruːv/", meaning: "v. 改善" },
+            { word: "success", phonetic: "/səkˈsɛs/", meaning: "n. 成功" },
+            { word: "grow", phonetic: "/ɡroʊ/", meaning: "v. 增长" },
+            { word: "plan", phonetic: "/plæn/", meaning: "n./v. 计划" },
+            { word: "team", phonetic: "/tiːm/", meaning: "n. 团队" },
+            { word: "world", phonetic: "/wɜːrld/", meaning: "n. 世界" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. By the end of July 2026, China's solar power capacity ___ 1.286 billion kilowatts.", type: "choice", options: ["reach", "reached", "reaches", "reaching"], answer: 1 },
+            { q: "2. Solar power capacity ___ coal-fired power capacity for the first time.", type: "choice", options: ["surpass", "surpassed", "surpasses", "surpassing"], answer: 1 },
+            { q: "3. This milestone ___ a fundamental transformation in China's energy structure.", type: "choice", options: ["mark", "marks", "marked", "marking"], answer: 1 },
+            { q: "4. Solar energy ___ the largest source of power generation capacity in China.", type: "choice", options: ["become", "became", "has become", "becoming"], answer: 2 },
+            { q: "5. Coal ___ long dominated the nation's energy mix.", type: "choice", options: ["has", "have", "had", "having"], answer: 0 },
+            { q: "6. China's photovoltaic market ___ the combined total of several regions.", type: "choice", options: ["exceed", "exceeds", "exceeded", "exceeding"], answer: 1 },
+            { q: "7. On September 2, 2026, John Ternus ___ Tim Cook as Apple's CEO.", type: "choice", options: ["succeed", "succeeded", "succeeds", "succeeding"], answer: 1 },
+            { q: "8. Tim Cook ___ to the role of Executive Chairman of the Board.", type: "choice", options: ["transition", "transitioned", "transitions", "transitioning"], answer: 1 },
+            { q: "9. Cook ___ as CEO for approximately 15 years.", type: "choice", options: ["serve", "served", "serves", "serving"], answer: 1 },
+            { q: "10. Apple's market capitalization ___ from $350 billion to $4 trillion.", type: "choice", options: ["grow", "grew", "grown", "grows"], answer: 1 },
+            { q: "11. John Ternus ___ Apple's product design team in 2001.", type: "choice", options: ["join", "joined", "joins", "joining"], answer: 1 },
+            { q: "12. Ternus ___ a crucial role in the hardware engineering of several products.", type: "choice", options: ["play", "played", "plays", "playing"], answer: 1 },
+            { q: "13. The leadership handover ___ carefully planned over several years.", type: "choice", options: ["was", "is", "were", "be"], answer: 0 },
+            { q: "14. Industry analysts ___ this succession as a smooth transfer of leadership.", type: "choice", options: ["view", "viewed", "views", "viewing"], answer: 0 },
+            { q: "15. The surpassing of coal by solar power ___ to reduce carbon emissions.", type: "choice", options: ["expect", "is expected", "expected", "expects"], answer: 1 },
+            { q: "16. Solar capacity ___ to grow rapidly in the coming years.", type: "choice", options: ["is predicted", "predict", "predicts", "predicting"], answer: 0 },
+            { q: "17. Ternus ___ as a mentor to younger engineers.", type: "choice", options: ["was regarded", "regard", "regards", "regarding"], answer: 0 },
+            { q: "18. China ___ the world in solar panel manufacturing.", type: "choice", options: ["lead", "leads", "led", "leading"], answer: 1 },
+            { q: "19. The company's revenue ___ to remain strong under Ternus's leadership.", type: "choice", options: ["is expected", "expect", "expects", "expected"], answer: 0 },
+            { q: "20. Cook ___ as a mentor to Ternus during the transition period.", type: "choice", options: ["serve", "served", "serves", "serving"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. ___ energy comes from the sun.", type: "choice", options: ["Solar", "Lunar", "Stellar", "Wind"], answer: 0 },
+            { q: "22. The installed ___ of a power plant refers to its maximum output.", type: "choice", options: ["capacity", "ability", "talent", "skill"], answer: 0 },
+            { q: "23. To ___ means to go beyond or exceed.", type: "choice", options: ["surpass", "fall behind", "decrease", "reduce"], answer: 0 },
+            { q: "24. ___ is a black fossil fuel used for power generation.", type: "choice", options: ["Coal", "Gold", "Salt", "Sand"], answer: 0 },
+            { q: "25. A ___ panel converts sunlight directly into electricity.", type: "choice", options: ["photovoltaic", "thermal", "nuclear", "hydraulic"], answer: 0 },
+            { q: "26. Carbon ___ contribute to climate change.", type: "choice", options: ["emissions", "profits", "benefits", "savings"], answer: 0 },
+            { q: "27. China aims to achieve carbon ___.", type: "choice", options: ["neutrality", " acidity", "toxicity", "reactivity"], answer: 0 },
+            { q: "28. The ___ from fossil fuels to clean energy is underway.", type: "choice", options: ["transition", "tradition", "translation", "transmission"], answer: 0 },
+            { q: "29. To ___ someone means to take over their position.", type: "choice", options: ["succeed", "precede", "follow", "ignore"], answer: 0 },
+            { q: "30. An ___ chairman has high-level management authority.", type: "choice", options: ["executive", "ordinary", "junior", "temporary"], answer: 0 },
+            { q: "31. ___ refers to the ability to guide and manage a team.", type: "choice", options: ["Leadership", "Fellowship", "Membership", "Scholarship"], answer: 0 },
+            { q: "32. Market ___ is the total value of a company's shares.", type: "choice", options: ["capitalization", "capital", "capitol", "capitalist"], answer: 0 },
+            { q: "33. A company's ___ is its total income from business operations.", type: "choice", options: ["revenue", "expense", "loss", "debt"], answer: 0 },
+            { q: "34. A ___ is an experienced person who guides someone less experienced.", type: "choice", options: ["mentor", "student", "novice", "beginner"], answer: 0 },
+            { q: "35. ___ refers to the physical components of a computer.", type: "choice", options: ["Hardware", "Software", "Firmware", "Liveware"], answer: 0 },
+            { q: "36. ___ is the application of science to design and build structures.", type: "choice", options: ["Engineering", "Painting", "Singing", "Dancing"], answer: 0 },
+            { q: "37. ___ energy comes from sources that can be naturally replenished.", type: "choice", options: ["Renewable", "Fossil", "Nuclear", "Non-renewable"], answer: 0 },
+            { q: "38. Power ___ is the process of producing electricity.", type: "choice", options: ["generation", "consumption", "reduction", "destruction"], answer: 0 },
+            { q: "39. Energy ___ includes power plants, grids, and transmission lines.", type: "choice", options: ["infrastructure", "superstructure", "substructure", "nonstructure"], answer: 0 },
+            { q: "40. Carbon ___ means balancing carbon emissions with removal.", type: "choice", options: ["neutrality", "positivity", "negativity", "activity"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. China's solar power capacity reached 1.286 billion kilowatts ___ the end of July 2026.", type: "choice", options: ["by", "in", "at", "on"], answer: 0 },
+            { q: "42. Solar surpassed coal-fired power capacity ___ the first time.", type: "choice", options: ["for", "in", "at", "on"], answer: 0 },
+            { q: "43. This milestone marks a fundamental transformation ___ China's energy structure.", type: "choice", options: ["in", "of", "at", "on"], answer: 0 },
+            { q: "44. Solar energy has become the largest source ___ power generation capacity.", type: "choice", options: ["of", "in", "at", "on"], answer: 0 },
+            { q: "45. Coal had long dominated ___ the nation's energy mix.", type: "choice", options: ["over", "in", "at", "on"], answer: 0 },
+            { q: "46. China's photovoltaic market far exceeds the combined total ___ several regions.", type: "choice", options: ["of", "in", "at", "on"], answer: 0 },
+            { q: "47. John Ternus succeeded Tim Cook ___ Apple's CEO.", type: "choice", options: ["as", "in", "at", "on"], answer: 0 },
+            { q: "48. Cook transitioned ___ the role of Executive Chairman.", type: "choice", options: ["to", "in", "at", "from"], answer: 0 },
+            { q: "49. Cook had served as CEO ___ approximately 15 years.", type: "choice", options: ["for", "in", "at", "on"], answer: 0 },
+            { q: "50. Apple's market capitalization grew ___ $350 billion to $4 trillion.", type: "choice", options: ["from", "in", "at", "on"], answer: 0 },
+            { q: "51. Ternus joined Apple's product design team ___ 2001.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "52. He played a crucial role ___ the hardware engineering of several products.", type: "choice", options: ["in", "at", "on", "for"], answer: 0 },
+            { q: "53. Ternus was regarded ___ a mentor to younger engineers.", type: "choice", options: ["as", "in", "at", "on"], answer: 0 },
+            { q: "54. The leadership handover was planned ___ several years.", type: "choice", options: ["over", "in", "at", "on"], answer: 0 },
+            { q: "55. Cook served ___ a mentor to Ternus during the transition.", type: "choice", options: ["as", "in", "at", "for"], answer: 0 },
+            { q: "56. The surpassing of coal ___ solar power is significant.", type: "choice", options: ["by", "in", "at", "on"], answer: 0 },
+            { q: "57. China is accelerating its transition ___ fossil fuels to clean energy.", type: "choice", options: ["from", "in", "at", "on"], answer: 0 },
+            { q: "58. This shift contributes ___ global efforts against climate change.", type: "choice", options: ["to", "in", "at", "on"], answer: 0 },
+            { q: "59. Industry experts predict that solar capacity will continue ___ grow rapidly.", type: "choice", options: ["to", "in", "at", "on"], answer: 0 },
+            { q: "60. ___ a historic milestone it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. What was China's solar power capacity by the end of July 2026?", options: ["1.185 billion kilowatts", "1.286 billion kilowatts", "1.386 billion kilowatts", "1.486 billion kilowatts"], type: "choice", answer: 1 },
+            { q: "62. What was the coal-fired power capacity at that time?", options: ["1.185 billion kilowatts", "1.285 billion kilowatts", "1.385 billion kilowatts", "1.485 billion kilowatts"], type: "choice", answer: 1 },
+            { q: "63. What did solar power surpass for the first time?", options: ["Wind power", "Nuclear power", "Coal-fired power", "Hydropower"], type: "choice", answer: 2 },
+            { q: "64. What does this milestone mark?", options: ["A temporary policy change", "A fundamental transformation in energy structure", "A decline in production", "A reduction in demand"], type: "choice", answer: 1 },
+            { q: "65. What has solar energy become the largest source of?", options: ["Electricity consumption", "Power generation capacity", "Industrial fuel", "Transportation energy"], type: "choice", answer: 1 },
+            { q: "66. What drove the rapid expansion of solar energy?", options: ["Wind turbine installations", "Photovoltaic installations", "Nuclear installations", "Hydroelectric installations"], type: "choice", answer: 1 },
+            { q: "67. China's photovoltaic market exceeds the combined total of which regions?", options: ["US, Japan, Russia", "US, India, Germany, EU", "Brazil, Canada, Australia", "South Korea, UK, India"], type: "choice", answer: 1 },
+            { q: "68. What is expected to be significantly reduced?", options: ["Carbon emissions", "Industrial output", "Technology imports", "Population"], type: "choice", answer: 0 },
+            { q: "69. What is China transitioning from?", options: ["Nuclear to solar", "Fossil fuels to clean energy", "Solar to wind", "Hydro to nuclear"], type: "choice", answer: 1 },
+            { q: "70. What position does China hold in renewable energy?", options: ["Second-largest", "World leader", "Minor participant", "Regional leader only"], type: "choice", answer: 1 },
+            { q: "71. When did Apple's leadership transition take effect?", options: ["September 1, Monday", "September 2, Tuesday", "September 3, Wednesday", "September 2, Wednesday"], type: "choice", answer: 1 },
+            { q: "72. Who became Apple's new CEO?", options: ["Steve Jobs", "John Ternus", "Craig Federighi", "Eddy Cue"], type: "choice", answer: 1 },
+            { q: "73. What role did Tim Cook transition to?", options: ["CTO", "Executive Chairman of the Board", "COO", "Senior Advisor"], type: "choice", answer: 1 },
+            { q: "74. How long did Cook serve as CEO?", options: ["About 10 years", "About 15 years", "About 20 years", "About 25 years"], type: "choice", answer: 1 },
+            { q: "75. What was Apple's market cap when Cook became CEO?", options: ["About $350 billion", "About $350 million", "About $3.5 trillion", "About $35 billion"], type: "choice", answer: 0 },
+            { q: "76. What did Apple's market cap grow to?", options: ["$1 trillion", "$2 trillion", "$3 trillion", "$4 trillion"], type: "choice", answer: 3 },
+            { q: "77. When did Ternus join Apple?", options: ["1998", "2001", "2005", "2010"], type: "choice", answer: 1 },
+            { q: "78. Which team did Ternus join at Apple?", options: ["Software engineering", "Product design", "Marketing", "Finance"], type: "choice", answer: 1 },
+            { q: "79. Which products did Ternus help engineer?", options: ["iPhone and Mac", "iPad and AirPods", "Apple Watch and TV", "MacBook and iMac"], type: "choice", answer: 1 },
+            { q: "80. How was the leadership handover described?", options: ["Sudden and unexpected", "Carefully planned over years", "Rushed and disorganized", "Forced by investors"], type: "choice", answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '截至7月底，中国太阳能装机容量达12.86亿千瓦。'", type: "choice", options: ["By the end of July, China's solar power capacity reached 1.286 billion kilowatts.", "China solar capacity 1.286 billion.", "Solar power China reached kilowatts.", "China's solar capacity is end July 1.286."], answer: 0 },
+            { q: "82. 'Solar power surpassed coal.' 'surpassed' means ___.", type: "choice", options: ["exceeded", "fell behind", "matched", "decreased"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["China's photovoltaic market far exceeds the combined total of several regions.", "China photovoltaic market exceed combined regions.", "China's photovoltaic market far exceeding combined total.", "China photovoltaic market is exceeds regions."], answer: 0 },
+            { q: "84. 'This milestone marks a fundamental transformation.' 'transformation' means ___.", type: "choice", options: ["change", "stability", "decline", "similarity"], answer: 0 },
+            { q: "85. Choose the correct translation: '约翰·特努斯接替蒂姆·库克成为苹果CEO。'", type: "choice", options: ["John Ternus succeeded Tim Cook as Apple's CEO.", "John Ternus succeed Tim Cook Apple CEO.", "John Ternus succeeding Tim Cook as CEO.", "John Ternus was succeed Tim Cook CEO."], answer: 0 },
+            { q: "86. 'The leadership transition took effect.' This is in the ___ voice.", type: "choice", options: ["active", "passive", "conditional", "imperative"], answer: 0 },
+            { q: "87. The passive voice of 'John Ternus succeeded Tim Cook' is ___.", type: "choice", options: ["Tim Cook was succeeded by John Ternus", "Tim Cook succeeded by John Ternus", "Tim Cook was succeed by Ternus", "John Ternus was succeeded by Tim Cook"], answer: 0 },
+            { q: "88. 'Apple's market capitalization grew from $350 billion to $4 trillion.' The subject is ___.", type: "choice", options: ["Apple's market capitalization", "grew", "$350 billion", "$4 trillion"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'Solar power surpassed coal, ___?'", type: "choice", options: ["didn't it", "did it", "isn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Ternus joined Apple in 2001 and has since played a crucial role.' Fill: ___ joining, he contributed greatly.", type: "choice", options: ["Since", "Although", "Because", "If"], answer: 0 },
+            { q: "91. Choose the correct translation: '库克转任董事会执行主席。'", type: "choice", options: ["Cook transitioned to the role of Executive Chairman of the Board.", "Cook transition Executive Chairman Board.", "Cook is transitioned to Executive Chairman.", "Cook transitioned role of Executive."], answer: 0 },
+            { q: "92. 'market capitalization' means ___.", type: "choice", options: ["the total value of a company's shares", "the profit of a company", "the revenue of a company", "the number of employees"], answer: 0 },
+            { q: "93. 'If solar capacity continues to grow, emissions will decrease.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["Ternus was regarded as a mentor to younger engineers.", "Ternus was regard as mentor engineers.", "Ternus regarding as mentor to engineers.", "Ternus was regarded mentor younger engineers."], answer: 0 },
+            { q: "95. '___ the careful planning, the transition was smooth.' Fill in the blank.", type: "choice", options: ["Thanks to", "Despite", "Although", "Because of"], answer: 0 },
+            { q: "96. The indirect speech of 'He said, \"Solar surpassed coal.\"' is ___.", type: "choice", options: ["He said solar had surpassed coal.", "He said solar surpass coal.", "He says solar surpassed coal.", "He said solar surpassing coal."], answer: 0 },
+            { q: "97. 'succeed' in 'Ternus succeeded Cook' means ___.", type: "choice", options: ["to take over a position", "to achieve a goal", "to fail at something", "to leave a company"], answer: 0 },
+            { q: "98. 'had served' is ___ tense.", type: "choice", options: ["past perfect", "present", "future", "present perfect"], answer: 0 },
+            { q: "99. 'China leads the world in solar manufacturing.' The verb is ___.", type: "choice", options: ["leads", "China", "the world", "manufacturing"], answer: 0 },
+            { q: "100. 'renewable energy' means ___.", type: "choice", options: ["energy from sources that can be replenished", "energy that cannot be reused", "energy from fossil fuels", "energy that is expensive"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
