@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月4日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月4日 · 星期五 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>Digital Education Program Boosts Rural Schooling in Yunnan</h3>
+                    <p>A digital education program organized by Beijing Normal University has been carried out in Lancang Lahu Autonomous County, Yunnan Province. The project aims to promote digital education in remote ethnic minority areas and serves approximately 220,000 Lahu students in the region.</p>
+                    <p>More than 30 teachers and students from Beijing Normal University participated in the three-day program at Lancang Ethnic Middle School. They taught interdisciplinary courses covering art, science, physical education, and technology to 14 classes with over 600 students. Thirty students attended an AI creative workshop, and the entire school participated in film appreciation and aesthetic education activities.</p>
+                    <p>In addition, the team provided AI-empowered training for 117 teachers from 23 primary and secondary schools across the county. The training covered AI literacy assessment, the national smart education platform, WPS AI tools, AI classroom management, and teacher professional development.</p>
+                    <p>The project is part of Beijing Normal University's rural digital education initiative launched in 2023. Lancang is the third practice site nationwide and the first in Yunnan. The team plans to develop localized digital teaching content, establish a tiered AI literacy training model, and provide ongoing support through both online and offline channels.</p>
+                    <span class="source">Source: China Daily, 2026-09-03</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>East China Normal University Students Extend Tech Education to Africa</h3>
+                    <p>Student volunteers from East China Normal University's School of Education Science have expanded their technology education practice to African countries along the Belt and Road. During the summer, they traveled to Karamay in Xinjiang, Xundian in Yunnan, and Liling in Hunan, as well as Namibia, Rwanda, Kenya, Tanzania, and Mauritius.</p>
+                    <p>The project uses a standardized curriculum system that integrates local culture into the courses. For example, in Karamay, students made windmill models; in Xundian, they practiced tie-dyeing; and in Liling, they painted paper umbrellas. The approach encourages students to "learn by doing."</p>
+                    <p>In Africa, the volunteers conducted interviews, classroom observations, and in-depth exchanges with local teachers and students. They discovered that many African countries have included technology education in their national education agendas, but they generally face challenges of teacher shortages and insufficient curriculum resources.</p>
+                    <p>The volunteers' curriculum design experience was welcomed by local educators. The research findings will be compiled into a report to provide references for Belt and Road technology education cooperation. The project has benefited over 1,000 primary and secondary school students and teachers globally.</p>
+                    <span class="source">Source: China Daily, 2026-09-03</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-04';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-04',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. Which university organized the digital education program in Yunnan?", options: ["Tsinghua University", "Beijing Normal University", "East China Normal University", "Fudan University"], answer: 1 },
+            { q: "2. Where was the digital education program carried out?", options: ["Lancang Lahu Autonomous County, Yunnan", "Karamay, Xinjiang", "Liling, Hunan", "Xundian, Yunnan"], answer: 0 },
+            { q: "3. How many Lahu students does the project serve?", options: ["About 22,000", "About 220,000", "About 2,200", "About 2,000,000"], answer: 1 },
+            { q: "4. How many teachers and students from Beijing Normal University participated?", options: ["More than 10", "More than 20", "More than 30", "More than 50"], answer: 2 },
+            { q: "5. How long did the program last at Lancang Ethnic Middle School?", options: ["One day", "Two days", "Three days", "One week"], answer: 2 },
+            { q: "6. How many classes were taught at Lancang Ethnic Middle School?", options: ["10 classes", "14 classes", "20 classes", "30 classes"], answer: 1 },
+            { q: "7. How many students attended the AI creative workshop?", options: ["14 students", "30 students", "117 students", "600 students"], answer: 1 },
+            { q: "8. How many teachers received AI-empowered training?", options: ["23 teachers", "117 teachers", "220 teachers", "600 teachers"], answer: 1 },
+            { q: "9. How many schools sent teachers for the AI training?", options: ["14 schools", "23 schools", "30 schools", "50 schools"], answer: 1 },
+            { q: "10. When was Beijing Normal University's rural digital education initiative launched?", options: ["2021", "2022", "2023", "2024"], answer: 2 }
+        ];
+
+        const reading2Data = [
+            { q: "11. Which university's students extended tech education to Africa?", options: ["Beijing Normal University", "East China Normal University", "Tsinghua University", "Peking University"], answer: 1 },
+            { q: "12. Which of the following is NOT an African country visited by the volunteers?", options: ["Namibia", "Rwanda", "Kenya", "Egypt"], answer: 3 },
+            { q: "13. What did students make in Karamay?", options: ["Tie-dye", "Paper umbrellas", "Windmill models", "Kites"], answer: 2 },
+            { q: "14. What did students practice in Xundian?", options: ["Tie-dyeing", "Windmill making", "Paper umbrella painting", "Pottery"], answer: 0 },
+            { q: "15. What did students do in Liling?", options: ["Made windmills", "Painted paper umbrellas", "Tie-dyeing", "Made pottery"], answer: 1 },
+            { q: "16. What approach does the project encourage?", options: ["Learn by reading", "Learn by doing", "Learn by watching", "Learn by listening"], answer: 1 },
+            { q: "17. What challenge do many African countries face in technology education?", options: ["Too many teachers", "Teacher shortages and insufficient resources", "Lack of students", "Too much funding"], answer: 1 },
+            { q: "18. How will the research findings be used?", options: ["Sold to publishers", "Compiled into a report for Belt and Road cooperation", "Kept secret", "Published as a novel"], answer: 1 },
+            { q: "19. How many students and teachers globally has the project benefited?", options: ["Over 100", "Over 500", "Over 1,000", "Over 10,000"], answer: 2 },
+            { q: "20. What kind of curriculum system does the project use?", options: ["A flexible system", "A standardized system", "No system", "A private system"], answer: 1 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "digital", phonetic: "/ˈdɪdʒɪtl/", meaning: "adj. 数字的；数字化的" },
+            { word: "rural", phonetic: "/ˈrʊərəl/", meaning: "adj. 农村的；乡村的" },
+            { word: "promote", phonetic: "/prəˈmoʊt/", meaning: "v. 促进；推广" },
+            { word: "remote", phonetic: "/rɪˈmoʊt/", meaning: "adj. 偏远的；遥远的" },
+            { word: "ethnic", phonetic: "/ˈeθnɪk/", meaning: "adj. 民族的；种族的" },
+            { word: "interdisciplinary", phonetic: "/ˌɪntərdɪsəˈplɪnəri/", meaning: "adj. 跨学科的" },
+            { word: "workshop", phonetic: "/ˈwɜːrkʃɑːp/", meaning: "n. 工作坊；研讨会" },
+            { word: "aesthetic", phonetic: "/esˈθetɪk/", meaning: "adj. 审美的；美学的" },
+            { word: "empower", phonetic: "/ɪmˈpaʊər/", meaning: "v. 赋能；授权" },
+            { word: "literacy", phonetic: "/ˈlɪtərəsi/", meaning: "n. 素养；读写能力" },
+            { word: "standardize", phonetic: "/ˈstændərdaɪz/", meaning: "v. 标准化" },
+            { word: "curriculum", phonetic: "/kəˈrɪkjʊləm/", meaning: "n. 课程；课程体系" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" },
+            { word: "integrate", phonetic: "/ˈɪntɪɡreɪt/", meaning: "v. 融合；整合" },
+            { word: "observation", phonetic: "/ˌɒbzərˈveɪʃən/", meaning: "n. 观察" },
+            { word: "agenda", phonetic: "/əˈdʒendə/", meaning: "n. 议程；计划" },
+            { word: "insufficient", phonetic: "/ˌɪnsəˈfɪʃənt/", meaning: "adj. 不足的" },
+            { word: "compile", phonetic: "/kəmˈpaɪl/", meaning: "v. 编纂；汇编" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作" },
+            { word: "benefit", phonetic: "/ˈbenɪfɪt/", meaning: "v./n. 使受益；利益" }
+        ];
+
+        const oldVocabData = [
+            { word: "education", phonetic: "/ˌedʒuˈkeɪʃən/", meaning: "n. 教育" },
+            { word: "school", phonetic: "/skuːl/", meaning: "n. 学校" },
+            { word: "student", phonetic: "/ˈstuːdənt/", meaning: "n. 学生" },
+            { word: "teacher", phonetic: "/ˈtiːtʃər/", meaning: "n. 教师" },
+            { word: "learn", phonetic: "/lɜːrn/", meaning: "v. 学习" },
+            { word: "class", phonetic: "/klæs/", meaning: "n. 班级；课" },
+            { word: "science", phonetic: "/ˈsaɪəns/", meaning: "n. 科学" },
+            { word: "art", phonetic: "/ɑːrt/", meaning: "n. 艺术" },
+            { word: "technology", phonetic: "/tɛkˈnɒlədʒi/", meaning: "n. 技术" },
+            { word: "training", phonetic: "/ˈtreɪnɪŋ/", meaning: "n. 培训" },
+            { word: "content", phonetic: "/ˈkɒntent/", meaning: "n. 内容" },
+            { word: "model", phonetic: "/ˈmɒdl/", meaning: "n. 模型；模式" },
+            { word: "support", phonetic: "/səˈpɔːrt/", meaning: "n./v. 支持" },
+            { word: "local", phonetic: "/ˈloʊkl/", meaning: "adj. 本地的" },
+            { word: "national", phonetic: "/ˈnæʃənəl/", meaning: "adj. 国家的" },
+            { word: "practice", phonetic: "/ˈpræktɪs/", meaning: "n./v. 实践；练习" },
+            { word: "culture", phonetic: "/ˈkʌltʃər/", meaning: "n. 文化" },
+            { word: "exchange", phonetic: "/ɪksˈtʃeɪndʒ/", meaning: "n./v. 交流" },
+            { word: "report", phonetic: "/rɪˈpɔːrt/", meaning: "n. 报告" },
+            { word: "research", phonetic: "/rɪˈsɜːrtʃ/", meaning: "n./v. 研究" },
+            { word: "develop", phonetic: "/dɪˈvɛləp/", meaning: "v. 开发；发展" },
+            { word: "country", phonetic: "/ˈkʌntri/", meaning: "n. 国家" },
+            { word: "university", phonetic: "/ˌjuːnɪˈvɜːrsəti/", meaning: "n. 大学" },
+            { word: "program", phonetic: "/ˈproʊɡræm/", meaning: "n. 项目；程序" },
+            { word: "provide", phonetic: "/prəˈvaɪd/", meaning: "v. 提供" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" },
+            { word: "resource", phonetic: "/ˈriːsɔːrs/", meaning: "n. 资源" },
+            { word: "experience", phonetic: "/ɪkˈspɪriəns/", meaning: "n. 经验；经历" },
+            { word: "channel", phonetic: "/ˈtʃænl/", meaning: "n. 渠道；频道" },
+            { word: "global", phonetic: "/ˈɡloʊbəl/", meaning: "adj. 全球的" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. A digital education program ___ in Lancang Lahu Autonomous County.", type: "choice", options: ["carry out", "was carried out", "carried out", "carries out"], answer: 1 },
+            { q: "2. The project aims ___ digital education in remote ethnic minority areas.", type: "choice", options: ["promote", "to promote", "promoting", "promoted"], answer: 1 },
+            { q: "3. More than 30 teachers and students ___ in the three-day program.", type: "choice", options: ["participate", "participated", "participates", "participating"], answer: 1 },
+            { q: "4. They taught interdisciplinary courses ___ art, science, and technology.", type: "choice", options: ["cover", "covering", "covered", "covers"], answer: 1 },
+            { q: "5. Thirty students ___ an AI creative workshop.", type: "choice", options: ["attend", "attended", "attends", "attending"], answer: 1 },
+            { q: "6. The team ___ AI-empowered training for 117 teachers.", type: "choice", options: ["provide", "provided", "provides", "providing"], answer: 1 },
+            { q: "7. The training ___ AI literacy assessment and classroom management.", type: "choice", options: ["cover", "covers", "covered", "covering"], answer: 1 },
+            { q: "8. The project ___ part of Beijing Normal University's initiative launched in 2023.", type: "choice", options: ["is", "was", "were", "be"], answer: 0 },
+            { q: "9. Student volunteers ___ their technology education practice to Africa.", type: "choice", options: ["expand", "expanded", "expands", "expanding"], answer: 1 },
+            { q: "10. The project ___ a standardized curriculum system.", type: "choice", options: ["use", "uses", "used", "using"], answer: 1 },
+            { q: "11. In Karamay, students ___ windmill models.", type: "choice", options: ["make", "made", "makes", "making"], answer: 1 },
+            { q: "12. The volunteers ___ interviews and classroom observations in Africa.", type: "choice", options: ["conduct", "conducted", "conducts", "conducting"], answer: 1 },
+            { q: "13. Many African countries ___ technology education in their national agendas.", type: "choice", options: ["include", "have included", "included", "including"], answer: 1 },
+            { q: "14. They ___ challenges of teacher shortages.", type: "choice", options: ["face", "faced", "faces", "facing"], answer: 0 },
+            { q: "15. The project ___ over 1,000 students and teachers globally.", type: "choice", options: ["benefit", "has benefited", "benefited", "benefiting"], answer: 1 },
+            { q: "16. The research findings ___ into a report.", type: "choice", options: ["will compile", "will be compiled", "compiled", "compiling"], answer: 1 },
+            { q: "17. The approach ___ students to learn by doing.", type: "choice", options: ["encourage", "encourages", "encouraged", "encouraging"], answer: 1 },
+            { q: "18. Lancang ___ the third practice site nationwide.", type: "choice", options: ["is", "was", "were", "be"], answer: 0 },
+            { q: "19. The team plans ___ localized digital teaching content.", type: "choice", options: ["develop", "to develop", "developing", "developed"], answer: 1 },
+            { q: "20. The volunteers' curriculum design ___ by local educators.", type: "choice", options: ["welcome", "was welcomed", "welcomes", "welcoming"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. ___ education uses digital technology in teaching.", type: "choice", options: ["Digital", "Physical", "Chemical", "Biological"], answer: 0 },
+            { q: "22. A ___ area is far from cities and towns.", type: "choice", options: ["rural", "urban", "suburban", "central"], answer: 0 },
+            { q: "23. To ___ means to help something develop or grow.", type: "choice", options: ["promote", "prevent", "reduce", "stop"], answer: 0 },
+            { q: "24. A ___ place is far away and difficult to reach.", type: "choice", options: ["remote", "nearby", "close", "central"], answer: 0 },
+            { q: "25. ___ minorities are groups with distinct cultural identities.", type: "choice", options: ["Ethnic", "Ethical", "External", "Extra"], answer: 0 },
+            { q: "26. An ___ course covers multiple fields of study.", type: "choice", options: ["interdisciplinary", "disciplinary", "ordinary", "simple"], answer: 0 },
+            { q: "27. A ___ is a hands-on learning session.", type: "choice", options: ["workshop", "bedroom", "kitchen", "hallway"], answer: 0 },
+            { q: "28. ___ education relates to beauty and art appreciation.", type: "choice", options: ["Aesthetic", "Athletic", "Academic", "Automatic"], answer: 0 },
+            { q: "29. To ___ someone means to give them power or ability.", type: "choice", options: ["empower", "disable", "weaken", "limit"], answer: 0 },
+            { q: "30. AI ___ refers to the ability to understand and use AI tools.", type: "choice", options: ["literacy", "illiteracy", "poverty", "wealth"], answer: 0 },
+            { q: "31. To ___ means to make something follow a standard.", type: "choice", options: ["standardize", "randomize", "customize", "minimize"], answer: 0 },
+            { q: "32. A ___ is the set of courses taught in a school.", type: "choice", options: ["curriculum", "cafeteria", "calendar", "catalog"], answer: 0 },
+            { q: "33. A ___ works without pay to help others.", type: "choice", options: ["volunteer", "employee", "manager", "customer"], answer: 0 },
+            { q: "34. To ___ means to combine parts into a whole.", type: "choice", options: ["integrate", "separate", "divide", "remove"], answer: 0 },
+            { q: "35. Classroom ___ is the act of watching a class to learn.", type: "choice", options: ["observation", "decoration", "celebration", "vacation"], answer: 0 },
+            { q: "36. A national ___ is a list of things to be done.", type: "choice", options: ["agenda", "agent", "agency", "age"], answer: 0 },
+            { q: "37. ___ resources means not having enough resources.", type: "choice", options: ["Insufficient", "Sufficient", "Abundant", "Plentiful"], answer: 0 },
+            { q: "38. To ___ a report means to put it together from various sources.", type: "choice", options: ["compile", "delete", "ignore", "forget"], answer: 0 },
+            { q: "39. International ___ means working together across borders.", type: "choice", options: ["cooperation", "competition", "conflict", "isolation"], answer: 0 },
+            { q: "40. To ___ means to gain something good from something.", type: "choice", options: ["benefit", "suffer", "lose", "miss"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. The program was carried ___ in Lancang.", type: "choice", options: ["out", "in", "at", "on"], answer: 0 },
+            { q: "42. The project aims ___ promote digital education.", type: "choice", options: ["to", "in", "at", "for"], answer: 0 },
+            { q: "43. More than 30 teachers and students participated ___ the program.", type: "choice", options: ["in", "at", "on", "for"], answer: 0 },
+            { q: "44. They taught courses covering art, science, ___ technology.", type: "choice", options: ["and", "or", "but", "so"], answer: 0 },
+            { q: "45. Thirty students attended an AI creative ___.", type: "choice", options: ["workshop", "classroom", "laboratory", "library"], answer: 0 },
+            { q: "46. The team provided training ___ 117 teachers.", type: "choice", options: ["for", "in", "at", "on"], answer: 0 },
+            { q: "47. Lancang is the third practice site ___.", type: "choice", options: ["nationwide", "citywide", "schoolwide", "worldwide"], answer: 0 },
+            { q: "48. The project is part ___ an initiative launched in 2023.", type: "choice", options: ["of", "in", "at", "on"], answer: 0 },
+            { q: "49. Volunteers expanded their practice ___ Africa.", type: "choice", options: ["to", "in", "at", "from"], answer: 0 },
+            { q: "50. The project uses a ___ curriculum system.", type: "choice", options: ["standardized", "random", "flexible", "private"], answer: 0 },
+            { q: "51. ___ Karamay, students made windmill models.", type: "choice", options: ["In", "At", "On", "By"], answer: 0 },
+            { q: "52. The approach encourages students to learn ___ doing.", type: "choice", options: ["by", "in", "at", "on"], answer: 0 },
+            { q: "53. Many African countries face teacher shortages and ___ resources.", type: "choice", options: ["insufficient", "sufficient", "abundant", "plenty"], answer: 0 },
+            { q: "54. The findings will be compiled ___ a report.", type: "choice", options: ["into", "in", "at", "on"], answer: 0 },
+            { q: "55. The project has benefited ___ 1,000 people globally.", type: "choice", options: ["over", "under", "below", "within"], answer: 0 },
+            { q: "56. The curriculum integrates local culture ___ the courses.", type: "choice", options: ["into", "in", "at", "on"], answer: 0 },
+            { q: "57. The volunteers conducted in-depth exchanges ___ local teachers.", type: "choice", options: ["with", "in", "at", "on"], answer: 0 },
+            { q: "58. The project plans to develop localized teaching ___.", type: "choice", options: ["content", "context", "contest", "contact"], answer: 0 },
+            { q: "59. The team will provide ongoing support ___ online and offline channels.", type: "choice", options: ["through", "in", "at", "on"], answer: 0 },
+            { q: "60. ___ a great project it is!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. Which university organized the Yunnan digital education program?", options: ["Beijing Normal University", "Tsinghua University", "East China Normal University", "Fudan University"], type: "choice", answer: 0 },
+            { q: "62. Where was the program carried out?", options: ["Lancang, Yunnan", "Karamay, Xinjiang", "Liling, Hunan", "Beijing"], type: "choice", answer: 0 },
+            { q: "63. How many Lahu students does the project serve?", options: ["About 22,000", "About 220,000", "About 2,200", "About 22 million"], type: "choice", answer: 1 },
+            { q: "64. How long did the program last?", options: ["One day", "Two days", "Three days", "Five days"], type: "choice", answer: 2 },
+            { q: "65. How many students attended the AI workshop?", options: ["14", "30", "117", "600"], type: "choice", answer: 1 },
+            { q: "66. How many teachers received AI training?", options: ["23", "117", "220", "600"], type: "choice", answer: 1 },
+            { q: "67. When was the rural digital education initiative launched?", options: ["2021", "2022", "2023", "2024"], type: "choice", answer: 2 },
+            { q: "68. Which university's students went to Africa?", options: ["East China Normal University", "Beijing Normal University", "Tsinghua University", "Peking University"], type: "choice", answer: 0 },
+            { q: "69. Which is NOT an African country visited?", options: ["Egypt", "Namibia", "Rwanda", "Kenya"], type: "choice", answer: 0 },
+            { q: "70. What did students make in Karamay?", options: ["Windmill models", "Tie-dye", "Paper umbrellas", "Pottery"], type: "choice", answer: 0 },
+            { q: "71. What approach does the project encourage?", options: ["Learn by doing", "Learn by reading", "Learn by watching", "Learn by listening"], type: "choice", answer: 0 },
+            { q: "72. What challenge do African countries face?", options: ["Teacher shortages", "Too many students", "Excess funding", "Too many resources"], type: "choice", answer: 0 },
+            { q: "73. How many people has the project benefited?", options: ["Over 100", "Over 500", "Over 1,000", "Over 10,000"], type: "choice", answer: 2 },
+            { q: "74. What will the research findings become?", options: ["A report", "A novel", "A movie", "A song"], type: "choice", answer: 0 },
+            { q: "75. What kind of curriculum system does the project use?", options: ["Standardized", "Random", "Informal", "Secret"], type: "choice", answer: 0 },
+            { q: "76. What did students practice in Xundian?", options: ["Tie-dyeing", "Windmill making", "Umbrella painting", "Pottery"], type: "choice", answer: 0 },
+            { q: "77. What did students paint in Liling?", options: ["Paper umbrellas", "Windmills", "Tie-dye", "Canvas"], type: "choice", answer: 0 },
+            { q: "78. How many schools sent teachers for AI training?", options: ["14", "23", "30", "50"], type: "choice", answer: 1 },
+            { q: "79. How many classes were taught at the middle school?", options: ["10", "14", "20", "30"], type: "choice", answer: 1 },
+            { q: "80. Lancang is the ___ practice site nationwide.", options: ["first", "second", "third", "fourth"], type: "choice", answer: 2 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '一个数字教育项目在云南澜沧拉祜族自治县开展。'", type: "choice", options: ["A digital education program was carried out in Lancang Lahu Autonomous County, Yunnan.", "Digital education program Lancang Yunnan.", "A program in Yunnan digital education.", "Lancang digital education program Yunnan."], answer: 0 },
+            { q: "82. 'The project aims to promote digital education.' 'promote' means ___.", type: "choice", options: ["encourage", "prevent", "stop", "reduce"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["More than 30 teachers and students participated in the three-day program.", "More than 30 teachers students participated program.", "More 30 teachers participated three-day.", "30 more teachers students program participated."], answer: 0 },
+            { q: "84. 'interdisciplinary courses' means courses that ___.", type: "choice", options: ["cover multiple fields", "are about one subject", "are easy", "are difficult"], answer: 0 },
+            { q: "85. Choose the correct translation: '该项目惠及全球1000多名师生。'", type: "choice", options: ["The project has benefited over 1,000 students and teachers globally.", "The project benefit 1000 students teachers.", "Project globally 1000 benefited.", "The project benefiting 1000 globally."], answer: 0 },
+            { q: "86. 'The training was provided for 117 teachers.' This is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'AI training was provided by the team' is ___.", type: "choice", options: ["The team provided AI training", "The team provides AI training", "The team providing AI training", "AI training the team provided"], answer: 0 },
+            { q: "88. 'The project encourages students to learn by doing.' The object is ___.", type: "choice", options: ["students", "encourages", "project", "doing"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The project benefited many people, ___?'", type: "choice", options: ["didn't it", "did it", "isn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'The volunteers expanded their practice to Africa.' Fill: They traveled ___ summer.", type: "choice", options: ["during the", "although", "because", "unless"], answer: 0 },
+            { q: "91. Choose the correct translation: '许多非洲国家面临教师短缺的挑战。'", type: "choice", options: ["Many African countries face challenges of teacher shortages.", "Many Africa countries teacher shortage.", "Africa face teacher shortage challenges.", "Many African countries facing teachers short."], answer: 0 },
+            { q: "92. 'standardized curriculum' means a curriculum that ___.", type: "choice", options: ["follows a standard", "is random", "is private", "has no rules"], answer: 0 },
+            { q: "93. 'If resources are insufficient, the project will face challenges.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The project uses a standardized curriculum system.", "The project use standardized curriculum.", "The project using standardized system.", "Project standardized curriculum system uses."], answer: 0 },
+            { q: "95. '___ the challenges, the volunteers persevered.' Fill in the blank.", type: "choice", options: ["Despite", "Because", "Since", "As"], answer: 0 },
+            { q: "96. The indirect speech of 'She said, \"The project benefited 1,000 people.\"' is ___.", type: "choice", options: ["She said the project had benefited 1,000 people.", "She said the project benefit 1,000 people.", "She says project benefited 1,000.", "She said the project benefiting people."], answer: 0 },
+            { q: "97. 'empower' in 'AI-empowered training' means ___.", type: "choice", options: ["to give power or ability", "to take away power", "to ignore", "to refuse"], answer: 0 },
+            { q: "98. 'was carried out' is ___ tense.", type: "choice", options: ["past passive", "present", "future", "present perfect"], answer: 0 },
+            { q: "99. 'The volunteers conducted interviews.' The verb is ___.", type: "choice", options: ["conducted", "volunteers", "interviews", "the"], answer: 0 },
+            { q: "100. 'digital education' means education that ___.", type: "choice", options: ["uses digital technology", "is traditional", "has no technology", "is only offline"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
