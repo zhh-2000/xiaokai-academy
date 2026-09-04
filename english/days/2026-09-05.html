@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月5日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月5日 · 星期六 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>APEC Role in AI Cooperation Draws Praise</h3>
+                    <p>APEC is playing an important role in translating artificial intelligence cooperation from strategic consensus into tangible action, experts said, as they laud China for providing significant public goods to foster regional AI development.</p>
+                    <p>As AI reshapes the global economy at breakneck speed, the Asia-Pacific Economic Cooperation, the region's most influential economic cooperation mechanism, is rapidly advancing its agenda for AI collaboration. A significant step was taken at the 2025 APEC Economic Leaders' Meeting in Gyeongju, South Korea, where the APEC Artificial Intelligence Initiative (2026-2030) was adopted. This initiative, the first APEC leaders' outcome focused specifically on AI, sets clear directives to promote secure, accessible, and reliable AI ecosystems for all.</p>
+                    <p>Since taking over as the APEC host last November, China has prioritized digital and smart transformations as new growth drivers for APEC economies. In July, at the APEC Digital and AI Ministerial Meeting held in Chengdu, member economies adopted the Chengdu Statement. This key document focuses on promoting universal and meaningful digital connectivity and leveraging digital technologies and AI for economic growth.</p>
+                    <p>At the APEC High-Level Forum on AI, also held in Chengdu in July, China announced plans to establish a center in Qianhai, Shenzhen, to promote APEC cooperation on cross-border data flows. The planned center will serve as an open platform for policy research, regulatory alignment and services for businesses. Kang Hogu, director of the Sino-Korea Economy/Society Institute, called the move strategically significant for balancing development and security in the Asia-Pacific.</p>
+                    <span class="source">Source: China Daily, 2026-09-04</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Nvidia to Acquire Hugging Face for $12.93 Billion</h3>
+                    <p>US chipmaker Nvidia has agreed to acquire artificial intelligence developer platform Hugging Face for about $12.93 billion, Nvidia founder and CEO Jensen Huang announced on September 4, 2026.</p>
+                    <p>Huang said in a company blog post that the two companies will work together to scale Hugging Face's platform, strengthen its infrastructure and expand access to AI for developers and institutions worldwide. Hugging Face will remain an open platform for the entire AI ecosystem, Huang said. "NVIDIA compute will not be required to build on or deploy through Hugging Face," Huang noted.</p>
+                    <p>He added that Hugging Face will continue to support open-source and open-weight models from different model developers, as well as multi-cloud and multi-accelerator development and deployment. According to Huang, more than 18 million developers, researchers and creators use Hugging Face, where they share more than 3 million models, 500,000 datasets and 1 million applications.</p>
+                    <p>More than 200,000 companies use the platform to discover, evaluate, customize and deploy AI. Nvidia has also been expanding its involvement in open AI models. Huang said the company has released more than 500 models and more than 250 open datasets on Hugging Face, describing Nvidia as the platform's largest contributor of open models and data. Hugging Face was founded by Clement Delangue, Julien Chaumond and Thomas Wolf.</p>
+                    <span class="source">Source: Xinhua / China Daily, 2026-09-04</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-05';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-05',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. What role is APEC playing in AI cooperation according to experts?", options: ["Translating strategic consensus into tangible action", "Only discussing policies", "Competing with other forums", "Restricting AI development"], answer: 0 },
+            { q: "2. Which country is being lauded for providing public goods for regional AI development?", options: ["Japan", "China", "South Korea", "United States"], answer: 1 },
+            { q: "3. Where was the 2025 APEC Economic Leaders' Meeting held?", options: ["Beijing, China", "Tokyo, Japan", "Gyeongju, South Korea", "Bangkok, Thailand"], answer: 2 },
+            { q: "4. What was adopted at the 2025 APEC Economic Leaders' Meeting?", options: ["The APEC AI Initiative (2026-2030)", "The Beijing Declaration", "The Seoul Accord", "The Asia-Pacific Trade Agreement"], answer: 0 },
+            { q: "5. When did China take over as the APEC host?", options: ["Last January", "Last November", "Last July", "Last September"], answer: 1 },
+            { q: "6. Where was the APEC Digital and AI Ministerial Meeting held?", options: ["Shenzhen", "Beijing", "Chengdu", "Shanghai"], answer: 2 },
+            { q: "7. What was adopted at the Chengdu meeting?", options: ["The Chengdu Plan", "The Chengdu Statement", "The Chengdu Agreement", "The Chengdu Protocol"], answer: 1 },
+            { q: "8. Where does China plan to establish a center for cross-border data flows?", options: ["Qianhai, Shenzhen", "Pudong, Shanghai", "Hainan", "Xiongan"], answer: 0 },
+            { q: "9. What will the planned center serve as?", options: ["A closed research facility", "An open platform for policy research and regulatory alignment", "A military base", "A private company"], answer: 1 },
+            { q: "10. Who is the director of the Sino-Korea Economy/Society Institute?", options: ["Zhang Jingjia", "Kang Hogu", "Liu Guozhong", "Jensen Huang"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. Which company agreed to acquire Hugging Face?", options: ["Intel", "Nvidia", "AMD", "Google"], answer: 1 },
+            { q: "12. How much is the acquisition worth?", options: ["About $1.29 billion", "About $12.93 billion", "About $129 billion", "About $129 million"], answer: 1 },
+            { q: "13. Who is the founder and CEO of Nvidia?", options: ["Clement Delangue", "Jensen Huang", "Thomas Wolf", "Julien Chaumond"], answer: 1 },
+            { q: "14. When was the acquisition announced?", options: ["September 4, 2026", "August 4, 2026", "September 4, 2025", "October 4, 2026"], answer: 0 },
+            { q: "15. Will Hugging Face remain an open platform after the acquisition?", options: ["Yes, it will remain open", "No, it will become closed", "Only for Nvidia users", "Only for paying customers"], answer: 0 },
+            { q: "16. How many developers use Hugging Face?", options: ["More than 1 million", "More than 8 million", "More than 18 million", "More than 180 million"], answer: 2 },
+            { q: "17. How many models are shared on Hugging Face?", options: ["More than 300,000", "More than 3 million", "More than 30 million", "More than 300 million"], answer: 1 },
+            { q: "18. How many companies use the Hugging Face platform?", options: ["More than 20,000", "More than 200,000", "More than 2 million", "More than 20 million"], answer: 1 },
+            { q: "19. How many models has Nvidia released on Hugging Face?", options: ["More than 50", "More than 500", "More than 5,000", "More than 50,000"], answer: 1 },
+            { q: "20. Who founded Hugging Face?", options: ["Jensen Huang and Bill Gates", "Clement Delangue, Julien Chaumond and Thomas Wolf", "Mark Zuckerberg", "Elon Musk"], answer: 1 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作；协作" },
+            { word: "consensus", phonetic: "/kənˈsensəs/", meaning: "n. 共识；一致意见" },
+            { word: "tangible", phonetic: "/ˈtændʒəbl/", meaning: "adj. 有形的；切实的" },
+            { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", meaning: "n. 倡议；主动行动" },
+            { word: "acquire", phonetic: "/əˈkwaɪər/", meaning: "v. 收购；获得" },
+            { word: "infrastructure", phonetic: "/ˈɪnfrəstrʌktʃər/", meaning: "n. 基础设施" },
+            { word: "ecosystem", phonetic: "/ˈiːkoʊsɪstəm/", meaning: "n. 生态系统" },
+            { word: "accessible", phonetic: "/əkˈsesəbl/", meaning: "adj. 可访问的；易接近的" },
+            { word: "regulatory", phonetic: "/ˈreɡjələtɔːri/", meaning: "adj. 监管的；管理的" },
+            { word: "alignment", phonetic: "/əˈlaɪnmənt/", meaning: "n. 对齐；协调" },
+            { word: "platform", phonetic: "/ˈplætfɔːrm/", meaning: "n. 平台" },
+            { word: "deployment", phonetic: "/dɪˈplɔɪmənt/", meaning: "n. 部署" },
+            { word: "evaluate", phonetic: "/ɪˈvæljueɪt/", meaning: "v. 评估" },
+            { word: "contributor", phonetic: "/kənˈtrɪbjətər/", meaning: "n. 贡献者" },
+            { word: "prioritize", phonetic: "/praɪˈɔːrətaɪz/", meaning: "v. 优先考虑" },
+            { word: "breakneck", phonetic: "/ˈbreɪknek/", meaning: "adj. 极速的" },
+            { word: "foster", phonetic: "/ˈfɒstər/", meaning: "v. 促进；培养" },
+            { word: "directive", phonetic: "/dəˈrektɪv/", meaning: "n. 指令；指示" },
+            { word: "incompatible", phonetic: "/ˌɪnkəmˈpætəbl/", meaning: "adj. 不兼容的" },
+            { word: "resilient", phonetic: "/rɪˈzɪliənt/", meaning: "adj. 有韧性的" }
+        ];
+
+        const oldVocabData = [
+            { word: "digital", phonetic: "/ˈdɪdʒɪtl/", meaning: "adj. 数字的；数字化的" },
+            { word: "rural", phonetic: "/ˈrʊərəl/", meaning: "adj. 农村的；乡村的" },
+            { word: "promote", phonetic: "/prəˈmoʊt/", meaning: "v. 促进；推广" },
+            { word: "remote", phonetic: "/rɪˈmoʊt/", meaning: "adj. 偏远的；遥远的" },
+            { word: "ethnic", phonetic: "/ˈeθnɪk/", meaning: "adj. 民族的；种族的" },
+            { word: "interdisciplinary", phonetic: "/ˌɪntərdɪsəˈplɪnəri/", meaning: "adj. 跨学科的" },
+            { word: "workshop", phonetic: "/ˈwɜːrkʃɑːp/", meaning: "n. 工作坊；研讨会" },
+            { word: "aesthetic", phonetic: "/esˈθetɪk/", meaning: "adj. 审美的；美学的" },
+            { word: "empower", phonetic: "/ɪmˈpaʊər/", meaning: "v. 赋能；授权" },
+            { word: "literacy", phonetic: "/ˈlɪtərəsi/", meaning: "n. 素养；读写能力" },
+            { word: "standardize", phonetic: "/ˈstændərdaɪz/", meaning: "v. 标准化" },
+            { word: "curriculum", phonetic: "/kəˈrɪkjʊləm/", meaning: "n. 课程；课程体系" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" },
+            { word: "integrate", phonetic: "/ˈɪntɪɡreɪt/", meaning: "v. 融合；整合" },
+            { word: "observation", phonetic: "/ˌɒbzərˈveɪʃən/", meaning: "n. 观察" },
+            { word: "agenda", phonetic: "/əˈdʒendə/", meaning: "n. 议程；计划" },
+            { word: "insufficient", phonetic: "/ˌɪnsəˈfɪʃənt/", meaning: "adj. 不足的" },
+            { word: "compile", phonetic: "/kəmˈpaɪl/", meaning: "v. 编纂；汇编" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作" },
+            { word: "benefit", phonetic: "/ˈbenɪfɪt/", meaning: "v./n. 使受益；利益" },
+            { word: "education", phonetic: "/ˌedʒuˈkeɪʃən/", meaning: "n. 教育" },
+            { word: "technology", phonetic: "/tɛkˈnɒlədʒi/", meaning: "n. 技术" },
+            { word: "training", phonetic: "/ˈtreɪnɪŋ/", meaning: "n. 培训" },
+            { word: "develop", phonetic: "/dɪˈvɛləp/", meaning: "v. 开发；发展" },
+            { word: "university", phonetic: "/ˌjuːnɪˈvɜːrsəti/", meaning: "n. 大学" },
+            { word: "provide", phonetic: "/prəˈvaɪd/", meaning: "v. 提供" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" },
+            { word: "resource", phonetic: "/ˈriːsɔːrs/", meaning: "n. 资源" },
+            { word: "experience", phonetic: "/ɪkˈspɪriəns/", meaning: "n. 经验；经历" },
+            { word: "global", phonetic: "/ˈɡloʊbəl/", meaning: "adj. 全球的" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. APEC ___ an important role in AI cooperation.", type: "choice", options: ["plays", "play", "playing", "played"], answer: 0 },
+            { q: "2. Experts ___ China for providing significant public goods.", type: "choice", options: ["laud", "lauds", "lauded", "lauding"], answer: 0 },
+            { q: "3. AI ___ the global economy at breakneck speed.", type: "choice", options: ["reshape", "reshapes", "is reshaping", "reshaped"], answer: 2 },
+            { q: "4. The initiative ___ at the 2025 APEC Economic Leaders' Meeting.", type: "choice", options: ["adopt", "was adopted", "adopted", "adopts"], answer: 1 },
+            { q: "5. China ___ as the APEC host last November.", type: "choice", options: ["take over", "took over", "takes over", "taking over"], answer: 1 },
+            { q: "6. China has ___ digital and smart transformations.", type: "choice", options: ["prioritize", "prioritized", "prioritizes", "prioritizing"], answer: 1 },
+            { q: "7. The Chengdu Statement ___ on promoting digital connectivity.", type: "choice", options: ["focus", "focuses", "focused", "focusing"], answer: 1 },
+            { q: "8. China ___ plans to establish a center in Qianhai.", type: "choice", options: ["announce", "announced", "announces", "announcing"], answer: 1 },
+            { q: "9. Nvidia ___ to acquire Hugging Face for $12.93 billion.", type: "choice", options: ["agree", "agreed", "agrees", "agreeing"], answer: 1 },
+            { q: "10. Jensen Huang ___ the acquisition in a blog post.", type: "choice", options: ["announce", "announced", "announces", "announcing"], answer: 1 },
+            { q: "11. The two companies ___ together to scale the platform.", type: "choice", options: ["will work", "works", "working", "worked"], answer: 0 },
+            { q: "12. Hugging Face ___ an open platform for the entire AI ecosystem.", type: "choice", options: ["remain", "will remain", "remains", "remaining"], answer: 1 },
+            { q: "13. More than 18 million developers ___ Hugging Face.", type: "choice", options: ["use", "uses", "used", "using"], answer: 0 },
+            { q: "14. Nvidia ___ more than 500 models on Hugging Face.", type: "choice", options: ["release", "has released", "released", "releasing"], answer: 1 },
+            { q: "15. Nvidia ___ as the platform's largest contributor of open models.", type: "choice", options: ["describe", "described", "describes", "describing"], answer: 1 },
+            { q: "16. Hugging Face ___ by Clement Delangue, Julien Chaumond and Thomas Wolf.", type: "choice", options: ["found", "was founded", "founds", "founding"], answer: 1 },
+            { q: "17. The center ___ as an open platform for policy research.", type: "choice", options: ["will serve", "serves", "served", "serving"], answer: 0 },
+            { q: "18. APEC is rapidly ___ its agenda for AI collaboration.", type: "choice", options: ["advance", "advancing", "advanced", "advances"], answer: 1 },
+            { q: "19. Experts said APEC ___ strategic consensus into tangible action.", type: "choice", options: ["translate", "translates", "is translating", "translated"], answer: 2 },
+            { q: "20. The initiative ___ to promote secure, accessible AI ecosystems.", type: "choice", options: ["aim", "aims", "aimed", "aiming"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. ___ means working together toward a common goal.", type: "choice", options: ["Cooperation", "Competition", "Conflict", "Isolation"], answer: 0 },
+            { q: "22. A ___ is a general agreement among all members.", type: "choice", options: ["consensus", "confusion", "conflict", "contract"], answer: 0 },
+            { q: "23. Something ___ can be touched or is real and definite.", type: "choice", options: ["tangible", "imaginary", "virtual", "abstract"], answer: 0 },
+            { q: "24. An ___ is a new plan or strategy to solve a problem.", type: "choice", options: ["initiative", "exit", "inertia", "illusion"], answer: 0 },
+            { q: "25. To ___ a company means to buy it or take control of it.", type: "choice", options: ["acquire", "lose", "sell", "ignore"], answer: 0 },
+            { q: "26. ___ refers to the basic facilities and systems of a place.", type: "choice", options: ["Infrastructure", "Superstructure", "Substructure", "Nonstructure"], answer: 0 },
+            { q: "27. An ___ is a community of organisms and their environment.", type: "choice", options: ["ecosystem", "economy", "society", "institution"], answer: 0 },
+            { q: "28. Something ___ can be reached or entered easily.", type: "choice", options: ["accessible", "impossible", "blocked", "forbidden"], answer: 0 },
+            { q: "29. ___ refers to rules and oversight by authorities.", type: "choice", options: ["Regulatory", "Creative", "Financial", "Commercial"], answer: 0 },
+            { q: "30. ___ means bringing things into proper arrangement.", type: "choice", options: ["Alignment", "Disorder", "Confusion", "Chaos"], answer: 0 },
+            { q: "31. A ___ is a raised surface or online system for use.", type: "choice", options: ["platform", "basement", "ceiling", "attic"], answer: 0 },
+            { q: "32. ___ means the act of placing forces or software into position.", type: "choice", options: ["Deployment", "Retreat", "Withdrawal", "Removal"], answer: 0 },
+            { q: "33. To ___ means to judge or assess the value of something.", type: "choice", options: ["evaluate", "create", "destroy", "ignore"], answer: 0 },
+            { q: "34. A ___ is someone who gives or contributes something.", type: "choice", options: ["contributor", "consumer", "observer", "bystander"], answer: 0 },
+            { q: "35. To ___ means to give something higher importance.", type: "choice", options: ["prioritize", "minimize", "maximize", "ignore"], answer: 0 },
+            { q: "36. ___ speed means extremely fast speed.", type: "choice", options: ["Breakneck", "Slow", "Moderate", "Casual"], answer: 0 },
+            { q: "37. To ___ means to encourage the development of something.", type: "choice", options: ["foster", "hinder", "prevent", "stop"], answer: 0 },
+            { q: "38. A ___ is an official instruction or order.", type: "choice", options: ["directive", "direction", "director", "directory"], answer: 0 },
+            { q: "39. Things that are ___ cannot exist or work together.", type: "choice", options: ["incompatible", "compatible", "identical", "similar"], answer: 0 },
+            { q: "40. Something ___ can recover quickly from difficulties.", type: "choice", options: ["resilient", "fragile", "weak", "broken"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. APEC is playing an important role ___ AI cooperation.", type: "choice", options: ["in", "at", "on", "for"], answer: 0 },
+            { q: "42. The initiative was adopted ___ the 2025 APEC Meeting.", type: "choice", options: ["at", "in", "on", "by"], answer: 0 },
+            { q: "43. China took ___ as the APEC host last November.", type: "choice", options: ["over", "in", "at", "on"], answer: 0 },
+            { q: "44. The Chengdu Statement focuses ___ digital connectivity.", type: "choice", options: ["on", "in", "at", "for"], answer: 0 },
+            { q: "45. China announced plans to establish a center ___ Qianhai.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "46. The center will serve ___ an open platform.", type: "choice", options: ["as", "in", "at", "on"], answer: 0 },
+            { q: "47. Nvidia agreed to acquire Hugging Face ___ $12.93 billion.", type: "choice", options: ["for", "in", "at", "by"], answer: 0 },
+            { q: "48. Huang announced the acquisition ___ a blog post.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "49. More than 18 million developers use Hugging Face ___ share models.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "50. Nvidia described ___ as the platform's largest contributor.", type: "choice", options: ["itself", "them", "they", "its"], answer: 0 },
+            { q: "51. ___ taking over as host, China prioritized digital transformations.", type: "choice", options: ["After", "Before", "During", "While"], answer: 0 },
+            { q: "52. APEC is translating consensus ___ tangible action.", type: "choice", options: ["into", "in", "at", "on"], answer: 0 },
+            { q: "53. The initiative aims ___ promote secure AI ecosystems.", type: "choice", options: ["to", "in", "at", "for"], answer: 0 },
+            { q: "54. The center will serve businesses ___ policy research.", type: "choice", options: ["through", "in", "at", "on"], answer: 0 },
+            { q: "55. Hugging Face will remain an open platform ___ the entire ecosystem.", type: "choice", options: ["for", "in", "at", "on"], answer: 0 },
+            { q: "56. NVIDIA compute will ___ be required to build on Hugging Face.", type: "choice", options: ["not", "always", "sometimes", "often"], answer: 0 },
+            { q: "57. Hugging Face was founded ___ three entrepreneurs.", type: "choice", options: ["by", "in", "at", "on"], answer: 0 },
+            { q: "58. More than 200,000 companies use the platform ___ deploy AI.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "59. Kang Hogu called the move ___ significant.", type: "choice", options: ["strategically", "strategic", "strategy", "strategies"], answer: 0 },
+            { q: "60. ___ a significant step was taken at the meeting!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. What is APEC's role in AI cooperation?", options: ["Translating strategic consensus into tangible action", "Only making policies", "Competing with other groups", "Restricting AI"], type: "choice", answer: 0 },
+            { q: "62. Which country is praised for regional AI development?", options: ["China", "Japan", "USA", "India"], type: "choice", answer: 0 },
+            { q: "63. Where was the 2025 APEC Leaders' Meeting?", options: ["Gyeongju, South Korea", "Beijing, China", "Tokyo, Japan", "Bangkok"], type: "choice", answer: 0 },
+            { q: "64. What was adopted at the 2025 APEC Meeting?", options: ["APEC AI Initiative (2026-2030)", "Beijing Declaration", "Seoul Accord", "Trade Agreement"], type: "choice", answer: 0 },
+            { q: "65. When did China become APEC host?", options: ["Last November", "Last January", "Last July", "Last March"], type: "choice", answer: 0 },
+            { q: "66. Where was the Digital and AI Ministerial Meeting?", options: ["Chengdu", "Shenzhen", "Beijing", "Shanghai"], type: "choice", answer: 0 },
+            { q: "67. What was adopted in Chengdu?", options: ["The Chengdu Statement", "The Chengdu Plan", "The Chengdu Accord", "The Chengdu Protocol"], type: "choice", answer: 0 },
+            { q: "68. Where will the cross-border data center be?", options: ["Qianhai, Shenzhen", "Pudong, Shanghai", "Hainan", "Xiongan"], type: "choice", answer: 0 },
+            { q: "69. Who is Nvidia's CEO?", options: ["Jensen Huang", "Clement Delangue", "Thomas Wolf", "Julien Chaumond"], type: "choice", answer: 0 },
+            { q: "70. How much is the Hugging Face acquisition?", options: ["About $12.93 billion", "About $1.29 billion", "About $129 billion", "About $129 million"], type: "choice", answer: 0 },
+            { q: "71. Will Hugging Face remain open?", options: ["Yes", "No", "Only for Nvidia", "Only for paying users"], type: "choice", answer: 0 },
+            { q: "72. How many developers use Hugging Face?", options: ["Over 18 million", "Over 8 million", "Over 1 million", "Over 180 million"], type: "choice", answer: 0 },
+            { q: "73. How many models are shared on Hugging Face?", options: ["Over 3 million", "Over 300,000", "Over 30 million", "Over 300 million"], type: "choice", answer: 0 },
+            { q: "74. How many companies use Hugging Face?", options: ["Over 200,000", "Over 20,000", "Over 2 million", "Over 20 million"], type: "choice", answer: 0 },
+            { q: "75. How many models has Nvidia released on Hugging Face?", options: ["Over 500", "Over 50", "Over 5,000", "Over 50,000"], type: "choice", answer: 0 },
+            { q: "76. Who founded Hugging Face?", options: ["Delangue, Chaumond and Wolf", "Huang and Gates", "Zuckerberg", "Musk"], type: "choice", answer: 0 },
+            { q: "77. What is the APEC AI Initiative for?", options: ["Promoting secure, accessible AI ecosystems", "Restricting AI", "Only for military use", "Only for profits"], type: "choice", answer: 0 },
+            { q: "78. What does the Chengdu Statement focus on?", options: ["Universal digital connectivity", "Military expansion", "Trade restrictions", "Cultural exchange"], type: "choice", answer: 0 },
+            { q: "79. What will the Qianhai center serve as?", options: ["An open platform for policy research", "A military base", "A private club", "A closed lab"], type: "choice", answer: 0 },
+            { q: "80. What did Kang Hogu call the Qianhai center move?", options: ["Strategically significant", "Unimportant", "Risky", "Unnecessary"], type: "choice", answer: 0 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '亚太经合组织在AI合作中发挥着重要作用。'", type: "choice", options: ["APEC is playing an important role in AI cooperation.", "APEC important AI cooperation.", "APEC plays role AI.", "APEC is AI cooperation important."], answer: 0 },
+            { q: "82. 'experts laud China' — 'laud' means ___.", type: "choice", options: ["praise", "criticize", "ignore", "fear"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["Since taking over as the APEC host, China has prioritized digital transformations.", "Since took over host China digital.", "China APEC host prioritize digital.", "China since host APEC digital prioritize."], answer: 0 },
+            { q: "84. 'tangible action' means action that is ___.", type: "choice", options: ["real and concrete", "imaginary", "planned only", "cancelled"], answer: 0 },
+            { q: "85. Choose the correct translation: '英伟达同意以约129.3亿美元收购Hugging Face。'", type: "choice", options: ["Nvidia has agreed to acquire Hugging Face for about $12.93 billion.", "Nvidia acquire Hugging Face 129.3 billion.", "Nvidia Hugging Face 12.93 billion acquire.", "Nvidia agreed Hugging Face billion."], answer: 0 },
+            { q: "86. 'was adopted' is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'The initiative was adopted at the meeting' is ___.", type: "choice", options: ["They adopted the initiative at the meeting", "They adopts initiative meeting", "Initiative they adopt meeting", "Meeting adopted initiative they"], answer: 0 },
+            { q: "88. 'The center will serve as an open platform.' The subject is ___.", type: "choice", options: ["The center", "serve", "platform", "open"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'APEC plays an important role, ___?'", type: "choice", options: ["doesn't it", "does it", "isn't it", "wasn't it"], answer: 0 },
+            { q: "90. 'Nvidia agreed to acquire Hugging Face.' Fill: The deal ___ $12.93 billion.", type: "choice", options: ["is worth", "worth", "is worth it", "worthy"], answer: 0 },
+            { q: "91. Choose the correct translation: '该倡议旨在促进安全、可及的AI生态系统。'", type: "choice", options: ["The initiative aims to promote secure, accessible AI ecosystems.", "Initiative promote secure AI.", "The initiative AI secure ecosystems.", "AI initiative promote secure ecosystems."], answer: 0 },
+            { q: "92. 'breakneck speed' means ___ speed.", type: "choice", options: ["extremely fast", "slow", "moderate", "steady"], answer: 0 },
+            { q: "93. 'If the center helps businesses, it will reduce costs.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["Hugging Face will remain an open platform for the entire AI ecosystem.", "Hugging Face remain open platform AI.", "Hugging Face open platform remain AI.", "Open platform Hugging Face AI remain."], answer: 0 },
+            { q: "95. '___ the challenges, experts praised APEC's efforts.' Fill in the blank.", type: "choice", options: ["Despite", "Because", "Since", "As"], answer: 0 },
+            { q: "96. The indirect speech of 'He said, \"Nvidia acquired Hugging Face.\"' is ___.", type: "choice", options: ["He said Nvidia had acquired Hugging Face.", "He said Nvidia acquire Hugging Face.", "He says Nvidia acquired Hugging Face.", "He said Nvidia acquiring Hugging Face."], answer: 0 },
+            { q: "97. 'ecosystem' in 'AI ecosystem' means ___.", type: "choice", options: ["a community of related things", "a single product", "a company", "a building"], answer: 0 },
+            { q: "98. 'agreed to acquire' uses the ___ tense.", type: "choice", options: ["past", "present", "future", "present perfect"], answer: 0 },
+            { q: "99. 'More than 200,000 companies use the platform.' The verb is ___.", type: "choice", options: ["use", "companies", "platform", "200,000"], answer: 0 },
+            { q: "100. 'regulatory alignment' means ___.", type: "choice", options: ["coordinating rules across regions", "breaking rules", "ignoring rules", "creating new rules only"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
