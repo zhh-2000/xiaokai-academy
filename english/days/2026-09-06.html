@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月6日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月6日 · 星期日 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>Asia-Pacific Media Forum Opens in Shenzhen</h3>
+                    <p>The Asia-Pacific Media Forum opened on Saturday, September 5, 2026, in Shenzhen, south China's Guangdong Province, with the theme "Building a Path to Shared Prosperity for the Asia-Pacific Community: Media Consensus and Action."</p>
+                    <p>Li Shulei, a member of the Political Bureau of the CPC Central Committee and head of the Publicity Department, delivered a keynote speech. More than 400 representatives from over 40 countries and regions attended the forum.</p>
+                    <p>Li underscored the need for fostering a favorable public opinion environment for the opening and development in the Asia-Pacific. He said, "Looking ahead, China's door to the outside world will only open wider and wider."</p>
+                    <p>Huang Kunming, secretary of the CPC Guangdong Provincial Committee, highlighted Guangdong's pioneering role in reform and opening up. The forum was co-hosted by the Publicity Department of the CPC Central Committee, Xinhua News Agency and the Guangdong provincial government. Sixteen media organizations jointly formed the Asia-Pacific Media Partnership Organizing Committee. The "Gather in Shenzhen, Create a Better Asia-Pacific" Media Cooperation Initiative was launched.</p>
+                    <span class="source">Source: China Daily / Xinhua, 2026-09-05</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Drones Deliver Supplies to Villagers After Floods Cut Off Roads in Yunnan</h3>
+                    <p>Heavy rain caused flooding in southwest China's Yunnan province, cutting off roads and disrupting supplies to many communities. Drones were used to deliver food, drinking water and daily necessities to villagers across the flooded areas, providing a lifeline when traditional transport was impossible.</p>
+                    <p>Meanwhile, in Fujian province, typhoon and extreme rainfall caused severe damage to the cities of Putian and Ningde. The national disaster relief emergency response was upgraded to Level III to cope with the growing crisis.</p>
+                    <p>Over 599,300 people were transferred from dangerous areas to safer locations. The Fujian provincial government urgently allocated 210 million yuan in funds for emergency rescue and disaster relief, aiming to support affected residents and rebuild damaged infrastructure as quickly as possible.</p>
+                    <span class="source">Source: Xinhua, 2026-09-05</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-06';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-06',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. When did the Asia-Pacific Media Forum open?", options: ["Friday, September 4, 2026", "Saturday, September 5, 2026", "Sunday, September 6, 2026", "Monday, September 7, 2026"], answer: 1 },
+            { q: "2. Where was the Asia-Pacific Media Forum held?", options: ["Beijing", "Shanghai", "Shenzhen", "Guangzhou"], answer: 2 },
+            { q: "3. Which province is Shenzhen located in?", options: ["Fujian Province", "Guangdong Province", "Yunnan Province", "Zhejiang Province"], answer: 1 },
+            { q: "4. What was the theme of the forum?", options: ["Building a Path to Shared Prosperity for the Asia-Pacific Community: Media Consensus and Action", "Digital Transformation in Asia-Pacific", "AI Cooperation and Development", "Trade and Economic Growth"], answer: 0 },
+            { q: "5. Who delivered a keynote speech at the forum?", options: ["Huang Kunming", "Li Shulei", "Jensen Huang", "Kang Hogu"], answer: 1 },
+            { q: "6. What is Li Shulei's position?", options: ["Secretary of the CPC Guangdong Provincial Committee", "A member of the Political Bureau of the CPC Central Committee and head of the Publicity Department", "Director of Xinhua News Agency", "Mayor of Shenzhen"], answer: 1 },
+            { q: "7. How many representatives attended the forum?", options: ["More than 40", "More than 400", "More than 4,000", "More than 40,000"], answer: 1 },
+            { q: "8. From how many countries and regions did the representatives come?", options: ["Over 4", "Over 14", "Over 40", "Over 400"], answer: 2 },
+            { q: "9. What did Li Shulei underscore the need for?", options: ["Fostering a favorable public opinion environment for the opening and development in the Asia-Pacific", "Restricting foreign media", "Closing China's door to the outside world", "Reducing international cooperation"], answer: 0 },
+            { q: "10. What did Li Shulei say about China's door to the outside world?", options: ["It will close gradually", "It will only open wider and wider", "It will remain the same", "It will open only to Asia"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "11. What caused flooding in southwest China's Yunnan province?", options: ["A typhoon", "Heavy rain", "A tsunami", "A drought"], answer: 1 },
+            { q: "12. What did the flooding cut off in Yunnan?", options: ["Power supply", "Roads and supplies", "Internet access", "Water supply only"], answer: 1 },
+            { q: "13. What was used to deliver supplies to villagers in Yunnan?", options: ["Helicopters", "Trucks", "Drones", "Boats"], answer: 2 },
+            { q: "14. What items were delivered to the villagers?", options: ["Food, drinking water and daily necessities", "Clothing and shoes only", "Electronics and gadgets", "Books and stationery"], answer: 0 },
+            { q: "15. Which province was also affected by typhoon and extreme rainfall?", options: ["Guangdong", "Fujian", "Zhejiang", "Jiangsu"], answer: 1 },
+            { q: "16. Which cities in Fujian suffered severe damage?", options: ["Fuzhou and Xiamen", "Putian and Ningde", "Quanzhou and Zhangzhou", "Longyan and Sanming"], answer: 1 },
+            { q: "17. What level was the national disaster relief emergency response upgraded to?", options: ["Level I", "Level II", "Level III", "Level IV"], answer: 2 },
+            { q: "18. How many people were transferred from dangerous areas?", options: ["Over 59,930", "Over 599,300", "Over 5,993,000", "Over 599"], answer: 1 },
+            { q: "19. How much funds did the Fujian provincial government allocate?", options: ["21 million yuan", "210 million yuan", "2.1 billion yuan", "210,000 yuan"], answer: 1 },
+            { q: "20. What was the purpose of the allocated funds?", options: ["For emergency rescue and disaster relief", "For building new airports", "For education programs", "For tourism promotion"], answer: 0 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "forum", phonetic: "/ˈfɔːrəm/", meaning: "n. 论坛；讨论会" },
+            { word: "prosperity", phonetic: "/prɑːˈsperəti/", meaning: "n. 繁荣；兴旺" },
+            { word: "consensus", phonetic: "/kənˈsensəs/", meaning: "n. 共识；一致意见" },
+            { word: "representative", phonetic: "/ˌreprɪˈzentətɪv/", meaning: "n. 代表 adj. 代表性的" },
+            { word: "participant", phonetic: "/pɑːrˈtɪsɪpənt/", meaning: "n. 参与者" },
+            { word: "keynote", phonetic: "/ˈkiːnoʊt/", meaning: "n. 主题发言；基调" },
+            { word: "partnership", phonetic: "/ˈpɑːrtnərʃɪp/", meaning: "n. 伙伴关系；合作关系" },
+            { word: "committee", phonetic: "/kəˈmɪti/", meaning: "n. 委员会" },
+            { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", meaning: "n. 倡议；主动行动" },
+            { word: "dialogue", phonetic: "/ˈdaɪəlɔːɡ/", meaning: "n. 对话；交流" },
+            { word: "connectivity", phonetic: "/kəˈnektɪvəti/", meaning: "n. 连通性；互联" },
+            { word: "digital", phonetic: "/ˈdɪdʒɪtl/", meaning: "adj. 数字的；数字化的" },
+            { word: "intelligent", phonetic: "/ɪnˈtelɪdʒənt/", meaning: "adj. 智能的；聪明的" },
+            { word: "transformation", phonetic: "/ˌtrænsfərˈmeɪʃn/", meaning: "n. 转变；变革" },
+            { word: "interoperability", phonetic: "/ˌɪntərɑːpərəˈbɪləti/", meaning: "n. 互操作性" },
+            { word: "disaster", phonetic: "/dɪˈzæstər/", meaning: "n. 灾难；灾害" },
+            { word: "relief", phonetic: "/rɪˈliːf/", meaning: "n. 救援；减轻" },
+            { word: "drone", phonetic: "/droʊn/", meaning: "n. 无人机" },
+            { word: "aviation", phonetic: "/ˌeɪviˈeɪʃn/", meaning: "n. 航空；飞行" },
+            { word: "disruption", phonetic: "/dɪsˈrʌpʃn/", meaning: "n. 中断；扰乱" }
+        ];
+
+        const oldVocabData = [
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作；协作" },
+            { word: "digital", phonetic: "/ˈdɪdʒɪtl/", meaning: "adj. 数字的；数字化的" },
+            { word: "rural", phonetic: "/ˈrʊərəl/", meaning: "adj. 农村的；乡村的" },
+            { word: "promote", phonetic: "/prəˈmoʊt/", meaning: "v. 促进；推广" },
+            { word: "remote", phonetic: "/rɪˈmoʊt/", meaning: "adj. 偏远的；遥远的" },
+            { word: "ethnic", phonetic: "/ˈeθnɪk/", meaning: "adj. 民族的；种族的" },
+            { word: "interdisciplinary", phonetic: "/ˌɪntərdɪsəˈplɪnəri/", meaning: "adj. 跨学科的" },
+            { word: "workshop", phonetic: "/ˈwɜːrkʃɑːp/", meaning: "n. 工作坊；研讨会" },
+            { word: "aesthetic", phonetic: "/esˈθetɪk/", meaning: "adj. 审美的；美学的" },
+            { word: "empower", phonetic: "/ɪmˈpaʊər/", meaning: "v. 赋能；授权" },
+            { word: "literacy", phonetic: "/ˈlɪtərəsi/", meaning: "n. 素养；读写能力" },
+            { word: "standardize", phonetic: "/ˈstændərdaɪz/", meaning: "v. 标准化" },
+            { word: "curriculum", phonetic: "/kəˈrɪkjʊləm/", meaning: "n. 课程；课程体系" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" },
+            { word: "integrate", phonetic: "/ˈɪntɪɡreɪt/", meaning: "v. 融合；整合" },
+            { word: "observation", phonetic: "/ˌɒbzərˈveɪʃən/", meaning: "n. 观察" },
+            { word: "agenda", phonetic: "/əˈdʒendə/", meaning: "n. 议程；计划" },
+            { word: "insufficient", phonetic: "/ˌɪnsəˈfɪʃənt/", meaning: "adj. 不足的" },
+            { word: "compile", phonetic: "/kəmˈpaɪl/", meaning: "v. 编纂；汇编" },
+            { word: "benefit", phonetic: "/ˈbenɪfɪt/", meaning: "v./n. 使受益；利益" },
+            { word: "education", phonetic: "/ˌedʒuˈkeɪʃən/", meaning: "n. 教育" },
+            { word: "technology", phonetic: "/tɛkˈnɒlədʒi/", meaning: "n. 技术" },
+            { word: "training", phonetic: "/ˈtreɪnɪŋ/", meaning: "n. 培训" },
+            { word: "develop", phonetic: "/dɪˈvɛləp/", meaning: "v. 开发；发展" },
+            { word: "university", phonetic: "/ˌjuːnɪˈvɜːrsəti/", meaning: "n. 大学" },
+            { word: "provide", phonetic: "/prəˈvaɪd/", meaning: "v. 提供" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" },
+            { word: "resource", phonetic: "/ˈriːsɔːrs/", meaning: "n. 资源" },
+            { word: "experience", phonetic: "/ɪkˈspɪriəns/", meaning: "n. 经验；经历" },
+            { word: "global", phonetic: "/ˈɡloʊbəl/", meaning: "adj. 全球的" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. The Asia-Pacific Media Forum ___ on Saturday, September 5, 2026.", type: "choice", options: ["opens", "opened", "opening", "open"], answer: 1 },
+            { q: "2. Li Shulei ___ a keynote speech at the forum.", type: "choice", options: ["deliver", "delivers", "delivered", "delivering"], answer: 2 },
+            { q: "3. More than 400 representatives ___ the forum.", type: "choice", options: ["attend", "attends", "attended", "attending"], answer: 2 },
+            { q: "4. Li ___ the need for fostering a favorable public opinion environment.", type: "choice", options: ["underscore", "underscores", "underscored", "underscoring"], answer: 2 },
+            { q: "5. China's door to the outside world ___ only open wider and wider.", type: "choice", options: ["will", "would", "shall", "should"], answer: 0 },
+            { q: "6. Huang Kunming ___ Guangdong's pioneering role in reform and opening up.", type: "choice", options: ["highlight", "highlights", "highlighted", "highlighting"], answer: 2 },
+            { q: "7. The forum ___ by three organizations.", type: "choice", options: ["co-host", "was co-hosted", "co-hosted", "co-hosts"], answer: 1 },
+            { q: "8. Sixteen media organizations ___ the Asia-Pacific Media Partnership Organizing Committee.", type: "choice", options: ["form", "forms", "formed", "forming"], answer: 2 },
+            { q: "9. The Media Cooperation Initiative ___ at the forum.", type: "choice", options: ["launch", "was launched", "launched", "launches"], answer: 1 },
+            { q: "10. Heavy rain ___ flooding in Yunnan province.", type: "choice", options: ["cause", "causes", "caused", "causing"], answer: 2 },
+            { q: "11. Drones ___ to deliver food and water to villagers.", type: "choice", options: ["use", "were used", "used", "uses"], answer: 1 },
+            { q: "12. The national disaster relief emergency response ___ to Level III.", type: "choice", options: ["upgrade", "was upgraded", "upgraded", "upgrades"], answer: 1 },
+            { q: "13. Over 599,300 people ___ from dangerous areas.", type: "choice", options: ["transfer", "were transferred", "transferred", "transfers"], answer: 1 },
+            { q: "14. The Fujian government ___ 210 million yuan in funds.", type: "choice", options: ["allocate", "allocates", "allocated", "allocating"], answer: 2 },
+            { q: "15. The funds ___ for emergency rescue and disaster relief.", type: "choice", options: ["are", "were", "is", "was"], answer: 1 },
+            { q: "16. More than 400 representatives from over 40 countries ___ the forum.", type: "choice", options: ["has attended", "have attended", "attends", "attend"], answer: 1 },
+            { q: "17. Li Shulei is a member of the Political Bureau of the CPC Central Committee and ___ of the Publicity Department.", type: "choice", options: ["head", "heads", "headed", "heading"], answer: 0 },
+            { q: "18. The flooding ___ off roads and disrupting supplies.", type: "choice", options: ["cut", "cuts", "cutting", "has cut"], answer: 0 },
+            { q: "19. Drones ___ a lifeline when traditional transport was impossible.", type: "choice", options: ["provide", "provides", "provided", "providing"], answer: 2 },
+            { q: "20. The provincial government ___ to support affected residents.", type: "choice", options: ["aim", "aims", "aimed", "is aiming"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. A ___ is a meeting where people discuss important issues.", type: "choice", options: ["forum", "failure", "fiction", "fragment"], answer: 0 },
+            { q: "22. ___ means the state of being successful and wealthy.", type: "choice", options: ["Prosperity", "Poverty", "Pregnancy", "Procedure"], answer: 0 },
+            { q: "23. A ___ is a general agreement among all members of a group.", type: "choice", options: ["consensus", "confusion", "conflict", "contract"], answer: 0 },
+            { q: "24. A ___ is a person who acts on behalf of others.", type: "choice", options: ["representative", "republican", "replacement", "repetition"], answer: 0 },
+            { q: "25. A ___ is someone who takes part in an activity.", type: "choice", options: ["participant", "partisan", "partition", "particular"], answer: 0 },
+            { q: "26. A ___ speech is the main speech that sets the tone of a conference.", type: "choice", options: ["keynote", "keyword", "keystone", "keyhole"], answer: 0 },
+            { q: "27. A ___ is a relationship between partners working together.", type: "choice", options: ["partnership", "membership", "leadership", "scholarship"], answer: 0 },
+            { q: "28. A ___ is a group of people chosen to do a particular task.", type: "choice", options: ["committee", "community", "commerce", "commentary"], answer: 0 },
+            { q: "29. An ___ is a new plan or strategy to solve a problem.", type: "choice", options: ["initiative", "inertia", "illusion", "injury"], answer: 0 },
+            { q: "30. A ___ is a formal conversation between two or more people.", type: "choice", options: ["dialogue", "dialect", "diary", "diet"], answer: 0 },
+            { q: "31. ___ refers to the state of being connected or interconnected.", type: "choice", options: ["Connectivity", "Conductivity", "Creativity", "Curiosity"], answer: 0 },
+            { q: "32. ___ technology uses numbers and electronic systems.", type: "choice", options: ["Digital", "Analog", "Manual", "Physical"], answer: 0 },
+            { q: "33. An ___ device can learn and make decisions on its own.", type: "choice", options: ["intelligent", "ignorant", "inactive", "invisible"], answer: 0 },
+            { q: "34. ___ means a complete change in form or nature.", type: "choice", options: ["Transformation", "Translation", "Transition", "Transmission"], answer: 0 },
+            { q: "35. ___ means the ability of different systems to work together.", type: "choice", options: ["Interoperability", "Interpretation", "Interference", "Intersection"], answer: 0 },
+            { q: "36. A ___ is a sudden event causing great damage.", type: "choice", options: ["disaster", "master", "mystery", "history"], answer: 0 },
+            { q: "37. ___ means help given to people in need or suffering.", type: "choice", options: ["Relief", "Grief", "Brief", "Belief"], answer: 0 },
+            { q: "38. A ___ is an unmanned aircraft controlled remotely.", type: "choice", options: ["drone", "phone", "clone", "stone"], answer: 0 },
+            { q: "39. ___ refers to the operation of aircraft and flight.", type: "choice", options: ["Aviation", "Navigation", "Invasion", "Occasion"], answer: 0 },
+            { q: "40. A ___ is an interruption that stops something from continuing.", type: "choice", options: ["disruption", "corruption", "eruption", "interruption"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. The Asia-Pacific Media Forum opened ___ Saturday.", type: "choice", options: ["on", "in", "at", "by"], answer: 0 },
+            { q: "42. The forum was held ___ Shenzhen.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "43. Li Shulei delivered a speech ___ the forum.", type: "choice", options: ["at", "in", "on", "for"], answer: 0 },
+            { q: "44. Representatives came ___ over 40 countries.", type: "choice", options: ["from", "in", "at", "on"], answer: 0 },
+            { q: "45. Li underscored the need ___ fostering a favorable environment.", type: "choice", options: ["for", "in", "at", "on"], answer: 0 },
+            { q: "46. China's door will open wider and wider ___ the future.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "47. Huang Kunming highlighted Guangdong's role ___ reform.", type: "choice", options: ["in", "at", "on", "for"], answer: 0 },
+            { q: "48. The forum was co-hosted ___ three organizations.", type: "choice", options: ["by", "in", "at", "on"], answer: 0 },
+            { q: "49. Sixteen media organizations formed the committee ___.", type: "choice", options: ["jointly", "joint", "joining", "joined"], answer: 0 },
+            { q: "50. Heavy rain caused flooding ___ Yunnan province.", type: "choice", options: ["in", "at", "on", "by"], answer: 0 },
+            { q: "51. Drones were used ___ deliver supplies to villagers.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "52. The response was upgraded ___ Level III.", type: "choice", options: ["to", "in", "at", "on"], answer: 0 },
+            { q: "53. People were transferred ___ dangerous areas.", type: "choice", options: ["from", "in", "at", "on"], answer: 0 },
+            { q: "54. The government allocated funds ___ emergency rescue.", type: "choice", options: ["for", "in", "at", "on"], answer: 0 },
+            { q: "55. The initiative aims ___ support affected residents.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "56. Drones provided a lifeline ___ traditional transport was impossible.", type: "choice", options: ["when", "where", "why", "how"], answer: 0 },
+            { q: "57. ___ the flooding, drones delivered food and water.", type: "choice", options: ["During", "Before", "After", "Despite"], answer: 0 },
+            { q: "58. The funds will be used ___ rebuild infrastructure.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "59. The theme focuses ___ shared prosperity.", type: "choice", options: ["on", "in", "at", "for"], answer: 0 },
+            { q: "60. ___ a successful forum it was!", type: "choice", options: ["What", "What a", "How", "How a"], answer: 1 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. When did the Asia-Pacific Media Forum open?", options: ["September 4, 2026", "September 5, 2026", "September 6, 2026", "September 7, 2026"], type: "choice", answer: 1 },
+            { q: "62. Where was the forum held?", options: ["Beijing", "Shanghai", "Shenzhen", "Guangzhou"], type: "choice", answer: 2 },
+            { q: "63. Which province is Shenzhen in?", options: ["Fujian", "Guangdong", "Yunnan", "Zhejiang"], type: "choice", answer: 1 },
+            { q: "64. What was the theme of the forum?", options: ["Shared Prosperity for the Asia-Pacific Community", "Digital Transformation", "AI Cooperation", "Trade Growth"], type: "choice", answer: 0 },
+            { q: "65. Who delivered the keynote speech?", options: ["Huang Kunming", "Li Shulei", "Jensen Huang", "Kang Hogu"], type: "choice", answer: 1 },
+            { q: "66. How many representatives attended?", options: ["Over 40", "Over 400", "Over 4,000", "Over 40,000"], type: "choice", answer: 1 },
+            { q: "67. From how many countries did representatives come?", options: ["Over 4", "Over 14", "Over 40", "Over 400"], type: "choice", answer: 2 },
+            { q: "68. What did Li say about China's door?", options: ["It will close", "It will open wider", "It stays the same", "It opens to Asia only"], type: "choice", answer: 1 },
+            { q: "69. Who highlighted Guangdong's role?", options: ["Li Shulei", "Huang Kunming", "The mayor", "The press"], type: "choice", answer: 1 },
+            { q: "70. How many media organizations formed the committee?", options: ["6", "16", "60", "160"], type: "choice", answer: 1 },
+            { q: "71. What caused flooding in Yunnan?", options: ["A typhoon", "Heavy rain", "A drought", "An earthquake"], type: "choice", answer: 1 },
+            { q: "72. What delivered supplies to villagers?", options: ["Trucks", "Helicopters", "Drones", "Boats"], type: "choice", answer: 2 },
+            { q: "73. Which province was hit by typhoon?", options: ["Guangdong", "Fujian", "Zhejiang", "Jiangsu"], type: "choice", answer: 1 },
+            { q: "74. Which Fujian cities were damaged?", options: ["Fuzhou and Xiamen", "Putian and Ningde", "Quanzhou and Zhangzhou", "Longyan and Sanming"], type: "choice", answer: 1 },
+            { q: "75. What level was the response upgraded to?", options: ["Level I", "Level II", "Level III", "Level IV"], type: "choice", answer: 2 },
+            { q: "76. How many people were transferred?", options: ["Over 59,930", "Over 599,300", "Over 5,993,000", "Over 599"], type: "choice", answer: 1 },
+            { q: "77. How much did Fujian allocate?", options: ["21 million yuan", "210 million yuan", "2.1 billion yuan", "210,000 yuan"], type: "choice", answer: 1 },
+            { q: "78. What was the purpose of the funds?", options: ["Emergency rescue and disaster relief", "Building airports", "Education", "Tourism"], type: "choice", answer: 0 },
+            { q: "79. What was launched at the forum?", options: ["The Media Cooperation Initiative", "A trade agreement", "A military pact", "A cultural program"], type: "choice", answer: 0 },
+            { q: "80. Who co-hosted the forum?", options: ["Publicity Department, Xinhua and Guangdong government", "Only Xinhua", "Only Guangdong", "Only the Publicity Department"], type: "choice", answer: 0 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '亚太媒体论坛于2026年9月5日在深圳开幕。'", type: "choice", options: ["The Asia-Pacific Media Forum opened on September 5, 2026 in Shenzhen.", "Forum Asia-Pacific Shenzhen opened.", "Asia-Pacific forum September opened.", "Shenzhen forum opened Asia-Pacific."], answer: 0 },
+            { q: "82. 'keynote speech' means ___.", type: "choice", options: ["a main speech setting the tone", "a short speech", "a closing speech", "an informal talk"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["Li Shulei delivered a keynote speech at the forum.", "Li Shulei forum keynote speech.", "Keynote speech Li Shulei forum.", "Forum Li Shulei keynote speech."], answer: 0 },
+            { q: "84. 'shared prosperity' means ___.", type: "choice", options: ["prosperity enjoyed by all together", "prosperity for one person", "no prosperity", "past prosperity"], answer: 0 },
+            { q: "85. Choose the correct translation: '无人机向村民运送了食物和饮用水。'", type: "choice", options: ["Drones delivered food and drinking water to villagers.", "Drones food water villagers.", "Villagers drones food water.", "Food water drones villagers."], answer: 0 },
+            { q: "86. 'was upgraded' is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'The response was upgraded to Level III' is ___.", type: "choice", options: ["They upgraded the response to Level III", "They upgrade response Level III", "Response they upgrade Level III", "Level III they response upgrade"], answer: 0 },
+            { q: "88. 'The forum was co-hosted by three organizations.' The subject is ___.", type: "choice", options: ["The forum", "co-hosted", "three organizations", "by"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'Li Shulei delivered a speech, ___?'", type: "choice", options: ["didn't he", "did he", "doesn't he", "isn't he"], answer: 0 },
+            { q: "90. 'China's door will open wider and wider.' Fill: The door ___ open wider.", type: "choice", options: ["will", "would", "shall", "should"], answer: 0 },
+            { q: "91. Choose the correct translation: '国家救灾应急响应提升至三级。'", type: "choice", options: ["The national disaster relief emergency response was upgraded to Level III.", "Response upgraded Level III national.", "National Level III response disaster.", "Disaster response Level III national."], answer: 0 },
+            { q: "92. 'disruption' means ___.", type: "choice", options: ["an interruption that stops something", "a continuation", "a beginning", "an improvement"], answer: 0 },
+            { q: "93. 'If the drones deliver supplies, villagers will survive.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The Fujian government urgently allocated 210 million yuan for disaster relief.", "Fujian government 210 million yuan relief.", "210 million yuan Fujian government relief.", "Relief Fujian government 210 million yuan."], answer: 0 },
+            { q: "95. '___ the heavy rain, drones continued to deliver supplies.' Fill in the blank.", type: "choice", options: ["Despite", "Because", "Since", "As"], answer: 0 },
+            { q: "96. The indirect speech of 'Li said, \"China's door will open wider.\"' is ___.", type: "choice", options: ["Li said China's door would open wider.", "Li said China's door open wider.", "Li says China's door will open wider.", "Li said China's door opening wider."], answer: 0 },
+            { q: "97. 'partnership' in 'Media Partnership' means ___.", type: "choice", options: ["a cooperative relationship", "a single entity", "a competition", "a disagreement"], answer: 0 },
+            { q: "98. 'was launched' uses the ___ tense.", type: "choice", options: ["past", "present", "future", "present perfect"], answer: 0 },
+            { q: "99. 'Over 599,300 people were transferred.' The verb is ___.", type: "choice", options: ["were transferred", "people", "599,300", "over"], answer: 0 },
+            { q: "100. 'public opinion environment' means ___.", type: "choice", options: ["the social climate of views and attitudes", "a private opinion", "a single person's view", "a government order only"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

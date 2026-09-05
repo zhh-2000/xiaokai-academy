@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年9月6日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'SimSun', serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月6日 星期日 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">望庐山瀑布</div>
+                    <div class="author">唐 · 李白</div>
+                    <div class="content">
+                        日照香炉生紫烟，遥看瀑布挂前川。<br>
+                        飞流直下三千尺，疑是银河落九天。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>香炉</strong>：指庐山香炉峰。庐山在今江西省九江市南，香炉峰是庐山的一座山峰，因形似香炉、水气常如香烟缭绕而得名。</p>
+                        <p>② <strong>紫烟</strong>：日光照射下，山间云雾呈现出紫色的光彩。</p>
+                        <p>③ <strong>遥看</strong>：远远望去。<strong>瀑布</strong>：庐山瀑布，水从高崖飞泻而下。<strong>前川</strong>：山前面的河流。此处指瀑布远看如同挂在山前的河流上。</p>
+                        <p>④ <strong>飞流</strong>：飞奔而下的水流。<strong>直下</strong>：垂直落下。<strong>三千尺</strong>：极言瀑布之长，并非实数，是夸张的说法。</p>
+                        <p>⑤ <strong>疑</strong>：怀疑、仿佛。<strong>银河</strong>：天河，古人想象中由群星组成的天上的河流。<strong>九天</strong>：古人认为天有九重，九天指天的最高处。</p>
+                        <br>
+                        <p><strong>译文：</strong>阳光照射在香炉峰上，山间云雾升起，呈现出紫色的光彩；远远望去，瀑布如同挂在山前的一条河流。飞奔而下的水流垂直落下，仿佛有三千尺之长，让人怀疑是银河从天的最高处倾泻而下。</p>
+                        <br>
+                        <p><strong>赏析：</strong>此诗是李白游庐山时所作，描绘了庐山瀑布的壮丽景象。前两句写实，"日照香炉生紫烟"写香炉峰在日光照射下云雾升腾、紫烟缭绕的美景，一个"生"字把静景写活，云雾仿佛在升腾变幻；"遥看瀑布挂前川"写远望瀑布，一个"挂"字化动为静，将飞泻的瀑布定格为一幅悬挂的画，既写出了远观的视觉效果，又突出了瀑布的高与长。后两句用夸张和比喻，"飞流直下三千尺"用"三千尺"极言瀑布之长，"直下"写出瀑布垂直落下的气势，一个"飞"字尽显水流奔涌之迅疾；"疑是银河落九天"以"银河"喻瀑布，以"九天"喻山高，把人间瀑布比作天上银河从最高处倾泻而下，想象奇特，气势磅礴。全诗运用夸张手法和比喻修辞，将庐山瀑布写得雄奇壮美、气象万千，充分体现了李白浪漫主义诗歌的豪迈风格，也表达了诗人对大自然鬼斧神工的由衷赞叹。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">题西林壁</div>
+                    <div class="author">宋 · 苏轼</div>
+                    <div class="content">
+                        横看成岭侧成峰，远近高低各不同。<br>
+                        不识庐山真面目，只缘身在此山中。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>西林</strong>：指西林寺，在庐山上，东林寺之西。题西林壁，即题写在西林寺墙壁上的诗。</p>
+                        <p>② <strong>横看</strong>：从正面、横向看。<strong>侧</strong>：从侧面看。</p>
+                        <p>③ <strong>岭</strong>：连绵起伏的山脉。<strong>峰</strong>：高耸陡峭的山尖。</p>
+                        <p>④ <strong>远近高低</strong>：从远处、近处、高处、低处不同角度观看。<strong>各不同</strong>：所见各不相同。</p>
+                        <p>⑤ <strong>不识</strong>：看不清、认不出。<strong>真面目</strong>：指庐山的真实面貌、整体面貌。</p>
+                        <p>⑥ <strong>只缘</strong>：只是因为。<strong>身在此山中</strong>：自身处在庐山之中。</p>
+                        <br>
+                        <p><strong>译文：</strong>从正面看庐山是连绵的山岭，从侧面看则是高耸的山峰，从远处、近处、高处、低处观看，庐山呈现的景象各不相同。看不清庐山的真实面貌，只是因为自身就处在庐山之中。</p>
+                        <br>
+                        <p><strong>赏析：</strong>此诗是苏轼于宋神宗元丰七年（1084年）游庐山时题写于西林寺壁上的一首理趣诗。前两句写景，"横看成岭侧成峰"以"横""侧"两个视角写出庐山形态各异——横看是连绵的山岭，侧看是高耸的山峰；"远近高低各不同"进一步扩展视角，远近高低所见各有不同，写出了庐山千姿百态、移步换形的壮美。后两句说理，"不识庐山真面目，只缘身在此山中"由写景转入议论：之所以看不清庐山的真实面貌，正是因为身处庐山之中，被局部的景象所局限。这一句蕴含深刻的哲理——人们观察事物常受所处位置和视角的限制，"当局者迷，旁观者清"，要认识事物的全貌与本质，必须跳出局限，从多个角度、全面地看待问题。全诗写景与说理水乳交融，景中含理，理寓于景，是宋诗"以理趣胜"的典范之作，也体现了苏轼旷达睿智的思想境界。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>横看成岭侧成峰：从庐山之景到亚太媒体之声</h3>
+                    <p>2026年9月5日，亚太媒体高端论坛在深圳开幕。论坛以"为亚太共同体铺设共同繁荣之路：媒体共识与行动"为主题，汇聚了来自40多个国家的400多位代表，共同探讨媒体如何凝聚共识、促进亚太合作。就在同一天，两首写庐山的古诗在我们的课堂上相遇——李白的《望庐山瀑布》与苏轼的《题西林壁》。一豪迈一理趣，却共同指向一个古老的智慧：看山，要看得全、看得远。</p>
+                    <p>苏轼在《题西林壁》中写道："横看成岭侧成峰，远近高低各不同。不识庐山真面目，只缘身在此山中。"诗人告诉我们，从正面看是连绵的山岭，从侧面看是高耸的山峰，远近高低所见各不相同。不同的角度，会看到事物不同的侧面；只站在一个位置，就只能看到局部，看不清全貌。这恰是这次亚太媒体论坛所呼应的精神：来自不同国家、不同文化、不同立场的媒体人齐聚一堂，正是因为每个人、每个国家所"看"到的世界只是"庐山"的一面，唯有汇集众声，才能逼近"真面目"。</p>
+                    <p>论坛上，各方嘉宾的观点恰如"远近高低各不同"的庐山之景。CNN的Konstantinos Oikonomou表示，多样性"不应被视为障碍"，而"可以成为力量的源泉"；巴基斯坦的一位部长说："通向共同繁荣的道路，通过合作而非胁迫来实现。"联合国官员Melissa Fleming强调，负责任的媒体报道是"一项至关重要的公共服务"。李书磊则指出，"中国的大门只会越开越大"。这些声音角度各异，却共同指向合作、包容与真实。</p>
+                    <p>而李白的《望庐山瀑布》则展现了另一种豪迈——"飞流直下三千尺，疑是银河落九天"，以夸张和比喻写出瀑布的壮美，也写出诗人胸襟的阔大。看世界，既要如苏轼般清醒理性，跳出局限、兼听则明；也要如李白般豪迈开阔，胸怀天地、不拘一格。苏轼的诗句"不识庐山真面目，只缘身在此山中"提醒我们：要看到完整的事实，需要倾听不同的声音，需要跳出自身的局限。这正是国际媒体论坛的旨归——让不同视角汇聚，让"各不同"的景象拼合成更接近全貌的"真面目"。横看是岭，侧看是峰，多元的声音汇成共识，这，便是从庐山到深圳、从千年诗行到今日论坛的智慧回响。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>亚太媒体高端论坛在深圳举办·云南无人机空投救灾物资</h3>
+                    <p>据新华社、China Daily及央视新闻2026年9月5日报道，亚太媒体高端论坛当日在广东深圳开幕。论坛主题为"为亚太共同体铺设共同繁荣之路：媒体共识与行动"，中共中央政治局委员、中宣部部长李书磊出席并发表主旨演讲。论坛汇聚了来自40多个国家的400多位代表，围绕媒体如何凝聚共识、促进亚太合作展开讨论。会上，16家媒体机构发起成立合作伙伴委员会，并发布"聚在深圳"倡议，呼吁亚太媒体加强交流合作、讲好亚太故事。李书磊在主旨演讲中强调，"中国的大门只会越开越大"，愿与各国媒体一道，为促进亚太繁荣发展贡献力量。</p>
+                    <p>另据报道，近日云南部分地区遭遇强降雨，引发洪涝灾害，道路受阻、村庄被淹。救援人员利用无人机向被困村民空投食品、饮用水和急需物资，打通了"空中生命线"，保障了受灾群众的基本生活。无人机在救灾中的运用，展示了科技赋能应急的新路径。</p>
+                    <p>此外，福建遭遇台风和极端强降雨，灾情严重。国家防灾减灾救灾应急响应级别提升至Ⅲ级，已紧急转移安置群众59.93万人，下拨中央救灾资金2.1亿元，全力保障受灾群众生命财产安全。</p>
+                    <div class="source">来源：综合China Daily、新华社、央视新闻（2026年9月5日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-09-06';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-06',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《望庐山瀑布》的作者是？", options: ["李白", "杜甫", "苏轼", "王安石"], answer: 0 },
+            { q: "2. 《望庐山瀑布》中\"香炉\"指？", options: ["庐山香炉峰", "烧香的炉子", "庐山主峰", "寺庙的香炉"], answer: 0 },
+            { q: "3. \"日照香炉生紫烟\"中\"紫烟\"指？", options: ["日光照射下云雾呈现紫色", "紫色的炊烟", "寺庙的香烟", "山上的雾气"], answer: 0 },
+            { q: "4. \"遥看瀑布挂前川\"中\"前川\"指？", options: ["山前面的河流", "前面的平地", "山后的河流", "瀑布下面的水潭"], answer: 0 },
+            { q: "5. \"飞流直下三千尺\"中\"三千尺\"的作用是？", options: ["极言瀑布之长，夸张手法", "实指瀑布长度", "形容山的高度", "形容水的深度"], answer: 0 },
+            { q: "6. \"疑是银河落九天\"中\"银河\"指？", options: ["天河", "地上的河流", "瀑布的名字", "星空"], answer: 0 },
+            { q: "7. \"疑是银河落九天\"中\"九天\"指？", options: ["天的最高处", "九层楼", "九条河", "九座山"], answer: 0 },
+            { q: "8. 《题西林壁》的作者是？", options: ["苏轼", "李白", "杜甫", "王安石"], answer: 0 },
+            { q: "9. 《题西林壁》中\"西林\"指？", options: ["西林寺", "西边的树林", "西边的山岭", "西林县"], answer: 0 },
+            { q: "10. \"不识庐山真面目，只缘身在此山中\"蕴含的哲理是？", options: ["当局者迷，要全面客观地看问题", "庐山很高", "山中风景很美", "登山很辛苦"], answer: 0 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 亚太媒体高端论坛在哪里开幕？", options: ["深圳", "北京", "上海", "广州"], answer: 0 },
+            { q: "12. 论坛共汇聚了来自多少个国家的代表？", options: ["40多个", "10多个", "20多个", "60多个"], answer: 0 },
+            { q: "13. 论坛共汇聚了多少位代表？", options: ["400多位", "100多位", "1000多位", "50多位"], answer: 0 },
+            { q: "14. CNN的Konstantinos Oikonomou认为多样性应如何？", options: ["不应被视为障碍，可以成为力量的源泉", "应被消除", "是合作的障碍", "无关紧要"], answer: 0 },
+            { q: "15. 巴基斯坦部长认为通向共同繁荣的道路通过什么实现？", options: ["合作而非胁迫", "胁迫", "孤立发展", "竞争对抗"], answer: 0 },
+            { q: "16. 联合国官员Melissa Fleming强调负责任的报道是什么？", options: ["一项至关重要的公共服务", "一种商业行为", "无关紧要的事", "一种娱乐"], answer: 0 },
+            { q: "17. 李书磊在论坛上强调什么？", options: ["中国的大门只会越开越大", "中国将封闭发展", "中国不参与合作", "中国将退出国际舞台"], answer: 0 },
+            { q: "18. 文章将苏轼的哪句诗与媒体论坛精神相联系？", options: ["不识庐山真面目，只缘身在此山中", "飞流直下三千尺", "日照香炉生紫烟", "不畏浮云遮望眼"], answer: 0 },
+            { q: "19. 文章认为\"看世界\"应兼具哪两种态度？", options: ["苏轼的清醒理性与李白的豪迈开阔", "李白的豪迈与杜甫的沉郁", "王安石的豪情与苏轼的旷达", "杜甫的沉郁与王安石的豪情"], answer: 0 },
+            { q: "20. 文章的中心思想是？", options: ["多元视角汇成共识，从庐山到深圳、从古诗到论坛的智慧回响", "庐山风景很美", "国际论坛不重要", "古诗与时事无关"], answer: 0 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 亚太媒体高端论坛的主题是？", options: ["为亚太共同体铺设共同繁荣之路：媒体共识与行动", "AI技术合作", "气候变化", "经济制裁"], answer: 0 },
+            { q: "22. 谁在论坛上发表主旨演讲？", options: ["李书磊", "黄仁勋", "苏姿丰", "习近平"], answer: 0 },
+            { q: "23. 论坛上多少家媒体机构发起成立合作伙伴委员会？", options: ["16家", "5家", "30家", "50家"], answer: 0 },
+            { q: "24. 论坛发布了什么倡议？", options: ["\"聚在深圳\"倡议", "\"聚在北京\"倡议", "\"聚在上海\"倡议", "\"聚在广州\"倡议"], answer: 0 },
+            { q: "25. 云南部分地区遭遇什么灾害？", options: ["强降雨引发洪涝", "地震", "干旱", "台风"], answer: 0 },
+            { q: "26. 云南救灾中使用了什么工具空投物资？", options: ["无人机", "直升机", "卡车", "马匹"], answer: 0 },
+            { q: "27. 福建遭遇了什么灾害？", options: ["台风和极端强降雨", "地震", "海啸", "火山"], answer: 0 },
+            { q: "28. 国家防灾减灾救灾应急响应提升至什么级别？", options: ["Ⅲ级", "Ⅰ级", "Ⅱ级", "Ⅳ级"], answer: 0 },
+            { q: "29. 福建灾害中紧急转移安置了多少群众？", options: ["59.93万人", "5.993万人", "599.3万人", "5993人"], answer: 0 },
+            { q: "30. 中央下拨福建救灾资金多少？", options: ["2.1亿元", "2100万元", "21亿元", "210万元"], answer: 0 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《望庐山瀑布》的作者是？", options: ["李白", "杜甫", "苏轼", "王安石"], answer: 0 },
+            { q: "2. 《望庐山瀑布》中\"香炉\"指？", options: ["庐山香炉峰", "烧香的炉子", "庐山主峰", "寺庙的香炉"], answer: 0 },
+            { q: "3. 庐山在今天的哪个省？", options: ["江西省", "安徽省", "浙江省", "湖南省"], answer: 0 },
+            { q: "4. \"日照香炉生紫烟\"中\"紫烟\"指？", options: ["日光照射下云雾呈现紫色", "紫色的炊烟", "寺庙的香烟", "山上的雾"], answer: 0 },
+            { q: "5. \"遥看瀑布挂前川\"中\"前川\"指？", options: ["山前面的河流", "前面的平地", "山后的河流", "瀑布下潭水"], answer: 0 },
+            { q: "6. \"飞流直下三千尺\"中\"三千尺\"是？", options: ["极言瀑布之长，夸张手法", "实指长度", "形容山高", "形容水深"], answer: 0 },
+            { q: "7. \"疑是银河落九天\"中\"银河\"指？", options: ["天河", "地上的河", "瀑布名", "星空"], answer: 0 },
+            { q: "8. \"疑是银河落九天\"中\"九天\"指？", options: ["天的最高处", "九层楼", "九条河", "九座山"], answer: 0 },
+            { q: "9. 《望庐山瀑布》运用的主要手法是？", options: ["夸张和比喻", "白描", "对比", "对偶"], answer: 0 },
+            { q: "10. 李白诗歌的风格是？", options: ["浪漫主义", "现实主义", "自然主义", "象征主义"], answer: 0 },
+            { q: "11. 《题西林壁》的作者是？", options: ["苏轼", "李白", "杜甫", "王安石"], answer: 0 },
+            { q: "12. 《题西林壁》中\"西林\"指？", options: ["西林寺", "西边的树林", "西边的山岭", "西林县"], answer: 0 },
+            { q: "13. \"横看成岭侧成峰\"中\"岭\"指？", options: ["连绵的山脉", "高耸的山尖", "山顶", "山谷"], answer: 0 },
+            { q: "14. \"横看成岭侧成峰\"中\"峰\"指？", options: ["高耸的山尖", "连绵的山脉", "山脚", "山洞"], answer: 0 },
+            { q: "15. \"远近高低各不同\"说明什么？", options: ["不同角度看庐山景象各异", "庐山很高", "庐山很大", "庐山风景一般"], answer: 0 },
+            { q: "16. \"不识庐山真面目\"中\"真面目\"指？", options: ["庐山的真实面貌", "庐山的名字", "庐山的高度", "庐山的天气"], answer: 0 },
+            { q: "17. \"只缘身在此山中\"中\"只缘\"意为？", options: ["只是因为", "只有缘分", "自然原因", "自由"], answer: 0 },
+            { q: "18. 《题西林壁》属于哪类诗？", options: ["理趣诗", "边塞诗", "田园诗", "送别诗"], answer: 0 },
+            { q: "19. 《题西林壁》蕴含的哲理是？", options: ["当局者迷，要全面客观地看问题", "庐山很高", "山中风景美", "登山辛苦"], answer: 0 },
+            { q: "20. 苏轼是哪个朝代的诗人？", options: ["宋代", "唐代", "元代", "明代"], answer: 0 },
+            { q: "21. 李白是哪个朝代的诗人？", options: ["唐代", "宋代", "汉代", "明代"], answer: 0 },
+            { q: "22. 亚太媒体高端论坛在哪里开幕？", options: ["深圳", "北京", "上海", "广州"], answer: 0 },
+            { q: "23. 亚太媒体论坛共汇聚多少国代表？", options: ["40多个", "10多个", "20多个", "60多个"], answer: 0 },
+            { q: "24. 亚太媒体论坛共汇聚多少位代表？", options: ["400多位", "100多位", "1000多位", "50多位"], answer: 0 },
+            { q: "25. 谁在亚太媒体论坛发表主旨演讲？", options: ["李书磊", "黄仁勋", "苏姿丰", "习近平"], answer: 0 },
+            { q: "26. 论坛上多少家媒体成立合作伙伴委员会？", options: ["16家", "5家", "30家", "50家"], answer: 0 },
+            { q: "27. 论坛发布了什么倡议？", options: ["\"聚在深圳\"倡议", "\"聚在北京\"倡议", "\"聚在上海\"倡议", "\"聚在广州\"倡议"], answer: 0 },
+            { q: "28. CNN的Konstantinos Oikonomou认为多样性可以成为？", options: ["力量的源泉", "合作的障碍", "无关紧要的事", "应被消除的因素"], answer: 0 },
+            { q: "29. 巴基斯坦部长认为通向共同繁荣的道路通过什么实现？", options: ["合作而非胁迫", "胁迫", "孤立发展", "竞争对抗"], answer: 0 },
+            { q: "30. 联合国Melissa Fleming强调负责任报道是什么？", options: ["一项至关重要的公共服务", "一种商业行为", "无关紧要的事", "一种娱乐"], answer: 0 },
+            { q: "31. 李书磊强调中国的大门会怎样？", options: ["只会越开越大", "将会关闭", "不会改变", "只对小国开放"], answer: 0 },
+            { q: "32. 云南部分地区遭遇什么灾害？", options: ["强降雨引发洪涝", "地震", "干旱", "台风"], answer: 0 },
+            { q: "33. 云南救灾中用什么空投物资？", options: ["无人机", "直升机", "卡车", "马匹"], answer: 0 },
+            { q: "34. 福建遭遇什么灾害？", options: ["台风和极端强降雨", "地震", "海啸", "火山"], answer: 0 },
+            { q: "35. 国家防灾减灾救灾应急响应提升至何级？", options: ["Ⅲ级", "Ⅰ级", "Ⅱ级", "Ⅳ级"], answer: 0 },
+            { q: "36. 福建转移安置群众多少？", options: ["59.93万人", "5.993万人", "599.3万人", "5993人"], answer: 0 },
+            { q: "37. 中央下拨福建救灾资金多少？", options: ["2.1亿元", "2100万元", "21亿元", "210万元"], answer: 0 },
+            { q: "38. 下列词语没有错别字的是？", options: ["瀑布", "暴布", "瀑布", "暴部"], answer: 0 },
+            { q: "39. 下列句子没有语病的是？", options: ["苏轼游庐山时写下了《题西林壁》", "通过游庐山，使苏轼写下《题西林壁》", "苏轼通过游庐山使写下了《题西林壁》", "游庐山使苏轼通过写下了《题西林壁》"], answer: 0 },
+            { q: "40. \"三千尺\"在诗中属于什么用法？", options: ["夸张", "比喻", "拟人", "对偶"], answer: 0 },
+            { q: "41. \"疑是银河落九天\"用了什么修辞？", options: ["比喻", "排比", "对偶", "反问"], answer: 0 },
+            { q: "42. 《望庐山瀑布》与《题西林壁》的共同描写对象是？", options: ["庐山", "泰山", "黄山", "华山"], answer: 0 },
+            { q: "43. 两首诗的共同主题是？", options: ["观山悟道", "思乡", "咏史", "送别"], answer: 0 },
+            { q: "44. 下列对《望庐山瀑布》理解正确的是？", options: ["运用夸张和比喻，写出瀑布雄奇壮美", "表达思乡之情", "描写田园生活", "表达伤秋之感"], answer: 0 },
+            { q: "45. 下列对《题西林壁》理解正确的是？", options: ["写景与说理交融，是宋诗理趣典范", "纯写景无议论", "表达思乡之情", "描写边塞风光"], answer: 0 },
+            { q: "46. \"横看成岭侧成峰，远近高低各不同\"说明的道理是？", options: ["不同视角所见不同", "庐山不可登", "庐山无风景", "登山无意义"], answer: 0 },
+            { q: "47. 将\"不识庐山真面目，只缘身在此山中\"改写，最贴合原意的是？", options: ["看不清庐山的真实面貌，只是因为自身处在庐山之中", "庐山没有真面目", "我不认识庐山", "我在山中迷路了"], answer: 0 },
+            { q: "48. \"遥看瀑布挂前川\"与\"飞流直下三千尺\"的共同手法倾向是？", options: ["化动为静与夸张放大", "纯白描", "纯对比", "纯拟人"], answer: 0 },
+            { q: "49. 亚太媒体高端论坛主题中\"媒体共识与行动\"对应古诗哪一智慧？", options: ["汇集众声，逼近\"真面目\"", "飞流直下", "日照香炉", "不畏浮云"], answer: 0 },
+            { q: "50. 对本日全部内容理解最准确的是？", options: ["古诗词咏庐山之景与观山之理，现代文将古诗多视角智慧与亚太媒体论坛实践相联系，时文记论坛与救灾新闻，共同体现多元视角、兼听则明的传承", "古诗与时事无关", "时文只是新闻", "现代文与古诗没有联系"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            let idx;
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
