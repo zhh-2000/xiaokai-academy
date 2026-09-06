@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月7日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月7日 · 星期一 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>Nepal Mudslide Death Toll Reaches 1,344</h3>
+                    <p>Police in Nepal said on September 5, 2026, that the death toll from devastating mudslidesides had reached 1,344. As of 5:00 a.m. local time on September 5, a total of 1,344 bodies had been recovered. Another 4,898 people remain missing, and 8,631 people have been successfully rescued.</p>
+                    <p>Rescue agencies are continuing search and rescue operations in the affected areas. Authorities are also strengthening efforts to confirm the identities of victims through DNA testing. A total of 2,232 DNA samples have been collected from 1,260 victims and 972 family members.</p>
+                    <p>The mudslides, triggered by heavy monsoon rains, have caused widespread destruction across several districts. Thousands of homes have been buried or swept away, and infrastructure including roads, bridges, and power lines has been severely damaged. International aid organizations have rushed to provide emergency supplies, including food, clean water, and medical assistance to the displaced families.</p>
+                    <p>The Nepalese government has appealed for international assistance, saying the scale of the disaster exceeds the country's own response capacity. Neighboring countries including China and India have already sent rescue teams and relief materials to support the ongoing operations.</p>
+                    <span class="source">Source: China Daily Asia / Xinhua, 2026-09-05</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Haze Hangs Over ASEAN, Prompting Regional Action</h3>
+                    <p>As El Nino intensifies drought conditions, analysts are calling this year's haze season in Southeast Asia a "red alert" year. Transboundary haze has become more than just a seasonal nuisance — it highlights the need for ASEAN to push for systematic solutions and accountability mechanisms.</p>
+                    <p>Malaysia and Brunei have agreed to use ASEAN mechanisms to address the cross-border haze problem. Indonesia faces greater pressure due to forest and peatland fires. Malaysia's Sarawak state declared a state of emergency after the Air Pollution Index exceeded 500, and parts of the Philippines and Singapore have also experienced dangerous air quality levels.</p>
+                    <p>The ASEAN Specialised Meteorological Centre noted that moderate to heavy cross-border haze has covered parts of Borneo and the Philippines. Indonesia has filed cases against 112 individuals and suspended the forestry licenses of 5 companies. The haze is primarily caused by slash-and-burn farming practices, which are exacerbated by the dry conditions brought by El Nino.</p>
+                    <p>Environmental experts warn that without stronger regional cooperation and stricter enforcement of anti-burning laws, the haze problem will continue to worsen. They call for a unified ASEAN framework that includes early warning systems, joint monitoring, and penalties for violations. The goal is to protect public health and preserve the region's rich biodiversity for future generations.</p>
+                    <span class="source">Source: China Daily Asia, 2026-09-05</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-07';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-07',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. What was the death toll from the mudslides in Nepal as of September 5, 2026?", options: ["8,631", "4,898", "1,344", "2,232"], answer: 2 },
+            { q: "2. How many people remain missing in the Nepal mudslide disaster?", options: ["1,344", "4,898", "8,631", "2,232"], answer: 1 },
+            { q: "3. How many people have been successfully rescued in Nepal?", options: ["1,344", "4,898", "8,631", "2,232"], answer: 2 },
+            { q: "4. What method are authorities using to confirm victims' identities?", options: ["Fingerprint matching", "DNA testing", "Facial recognition", "Dental records"], answer: 1 },
+            { q: "5. How many DNA samples have been collected so far?", options: ["1,260", "972", "2,232", "1,344"], answer: 2 },
+            { q: "6. What caused the mudslides in Nepal?", options: ["An earthquake", "Heavy monsoon rains", "A volcanic eruption", "A tsunami"], answer: 1 },
+            { q: "7. What has been severely damaged by the mudslides?", options: ["Only homes", "Only roads", "Infrastructure including roads, bridges, and power lines", "Only schools"], answer: 2 },
+            { q: "8. What have international aid organizations provided?", options: ["Only food", "Only water", "Food, clean water, and medical assistance", "Only money"], answer: 2 },
+            { q: "9. What has the Nepalese government done regarding the disaster?", options: ["Refused international help", "Appealed for international assistance", "Declared the disaster over", "Sent rescue teams to other countries"], answer: 1 },
+            { q: "10. Which neighboring countries have sent rescue teams?", options: ["Only China", "Only India", "Both China and India", "Neither China nor India"], answer: 2 }
+        ];
+
+        const reading2Data = [
+            { q: "11. What is analysts calling this year's haze season in Southeast Asia?", options: ["A 'green alert' year", "A 'red alert' year", "A 'yellow alert' year", "A 'blue alert' year"], answer: 1 },
+            { q: "12. What is intensifying drought conditions in Southeast Asia?", options: ["La Nina", "El Nino", "A typhoon", "A monsoon"], answer: 1 },
+            { q: "13. Which countries have agreed to use ASEAN mechanisms to address cross-border haze?", options: ["Malaysia and Brunei", "Indonesia and Singapore", "Thailand and Vietnam", "Philippines and Myanmar"], answer: 0 },
+            { q: "14. Which country faces greater pressure due to forest and peatland fires?", options: ["Malaysia", "Brunei", "Indonesia", "Singapore"], answer: 2 },
+            { q: "15. What did Malaysia's Sarawak state declare after the Air Pollution Index exceeded 500?", options: ["A holiday", "A state of emergency", "A festival", "A curfew"], answer: 1 },
+            { q: "16. What areas have also experienced dangerous air quality levels?", options: ["Only Singapore", "Only the Philippines", "Parts of the Philippines and Singapore", "Only Thailand"], answer: 2 },
+            { q: "17. How many individuals has Indonesia filed cases against?", options: ["5", "50", "112", "500"], answer: 2 },
+            { q: "18. How many companies had their forestry licenses suspended?", options: ["1", "3", "5", "10"], answer: 2 },
+            { q: "19. What is the primary cause of the haze?", options: ["Industrial pollution", "Slash-and-burn farming practices", "Vehicle emissions", "Volcanic activity"], answer: 1 },
+            { q: "20. What do environmental experts call for?", options: ["A unified ASEAN framework", "Closing all factories", "Banning all farming", "Evacuating all cities"], answer: 0 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "mudslide", phonetic: "/ˈmʌdˌslaɪd/", meaning: "n. 泥石流" },
+            { word: "death toll", phonetic: "/deθ toʊl/", meaning: "n. 死亡人数" },
+            { word: "rescue", phonetic: "/ˈreskjuː/", meaning: "n./v. 救援；营救" },
+            { word: "recover", phonetic: "/rɪˈkʌvər/", meaning: "v. 找回；恢复" },
+            { word: "displaced", phonetic: "/dɪsˈpleɪst/", meaning: "adj. 流离失所的" },
+            { word: "haze", phonetic: "/heɪz/", meaning: "n. 霾；雾霾" },
+            { word: "El Nino", phonetic: "/ɛl ˈniːnjoʊ/", meaning: "n. 厄尔尼诺现象" },
+            { word: "transboundary", phonetic: "/trænzˈbaʊndəri/", meaning: "adj. 跨境的" },
+            { word: "accountability", phonetic: "/əˌkaʊntəˈbɪləti/", meaning: "n. 问责；责任" },
+            { word: "peatland", phonetic: "/ˈpiːtlænd/", meaning: "n. 泥炭地" },
+            { word: "emergency", phonetic: "/ɪˈmɜːrdʒənsi/", meaning: "n. 紧急情况" },
+            { word: "monsoon", phonetic: "/mɑːnˈsuːn/", meaning: "n. 季风；雨季" },
+            { word: "infrastructure", phonetic: "/ˈɪnfrəˌstrʌktʃər/", meaning: "n. 基础设施" },
+            { word: "biodiversity", phonetic: "/ˌbaɪoʊdaɪˈvɜːrsəti/", meaning: "n. 生物多样性" },
+            { word: "slash-and-burn", phonetic: "/slæʃ ænd bɜːrn/", meaning: "adj. 刀耕火种的" },
+            { word: "violation", phonetic: "/ˌvaɪəˈleɪʃn/", meaning: "n. 违反；违背" },
+            { word: "framework", phonetic: "/ˈfreɪmwɜːrk/", meaning: "n. 框架；体系" },
+            { word: "enforcement", phonetic: "/ɪnˈfɔːrsmənt/", meaning: "n. 执行；实施" },
+            { word: "exacerbate", phonetic: "/ɪɡˈzæsərbeɪt/", meaning: "v. 加重；恶化" },
+            { word: "appeal", phonetic: "/əˈpiːl/", meaning: "v. 呼吁；恳求" }
+        ];
+
+        const oldVocabData = [
+            { word: "forum", phonetic: "/ˈfɔːrəm/", meaning: "n. 论坛；讨论会" },
+            { word: "prosperity", phonetic: "/prɑːˈsperəti/", meaning: "n. 繁荣；兴旺" },
+            { word: "consensus", phonetic: "/kənˈsensəs/", meaning: "n. 共识；一致意见" },
+            { word: "representative", phonetic: "/ˌreprɪˈzentətɪv/", meaning: "n. 代表 adj. 代表性的" },
+            { word: "keynote", phonetic: "/ˈkiːnoʊt/", meaning: "n. 主题发言；基调" },
+            { word: "partnership", phonetic: "/ˈpɑːrtnərʃɪp/", meaning: "n. 伙伴关系；合作关系" },
+            { word: "committee", phonetic: "/kəˈmɪti/", meaning: "n. 委员会" },
+            { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", meaning: "n. 倡议；主动行动" },
+            { word: "dialogue", phonetic: "/ˈdaɪəlɔːɡ/", meaning: "n. 对话；交流" },
+            { word: "connectivity", phonetic: "/kəˈnektɪvəti/", meaning: "n. 连通性；互联" },
+            { word: "transformation", phonetic: "/ˌtrænsfərˈmeɪʃn/", meaning: "n. 转变；变革" },
+            { word: "disaster", phonetic: "/dɪˈzæstər/", meaning: "n. 灾难；灾害" },
+            { word: "relief", phonetic: "/rɪˈliːf/", meaning: "n. 救援；减轻" },
+            { word: "drone", phonetic: "/droʊn/", meaning: "n. 无人机" },
+            { word: "disruption", phonetic: "/dɪsˈrʌpʃn/", meaning: "n. 中断；扰乱" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作；协作" },
+            { word: "digital", phonetic: "/ˈdɪdʒɪtl/", meaning: "adj. 数字的；数字化的" },
+            { word: "promote", phonetic: "/prəˈmoʊt/", meaning: "v. 促进；推广" },
+            { word: "integrate", phonetic: "/ˈɪntɪɡreɪt/", meaning: "v. 融合；整合" },
+            { word: "global", phonetic: "/ˈɡloʊbəl/", meaning: "adj. 全球的" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" },
+            { word: "resource", phonetic: "/ˈriːsɔːrs/", meaning: "n. 资源" },
+            { word: "experience", phonetic: "/ɪkˈspɪriəns/", meaning: "n. 经验；经历" },
+            { word: "benefit", phonetic: "/ˈbenɪfɪt/", meaning: "v./n. 使受益；利益" },
+            { word: "education", phonetic: "/ˌedʒuˈkeɪʃən/", meaning: "n. 教育" },
+            { word: "technology", phonetic: "/tɛkˈnɒlədʒi/", meaning: "n. 技术" },
+            { word: "provide", phonetic: "/prəˈvaɪd/", meaning: "v. 提供" },
+            { word: "develop", phonetic: "/dɪˈvɛləp/", meaning: "v. 开发；发展" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" },
+            { word: "standardize", phonetic: "/ˈstændərdaɪz/", meaning: "v. 标准化" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. Police in Nepal ___ on September 5 that the death toll had reached 1,344.", type: "choice", options: ["say", "says", "said", "saying"], answer: 2 },
+            { q: "2. A total of 1,344 bodies ___ by September 5.", type: "choice", options: ["recover", "were recovered", "recovered", "recovers"], answer: 1 },
+            { q: "3. Another 4,898 people ___ missing.", type: "choice", options: ["remain", "remains", "remained", "remaining"], answer: 0 },
+            { q: "4. Rescue agencies ___ search and rescue operations in the affected areas.", type: "choice", options: ["continue", "continues", "continued", "are continuing"], answer: 3 },
+            { q: "5. Authorities ___ efforts to confirm victims' identities through DNA testing.", type: "choice", options: ["strengthen", "strengthens", "strengthened", "are strengthening"], answer: 3 },
+            { q: "6. The mudslides ___ by heavy monsoon rains.", type: "choice", options: ["trigger", "were triggered", "triggered", "triggers"], answer: 1 },
+            { q: "7. Thousands of homes ___ or swept away.", type: "choice", options: ["bury", "buried", "have been buried", "were burying"], answer: 2 },
+            { q: "8. International aid organizations ___ to provide emergency supplies.", type: "choice", options: ["rush", "rushes", "have rushed", "rushed"], answer: 2 },
+            { q: "9. The Nepalese government ___ for international assistance.", type: "choice", options: ["appeal", "appeals", "has appealed", "appealed"], answer: 2 },
+            { q: "10. Neighboring countries ___ rescue teams and relief materials.", type: "choice", options: ["send", "sends", "sent", "have sent"], answer: 3 },
+            { q: "11. Analysts ___ this year's haze season a 'red alert' year.", type: "choice", options: ["call", "calls", "called", "calling"], answer: 2 },
+            { q: "12. Transboundary haze ___ more than just a seasonal nuisance.", type: "choice", options: ["become", "becomes", "has become", "became"], answer: 2 },
+            { q: "13. Malaysia and Brunei ___ to use ASEAN mechanisms.", type: "choice", options: ["agree", "agrees", "agreed", "have agreed"], answer: 2 },
+            { q: "14. Indonesia ___ greater pressure due to forest fires.", type: "choice", options: ["face", "faces", "faced", "facing"], answer: 1 },
+            { q: "15. Sarawak state ___ a state of emergency after the API exceeded 500.", type: "choice", options: ["declare", "declares", "declared", "declaring"], answer: 2 },
+            { q: "16. Indonesia ___ cases against 112 individuals.", type: "choice", options: ["file", "files", "filed", "has filed"], answer: 3 },
+            { q: "17. The haze ___ primarily by slash-and-burn farming practices.", type: "choice", options: ["cause", "is caused", "caused", "causes"], answer: 1 },
+            { q: "18. Environmental experts ___ that the problem will worsen.", type: "choice", options: ["warn", "warns", "warned", "warning"], answer: 0 },
+            { q: "19. They ___ for a unified ASEAN framework.", type: "choice", options: ["call", "calls", "called", "calling"], answer: 0 },
+            { q: "20. The goal is ___ public health and preserve biodiversity.", type: "choice", options: ["protect", "protecting", "to protect", "protected"], answer: 2 },
+            // 21-40 词汇运用
+            { q: "21. A ___ is a mass of mud that slides down a mountain.", type: "choice", options: ["mudslide", "moonlight", "midnight", "milestone"], answer: 0 },
+            { q: "22. The ___ refers to the number of people who have died.", type: "choice", options: ["death toll", "birth rate", "death rate", "toll road"], answer: 0 },
+            { q: "23. To ___ someone means to save them from danger.", type: "choice", options: ["rescue", "reject", "reflect", "reduce"], answer: 0 },
+            { q: "24. ___ people have been forced to leave their homes.", type: "choice", options: ["Displaced", "Replaced", "Misplaced", "Embraced"], answer: 0 },
+            { q: "25. ___ is a weather phenomenon that causes warm water and drought.", type: "choice", options: ["El Nino", "La Nina", "Monsoon", "Typhoon"], answer: 0 },
+            { q: "26. ___ means crossing national boundaries or borders.", type: "choice", options: ["Transboundary", "Transferable", "Transparent", "Translucent"], answer: 0 },
+            { q: "27. ___ means being responsible for one's actions.", type: "choice", options: ["Accountability", "Availability", "Ability", "Activity"], answer: 0 },
+            { q: "28. A ___ is land made of decayed plant material.", type: "choice", options: ["peatland", "wetland", "farmland", "homeland"], answer: 0 },
+            { q: "29. An ___ is a sudden, unexpected situation requiring action.", type: "choice", options: ["emergency", "emergence", "energy", "engine"], answer: 0 },
+            { q: "30. A ___ is a seasonal wind that brings heavy rain.", type: "choice", options: ["monsoon", "typhoon", "hurricane", "tornado"], answer: 0 },
+            { q: "31. ___ includes roads, bridges, and power lines.", type: "choice", options: ["Infrastructure", "Superstructure", "Substructure", "Structure"], answer: 0 },
+            { q: "32. ___ refers to the variety of living organisms in an area.", type: "choice", options: ["Biodiversity", "Biography", "Biology", "Biometrics"], answer: 0 },
+            { q: "33. ___ farming involves cutting and burning forests for agriculture.", type: "choice", options: ["Slash-and-burn", "Organic", "Factory", "Urban"], answer: 0 },
+            { q: "34. A ___ is the act of breaking a rule or law.", type: "choice", options: ["violation", "vacation", "vibration", "valuation"], answer: 0 },
+            { q: "35. A ___ is a basic structure or system.", type: "choice", options: ["framework", "network", "platform", "groundwork"], answer: 0 },
+            { q: "36. ___ means making sure rules are followed.", type: "choice", options: ["Enforcement", "Arrangement", "Development", "Measurement"], answer: 0 },
+            { q: "37. To ___ means to make a problem worse.", type: "choice", options: ["exacerbate", "celebrate", "mitigate", "alleviate"], answer: 0 },
+            { q: "38. To ___ means to make an earnest request.", type: "choice", options: ["appeal", "appear", "apply", "appraise"], answer: 0 },
+            { q: "39. A ___ is fine particles in the air that reduce visibility.", type: "choice", options: ["haze", "maze", "daze", "gaze"], answer: 0 },
+            { q: "40. To ___ means to find or identify something that was lost.", type: "choice", options: ["recover", "discover", "uncover", "cover"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. Police in Nepal said ___ September 5 that the death toll had reached 1,344.", type: "choice", options: ["on", "in", "at", "by"], answer: 0 },
+            { q: "42. The mudslides were triggered ___ heavy monsoon rains.", type: "choice", options: ["by", "with", "from", "for"], answer: 0 },
+            { q: "43. Rescue agencies are continuing operations ___ the affected areas.", type: "choice", options: ["in", "on", "at", "by"], answer: 0 },
+            { q: "44. Authorities are confirming identities ___ DNA testing.", type: "choice", options: ["through", "with", "by", "using"], answer: 0 },
+            { q: "45. The government has appealed ___ international assistance.", type: "choice", options: ["for", "to", "at", "in"], answer: 0 },
+            { q: "46. Neighboring countries have sent rescue teams ___ support the operations.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "47. Analysts are calling this year's haze season a 'red alert' year ___ El Nino.", type: "choice", options: ["due to", "because", "since", "as"], answer: 0 },
+            { q: "48. Malaysia's Sarawak state declared an emergency ___ the API exceeded 500.", type: "choice", options: ["after", "before", "during", "while"], answer: 0 },
+            { q: "49. The haze is primarily caused ___ slash-and-burn farming.", type: "choice", options: ["by", "from", "with", "for"], answer: 0 },
+            { q: "50. Environmental experts call ___ a unified ASEAN framework.", type: "choice", options: ["for", "to", "at", "in"], answer: 0 },
+            { q: "51. The goal is to protect public health and preserve the region's rich biodiversity ___ future generations.", type: "choice", options: ["for", "to", "at", "in"], answer: 0 },
+            { q: "52. Indonesia has filed cases ___ 112 individuals.", type: "choice", options: ["against", "for", "with", "to"], answer: 0 },
+            { q: "53. The forestry licenses ___ 5 companies were suspended.", type: "choice", options: ["of", "for", "from", "to"], answer: 0 },
+            { q: "54. International aid organizations rushed ___ provide emergency supplies.", type: "choice", options: ["to", "for", "in", "at"], answer: 0 },
+            { q: "55. ___ the scale of the disaster exceeds Nepal's own capacity.", type: "choice", options: ["The government says", "The government say", "Governments says", "Government saying"], answer: 0 },
+            { q: "56. Transboundary haze has become ___ than just a seasonal nuisance.", type: "choice", options: ["more", "most", "much", "many"], answer: 0 },
+            { q: "57. The dry conditions are exacerbated ___ El Nino.", type: "choice", options: ["by", "from", "with", "for"], answer: 0 },
+            { q: "58. Without stronger regional cooperation, the haze problem ___ continue to worsen.", type: "choice", options: ["will", "would", "shall", "should"], answer: 0 },
+            { q: "59. ___ what the Nepalese government has appealed for?", type: "choice", options: ["Do you know", "You know", "Are you knowing", "Did you knew"], answer: 0 },
+            { q: "60. The ASEAN framework ___ early warning systems and joint monitoring.", type: "choice", options: ["includes", "include", "included", "including"], answer: 0 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. How many bodies had been recovered by September 5?", options: ["8,631", "4,898", "1,344", "2,232"], type: "choice", answer: 2 },
+            { q: "62. What caused the mudslides in Nepal?", options: ["Earthquake", "Heavy monsoon rains", "Volcanic eruption", "Tsunami"], type: "choice", answer: 1 },
+            { q: "63. How were victims' identities confirmed?", options: ["Fingerprint matching", "DNA testing", "Facial recognition", "Dental records"], type: "choice", answer: 1 },
+            { q: "64. What has the Nepalese government done?", options: ["Refused help", "Appealed for international assistance", "Declared the disaster over", "Sent teams abroad"], type: "choice", answer: 1 },
+            { q: "65. Which countries sent rescue teams to Nepal?", options: ["China only", "India only", "China and India", "No countries"], type: "choice", answer: 2 },
+            { q: "66. How many DNA samples were collected?", options: ["1,260", "972", "2,232", "1,344"], type: "choice", answer: 2 },
+            { q: "67. What is this year's haze season called?", options: ["A 'green alert' year", "A 'red alert' year", "A 'yellow alert' year", "A 'blue alert' year"], type: "choice", answer: 1 },
+            { q: "68. What is intensifying drought conditions?", options: ["La Nina", "El Nino", "A typhoon", "A monsoon"], type: "choice", answer: 1 },
+            { q: "69. Which state declared a state of emergency?", options: ["Sarawak", "Sabah", "Selangor", "Penang"], type: "choice", answer: 0 },
+            { q: "70. What exceeded 500 in Sarawak?", options: ["The Air Pollution Index", "The temperature", "The death toll", "The number of fires"], type: "choice", answer: 0 },
+            { q: "71. How many individuals did Indonesia file cases against?", options: ["5", "50", "112", "500"], type: "choice", answer: 2 },
+            { q: "72. How many companies had licenses suspended?", options: ["1", "3", "5", "10"], type: "choice", answer: 2 },
+            { q: "73. What is the primary cause of the haze?", options: ["Industrial pollution", "Slash-and-burn farming", "Vehicle emissions", "Volcanic activity"], type: "choice", answer: 1 },
+            { q: "74. What do experts call for?", options: ["A unified ASEAN framework", "Closing all factories", "Banning all farming", "Evacuating all cities"], type: "choice", answer: 0 },
+            { q: "75. What should the framework include?", options: ["Early warning systems and joint monitoring", "Only penalties", "Only monitoring", "Nothing specific"], type: "choice", answer: 0 },
+            { q: "76. How many people remain missing in Nepal?", options: ["1,344", "4,898", "8,631", "2,232"], type: "choice", answer: 1 },
+            { q: "77. How many people were rescued in Nepal?", options: ["1,344", "4,898", "8,631", "2,232"], type: "choice", answer: 2 },
+            { q: "78. What has been severely damaged?", options: ["Only homes", "Only roads", "Infrastructure including roads, bridges, and power lines", "Only schools"], type: "choice", answer: 2 },
+            { q: "79. What have Malaysia and Brunei agreed to use?", options: ["ASEAN mechanisms", "UN mechanisms", "NATO mechanisms", "WTO mechanisms"], type: "choice", answer: 0 },
+            { q: "80. What is the goal of the ASEAN framework?", options: ["To protect public health and preserve biodiversity", "To increase trade", "To build more roads", "To reduce population"], type: "choice", answer: 0 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '尼泊尔泥石流死亡人数达到1,344人。'", type: "choice", options: ["The death toll from Nepal mudslides reached 1,344.", "Nepal mudslides people 1,344.", "1,344 people Nepal mudslides.", "Mudslides Nepal 1,344 death."], answer: 0 },
+            { q: "82. 'death toll' means ___.", type: "choice", options: ["the number of deaths", "the number of births", "the number of injuries", "the number of survivors"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["The mudslides were triggered by heavy monsoon rains.", "The mudslides triggered by heavy monsoon.", "Heavy monsoon the mudslides triggered.", "Triggered the mudslides heavy monsoon."], answer: 0 },
+            { q: "84. 'displaced' in this context means ___.", type: "choice", options: ["forced to leave home", "happy at home", "returning home", "building a home"], answer: 0 },
+            { q: "85. Choose the correct translation: '厄尔尼诺现象加剧了干旱。'", type: "choice", options: ["El Nino exacerbates the drought.", "El Nino the drought exacerbates.", "Drought El Nino exacerbates.", "Exacerbates El Nino drought."], answer: 0 },
+            { q: "86. 'were triggered' is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'The mudslides were triggered by heavy rains' is ___.", type: "choice", options: ["Heavy rains triggered the mudslides.", "Heavy rains the mudslides triggered.", "The mudslides heavy rains triggered.", "Triggered heavy rains the mudslides."], answer: 0 },
+            { q: "88. 'Transboundary haze has become more than just a seasonal nuisance.' The subject is ___.", type: "choice", options: ["Transboundary haze", "has become", "more than", "seasonal nuisance"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The Nepalese government appealed for help, ___?'", type: "choice", options: ["didn't it", "did it", "doesn't it", "isn't it"], answer: 0 },
+            { q: "90. 'Without stronger cooperation, the problem ___ continue to worsen.' Fill:", type: "choice", options: ["will", "would", "shall", "should"], answer: 0 },
+            { q: "91. Choose the correct translation: '印尼已对112人立案。'", type: "choice", options: ["Indonesia has filed cases against 112 individuals.", "Indonesia 112 individuals cases.", "112 individuals Indonesia cases.", "Cases Indonesia 112 individuals."], answer: 0 },
+            { q: "92. 'exacerbate' means ___.", type: "choice", options: ["to make worse", "to make better", "to make equal", "to make different"], answer: 0 },
+            { q: "93. 'If the haze continues, people will suffer.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["Malaysia's Sarawak state declared a state of emergency after the API exceeded 500.", "Sarawak state emergency API 500.", "API 500 Sarawak state emergency.", "Emergency API 500 Sarawak state."], answer: 0 },
+            { q: "95. '___ the heavy rains, rescue teams continued their work.' Fill in the blank.", type: "choice", options: ["Despite", "Because", "Since", "As"], answer: 0 },
+            { q: "96. The indirect speech of 'Police said, \"The death toll has reached 1,344.\"' is ___.", type: "choice", options: ["Police said the death toll had reached 1,344.", "Police said the death toll has reached 1,344.", "Police says the death toll had reached 1,344.", "Police said the death toll reach 1,344."], answer: 0 },
+            { q: "97. 'accountability' in the context means ___.", type: "choice", options: ["being responsible for actions", "being free from rules", "being absent", "being wealthy"], answer: 0 },
+            { q: "98. 'has filed' uses the ___ tense.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "99. 'Over 8,631 people have been rescued.' The verb is ___.", type: "choice", options: ["have been rescued", "people", "8,631", "over"], answer: 0 },
+            { q: "100. 'biodiversity' means ___.", type: "choice", options: ["the variety of living organisms", "a single species", "extinct animals", "non-living things"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
