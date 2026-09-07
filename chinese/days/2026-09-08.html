@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文学习 - 2026年9月8日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'SimSun', serif;
+            background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #E65100;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .poem {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border: 2px solid #FFE082;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .poem .title { font-size: 1.6em; font-weight: bold; color: #BF360C; margin-bottom: 5px; }
+        .poem .author { color: #8D6E63; margin-bottom: 15px; font-size: 1em; }
+        .poem .content { font-size: 1.3em; line-height: 2; color: #333; font-style: italic; }
+        .poem .annotation { margin-top: 15px; text-align: left; font-size: 0.95em; color: #555; line-height: 1.8; }
+        .poem .annotation strong { color: #E65100; }
+        .modern-text {
+            background: #FFFDE7;
+            border-left: 4px solid #FFB300;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .modern-text h3 { color: #E65100; margin-bottom: 15px; }
+        .modern-text p { text-indent: 2em; margin-bottom: 10px; }
+        .news-text {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.9;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+        }
+        .news-text h3 { color: #0D47A1; margin-bottom: 15px; }
+        .news-text .source { color: #666; font-size: 0.9em; margin-top: 15px; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #FFF3E0; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.4); }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #C8E6C9; color: #1b5e20; }
+        .result-box.fail { background: #FFCCBC; color: #bf360c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #FF9800; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #FFB74D);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #FFF3E0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #E65100; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月8日 星期二 · 语文</span>
+            <a href="../index.html">📚 语文目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('poem')">📜 古诗词</button>
+            <button class="tab-btn" onclick="showTab('modern')">📖 现代文</button>
+            <button class="tab-btn" onclick="showTab('news')">📰 时文阅读</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (50题)</button>
+        </div>
+
+        <!-- 古诗词 -->
+        <div class="tab-content active" id="tab-poem">
+            <div class="section">
+                <h2>📜 古诗词赏析</h2>
+                <div class="poem">
+                    <div class="title">闻王昌龄左迁龙标遥有此寄</div>
+                    <div class="author">唐 · 李白</div>
+                    <div class="content">
+                        杨花落尽子规啼，<br>
+                        闻道龙标过五溪。<br>
+                        我寄愁心与明月，<br>
+                        随君直到夜郎西。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                        <p>① <strong>左迁</strong>：贬官，降职。古人以右为尊，以左为卑，故称贬官为左迁。<strong>龙标</strong>：即唐代的龙标县，在今湖南省黔阳县。王昌龄被贬为龙标尉。</p>
+                        <p>② <strong>杨花</strong>：柳絮。<strong>子规</strong>：即杜鹃鸟，又称布谷鸟。相传子规的叫声似"不如归去"，容易引起游子思乡之情。</p>
+                        <p>③ <strong>五溪</strong>：指湖南、贵州交界处的辰溪、酉溪、巫溪、武溪、沅溪五条溪流，古时为偏远之地。</p>
+                        <p>④ <strong>夜郎</strong>：唐代少数民族政权名，在今贵州省境内。此处泛指遥远的西南边地。</p>
+                        <br>
+                        <p><strong>译文：</strong>柳絮飘落殆尽，杜鹃鸟啼叫着，听说你被贬到龙标，要经过五溪。我把忧愁的心寄托给明月，随着你一直走到夜郎以西。</p>
+                        <br>
+                        <p><strong>赏析：</strong>此诗是李白得知好友王昌龄被贬为龙标尉后，写下的一首寄赠之作。首句"杨花落尽子规啼"以暮春时节的景物起兴，杨花飘落、子规哀啼，营造了一种萧瑟凄凉的氛围，暗含对友人遭遇的同情。次句"闻道龙标过五溪"点明友人被贬之事，"过五溪"写出了路途的遥远艰辛。后两句"我寄愁心与明月，随君直到夜郎西"是千古名句，诗人将抽象的"愁心"具象化，寄予明月，让月光伴随着友人远行，既表达了深切的牵挂，又展现了李白浪漫主义的诗风。全诗想象奇特，感情真挚，是初一语文必背古诗之一。</p>
+                    </div>
+                </div>
+                <div class="poem">
+                    <div class="title">夜雨寄北</div>
+                    <div class="author">唐 · 李商隐</div>
+                    <div class="content">
+                        君问归期未有期，<br>
+                        巴山夜雨涨秋池。<br>
+                        何当共剪西窗烛，<br>
+                        却话巴山夜雨时。
+                    </div>
+                    <div class="annotation">
+                        <p><strong>注释：</strong></p>
+                                               <p>① <strong>寄北</strong>：寄给北方的人。当时诗人在巴蜀（今四川），友人（或妻子）在北方，故称"寄北"。</p>
+                        <p>② <strong>巴山</strong>：泛指巴蜀一带的山。<strong>夜雨</strong>：夜间的雨。<strong>涨秋池</strong>：秋雨使池塘水涨满。</p>
+                        <p>③ <strong>何当</strong>：什么时候能够。<strong>剪西窗烛</strong>：在西窗下剪烛芯。剪烛是古人夜间谈话时常做的事，烛芯燃久了会变长，需要剪短才能更亮。</p>
+                        <p>④ <strong>却话</strong>：回头说，追述。<strong>巴山夜雨时</strong>：即此刻巴山夜雨中的情景。</p>
+                        <br>
+                        <p><strong>译文：</strong>你问我何时回去，我还没有确定的归期。今夜巴山的秋雨涨满了池塘。什么时候我们能一起在西窗下剪烛夜谈，回头说起此刻巴山夜雨中的情景呢？</p>
+                        <br>
+                        <p><strong>赏析：</strong>此诗是李商隐身居巴蜀时寄怀远方亲友之作。首句"君问归期未有期"以一问一答开篇，平淡中见深情，写出了归期未定的无奈。次句"巴山夜雨涨秋池"以景写情，绵绵秋雨涨满池塘，暗喻愁绪之深。后两句"何当共剪西窗烛，却话巴山夜雨时"虚实交织，由眼前的凄苦想象未来重逢时的温馨，用未来的欢聚反衬眼前的孤寂，构思巧妙，回环往复。"巴山夜雨"在诗中两次出现，前一个是实景，后一个是虚景中的回忆，形成回环之美。全诗语浅情深，意境优美，是描写思念之情的千古绝唱。</p>
+                    </div>
+                </div>
+                <div id="poemQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 现代文 -->
+        <div class="tab-content" id="tab-modern">
+            <div class="section">
+                <h2>📖 现代文阅读</h2>
+                <div class="modern-text">
+                    <h3>山间的新灯</h3>
+                    <p>在我们村的东头，有一座小小的山包，山包上矗立着一排排整齐的光伏板，在阳光下泛着幽蓝的光，像一片安静的湖。</p>
+                    <p>爷爷说，从前这山包光秃秃的，什么也种不出。村里人砍柴烧煤，山上的树越来越少，到了冬天，大风一吹，黄尘漫天。</p>
+                    <p>前年，来了一群穿蓝色工服的人。他们在山包上打桩、支架、铺板，叮叮当当地忙了整整两个月。装好的那天，整个山包忽然亮了起来——不是灯光，而是那些板子，整整齐齐地朝着太阳，像一面面镜子。</p>
+                    <p>从此，村里用上了"太阳的电"。奶奶不再半夜起来加煤炉，风扇转得又快又稳，路灯一到天黑就自动亮起来。爷爷说："这太阳，可真是个好东西，白天晒板子，晚上照亮路。"</p>
+                    <p>那天放学回家，我爬上山包去看那些板子。风从板子底下吹过，带着一股金属的凉意。我蹲下来，看见板子下面竟然长出了小草——因为板子遮住了烈日，水分留住了，原本干旱的土，居然冒出了嫩绿。</p>
+                    <p>我忽然觉得，这些板子像一把把伞，既给村庄撑起了光明，又给土地撑出了一片温柔的阴凉。远方是连绵的青山，近处是嗡嗡转动的风机，脚底下，草在安静地生长。</p>
+                    <p>下山时，夕阳正好落在光伏板上，整座山包被镀上了一层金边。爷爷站在村口等我，身后是亮起的路灯。他说："你好好读书，将来也去造这种板子，让更多的地方亮起来。"</p>
+                    <p>我点了点头。山间的新灯，不烧煤、不冒烟，却把光亮和希望，稳稳地照进了每一个平常的日子。</p>
+                </div>
+                <div id="modernQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 时文 -->
+        <div class="tab-content" id="tab-news">
+            <div class="section">
+                <h2>📰 时文阅读</h2>
+                <div class="news-text">
+                    <h3>西藏吉隆泥石流救援持续推进 · 中国新型电力系统建设规划发布 · 两部门紧急拨付2.4亿元救灾资金</h3>
+                    <p>据央视新闻、China Daily 2026年9月7日报道，针对西藏自治区吉隆县"8·26"泥石流灾害，救援工作持续推进。截至目前，已确认43人遇难，519人失踪。超过2500名救援人员、500余辆救援车辆和9000余套救援设备已投入救援。无人机已执行超过1000架次飞行任务，空投物资5.43吨。9月5日至6日，国务院新闻办公室会同外交部组织来自美国、英国、俄罗斯、印度、巴基斯坦、新加坡、巴西等国家和地区17名境外媒体记者赴灾害现场采访。巴西记者布鲁诺·法尔西表示，"中国行动之快令人印象深刻"。</p>
+                    <p>另据报道，9月6日，《新型电力系统建设"十五五"规划》正式发布。规划明确，到2030年，中国风电和太阳能发电总装机容量将达到28亿千瓦以上，即在"十五五"期间新增约10亿千瓦可再生能源装机。截至2025年底，中国风电、太阳能发电累计并网装机已达18.4亿千瓦。国家电网公司提出，到2030年可再生能源发电占比超过30%，承诺用清洁能源满足全部新增电力需求。中国光伏发电装机容量已首次超过煤电。规划还提出，到2030年非化石能源发电量占比达50%，标志着向碳中和目标迈出关键一步。</p>
+                    <p>此外，9月7日，财政部、应急管理部紧急拨付2.4亿元中央自然灾害救灾资金，支持浙江、福建、江西、湖南、云南等5省开展洪涝、地质灾害应急抢险救灾工作。同日，央视新闻报道，受连日持续强降雨影响，江西遂川县大汾镇和坪村山体开裂，存在滑坡风险，当地连夜转移三个村民小组87户169名群众，截至当晚20时已全部安全转移到位，无一人遗漏。</p>
+                    <div class="source">来源：综合央视新闻、China Daily、人民日报（2026年9月7日）</div>
+                </div>
+                <div id="newsQuestions"></div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (50题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：古诗词、现代文、时文、基础知识、语言运用等</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_cn_2026-09-08';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-08',
+            subject: 'chinese',
+            answers: {},
+            sectionAnswers: {},
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 古诗词题目 ============
+        const poemQuestions = [
+            { q: "1. 《闻王昌龄左迁龙标遥有此寄》的作者是？", options: ["李白", "杜甫", "白居易", "王维"], answer: 0 },
+            { q: "2. \"左迁\"的意思是？", options: ["升职", "贬官，降职", "调动", "退休"], answer: 1 },
+            { q: "3. 王昌龄被贬到哪里？", options: ["龙标", "夜郎", "五溪", "巴山"], answer: 0 },
+            { q: "4. \"杨花落尽子规啼\"写的是什么季节？", options: ["暮春", "盛夏", "深秋", "隆冬"], answer: 0 },
+            { q: "5. \"子规\"指的是什么鸟？", options: ["杜鹃鸟", "燕子", "喜鹊", "黄鹂"], answer: 0 },
+            { q: "6. \"我寄愁心与明月\"用了什么修辞手法？", options: ["拟人", "比喻", "夸张", "排比"], answer: 0 },
+            { q: "7. 《夜雨寄北》的作者是？", options: ["李商隐", "李白", "杜甫", "杜牧"], answer: 0 },
+            { q: "8. \"巴山夜雨涨秋池\"中\"涨\"字的作用？", options: ["写出秋雨绵绵、愁绪之深", "表示水很多", "表示天气冷", "没有特殊含义"], answer: 0 },
+            { q: "9. \"何当共剪西窗烛\"中\"何当\"的意思是？", options: ["什么时候能够", "为什么", "如何", "哪里"], answer: 0 },
+            { q: "10. 《夜雨寄北》中\"巴山夜雨\"出现了几次？", options: ["1次", "2次", "3次", "4次"], answer: 1 }
+        ];
+
+        // ============ 现代文题目 ============
+        const modernQuestions = [
+            { q: "11. 山包上矗立着的是什么？", options: ["光伏板", "风力发电机", "广告牌", "太阳能热水器"], answer: 0 },
+            { q: "12. 从前山包是什么样的？", options: ["光秃秃的", "绿树成荫", "开满鲜花", "种满庄稼"], answer: 0 },
+            { q: "13. 穿什么颜色工服的人来安装光伏板？", options: ["蓝色", "红色", "黄色", "白色"], answer: 0 },
+            { q: "14. 村里用上了什么电？", options: ["太阳的电", "煤电", "风电", "核电"], answer: 0 },
+            { q: "15. 光伏板下面长出了什么？", options: ["小草", "花朵", "蘑菇", "蔬菜"], answer: 0 },
+            { q: "16. 板子下面长出小草的原因是？", options: ["板子遮住烈日，留住了水分", "有人浇水", "下了大雨", "土地本来就很肥沃"], answer: 0 },
+            { q: "17. 作者把光伏板比作什么？", options: ["一把把伞", "一面面旗", "一座座山", "一条条河"], answer: 0 },
+            { q: "18. 爷爷希望作者将来做什么？", options: ["去造光伏板，让更多地方亮起来", "当农民", "当老师", "当医生"], answer: 0 },
+            { q: "19. 山间的新灯有什么特点？", options: ["不烧煤、不冒烟", "很亮但很贵", "只白天能用", "需要很多煤"], answer: 0 },
+            { q: "20. 文章表达了什么主题？", options: ["绿色能源带来光明和希望", "山村生活很苦", "太阳能不好用", "要保护树木"], answer: 0 }
+        ];
+
+        // ============ 时文题目 ============
+        const newsQuestions = [
+            { q: "21. 吉隆泥石流灾害发生在哪一天？", options: ["8月26日", "9月7日", "9月6日", "8月31日"], answer: 0 },
+            { q: "22. 吉隆泥石流已确认多少人遇难？", options: ["43人", "519人", "2500人", "169人"], answer: 0 },
+            { q: "23. 多少名境外媒体记者赴灾害现场采访？", options: ["17名", "9名", "43名", "519名"], answer: 0 },
+            { q: "24. 巴西记者叫什么名字？", options: ["布鲁诺·法尔西", "穆罕默德·阿斯加尔", "苏鹏程", "任伟"], answer: 0 },
+            { q: "25. 《新型电力系统建设\"十五五\"规划》在哪天发布？", options: ["9月6日", "9月7日", "9月8日", "8月26日"], answer: 0 },
+            { q: "26. 到2030年风电和太阳能发电总装机容量目标？", options: ["28亿千瓦以上", "18.4亿千瓦", "10亿千瓦", "6万亿千瓦"], answer: 0 },
+            { q: "27. 截至2025年底，中国风电太阳能装机达多少？", options: ["18.4亿千瓦", "28亿千瓦", "10亿千瓦", "50%"], answer: 0 },
+            { q: "28. 两部门紧急拨付了多少救灾资金？", options: ["2.4亿元", "3.6亿元", "1亿元", "5亿元"], answer: 0 },
+            { q: "29. 江西遂川县转移了多少名群众？", options: ["169人", "87人", "519人", "43人"], answer: 0 },
+            { q: "30. 到2030年非化石能源发电量占比目标？", options: ["50%", "30%", "40%", "60%"], answer: 0 }
+        ];
+
+        function renderQuestions(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.sectionAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveSectionAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveSectionAnswer(prefix, qIndex, ansIndex) {
+            savedData.sectionAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 综合测试50题 ============
+        const testData = [
+            { q: "1. 《闻王昌龄左迁龙标遥有此寄》的作者是？", options: ["李白", "杜甫", "白居易", "王维"], answer: 0 },
+            { q: "2. \"左迁\"的意思是？", options: ["贬官，降职", "升职", "调动", "退休"], answer: 0 },
+            { q: "3. 王昌龄被贬为哪里？", options: ["龙标尉", "夜郎王", "五溪令", "巴山令"], answer: 0 },
+            { q: "4. \"杨花落尽子规啼\"写的是什么季节？", options: ["暮春", "盛夏", "深秋", "隆冬"], answer: 0 },
+            { q: "5. \"子规\"是什么鸟？", options: ["杜鹃鸟", "燕子", "喜鹊", "黄鹂"], answer: 0 },
+            { q: "6. 子规的叫声似什么？", options: ["不如归去", "不如离去", "不如早归", "不如不归"], answer: 0 },
+            { q: "7. \"我寄愁心与明月\"用了什么手法？", options: ["拟人", "比喻", "夸张", "排比"], answer: 0 },
+            { q: "8. \"随君直到夜郎西\"中\"夜郎\"在哪里？", options: ["今贵州省境内", "今四川省境内", "今湖南省境内", "今云南省境内"], answer: 0 },
+            { q: "9. 《夜雨寄北》的作者是？", options: ["李商隐", "李白", "杜甫", "杜牧"], answer: 0 },
+            { q: "10. \"君问归期未有期\"用了什么修辞手法？", options: ["一问一答", "排比", "比喻", "拟人"], answer: 0 },
+            { q: "11. \"巴山夜雨涨秋池\"中\"涨\"字的作用？", options: ["写秋雨绵绵、愁绪之深", "表示水量大", "表示天气冷", "无特殊含义"], answer: 0 },
+            { q: "12. \"何当共剪西窗烛\"中\"何当\"的意思是？", options: ["什么时候能够", "为什么", "如何", "哪里"], answer: 0 },
+            { q: "13. \"却话巴山夜雨时\"中\"却话\"的意思是？", options: ["回头说，追述", "却不说", "结束话题", "谈论别的"], answer: 0 },
+            { q: "14. 《夜雨寄北》中\"巴山夜雨\"出现了几次？", options: ["2次", "1次", "3次", "4次"], answer: 0 },
+            { q: "15. 《夜雨寄北》前一个\"巴山夜雨\"是什么？", options: ["实景", "虚景", "想象", "回忆"], answer: 0 },
+            { q: "16. 《夜雨寄北》后一个\"巴山夜雨\"是什么？", options: ["虚景中的回忆", "实景", "梦境", "比喻"], answer: 0 },
+            { q: "17. 李白是什么朝代的诗人？", options: ["唐代", "宋代", "元代", "明代"], answer: 0 },
+            { q: "18. 李商隐是什么朝代的诗人？", options: ["唐代", "宋代", "元代", "明代"], answer: 0 },
+            { q: "19. 《山间的新灯》写的是什么？", options: ["光伏发电板", "风力发电机", "路灯", "煤油灯"], answer: 0 },
+            { q: "20. 从前山包是什么样的？", options: ["光秃秃的", "绿树成荫", "开满鲜花", "种满庄稼"], answer: 0 },
+            { q: "21. 村里人以前靠什么烧火？", options: ["砍柴烧煤", "天然气", "电", "太阳能"], answer: 0 },
+            { q: "22. 光伏板下面长出了什么？", options: ["小草", "花朵", "蘑菇", "蔬菜"], answer: 0 },
+            { q: "23. 光伏板下面长草的原因？", options: ["板子遮住烈日留住了水分", "有人浇水", "下了大雨", "本来就很肥沃"], answer: 0 },
+            { q: "24. 作者把光伏板比作什么？", options: ["一把把伞", "一面面旗", "一座座山", "一条条河"], answer: 0 },
+            { q: "25. 山间的新灯的特点？", options: ["不烧煤不冒烟", "很亮但很贵", "只白天能用", "需要很多煤"], answer: 0 },
+            { q: "26. 爷爷希望作者将来做什么？", options: ["去造光伏板让更多地方亮起来", "当农民", "当老师", "当医生"], answer: 0 },
+            { q: "27. 吉隆泥石流灾害发生在哪一天？", options: ["8月26日", "9月7日", "9月6日", "8月31日"], answer: 0 },
+            { q: "28. 吉隆泥石流确认多少人遇难？", options: ["43人", "519人", "2500人", "169人"], answer: 0 },
+            { q: "29. 多少人失踪？", options: ["519人", "43人", "2500人", "169人"], answer: 0 },
+            { q: "30. 多少名救援人员被部署？", options: ["超过2500名", "超过500名", "超过9000名", "超过1000名"], answer: 0 },
+            { q: "31. 无人机执行了多少架次飞行？", options: ["超过1000架次", "超过500架次", "超过2500架次", "超过100架次"], answer: 0 },
+            { q: "32. 空投了多少吨物资？", options: ["5.43吨", "43吨", "519吨", "2500吨"], answer: 0 },
+            { q: "33. 多少名境外记者赴现场采访？", options: ["17名", "9名", "43名", "519名"], answer: 0 },
+            { q: "34. 来自多少个国家和地区？", options: ["9个", "5个", "7个", "17个"], answer: 0 },
+            { q: "35. 巴西记者叫什么？", options: ["布鲁诺·法尔西", "穆罕默德·阿斯加尔", "苏鹏成", "任伟"], answer: 0 },
+            { q: "36. 新型电力系统规划在哪天发布？", options: ["9月6日", "9月7日", "9月8日", "8月26日"], answer: 0 },
+            { q: "37. 到2030年风光装机目标？", options: ["28亿千瓦以上", "18.4亿千瓦", "10亿千瓦", "6万亿千瓦"], answer: 0 },
+            { q: "38. 十五五期间新增多少？", options: ["约10亿千瓦", "约5亿千瓦", "约18.4亿千瓦", "约28亿千瓦"], answer: 0 },
+            { q: "39. 截至2025年底装机多少？", options: ["18.4亿千瓦", "28亿千瓦", "10亿千瓦", "6万亿千瓦"], answer: 0 },
+            { q: "40. 两部门拨付了多少救灾资金？", options: ["2.4亿元", "3.6亿元", "1亿元", "5亿元"], answer: 0 },
+            { q: "41. 资金支持了几个省？", options: ["5个", "3个", "7个", "10个"], answer: 0 },
+            { q: "42. 江西遂川转移了多少人？", options: ["169人", "87人", "519人", "43人"], answer: 0 },
+            { q: "43. 转移了几个村民小组？", options: ["3个", "1个", "5个", "10个"], answer: 0 },
+            { q: "44. 到2030年非化石能源发电占比？", options: ["50%", "30%", "40%", "60%"], answer: 0 },
+            { q: "45. 中国光伏装机首次超过了什么？", options: ["煤电", "风电", "核电", "水电"], answer: 0 },
+            { q: "46. \"我寄愁心与明月\"表达了什么情感？", options: ["对友人的深切牵挂", "思乡之情", "喜悦之情", "愤怒之情"], answer: 0 },
+            { q: "47. 《夜雨寄北》用什么反衬眼前的孤寂？", options: ["未来重逢的温馨", "过去的回忆", "别人的幸福", "远方的风景"], answer: 0 },
+            { q: "48. 《山间的新灯》的主题是？", options: ["绿色能源带来光明和希望", "山村生活苦", "太阳能不好用", "保护环境没用"], answer: 0 },
+            { q: "49. 吉隆泥石流是由什么引发的？", options: ["高海拔冰岩崩塌", "地震", "暴雨", "火山喷发"], answer: 0 },
+            { q: "50. 对本日全部内容理解最准确的是？", options: ["古诗写思念之情，现代文写绿色能源之美，时文记泥石流救援与电力规划，共同体现关怀与担当", "古诗与时事无关", "时文只是新闻", "现代文与古诗没有联系"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 25) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成25题后再提交。`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const sectionAnswered = Object.keys(savedData.sectionAnswers).length;
+            const total = testAnswered + sectionAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            const allSection = [...poemQuestions, ...modernQuestions, ...newsQuestions];
+            let idx;
+            allSection.forEach((item, i) => {
+                let prefix;
+                if (i < poemQuestions.length) { prefix = 'poem'; idx = i; }
+                else if (i < poemQuestions.length + modernQuestions.length) { prefix = 'modern'; idx = i - poemQuestions.length; }
+                else { prefix = 'news'; idx = i - poemQuestions.length - modernQuestions.length; }
+                if (savedData.sectionAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 80 * 100) + '%';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        loadData();
+        renderQuestions('poemQuestions', poemQuestions, 'poem');
+        renderQuestions('modernQuestions', modernQuestions, 'modern');
+        renderQuestions('newsQuestions', newsQuestions, 'news');
+        renderTest();
+        updateStats();
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>

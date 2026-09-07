@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月8日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月8日 · 星期二 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>Rescue Teams Intensify Deep Searches in Gyirong</h3>
+                    <p>Forty-three people are confirmed dead and 519 remain missing in Gyirong county, Xizang autonomous region, after a devastating mudslide swept through the area on August 26, as search and rescue operations continued, local authorities said on September 7, 2026.</p>
+                    <p>As of Saturday evening, more than 2,500 rescuers had been deployed, along with over 500 vehicles and more than 9,000 sets of rescue equipment. Drones had made over 1,000 flights, while 5.43 metric tons of supplies and equipment had been air-dropped.</p>
+                    <p>Since road access to the core area was restored on Wednesday, six specialized groups and seven rescue teams have been carrying out detailed searches. Rescuers have been clearing debris layer by layer and searching each section thoroughly, with some areas already cleared down to the original foundations.</p>
+                    <p>The State Council Information Office and the Ministry of Foreign Affairs organized a visit to the disaster area for 17 journalists from nine overseas media outlets, including those from the United States, Britain, Russia, India and Singapore. Bruno Falci, a Brazilian journalist, said it was "really impressive how fast China acts," citing the rapid mobilization of rescuers and reopening of roads.</p>
+                    <p>A high-altitude ice-rock collapse on the Nepalese side of the Himalayas triggered the disaster. The resulting debris flow traveled about 22 kilometers downstream in only six to seven minutes, causing severe damage. Su Pengcheng, a researcher at the Chinese Academy of Sciences, said climate change is increasing the risks of disasters in the Himalayas, calling for early glacier-risk assessment and stronger cross-border cooperation.</p>
+                    <span class="source">Source: China Daily, 2026-09-07</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>China to Add 1 Billion Kilowatts of Wind and Solar Power by 2030</h3>
+                    <p>China has set an ambitious target to expand its wind and solar power capacity to over 2.8 billion kilowatts by 2030, according to the 15th Five-Year Plan (2026-2030) for building a new power system, released on September 6, 2026. This means adding approximately 1 billion kilowatts of new renewable energy capacity in the next five years.</p>
+                    <p>During the 14th Five-Year Plan period, China built the world's largest and fastest-growing renewable energy system. By the end of 2025, China's cumulative installed capacity of wind and solar power reached 1.84 billion kilowatts. The new plan aims to make renewable power generation reach about 6 trillion kilowatt-hours annually by 2030.</p>
+                    <p>The State Grid Corporation of China unveiled plans to lift the share of renewable power generation across its operating footprint to over 30 percent by 2030, committing to meet all incremental electricity demand with clean energy. The comprehensive decarbonization blueprint includes integrating large-scale renewable energy into the power system.</p>
+                    <p>China's photovoltaic power capacity has already overtaken coal-fired power for the first time. Energy plans for the 15th Five-Year Plan period set out specific measures to better integrate renewable energy into the power system, making PV power more predictable and dispatchable. The country aims to achieve a green and low-carbon power supply pattern by 2030.</p>
+                    <p>Experts note that this transition represents a historic shift in China's energy structure. Non-fossil energy power generation is expected to reach 50 percent by 2030, marking a crucial step toward carbon neutrality. The plan also emphasizes grid modernization, energy storage development, and smart power systems to handle the intermittency of renewable sources.</p>
+                    <span class="source">Source: People's Daily / CCTV News / China Daily, 2026-09-07</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-08';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-08',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. How many people are confirmed dead in the Gyirong mudslide?", options: ["43", "519", "2,500", "9,000"], answer: 0 },
+            { q: "2. How many people remain missing in the Gyirong disaster?", options: ["43", "519", "2,500", "1,000"], answer: 1 },
+            { q: "3. When did the devastating mudslide sweep through Gyirong?", options: ["August 26", "September 7", "September 6", "August 31"], answer: 0 },
+            { q: "4. How many rescuers had been deployed as of Saturday evening?", options: ["Over 500", "Over 1,000", "Over 2,500", "Over 9,000"], answer: 2 },
+            { q: "5. How many flights had drones made?", options: ["Over 500", "Over 1,000", "Over 2,500", "Over 5,000"], answer: 1 },
+            { q: "6. How many tons of supplies had been air-dropped?", options: ["5.43 tons", "43 tons", "519 tons", "2,500 tons"], answer: 0 },
+            { q: "7. When was road access to the core area restored?", options: ["Monday", "Tuesday", "Wednesday", "Thursday"], answer: 2 },
+            { q: "8. How many journalists visited the disaster area?", options: ["9", "17", "43", "519"], answer: 1 },
+            { q: "9. How many overseas media outlets were represented?", options: ["5", "7", "9", "17"], answer: 2 },
+            { q: "10. What triggered the disaster according to Su Pengcheng?", options: ["An earthquake", "A high-altitude ice-rock collapse", "Heavy monsoon rains", "A volcanic eruption"], answer: 1 },
+            { q: "11. How far did the debris flow travel downstream?", options: ["About 6 km", "About 22 km", "About 43 km", "About 519 km"], answer: 1 },
+            { q: "12. How long did the debris flow take to travel that distance?", options: ["Six to seven minutes", "Six to seven hours", "Six to seven seconds", "Six to seven days"], answer: 0 },
+            { q: "13. What did Bruno Falci say was 'really impressive'?", options: ["How fast China acts", "The number of casualties", "The weather conditions", "The media coverage"], answer: 0 },
+            { q: "14. What is Su Pengcheng's profession?", options: ["A journalist", "A researcher at the Chinese Academy of Sciences", "A rescue worker", "A government official"], answer: 1 },
+            { q: "15. What did Su say is increasing disaster risks in the Himalayas?", options: ["Deforestation", "Climate change", "Urbanization", "Mining"], answer: 1 },
+            { q: "16. What did Su call for?", options: ["More media coverage", "Early glacier-risk assessment and cross-border cooperation", "Evacuation of all mountain areas", "Banning all climbing activities"], answer: 1 },
+            { q: "17. How many specialized groups are carrying out detailed searches?", options: ["Three", "Five", "Six", "Seven"], answer: 2 },
+            { q: "18. How many rescue teams are involved?", options: ["Five", "Six", "Seven", "Nine"], answer: 2 },
+            { q: "19. Where did the ice-rock collapse occur?", options: ["On the Chinese side of the Himalayas", "On the Nepalese side of the Himalayas", "In India", "In Pakistan"], answer: 1 },
+            { q: "20. What have rescuers been clearing?", options: ["Snow", "Debris layer by layer", "Trees", "Buildings"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "21. What is China's target for wind and solar power capacity by 2030?", options: ["1.84 billion kilowatts", "2.8 billion kilowatts", "6 trillion kilowatts", "50 percent"], answer: 1 },
+            { q: "22. How much new renewable energy capacity will be added in five years?", options: ["About 500 million kilowatts", "About 1 billion kilowatts", "About 1.84 billion kilowatts", "About 2.8 billion kilowatts"], answer: 1 },
+            { q: "23. When was the 15th Five-Year Plan for building a new power system released?", options: ["September 5", "September 6", "September 7", "September 8"], answer: 1 },
+            { q: "24. What was China's cumulative wind and solar capacity by end of 2025?", options: ["1 billion kilowatts", "1.84 billion kilowatts", "2.8 billion kilowatts", "6 trillion kilowatts"], answer: 1 },
+            { q: "25. What is the annual renewable power generation target for 2030?", options: ["About 4 trillion kWh", "About 6 trillion kWh", "About 1.84 trillion kWh", "About 2.8 trillion kWh"], answer: 1 },
+            { q: "26. What share of renewable power does State Grid aim for by 2030?", options: ["Over 20%", "Over 30%", "Over 50%", "Over 100%"], answer: 1 },
+            { q: "27. What has China's photovoltaic power capacity done for the first time?", options: ["Overtaken coal-fired power", "Overtaken wind power", "Overtaken nuclear power", "Overtaken hydro power"], answer: 0 },
+            { q: "28. What percentage will non-fossil energy power generation reach by 2030?", options: ["30%", "40%", "50%", "60%"], answer: 2 },
+            { q: "29. What does the plan emphasize to handle intermittency?", options: ["More coal plants", "Grid modernization and energy storage", "Less renewable energy", "Importing more oil"], answer: 1 },
+            { q: "30. What kind of power supply pattern does China aim for by 2030?", options: ["Coal-based", "Green and low-carbon", "Nuclear-based", "Gas-based"], answer: 1 },
+            { q: "31. During which Five-Year Plan period did China build the world's largest renewable energy system?", options: ["13th", "14th", "15th", "16th"], answer: 1 },
+            { q: "32. What does State Grid commit to meet all incremental electricity demand with?", options: ["Coal energy", "Clean energy", "Nuclear energy", "Imported energy"], answer: 1 },
+            { q: "33. What will PV power become according to the plans?", options: ["More expensive", "More predictable and dispatchable", "Less reliable", "Smaller in scale"], answer: 1 },
+            { q: "34. What does the transition represent according to experts?", options: ["A temporary change", "A historic shift in energy structure", "A minor adjustment", "A failed experiment"], answer: 1 },
+            { q: "35. What is the crucial goal this transition marks a step toward?", options: ["Energy independence", "Carbon neutrality", "Economic growth", "Industrial expansion"], answer: 1 },
+            { q: "36. How many kilowatts of wind and solar capacity will be added?", options: ["Approximately 1 billion", "Approximately 2.8 billion", "Approximately 1.84 billion", "Approximately 6 trillion"], answer: 0 },
+            { q: "37. What type of power systems does the plan emphasize?", options: ["Traditional power systems", "Smart power systems", "Nuclear power systems", "Gas power systems"], answer: 1 },
+            { q: "38. What is the time frame of the 15th Five-Year Plan?", options: ["2021-2025", "2026-2030", "2031-2035", "2016-2020"], answer: 1 },
+            { q: "39. What did State Grid unveil?", options: ["A new power plant", "A comprehensive decarbonization blueprint", "A new coal mine", "A nuclear reactor"], answer: 1 },
+            { q: "40. What does PV stand for in this context?", options: ["Photovoltaic", "Power Vehicle", "Private Venture", "Physical Volume"], answer: 0 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "devastating", phonetic: "/ˈdevəsteɪtɪŋ/", meaning: "adj. 毁灭性的；破坏性极强的" },
+            { word: "mudslide", phonetic: "/ˈmʌdˌslaɪd/", meaning: "n. 泥石流" },
+            { word: "deploy", phonetic: "/dɪˈplɔɪ/", meaning: "v. 部署；调遣" },
+            { word: "air-drop", phonetic: "/ɛr drɒp/", meaning: "v. 空投" },
+            { word: "debris", phonetic: "/dəˈbriː/", meaning: "n. 碎片；残骸" },
+            { word: "restore", phonetic: "/rɪˈstɔːr/", meaning: "v. 恢复；修复" },
+            { word: "journalist", phonetic: "/ˈdʒɜːrnəlɪst/", meaning: "n. 记者；新闻工作者" },
+            { word: "mobilization", phonetic: "/ˌmoʊbələˈzeɪʃn/", meaning: "n. 动员；调动" },
+            { word: "trigger", phonetic: "/ˈtrɪɡər/", meaning: "v. 触发；引发" },
+            { word: "collapse", phonetic: "/kəˈlæps/", meaning: "n./v. 坍塌；崩塌" },
+            { word: "capacity", phonetic: "/kəˈpæsəti/", meaning: "n. 容量；产能" },
+            { word: "renewable", phonetic: "/rɪˈnuːəbl/", meaning: "adj. 可再生的 n. 可再生能源" },
+            { word: "decarbonization", phonetic: "/diːˌkɑːrbənaɪˈzeɪʃn/", meaning: "n. 脱碳；去碳化" },
+            { word: "blueprint", phonetic: "/ˈbluːprɪnt/", meaning: "n. 蓝图；方案" },
+            { word: "photovoltaic", phonetic: "/ˌfoʊtoʊvɒlˈteɪɪk/", meaning: "adj. 光伏的" },
+            { word: "intermittency", phonetic: "/ˌɪntərˈmɪtənsi/", meaning: "n. 间歇性；断续性" },
+            { word: "neutrality", phonetic: "/nuːˈtræləti/", meaning: "n. 中和；中立；碳中和" },
+            { word: "dispatchable", phonetic: "/dɪˈspætʃəbl/", meaning: "adj. 可调度的；可调度的" },
+            { word: "comprehensive", phonetic: "/ˌkɑːmprɪˈhensɪv/", meaning: "adj. 综合的；全面的" },
+            { word: "assessment", phonetic: "/əˈsesmənt/", meaning: "n. 评估；评价" }
+        ];
+
+        const oldVocabData = [
+            { word: "mudslide", phonetic: "/ˈmʌdˌslaɪd/", meaning: "n. 泥石流" },
+            { word: "death toll", phonetic: "/deθ toʊl/", meaning: "n. 死亡人数" },
+            { word: "rescue", phonetic: "/ˈreskjuː/", meaning: "n./v. 救援；营救" },
+            { word: "recover", phonetic: "/rɪˈkʌvər/", meaning: "v. 找回；恢复" },
+            { word: "displaced", phonetic: "/dɪsˈpleɪst/", meaning: "adj. 流离失所的" },
+            { word: "haze", phonetic: "/heɪz/", meaning: "n. 霾；雾霾" },
+            { word: "El Nino", phonetic: "/ɛl ˈniːnjoʊ/", meaning: "n. 厄尔尼诺现象" },
+            { word: "transboundary", phonetic: "/trænzˈbaʊndəri/", meaning: "adj. 跨境的" },
+            { word: "accountability", phonetic: "/əˌkaʊntəˈbɪləti/", meaning: "n. 问责；责任" },
+            { word: "peatland", phonetic: "/ˈpiːtlænd/", meaning: "n. 泥炭地" },
+            { word: "emergency", phonetic: "/ɪˈmɜːrdʒənsi/", meaning: "n. 紧急情况" },
+            { word: "monsoon", phonetic: "/mɑːnˈsuːn/", meaning: "n. 季风；雨季" },
+            { word: "infrastructure", phonetic: "/ˈɪnfrəˌstrʌktʃər/", meaning: "n. 基础设施" },
+            { word: "biodiversity", phonetic: "/ˌbaɪoʊdaɪˈvɜːrsəti/", meaning: "n. 生物多样性" },
+            { word: "slash-and-burn", phonetic: "/slæʃ ænd bɜːrn/", meaning: "adj. 刀耕火种的" },
+            { word: "violation", phonetic: "/ˌvaɪəˈleɪʃn/", meaning: "n. 违反；违背" },
+            { word: "framework", phonetic: "/ˈfreɪmwɜːrk/", meaning: "n. 框架；体系" },
+            { word: "enforcement", phonetic: "/ɪnˈfɔːrsmənt/", meaning: "n. 执行；实施" },
+            { word: "exacerbate", phonetic: "/ɪɡˈzæsərbeɪt/", meaning: "v. 加重；恶化" },
+            { word: "appeal", phonetic: "/əˈpiːl/", meaning: "v. 呼吁；恳求" },
+            { word: "forum", phonetic: "/ˈfɔːrəm/", meaning: "n. 论坛；讨论会" },
+            { word: "prosperity", phonetic: "/prɑːˈsperəti/", meaning: "n. 繁荣；兴旺" },
+            { word: "consensus", phonetic: "/kənˈsensəs/", meaning: "n. 共识；一致意见" },
+            { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", meaning: "n. 倡议；主动行动" },
+            { word: "connectivity", phonetic: "/kəˈnektɪvəti/", meaning: "n. 连通性；互联" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作；协作" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" },
+            { word: "resource", phonetic: "/ˈriːsɔːrs/", meaning: "n. 资源" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" },
+            { word: "standardize", phonetic: "/ˈstændərdaɪz/", meaning: "v. 标准化" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. Forty-three people ___ confirmed dead in the Gyirong mudslide.", type: "choice", options: ["is", "are", "was", "were"], answer: 1 },
+            { q: "2. The mudslide ___ through the area on August 26.", type: "choice", options: ["swept", "sweeps", "has swept", "sweeping"], answer: 0 },
+            { q: "3. More than 2,500 rescuers ___ by Saturday evening.", type: "choice", options: ["deployed", "were deployed", "have deployed", "deploying"], answer: 1 },
+            { q: "4. Drones ___ over 1,000 flights.", type: "choice", options: ["made", "make", "have made", "making"], answer: 2 },
+            { q: "5. Since road access ___, six specialized groups have been searching.", type: "choice", options: ["restored", "was restored", "has restored", "restores"], answer: 1 },
+            { q: "6. A high-altitude ice-rock collapse ___ the disaster.", type: "choice", options: ["trigger", "triggers", "triggered", "has triggered"], answer: 2 },
+            { q: "7. The debris flow ___ about 22 kilometers downstream.", type: "choice", options: ["travel", "travels", "traveled", "traveling"], answer: 2 },
+            { q: "8. Climate change ___ the risks of disasters in the Himalayas.", type: "choice", options: ["increase", "increases", "is increasing", "increased"], answer: 2 },
+            { q: "9. China ___ an ambitious target to expand wind and solar power.", type: "choice", options: ["set", "sets", "has set", "setting"], answer: 2 },
+            { q: "10. The plan ___ for the 15th Five-Year Plan period.", type: "choice", options: ["release", "releases", "was released", "releasing"], answer: 2 },
+            { q: "11. China's photovoltaic power capacity ___ coal-fired power for the first time.", type: "choice", options: ["overtake", "overtakes", "has overtaken", "overtook"], answer: 2 },
+            { q: "12. State Grid ___ plans to lift renewable share to over 30%.", type: "choice", options: ["unveil", "unveils", "unveiled", "has unveiled"], answer: 3 },
+            { q: "13. The country ___ to achieve green power supply by 2030.", type: "choice", options: ["aim", "aims", "is aiming", "has aimed"], answer: 1 },
+            { q: "14. Non-fossil energy power generation ___ 50 percent by 2030.", type: "choice", options: ["reach", "reaches", "will reach", "reached"], answer: 2 },
+            { q: "15. Experts note that this transition ___ a historic shift.", type: "choice", options: ["represent", "represents", "represented", "representing"], answer: 1 },
+            { q: "16. The plan also ___ grid modernization and energy storage.", type: "choice", options: ["emphasize", "emphasizes", "emphasized", "emphasizing"], answer: 1 },
+            { q: "17. Rescuers ___ debris layer by layer.", type: "choice", options: ["clear", "clears", "have been clearing", "cleared"], answer: 2 },
+            { q: "18. Bruno Falci said it ___ 'really impressive how fast China acts'.", type: "choice", options: ["is", "was", "be", "being"], answer: 1 },
+            { q: "19. Su Pengcheng said climate change ___ disaster risks.", type: "choice", options: ["increase", "increases", "is increasing", "increased"], answer: 2 },
+            { q: "20. The government ___ 17 journalists to visit the area.", type: "choice", options: ["invite", "invites", "invited", "has invited"], answer: 3 },
+            // 21-40 词汇运用
+            { q: "21. A ___ mudslide is one that causes great damage.", type: "choice", options: ["devastating", "beautiful", "small", "minor"], answer: 0 },
+            { q: "22. To ___ means to position forces or equipment for action.", type: "choice", options: ["deploy", "delay", "deny", "depart"], answer: 0 },
+            { q: "23. ___ refers to broken pieces of buildings or other structures.", type: "choice", options: ["Debris", "Debate", "Detail", "Device"], answer: 0 },
+            { q: "24. To ___ means to bring something back to its original condition.", type: "choice", options: ["restore", "remove", "return", "review"], answer: 0 },
+            { q: "25. A ___ is a person who writes for newspapers or magazines.", type: "choice", options: ["journalist", "geologist", "geneticist", "gymnast"], answer: 0 },
+            { q: "26. ___ means the act of organizing and preparing for action.", type: "choice", options: ["Mobilization", "Modernization", "Motivation", "Modification"], answer: 0 },
+            { q: "27. To ___ means to cause something to happen.", type: "choice", options: ["trigger", "tremble", "travel", "trust"], answer: 0 },
+            { q: "28. A ___ is when something falls down suddenly.", type: "choice", options: ["collapse", "color", "column", "concept"], answer: 0 },
+            { q: "29. ___ energy comes from sources that naturally replenish.", type: "choice", options: ["Renewable", "Nuclear", "Fossil", "Thermal"], answer: 0 },
+            { q: "30. ___ means reducing carbon emissions to fight climate change.", type: "choice", options: ["Decarbonization", "Deforestation", "Desalination", "Decentralization"], answer: 0 },
+            { q: "31. A ___ is a detailed plan or design.", type: "choice", options: ["blueprint", "blueprint", "background", "backlash"], answer: 0 },
+            { q: "32. ___ power is electricity generated from sunlight.", type: "choice", options: ["Photovoltaic", "Hydroelectric", "Geothermal", "Nuclear"], answer: 0 },
+            { q: "33. ___ means the quality of being discontinuous or irregular.", type: "choice", options: ["Intermittency", "Integration", "Innovation", "Infrastructure"], answer: 0 },
+            { q: "34. Carbon ___ means achieving net zero carbon emissions.", type: "choice", options: ["neutrality", "neutrality", "nationality", "normality"], answer: 0 },
+            { q: "35. ___ means able to be controlled and sent out as needed.", type: "choice", options: ["Dispatchable", "Dependable", "Desirable", "Durable"], answer: 0 },
+            { q: "36. ___ means covering all aspects; thorough.", type: "choice", options: ["Comprehensive", "Competitive", "Compulsory", "Conditional"], answer: 0 },
+            { q: "37. An ___ is an evaluation or judgment.", type: "choice", options: ["assessment", "assignment", "assistance", "assurance"], answer: 0 },
+            { q: "38. ___ means the maximum amount that can be contained.", type: "choice", options: ["Capacity", "Capability", "Capital", "Category"], answer: 0 },
+            { q: "39. To ___ supplies means to drop them from an aircraft.", type: "choice", options: ["air-drop", "airlift", "airbrush", "airmail"], answer: 0 },
+            { q: "40. A ___ is a person who researches at a scientific institution.", type: "choice", options: ["researcher", "reporter", "retailer", "receiver"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. Forty-three people are confirmed dead ___ 519 remain missing.", type: "choice", options: ["and", "but", "or", "so"], answer: 0 },
+            { q: "42. The mudslide swept ___ the area on August 26.", type: "choice", options: ["through", "in", "at", "on"], answer: 0 },
+            { q: "43. More than 2,500 rescuers had been deployed ___ Saturday evening.", type: "choice", options: ["as of", "by", "until", "from"], answer: 0 },
+            { q: "44. Drones had made ___ 1,000 flights.", type: "choice", options: ["over", "above", "more", "beyond"], answer: 0 },
+            { q: "45. Road access was restored ___ Wednesday.", type: "choice", options: ["on", "in", "at", "by"], answer: 0 },
+            { q: "46. Rescuers have been clearing debris layer ___ layer.", type: "choice", options: ["by", "after", "with", "from"], answer: 0 },
+            { q: "47. A collapse on the Nepalese side triggered ___ disaster.", type: "choice", options: ["the", "a", "an", "/"], answer: 0 },
+            { q: "48. The debris flow traveled ___ 22 kilometers.", type: "choice", options: ["about", "around", "near", "almost"], answer: 0 },
+            { q: "49. It took only six ___ seven minutes.", type: "choice", options: ["to", "and", "or", "until"], answer: 0 },
+            { q: "50. Climate change is increasing the risks ___ disasters.", type: "choice", options: ["of", "for", "with", "by"], answer: 0 },
+            { q: "51. China has set a target to ___ wind and solar capacity.", type: "choice", options: ["expand", "expands", "expanding", "expanded"], answer: 0 },
+            { q: "52. The plan was released ___ September 6.", type: "choice", options: ["on", "in", "at", "by"], answer: 0 },
+            { q: "53. This means ___ approximately 1 billion kilowatts.", type: "choice", options: ["adding", "add", "added", "to add"], answer: 0 },
+            { q: "54. China built the world's largest renewable energy system ___ the 14th Five-Year Plan.", type: "choice", options: ["during", "while", "since", "from"], answer: 0 },
+            { q: "55. By the end ___ 2025, capacity reached 1.84 billion kilowatts.", type: "choice", options: ["of", "in", "at", "by"], answer: 0 },
+            { q: "56. State Grid aims to lift the share ___ over 30 percent.", type: "choice", options: ["to", "at", "in", "for"], answer: 0 },
+            { q: "57. PV power capacity has overtaken coal-fired power ___ the first time.", type: "choice", options: ["for", "at", "in", "on"], answer: 0 },
+            { q: "58. The plan emphasizes grid modernization ___ handle intermittency.", type: "choice", options: ["to", "for", "with", "by"], answer: 0 },
+            { q: "59. This transition represents a historic shift ___ China's energy structure.", type: "choice", options: ["in", "of", "for", "at"], answer: 0 },
+            { q: "60. Experts note that this marks a step ___ carbon neutrality.", type: "choice", options: ["toward", "to", "at", "for"], answer: 0 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. How many people are confirmed dead in Gyirong?", options: ["43", "519", "2,500", "1,000"], type: "choice", answer: 0 },
+            { q: "62. How many remain missing?", options: ["43", "519", "2,500", "500"], type: "choice", answer: 1 },
+            { q: "63. When did the mudslide occur?", options: ["August 26", "September 7", "September 6", "August 31"], type: "choice", answer: 0 },
+            { q: "64. How many rescuers were deployed?", options: ["Over 500", "Over 1,000", "Over 2,500", "Over 9,000"], type: "choice", answer: 2 },
+            { q: "65. How many drone flights were made?", options: ["Over 500", "Over 1,000", "Over 2,500", "Over 5,000"], type: "choice", answer: 1 },
+            { q: "66. How many tons of supplies were air-dropped?", options: ["5.43 tons", "43 tons", "519 tons", "2,500 tons"], type: "choice", answer: 0 },
+            { q: "67. What triggered the disaster?", options: ["An earthquake", "An ice-rock collapse", "Heavy rains", "A volcanic eruption"], type: "choice", answer: 1 },
+            { q: "68. How far did the debris flow travel?", options: ["About 6 km", "About 22 km", "About 43 km", "About 519 km"], type: "choice", answer: 1 },
+            { q: "69. What did Bruno Falci find impressive?", options: ["The number of casualties", "How fast China acts", "The weather", "The media coverage"], type: "choice", answer: 1 },
+            { q: "70. What is Su Pengcheng's field?", options: ["Journalism", "Mountain Hazards and Environment", "Medicine", "Engineering"], type: "choice", answer: 1 },
+            { q: "71. What is China's wind and solar target by 2030?", options: ["1.84 billion kW", "2.8 billion kW", "6 trillion kW", "50%"], type: "choice", answer: 1 },
+            { q: "72. How much new capacity will be added?", options: ["About 500 million kW", "About 1 billion kW", "About 1.84 billion kW", "About 2.8 billion kW"], type: "choice", answer: 1 },
+            { q: "73. When was the plan released?", options: ["September 5", "September 6", "September 7", "September 8"], type: "choice", answer: 1 },
+            { q: "74. What was the capacity by end of 2025?", options: ["1 billion kW", "1.84 billion kW", "2.8 billion kW", "6 trillion kW"], type: "choice", answer: 1 },
+            { q: "75. What is the annual renewable generation target for 2030?", options: ["About 4 trillion kWh", "About 6 trillion kWh", "About 1.84 trillion kWh", "About 2.8 trillion kWh"], type: "choice", answer: 1 },
+            { q: "76. What share does State Grid aim for?", options: ["Over 20%", "Over 30%", "Over 50%", "Over 100%"], type: "choice", answer: 1 },
+            { q: "77. What has PV power overtaken?", options: ["Wind power", "Coal-fired power", "Nuclear power", "Hydro power"], type: "choice", answer: 1 },
+            { q: "78. What percentage will non-fossil energy reach?", options: ["30%", "40%", "50%", "60%"], type: "choice", answer: 2 },
+            { q: "79. What does the plan emphasize?", options: ["More coal plants", "Grid modernization and storage", "Less renewables", "More oil imports"], type: "choice", answer: 1 },
+            { q: "80. What kind of supply pattern does China aim for?", options: ["Coal-based", "Green and low-carbon", "Nuclear-based", "Gas-based"], type: "choice", answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '西藏吉隆泥石流已确认43人死亡。'", type: "choice", options: ["Forty-three people are confirmed dead in the Gyirong mudslide.", "43 people die Gyirong.", "Gyirong 43 dead.", "Mudslide Gyirong 43."], answer: 0 },
+            { q: "82. 'devastating' means ___.", type: "choice", options: ["causing great damage", "very beautiful", "extremely small", "quite simple"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["The mudslide swept through the area on August 26.", "The mudslide sweeps area August 26.", "August 26 mudslide area.", "Area mudslide August 26 swept."], answer: 0 },
+            { q: "84. 'deployed' in this context means ___.", type: "choice", options: ["positioned for action", "sent home", "dismissed", "delayed"], answer: 0 },
+            { q: "85. Choose the correct translation: '气候变化正在增加喜马拉雅地区的灾害风险。'", type: "choice", options: ["Climate change is increasing the risks of disasters in the Himalayas.", "Climate change Himalayas disasters risks.", "Himalayas climate change risks disasters.", "Disasters risks Himalayas climate change."], answer: 0 },
+            { q: "86. 'were deployed' is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'More than 2,500 rescuers were deployed' is ___.", type: "choice", options: ["The government deployed more than 2,500 rescuers.", "The government more than 2,500 rescuers deployed.", "More than 2,500 rescuers the government deployed.", "Deployed the government more than 2,500 rescuers."], answer: 0 },
+            { q: "88. 'China has set an ambitious target.' The subject is ___.", type: "choice", options: ["China", "has set", "an ambitious target", "set"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The debris flow traveled 22 kilometers, ___?'", type: "choice", options: ["didn't it", "did it", "doesn't it", "isn't it"], answer: 0 },
+            { q: "90. 'By 2030, non-fossil energy ___ reach 50%.' Fill:", type: "choice", options: ["will", "would", "shall", "should"], answer: 0 },
+            { q: "91. Choose the correct translation: '中国光伏发电量首次超过煤电。'", type: "choice", options: ["China's photovoltaic power capacity has overtaken coal-fired power for the first time.", "China PV coal first time.", "First time China PV coal.", "Coal PV China first time."], answer: 0 },
+            { q: "92. 'intermittency' means ___.", type: "choice", options: ["the quality of being discontinuous", "the quality of being constant", "the quality of being strong", "the quality of being weak"], answer: 0 },
+            { q: "93. 'If climate change continues, disasters will increase.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["State Grid unveiled a comprehensive decarbonization blueprint.", "State Grid blueprint decarbonization.", "Decarbonization blueprint State Grid.", "Blueprint State Grid decarbonization."], answer: 0 },
+            { q: "95. '___ the challenging terrain, rescuers continued their work.' Fill in the blank.", type: "choice", options: ["Despite", "Because", "Since", "As"], answer: 0 },
+            { q: "96. The indirect speech of 'Su said, \"Climate change is increasing risks.\"' is ___.", type: "choice", options: ["Su said climate change was increasing risks.", "Su said climate change is increasing risks.", "Su says climate change was increasing risks.", "Su said climate change increase risks."], answer: 0 },
+            { q: "97. 'dispatchable' in the context means ___.", type: "choice", options: ["able to be controlled and sent out", "free from control", "unable to operate", "permanently fixed"], answer: 0 },
+            { q: "98. 'has overtaken' uses the ___ tense.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "99. 'Over 2,500 rescuers had been deployed.' The verb is ___.", type: "choice", options: ["had been deployed", "2,500", "rescuers", "over"], answer: 0 },
+            { q: "100. 'carbon neutrality' means ___.", type: "choice", options: ["achieving net zero carbon emissions", "producing more carbon", "burning more coal", "increasing emissions"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
