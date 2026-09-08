@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年9月9日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年9月9日 · 星期三 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>China Dispatches Fourth Batch of Emergency Relief Supplies to Nepal</h3>
+                    <p>China dispatched its fourth batch of emergency relief supplies to Nepal on the morning of September 8, 2026, as the Himalayan nation continued to grapple with the devastating aftermath of catastrophic floods and mudslides that have claimed over 1,357 lives.</p>
+                    <p>Foreign Ministry spokeswoman Mao Ning announced at a regular press briefing that the supplies — delivered by a Chinese Air Force Y-20 transport aircraft to Tribhuvan International Airport in Kathmandu — include rescue hovercraft, stainless steel permanent magnet flood pumps, backup batteries, mortuary cabinets, and solar lamps, tailored to Nepal's most urgent needs.</p>
+                    <p>Chinese Ambassador to Nepal Zhang Maoming and Nepal's Minister of Science, Technology and Innovation Mahabir Pun attended the handover ceremony at the airport. This latest delivery follows three earlier batches sent on August 30, September 1, and September 3.</p>
+                    <p>Mao also highlighted broader civil-society contributions: the China Foundation for Rural Development has established temporary shelters in disaster-hit areas of Nepal, providing daily necessities and basic medical services. The Nepal Chinese Enterprises Association recently handed over its first batch of disaster relief funds to the Nepali side.</p>
+                    <p>"In the face of major disasters, China will continue to stand together with Nepal and join hands to overcome difficulties," Mao said. The death toll from the Nepal mudslide disaster has risen to 1,357 as of September 8, according to Nepal's National Disaster Risk Reduction and Management Authority.</p>
+                    <span class="source">Source: China Daily / CCTV News, 2026-09-08</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>China's Foreign Trade Surges 17.6% in First Eight Months of 2026</h3>
+                    <p>China's foreign trade in goods rose 17.6 percent year-on-year in the first eight months of 2026 to 34.78 trillion yuan (about $5.13 trillion), according to data released by the General Administration of Customs on September 8, 2026. The growth rate accelerated by 0.3 percentage points compared to the January-July period.</p>
+                    <p>Exports climbed 14.6 percent to 20.17 trillion yuan, while imports surged 22 percent to 14.61 trillion yuan. The import growth rate exceeded the export growth rate by 8 percentage points, underscoring China's expanding role as a major consumer market. In August alone, imports grew by an impressive 24.5 percent year-on-year.</p>
+                    <p>The ASEAN remained China's largest trading partner, with bilateral trade reaching 4.82 trillion yuan, up 17.2 percent. The European Union ranked second with trade totaling 4.46 trillion yuan, a 16.7 percent increase, followed by the United States at 3.88 trillion yuan, up 17.4 percent.</p>
+                    <p>Trade with Belt and Road countries grew 19.4 percent to 16.98 trillion yuan, while trade with other BRICS nations increased 18.8 percent. Mechanical and electrical products led exports, accounting for 12.15 trillion yuan, up 16.2 percent. Automobile exports reached 6.52 million units, maintaining China's position as the world's top auto exporter.</p>
+                    <p>The 2026 China International Fair for Trade in Services (CIFTIS) is set to open in Beijing on September 9, further highlighting China's commitment to expanding trade. The fair, held at the newly renovated Shougang Park, will run through September 13 with exhibitors from over 80 countries.</p>
+                    <span class="source">Source: China Daily / Xinhua / CCTV News, 2026-09-08</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-09-09';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-09-09',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. How many batches of emergency relief has China sent to Nepal?", options: ["Three", "Four", "Five", "Two"], answer: 1 },
+            { q: "2. When was the fourth batch dispatched?", options: ["August 30", "September 1", "September 3", "September 8"], answer: 3 },
+            { q: "3. What aircraft delivered the supplies?", options: ["Y-20 transport aircraft", "C-130", "Il-76", "Boeing 747"], answer: 0 },
+            { q: "4. Where did the aircraft land?", options: ["Tribhuvan International Airport", "Lukla Airport", "Pokhara Airport", "Bhaktapur Airport"], answer: 0 },
+            { q: "5. Who is the Foreign Ministry spokeswoman?", options: ["Mao Ning", "Hua Chunying", "Wang Wenbin", "Zhao Lijian"], answer: 0 },
+            { q: "6. Which items are NOT included in the relief supplies?", options: ["Rescue hovercraft", "Solar lamps", "Food and water", "Mortuary cabinets"], answer: 2 },
+            { q: "7. Who is the Chinese Ambassador to Nepal?", options: ["Zhang Maoming", "Chen Song", "Hou Yanqi", "Wu Hongbo"], answer: 0 },
+            { q: "8. What is Nepal's Science and Technology Minister's name?", options: ["Mahabir Pun", "Sher Bahadur Deuba", "K.P. Sharma Oli", "Pushpa Kamal Dahal"], answer: 0 },
+            { q: "9. What has the China Foundation for Rural Development established?", options: ["Temporary shelters", "Schools", "Hospitals", "Power plants"], answer: 0 },
+            { q: "10. How many lives have been claimed by the disaster?", options: ["Over 519", "Over 1,357", "Over 2,500", "Over 3,000"], answer: 1 },
+            { q: "11. Which organization handed over disaster relief funds?", options: ["Nepal Chinese Enterprises Association", "Red Cross China", "UNICEF", "WHO"], answer: 0 },
+            { q: "12. When was the first batch of supplies sent?", options: ["August 26", "August 30", "September 1", "September 3"], answer: 1 },
+            { q: "13. What did Mao say China would do in the face of major disasters?", options: ["Continue to stand together with Nepal", "Withdraw all aid", "Send only financial help", "Send military forces"], answer: 0 },
+            { q: "14. Which Nepali authority reported the death toll?", options: ["National Disaster Risk Reduction and Management Authority", "Nepal Army", "Nepal Police", "Home Ministry"], answer: 0 },
+            { q: "15. What type of pumps are included in the supplies?", options: ["Stainless steel permanent magnet flood pumps", "Diesel pumps", "Hand pumps", "Solar pumps"], answer: 0 },
+            { q: "16. The supplies were tailored to Nepal's most ___ needs.", options: ["urgent", "general", "long-term", "minor"], answer: 0 },
+            { q: "17. Where did the handover ceremony take place?", options: ["At the airport", "At the Chinese Embassy", "At a government building", "At a relief camp"], answer: 0 },
+            { q: "18. How many earlier batches were sent before this one?", options: ["Two", "Three", "Four", "Five"], answer: 1 },
+            { q: "19. What did the Nepal Chinese Enterprises Association hand over?", options: ["First batch of disaster relief funds", "Medical equipment", "Food supplies", "Clothing"], answer: 0 },
+            { q: "20. What basic services do the temporary shelters provide?", options: ["Daily necessities and basic medical services", "Internet and education", "Banking and legal services", "Transportation and housing"], answer: 0 }
+        ];
+
+        const reading2Data = [
+            { q: "21. How much did China's foreign trade grow in the first eight months of 2026?", options: ["14.6%", "17.6%", "22%", "24.5%"], answer: 1 },
+            { q: "22. What was the total trade value in the first eight months?", options: ["30.13 trillion yuan", "34.78 trillion yuan", "40 trillion yuan", "20.17 trillion yuan"], answer: 1 },
+            { q: "23. How much did exports grow?", options: ["14.6%", "17.6%", "22%", "19.4%"], answer: 0 },
+            { q: "24. How much did imports grow?", options: ["14.6%", "17.6%", "22%", "24.5%"], answer: 2 },
+            { q: "25. By how much did the growth rate accelerate compared to January-July?", options: ["0.2 percentage points", "0.3 percentage points", "0.5 percentage points", "1 percentage point"], answer: 1 },
+            { q: "26. What was the total export value?", options: ["14.61 trillion yuan", "20.17 trillion yuan", "34.78 trillion yuan", "16.98 trillion yuan"], answer: 1 },
+            { q: "27. What was the total import value?", options: ["14.61 trillion yuan", "20.17 trillion yuan", "34.78 trillion yuan", "16.98 trillion yuan"], answer: 0 },
+            { q: "28. By how much did import growth exceed export growth?", options: ["5.4 percentage points", "7.4 percentage points", "8 percentage points", "10 percentage points"], answer: 2 },
+            { q: "29. What was the import growth rate in August alone?", options: ["14.6%", "17.6%", "22%", "24.5%"], answer: 3 },
+            { q: "30. Which is China's largest trading partner?", options: ["EU", "ASEAN", "USA", "Japan"], answer: 1 },
+            { q: "31. What was the bilateral trade with ASEAN?", options: ["3.88 trillion yuan", "4.46 trillion yuan", "4.82 trillion yuan", "16.98 trillion yuan"], answer: 2 },
+            { q: "32. How much did ASEAN trade grow?", options: ["16.7%", "17.2%", "17.4%", "19.4%"], answer: 1 },
+            { q: "33. What was the EU-China trade total?", options: ["3.88 trillion yuan", "4.46 trillion yuan", "4.82 trillion yuan", "6.52 trillion yuan"], answer: 1 },
+            { q: "34. What was the China-US trade total?", options: ["3.88 trillion yuan", "4.46 trillion yuan", "4.82 trillion yuan", "6.52 trillion yuan"], answer: 0 },
+            { q: "35. How much did trade with Belt and Road countries grow?", options: ["16.2%", "17.4%", "18.8%", "19.4%"], answer: 3 },
+            { q: "36. What was the Belt and Road trade total?", options: ["12.15 trillion yuan", "14.61 trillion yuan", "16.98 trillion yuan", "20.17 trillion yuan"], answer: 2 },
+            { q: "37. How much did trade with other BRICS nations increase?", options: ["16.2%", "17.4%", "18.8%", "19.4%"], answer: 2 },
+            { q: "38. What was the value of mechanical and electrical product exports?", options: ["6.52 trillion yuan", "12.15 trillion yuan", "14.61 trillion yuan", "16.98 trillion yuan"], answer: 1 },
+            { q: "39. How many automobile units were exported?", options: ["3.88 million", "6.52 million", "12.15 million", "17.2 million"], answer: 1 },
+            { q: "40. When does CIFTIS open in Beijing?", options: ["September 7", "September 8", "September 9", "September 13"], answer: 2 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "dispatch", phonetic: "/dɪsˈpætʃ/", meaning: "v. 派遣；发送" },
+            { word: "catastrophic", phonetic: "/ˌkætəˈstrɒfɪk/", meaning: "adj. 灾难性的" },
+            { word: "aftermath", phonetic: "/ˈɑːftərmæθ/", meaning: "n. 后果；灾后时期" },
+            { word: "hovercraft", phonetic: "/ˈhɒvərkræft/", meaning: "n. 气垫船" },
+            { word: "mortuary", phonetic: "/ˈmɔːrtʃueri/", meaning: "n. 停尸间 adj. 丧葬的" },
+            { word: "surge", phonetic: "/sɜːrdʒ/", meaning: "v. 激增 n. 汹涌" },
+            { word: "bilateral", phonetic: "/baɪˈlætərəl/", meaning: "adj. 双边的" },
+            { word: "mechanical", phonetic: "/məˈkænɪkl/", meaning: "adj. 机械的" },
+            { word: "exceed", phonetic: "/ɪkˈsiːd/", meaning: "v. 超过；超出" },
+            { word: "underscore", phonetic: "/ˌʌndərˈskɔːr/", meaning: "v. 强调；突出" },
+            { word: "accelerate", phonetic: "/əkˈseləreɪt/", meaning: "v. 加速；促进" },
+            { word: "comprehensive", phonetic: "/ˌkɑːmprɪˈhensɪv/", meaning: "adj. 综合的；全面的" },
+            { word: "renovate", phonetic: "/ˈrenəveɪt/", meaning: "v. 翻新；修复" },
+            { word: "exhibitor", phonetic: "/ɪɡˈzɪbɪtər/", meaning: "n. 参展商" },
+            { word: "electromechanical", phonetic: "/ɪˌlɛktroʊməˈkænɪkl/", meaning: "adj. 机电的" },
+            { word: "preliminary", phonetic: "/prɪˈlɪmɪneri/", meaning: "adj. 初步的；预备的" },
+            { word: "consulate", phonetic: "/ˈkɑːnsələt/", meaning: "n. 领事馆" },
+            { word: "devastate", phonetic: "/ˈdevəsteɪt/", meaning: "v. 毁坏；使荒废" },
+            { word: "infrastructure", phonetic: "/ˈɪnfrəˌstrʌktʃər/", meaning: "n. 基础设施" },
+            { word: "submit", phonetic: "/səbˈmɪt/", meaning: "v. 提交；呈递" }
+        ];
+
+        const oldVocabData = [
+            { word: "devastating", phonetic: "/ˈdevəsteɪtɪŋ/", meaning: "adj. 毁灭性的" },
+            { word: "mudslide", phonetic: "/ˈmʌdˌslaɪd/", meaning: "n. 泥石流" },
+            { word: "deploy", phonetic: "/dɪˈplɔɪ/", meaning: "v. 部署；调遣" },
+            { word: "air-drop", phonetic: "/ɛr drɒp/", meaning: "v. 空投" },
+            { word: "debris", phonetic: "/dəˈbriː/", meaning: "n. 碎片；残骸" },
+            { word: "restore", phonetic: "/rɪˈstɔːr/", meaning: "v. 恢复；修复" },
+            { word: "journalist", phonetic: "/ˈdʒɜːrnəlɪst/", meaning: "n. 记者" },
+            { word: "mobilization", phonetic: "/ˌmoʊbələˈzeɪʃn/", meaning: "n. 动员；调动" },
+            { word: "trigger", phonetic: "/ˈtrɪɡər/", meaning: "v. 触发；引发" },
+            { word: "collapse", phonetic: "/kəˈlæps/", meaning: "n./v. 坍塌" },
+            { word: "capacity", phonetic: "/kəˈpæsəti/", meaning: "n. 容量；产能" },
+            { word: "renewable", phonetic: "/rɪˈnuːəbl/", meaning: "adj. 可再生的" },
+            { word: "decarbonization", phonetic: "/diːˌkɑːrbənaɪˈzeɪʃn/", meaning: "n. 脱碳" },
+            { word: "blueprint", phonetic: "/ˈbluːprɪnt/", meaning: "n. 蓝图；方案" },
+            { word: "photovoltaic", phonetic: "/ˌfoʊtoʊvɒlˈteɪɪk/", meaning: "adj. 光伏的" },
+            { word: "intermittency", phonetic: "/ˌɪntərˈmɪtənsi/", meaning: "n. 间歇性" },
+            { word: "neutrality", phonetic: "/nuːˈtræləti/", meaning: "n. 中和；中立" },
+            { word: "dispatchable", phonetic: "/dɪˈspætʃəbl/", meaning: "adj. 可调度的" },
+            { word: "assessment", phonetic: "/əˈsesmənt/", meaning: "n. 评估" },
+            { word: "rescue", phonetic: "/ˈreskjuː/", meaning: "n./v. 救援" },
+            { word: "emergency", phonetic: "/ɪˈmɜːrdʒənsi/", meaning: "n. 紧急情况" },
+            { word: "monsoon", phonetic: "/mɑːnˈsuːn/", meaning: "n. 季风；雨季" },
+            { word: "framework", phonetic: "/ˈfreɪmwɜːrk/", meaning: "n. 框架；体系" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃən/", meaning: "n. 合作；协作" },
+            { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", meaning: "n. 倡议" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" },
+            { word: "prosperity", phonetic: "/prɑːˈsperəti/", meaning: "n. 繁荣" },
+            { word: "consensus", phonetic: "/kənˈsensəs/", meaning: "n. 共识" },
+            { word: "connectivity", phonetic: "/kəˈnektɪvəti/", meaning: "n. 连通性" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. China ___ its fourth batch of emergency relief supplies to Nepal.", type: "choice", options: ["dispatch", "dispatches", "dispatched", "dispatching"], answer: 2 },
+            { q: "2. The supplies ___ by a Chinese Air Force Y-20 transport aircraft.", type: "choice", options: ["deliver", "were delivered", "have delivered", "delivering"], answer: 1 },
+            { q: "3. Foreign Ministry spokeswoman Mao Ning ___ at a regular press briefing.", type: "choice", options: ["announce", "announces", "announced", "has announced"], answer: 2 },
+            { q: "4. The death toll ___ to 1,357 as of September 8.", type: "choice", options: ["rise", "rises", "has risen", "rose"], answer: 2 },
+            { q: "5. This latest delivery ___ three earlier batches.", type: "choice", options: ["follow", "follows", "has followed", "following"], answer: 1 },
+            { q: "6. The China Foundation for Rural Development ___ temporary shelters.", type: "choice", options: ["establish", "establishes", "has established", "establishing"], answer: 2 },
+            { q: "7. China's foreign trade ___ 17.6 percent year-on-year.", type: "choice", options: ["rose", "rises", "has risen", "rising"], answer: 0 },
+            { q: "8. The growth rate ___ by 0.3 percentage points.", type: "choice", options: ["accelerate", "accelerates", "accelerated", "has accelerated"], answer: 3 },
+            { q: "9. Exports ___ 14.6 percent to 20.17 trillion yuan.", type: "choice", options: ["climb", "climbs", "climbed", "has climbed"], answer: 0 },
+            { q: "10. The import growth rate ___ the export growth rate by 8 percentage points.", type: "choice", options: ["exceed", "exceeds", "exceeded", "exceeding"], answer: 1 },
+            { q: "11. ASEAN ___ China's largest trading partner.", type: "choice", options: ["remain", "remains", "remained", "remaining"], answer: 1 },
+            { q: "12. Mechanical and electrical products ___ exports.", type: "choice", options: ["lead", "leads", "led", "leading"], answer: 0 },
+            { q: "13. Automobile exports ___ 6.52 million units.", type: "choice", options: ["reach", "reaches", "reached", "reaching"], answer: 0 },
+            { q: "14. The fair ___ at the newly renovated Shougang Park.", type: "choice", options: ["hold", "holds", "is held", "held"], answer: 2 },
+            { q: "15. In the face of major disasters, China ___ to stand together with Nepal.", type: "choice", options: ["continue", "continues", "continued", "has continued"], answer: 1 },
+            { q: "16. The supplies ___ to Nepal's most urgent needs.", type: "choice", options: ["tailor", "are tailored", "tailored", "tailoring"], answer: 1 },
+            { q: "17. Mao also ___ broader civil-society contributions.", type: "choice", options: ["highlight", "highlights", "highlighted", "has highlighted"], answer: 2 },
+            { q: "18. The Nepal Chinese Enterprises Association ___ its first batch of funds.", type: "choice", options: ["hand over", "hands over", "handed over", "has handed over"], answer: 2 },
+            { q: "19. Bilateral trade ___ 4.82 trillion yuan.", type: "choice", options: ["reach", "reaches", "reached", "reaching"], answer: 0 },
+            { q: "20. Trade with Belt and Road countries ___ 19.4 percent.", type: "choice", options: ["grow", "grows", "grew", "has grown"], answer: 3 },
+            // 21-40 词汇运用
+            { q: "21. To ___ means to send someone or something somewhere for a purpose.", type: "choice", options: ["dispatch", "delay", "deny", "depart"], answer: 0 },
+            { q: "22. ___ means causing great damage or suffering.", type: "choice", options: ["Catastrophic", "Beautiful", "Minor", "Pleasant"], answer: 0 },
+            { q: "23. The ___ of a disaster refers to the period following it.", type: "choice", options: ["aftermath", "beforemath", "beginning", "introduction"], answer: 0 },
+            { q: "24. A ___ is a vehicle that travels on a cushion of air.", type: "choice", options: ["hovercraft", "helicopter", "airplane", "submarine"], answer: 0 },
+            { q: "25. A ___ is a room or building where dead bodies are kept.", type: "choice", options: ["mortuary", "library", "factory", "hospital"], answer: 0 },
+            { q: "26. To ___ means to increase suddenly and greatly.", type: "choice", options: ["surge", "decrease", "remain", "decline"], answer: 0 },
+            { q: "27. ___ means involving two parties or countries.", type: "choice", options: ["Bilateral", "Unilateral", "Trilateral", "Multilateral"], answer: 0 },
+            { q: "28. ___ products involve machinery and electronics.", type: "choice", options: ["Mechanical", "Chemical", "Biological", "Manual"], answer: 0 },
+            { q: "29. To ___ means to be greater than.", type: "choice", options: ["exceed", "fall short", "match", "equal"], answer: 0 },
+            { q: "30. To ___ means to emphasize or highlight.", type: "choice", options: ["underscore", "understate", "overlook", "ignore"], answer: 0 },
+            { q: "31. To ___ means to speed up.", type: "choice", options: ["accelerate", "decelerate", "maintain", "pause"], answer: 0 },
+            { q: "32. ___ means covering all aspects; thorough.", type: "choice", options: ["Comprehensive", "Partial", "Limited", "Narrow"], answer: 0 },
+            { q: "33. To ___ a building means to repair and improve it.", type: "choice", options: ["renovate", "demolish", "abandon", "construct"], answer: 0 },
+            { q: "34. An ___ is a person or company that exhibits at a fair.", type: "choice", options: ["exhibitor", "visitor", "customer", "supplier"], answer: 0 },
+            { q: "35. ___ combines electrical and mechanical engineering.", type: "choice", options: ["Electromechanical", "Biological", "Chemical", "Agricultural"], answer: 0 },
+            { q: "36. ___ means initial or preparatory.", type: "choice", options: ["Preliminary", "Final", "Complete", "Advanced"], answer: 0 },
+            { q: "37. A ___ is the office of a consul in a foreign city.", type: "choice", options: ["consulate", "embassy", "ministry", "parliament"], answer: 0 },
+            { q: "38. To ___ means to destroy or ruin completely.", type: "choice", options: ["devastate", "build", "repair", "maintain"], answer: 0 },
+            { q: "39. ___ refers to basic facilities and systems of a country.", type: "choice", options: ["Infrastructure", "Agriculture", "Manufacturing", "Retail"], answer: 0 },
+            { q: "40. To ___ means to present or hand in something.", type: "choice", options: ["submit", "withdraw", "cancel", "postpone"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. China dispatched its fourth batch ___ emergency relief supplies.", type: "choice", options: ["of", "for", "with", "by"], answer: 0 },
+            { q: "42. The supplies were delivered ___ a Chinese Air Force Y-20.", type: "choice", options: ["by", "with", "from", "through"], answer: 0 },
+            { q: "43. The death toll has risen ___ 1,357.", type: "choice", options: ["to", "at", "in", "for"], answer: 0 },
+            { q: "44. Mao announced ___ a regular press briefing.", type: "choice", options: ["at", "in", "on", "during"], answer: 0 },
+            { q: "45. The supplies are tailored ___ Nepal's most urgent needs.", type: "choice", options: ["to", "for", "with", "by"], answer: 0 },
+            { q: "46. China's foreign trade rose 17.6 percent year-on-year ___ the first eight months.", type: "choice", options: ["in", "on", "at", "by"], answer: 0 },
+            { q: "47. The growth rate accelerated ___ 0.3 percentage points.", type: "choice", options: ["by", "to", "from", "with"], answer: 0 },
+            { q: "48. Exports climbed 14.6 percent ___ 20.17 trillion yuan.", type: "choice", options: ["to", "by", "from", "at"], answer: 0 },
+            { q: "49. ASEAN remained China's largest trading ___.", type: "choice", options: ["partner", "rival", "enemy", "neighbor"], answer: 0 },
+            { q: "50. Bilateral trade ___ 4.82 trillion yuan.", type: "choice", options: ["reached", "fell", "dropped", "decreased"], answer: 0 },
+            { q: "51. Mechanical and electrical products ___ exports.", type: "choice", options: ["led", "followed", "delayed", "hindered"], answer: 0 },
+            { q: "52. Automobile exports reached 6.52 million ___.", type: "choice", options: ["units", "tons", "liters", "meters"], answer: 0 },
+            { q: "53. The fair is set to ___ in Beijing on September 9.", type: "choice", options: ["open", "close", "end", "cancel"], answer: 0 },
+            { q: "54. The fair will ___ through September 13.", type: "choice", options: ["run", "stop", "pause", "halt"], answer: 0 },
+            { q: "55. The China Foundation ___ Rural Development established shelters.", type: "choice", options: ["for", "of", "with", "by"], answer: 0 },
+            { q: "56. The association handed ___ disaster relief funds.", type: "choice", options: ["over", "out", "in", "up"], answer: 0 },
+            { q: "57. China will continue to stand ___ with Nepal.", type: "choice", options: ["together", "apart", "alone", "away"], answer: 0 },
+            { q: "58. The disaster has claimed ___ 1,357 lives.", type: "choice", options: ["over", "under", "below", "nearly"], answer: 0 },
+            { q: "59. Trade with Belt and Road countries ___ 19.4 percent.", type: "choice", options: ["grew", "shrank", "declined", "dropped"], answer: 0 },
+            { q: "60. The import growth rate ___ the export growth rate.", type: "choice", options: ["exceeded", "matched", "equaled", "fell short of"], answer: 0 },
+            // 61-80 阅读理解题（基于课文）
+            { q: "61. How many batches of relief supplies has China sent to Nepal?", type: "choice", options: ["Three", "Four", "Five", "Two"], answer: 1 },
+            { q: "62. What aircraft delivered the fourth batch?", type: "choice", options: ["Y-20", "C-130", "Il-76", "Boeing 747"], answer: 0 },
+            { q: "63. Who is the Foreign Ministry spokeswoman?", type: "choice", options: ["Mao Ning", "Hua Chunying", "Wang Wenbin", "Zhao Lijian"], answer: 0 },
+            { q: "64. How many lives have been claimed by the Nepal disaster?", type: "choice", options: ["Over 519", "Over 1,357", "Over 2,500", "Over 3,000"], answer: 1 },
+            { q: "65. What has the China Foundation for Rural Development established?", type: "choice", options: ["Temporary shelters", "Schools", "Hospitals", "Power plants"], answer: 0 },
+            { q: "66. How much did China's foreign trade grow in the first 8 months?", type: "choice", options: ["14.6%", "17.6%", "22%", "24.5%"], answer: 1 },
+            { q: "67. What was the total trade value?", type: "choice", options: ["30.13 trillion yuan", "34.78 trillion yuan", "40 trillion yuan", "20.17 trillion yuan"], answer: 1 },
+            { q: "68. How much did exports grow?", type: "choice", options: ["14.6%", "17.6%", "22%", "19.4%"], answer: 0 },
+            { q: "69. How much did imports grow?", type: "choice", options: ["14.6%", "17.6%", "22%", "24.5%"], answer: 2 },
+            { q: "70. Which is China's largest trading partner?", type: "choice", options: ["EU", "ASEAN", "USA", "Japan"], answer: 1 },
+            { q: "71. What was the ASEAN-China bilateral trade?", type: "choice", options: ["3.88 trillion yuan", "4.46 trillion yuan", "4.82 trillion yuan", "16.98 trillion yuan"], answer: 2 },
+            { q: "72. What was the China-US trade total?", type: "choice", options: ["3.88 trillion yuan", "4.46 trillion yuan", "4.82 trillion yuan", "6.52 trillion yuan"], answer: 0 },
+            { q: "73. How much did Belt and Road trade grow?", type: "choice", options: ["16.2%", "17.4%", "18.8%", "19.4%"], answer: 3 },
+            { q: "74. What was the value of mechanical and electrical exports?", type: "choice", options: ["6.52 trillion yuan", "12.15 trillion yuan", "14.61 trillion yuan", "16.98 trillion yuan"], answer: 1 },
+            { q: "75. How many automobiles did China export?", type: "choice", options: ["3.88 million", "6.52 million", "12.15 million", "17.2 million"], answer: 1 },
+            { q: "76. When does CIFTIS open?", type: "choice", options: ["September 7", "September 8", "September 9", "September 13"], answer: 2 },
+            { q: "77. Where is CIFTIS held?", type: "choice", options: ["Shougang Park", "National Exhibition Center", "China National Convention Center", "Bird's Nest"], answer: 0 },
+            { q: "78. How long will CIFTIS run?", type: "choice", options: ["3 days", "5 days", "7 days", "10 days"], answer: 1 },
+            { q: "79. What is China's rank in auto exports?", type: "choice", options: ["First", "Second", "Third", "Fourth"], answer: 0 },
+            { q: "80. By how much did the growth rate accelerate?", type: "choice", options: ["0.2 pp", "0.3 pp", "0.5 pp", "1 pp"], answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '中国向尼泊尔派遣了第四批紧急援助物资。'", type: "choice", options: ["China dispatched its fourth batch of emergency relief supplies to Nepal.", "China Nepal fourth batch supplies.", "Fourth batch China Nepal.", "Nepal China fourth batch."], answer: 0 },
+            { q: "82. 'catastrophic' means ___.", type: "choice", options: ["causing great damage", "very beautiful", "extremely small", "quite simple"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["The death toll has risen to 1,357.", "Death toll 1,357 risen.", "1,357 death toll risen.", "Risen death toll 1,357."], answer: 0 },
+            { q: "84. 'dispatched' in this context means ___.", type: "choice", options: ["sent off for a purpose", "cancelled", "delayed", "returned"], answer: 0 },
+            { q: "85. Choose the correct translation: '中国外贸在前八个月增长了17.6%。'", type: "choice", options: ["China's foreign trade rose 17.6% in the first eight months.", "China trade 17.6% eight months.", "Eight months China trade 17.6%.", "17.6% trade China eight months."], answer: 0 },
+            { q: "86. 'were delivered' is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'The supplies were delivered by a Y-20' is ___.", type: "choice", options: ["A Y-20 delivered the supplies.", "A Y-20 supplies delivered.", "Supplies a Y-20 delivered.", "Delivered supplies Y-20."], answer: 0 },
+            { q: "88. 'China has dispatched supplies.' The tense is ___.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'ASEAN remained China's largest trading partner, ___?'", type: "choice", options: ["didn't it", "did it", "doesn't it", "isn't it"], answer: 0 },
+            { q: "90. 'Exports climbed 14.6 percent.' Fill: By 2030, exports ___ even higher.", type: "choice", options: ["will climb", "climbed", "climb", "climbing"], answer: 0 },
+            { q: "91. Choose the correct translation: '进口增速超过出口增速8个百分点。'", type: "choice", options: ["The import growth rate exceeded the export growth rate by 8 percentage points.", "Import export 8 points.", "8 points import export.", "Export import 8 percentage."], answer: 0 },
+            { q: "92. 'surge' means ___.", type: "choice", options: ["to increase suddenly and greatly", "to decrease slowly", "to remain stable", "to fluctuate slightly"], answer: 0 },
+            { q: "93. 'If trade continues to grow, imports will increase.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The fair will run through September 13.", "The fair September 13 run.", "September 13 fair run.", "Run fair September 13."], answer: 0 },
+            { q: "95. '___ the disaster, China continued to send aid.' Fill in the blank.", type: "choice", options: ["Despite", "Because", "Since", "As"], answer: 0 },
+            { q: "96. The indirect speech of 'Mao said, \"China will stand together with Nepal.\"' is ___.", type: "choice", options: ["Mao said China would stand together with Nepal.", "Mao says China will stand together with Nepal.", "Mao said China stands together with Nepal.", "Mao said China stand together Nepal."], answer: 0 },
+            { q: "97. 'underscore' in the context means ___.", type: "choice", options: ["to emphasize", "to ignore", "to remove", "to question"], answer: 0 },
+            { q: "98. 'has risen' uses the ___ tense.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "99. 'Trade with ASEAN reached 4.82 trillion yuan.' The verb is ___.", type: "choice", options: ["reached", "trade", "4.82", "trillion"], answer: 0 },
+            { q: "100. 'bilateral trade' means ___.", type: "choice", options: ["trade between two countries", "trade among many countries", "domestic trade only", "international trade"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
