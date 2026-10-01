@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年10月2日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年10月2日 · 星期五 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>China Celebrates 77th National Day with Flag-Raising Ceremony at Tiananmen Square</h3>
+                    <p>A solemn flag-raising ceremony was held at Tiananmen Square in Beijing on October 1, 2026, to celebrate the 77th anniversary of the founding of the People's Republic of China. Thousands of people gathered at the square to witness the historic moment as the national flag was hoisted at sunrise.</p>
+                    <p>President Xi Jinping said the great rejuvenation of the Chinese nation is unstoppable. He expressed full confidence in the bright prospects for Chinese modernization at a reception at the Great Hall of the People. Over the past 77 years, the Party has led the Chinese people in achieving two miracles: rapid economic growth and enduring social stability.</p>
+                    <p>Since the beginning of this year, the Chinese economy has continued to progress despite mounting pressure and achieved innovation-driven and high-quality development. The economy has demonstrated remarkable resilience and vitality, with major indicators pointing to a steady recovery.</p>
+                    <p>Xi stressed "one country, two systems" for Hong Kong and Macao, and called for peaceful development of cross-Strait relations. He firmly opposed any secessionist activities aimed at "Taiwan independence" and reaffirmed that complete national reunification is a historical trend that no one can stop.</p>
+                    <span class="source">Source: China Daily / Xinhua / CCTV News, 2026-10-01</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>China's Express Delivery Volume Exceeds 150 Billion Parcels and Diving Team Wins 100th Asian Games Gold</h3>
+                    <p>China's express delivery volume has exceeded 150 billion parcels in 2026 as of September 29, 12 days earlier than in 2025, according to the State Post Bureau. This milestone reflects the robust growth of China's logistics sector and the vitality of consumer demand in the world's second-largest economy.</p>
+                    <p>Meanwhile, China's diving "Dream Team" achieved a historic milestone at the Asian Games, winning its 100th gold medal in Asian Games history. Chen Yiwen won the women's 3-meter springboard gold and Lian Junjie won the men's 10-meter platform gold. The Chinese diving team swept all 10 gold medals with 10 gold, 4 silver and 2 bronze.</p>
+                    <p>As of the 11th competition day, the Chinese delegation topped the medal table with 151 gold, 67 silver and 59 bronze. The dominant performance underscored China's continued strength in diving and other aquatic sports.</p>
+                    <p>Additionally, 2,500 billion yuan in consumer goods trade-in funds have been fully disbursed this year, with the fourth batch of 62.5 billion yuan in ultra-long special national bonds already allocated. The allocation of these funds aims to boost domestic consumption and support economic recovery across the country.</p>
+                    <span class="source">Source: China Daily / CCTV News / State Post Bureau, 2026-10-01</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-10-02';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-10-02',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. What anniversary of the PRC founding was celebrated?", options: ["75th", "76th", "77th", "78th"], answer: 2 },
+            { q: "2. Where was the flag-raising ceremony held?", options: ["Great Hall of the People", "Tiananmen Square", "Forbidden City", "Summer Palace"], answer: 1 },
+            { q: "3. Who said the great rejuvenation of the Chinese nation is unstoppable?", options: ["Li Qiang", "Xi Jinping", "Wang Huning", "Cai Qi"], answer: 1 },
+            { q: "4. At which venue did Xi express confidence in Chinese modernization?", options: ["Tiananmen Square", "National Museum", "Great Hall of the People", "Zhongnanhai"], answer: 2 },
+            { q: "5. How many miracles has the Party led the Chinese people in achieving?", options: ["One", "Two", "Three", "Four"], answer: 1 },
+            { q: "6. What are the two miracles mentioned?", options: ["Rapid economic growth and enduring social stability", "Military strength and cultural revival", "Technological innovation and agricultural reform", "Infrastructure development and poverty reduction"], answer: 0 },
+            { q: "7. What kind of development has the Chinese economy achieved this year?", options: ["Export-driven and quantitative", "Innovation-driven and high-quality", "Labor-intensive and low-cost", "Resource-driven and large-scale"], answer: 1 },
+            { q: "8. What did Xi stress for Hong Kong and Macao?", options: ["Full integration", "One country, two systems", "Direct governance", "Economic independence"], answer: 1 },
+            { q: "9. What did Xi call for regarding cross-Strait relations?", options: ["Military confrontation", "Peaceful development", "Economic sanctions", "Diplomatic isolation"], answer: 1 },
+            { q: "10. What activities did Xi firmly oppose?", options: ["Economic reforms", "Secessionist activities aimed at 'Taiwan independence'", "Cultural exchanges", "Trade negotiations"], answer: 1 },
+            { q: "11. When was the flag-raising ceremony held?", options: ["September 30", "October 1", "October 2", "October 3"], answer: 1 },
+            { q: "12. What was hoisted at sunrise?", options: ["The national flag", "A ceremonial banner", "A memorial wreath", "A festival decoration"], answer: 0 },
+            { q: "13. What did the economy demonstrate this year?", options: ["Decline and recession", "Remarkable resilience and vitality", "Stagnation and uncertainty", "Inflation and instability"], answer: 1 },
+            { q: "14. Xi expressed full confidence in the bright prospects for ___.", options: ["global trade", "Chinese modernization", "foreign investment", "space exploration"], answer: 1 },
+            { q: "15. Xi reaffirmed that complete national reunification is ___.", options: ["impossible", "a historical trend no one can stop", "a distant goal", "not a priority"], answer: 1 },
+            { q: "16. Despite what has the Chinese economy continued to progress?", options: ["Declining demand", "Mounting pressure", "International sanctions", "Natural disasters"], answer: 1 },
+            { q: "17. What did thousands of people gather to witness?", options: ["A military parade", "The historic moment of flag-raising", "A cultural performance", "A political speech"], answer: 1 },
+            { q: "18. The two miracles include enduring ___.", options: ["social stability", "military strength", "cultural heritage", "diplomatic influence"], answer: 0 },
+            { q: "19. What system did Xi stress for Hong Kong and Macao?", options: ["One country, two systems", "Full autonomy", "Direct elections", "Free market"], answer: 0 },
+            { q: "20. The ceremony was described as ___.", options: ["casual", "solemn", "informal", "festive"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "21. How many parcels has China's express delivery volume exceeded?", options: ["100 billion", "120 billion", "150 billion", "200 billion"], answer: 2 },
+            { q: "22. By what date was the 150 billion milestone reached?", options: ["September 1", "September 15", "September 29", "October 1"], answer: 2 },
+            { q: "23. How many days earlier than 2025 was the milestone reached?", options: ["5 days", "8 days", "10 days", "12 days"], answer: 3 },
+            { q: "24. Which bureau reported the express delivery data?", options: ["National Bureau of Statistics", "State Post Bureau", "Ministry of Transport", "Customs Administration"], answer: 1 },
+            { q: "25. What milestone did China's diving team achieve at the Asian Games?", options: ["50th gold medal", "75th gold medal", "100th gold medal", "150th gold medal"], answer: 2 },
+            { q: "26. Who won the women's 3-meter springboard gold?", options: ["Quan Hongchan", "Chen Yiwen", "Wu Minxia", "Shi Tingmao"], answer: 1 },
+            { q: "27. Who won the men's 10-meter platform gold?", options: ["Cao Yuan", "Lian Junjie", "Yang Jian", "Chen Aisen"], answer: 1 },
+            { q: "28. How many gold medals did the diving team sweep?", options: ["8", "9", "10", "12"], answer: 2 },
+            { q: "29. What was the diving team's overall medal count?", options: ["10 gold, 4 silver, 2 bronze", "8 gold, 3 silver, 1 bronze", "12 gold, 5 silver, 3 bronze", "9 gold, 2 silver, 1 bronze"], answer: 0 },
+            { q: "30. As of which competition day did the Chinese delegation top the table?", options: ["8th", "9th", "10th", "11th"], answer: 3 },
+            { q: "31. How many gold medals did the Chinese delegation have?", options: ["100", "130", "151", "200"], answer: 2 },
+            { q: "32. How much consumer goods trade-in funds have been disbursed?", options: ["1,000 billion yuan", "1,500 billion yuan", "2,500 billion yuan", "3,000 billion yuan"], answer: 2 },
+            { q: "33. Which batch of ultra-long special national bonds was allocated?", options: ["First", "Second", "Third", "Fourth"], answer: 3 },
+            { q: "34. How much was the fourth batch of ultra-long special national bonds?", options: ["25 billion yuan", "50 billion yuan", "62.5 billion yuan", "100 billion yuan"], answer: 2 },
+            { q: "35. What nickname is given to China's diving team?", options: ["Golden Team", "Dream Team", "Power Team", "Star Team"], answer: 1 },
+            { q: "36. What sport did Chen Yiwin compete in?", options: ["10-meter platform", "3-meter springboard", "Synchronized diving", "5-meter platform"], answer: 1 },
+            { q: "37. The allocation of trade-in funds aims to boost ___.", options: ["exports", "domestic consumption", "foreign investment", "government revenue"], answer: 1 },
+            { q: "38. China's express delivery milestone reflects the vitality of ___.", options: ["industrial production", "consumer demand", "agricultural output", "technology exports"], answer: 1 },
+            { q: "39. The Chinese delegation's silver medal count was ___.", options: ["50", "59", "67", "77"], answer: 2 },
+            { q: "40. The Chinese delegation's bronze medal count was ___.", options: ["50", "59", "67", "77"], answer: 1 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "rejuvenation", phonetic: "/rɪˌdʒuːvəˈneɪʃn/", meaning: "n. 复兴；振兴" },
+            { word: "unstoppable", phonetic: "/ʌnˈstɒpəbl/", meaning: "adj. 不可阻挡的" },
+            { word: "solemn", phonetic: "/ˈsɒləm/", meaning: "adj. 庄严的；隆重的" },
+            { word: "reception", phonetic: "/rɪˈsepʃn/", meaning: "n. 招待会" },
+            { word: "modernization", phonetic: "/ˌmɒdənaɪˈzeɪʃn/", meaning: "n. 现代化" },
+            { word: "resilience", phonetic: "/rɪˈzɪliəns/", meaning: "n. 韧性；恢复力" },
+            { word: "vitality", phonetic: "/vaɪˈtæləti/", meaning: "n. 活力；生命力" },
+            { word: "disburse", phonetic: "/dɪsˈbɜːrs/", meaning: "v. 拨付；支付" },
+            { word: "allocation", phonetic: "/ˌæləˈkeɪʃn/", meaning: "n. 分配；拨款" },
+            { word: "ultra-long", phonetic: "/ˈʌltrə lɒŋ/", meaning: "adj. 超长期的" },
+            { word: "trade-in", phonetic: "/ˈtreɪd ɪn/", meaning: "n. 以旧换新" },
+            { word: "milestone", phonetic: "/ˈmaɪlstoʊn/", meaning: "n. 里程碑" },
+            { word: "sweep", phonetic: "/swiːp/", meaning: "v. 包揽；席卷" },
+            { word: "springboard", phonetic: "/ˈsprɪŋbɔːrd/", meaning: "n. 跳板" },
+            { word: "platform", phonetic: "/ˈplætfɔːrm/", meaning: "n. 平台；跳台" },
+            { word: "delegation", phonetic: "/ˌdelɪˈɡeɪʃn/", meaning: "n. 代表团" },
+            { word: "parcel", phonetic: "/ˈpɑːrsl/", meaning: "n. 包裹" },
+            { word: "express", phonetic: "/ɪkˈspres/", meaning: "adj. 快递的；快速的" },
+            { word: "autonomy", phonetic: "/ɔːˈtɒnəmi/", meaning: "n. 自治；自主" },
+            { word: "secessionist", phonetic: "/sɪˈseʃnɪst/", meaning: "n. 分裂主义者" }
+        ];
+
+        const oldVocabData = [
+            { word: "devastating", phonetic: "/ˈdevəsteɪtɪŋ/", meaning: "adj. 毁灭性的" },
+            { word: "mudslide", phonetic: "/ˈmʌdˌslaɪd/", meaning: "n. 泥石流" },
+            { word: "deploy", phonetic: "/dɪˈplɔɪ/", meaning: "v. 部署；调遣" },
+            { word: "debris", phonetic: "/dəˈbriː/", meaning: "n. 碎片；残骸" },
+            { word: "restore", phonetic: "/rɪˈstɔːr/", meaning: "v. 恢复；修复" },
+            { word: "journalist", phonetic: "/ˈdʒɜːrnəlɪst/", meaning: "n. 记者" },
+            { word: "mobilization", phonetic: "/ˌmoʊbələˈzeɪʃn/", meaning: "n. 动员；调动" },
+            { word: "trigger", phonetic: "/ˈtrɪɡər/", meaning: "v. 触发；引发" },
+            { word: "collapse", phonetic: "/kəˈlæps/", meaning: "n./v. 坍塌" },
+            { word: "capacity", phonetic: "/kəˈpæsəti/", meaning: "n. 容量；产能" },
+            { word: "renewable", phonetic: "/rɪˈnuːəbl/", meaning: "adj. 可再生的" },
+            { word: "blueprint", phonetic: "/ˈbluːprɪnt/", meaning: "n. 蓝图；方案" },
+            { word: "framework", phonetic: "/ˈfreɪmwɜːrk/", meaning: "n. 框架；体系" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃn/", meaning: "n. 合作；协作" },
+            { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", meaning: "n. 倡议" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" },
+            { word: "prosperity", phonetic: "/prɑːˈsperəti/", meaning: "n. 繁荣" },
+            { word: "consensus", phonetic: "/kənˈsensəs/", meaning: "n. 共识" },
+            { word: "connectivity", phonetic: "/kəˈnektɪvəti/", meaning: "n. 连通性" },
+            { word: "challenge", phonetic: "/ˈtʃælɪndʒ/", meaning: "n. 挑战" },
+            { word: "dispatch", phonetic: "/dɪsˈpætʃ/", meaning: "v. 派遣；发送" },
+            { word: "catastrophic", phonetic: "/ˌkætəˈstrɒfɪk/", meaning: "adj. 灾难性的" },
+            { word: "aftermath", phonetic: "/ˈɑːftərmæθ/", meaning: "n. 后果；灾后时期" },
+            { word: "surge", phonetic: "/sɜːrdʒ/", meaning: "v. 激增 n. 汹涌" },
+            { word: "bilateral", phonetic: "/baɪˈlætərəl/", meaning: "adj. 双边的" },
+            { word: "mechanical", phonetic: "/məˈkænɪkl/", meaning: "adj. 机械的" },
+            { word: "exceed", phonetic: "/ɪkˈsiːd/", meaning: "v. 超过；超出" },
+            { word: "comprehensive", phonetic: "/ˌkɑːmprɪˈhensɪv/", meaning: "adj. 综合的；全面的" },
+            { word: "infrastructure", phonetic: "/ˈɪnfrəˌstrʌktʃər/", meaning: "n. 基础设施" },
+            { word: "submit", phonetic: "/səbˈmɪt/", meaning: "v. 提交；呈递" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. A solemn flag-raising ceremony ___ at Tiananmen Square on October 1, 2026.", type: "choice", options: ["held", "was held", "has held", "is holding"], answer: 1 },
+            { q: "2. President Xi Jinping said the great rejuvenation of the Chinese nation ___ unstoppable.", type: "choice", options: ["is", "was", "has been", "will be"], answer: 0 },
+            { q: "3. He ___ full confidence in the bright prospects for Chinese modernization.", type: "choice", options: ["express", "expresses", "expressed", "has expressed"], answer: 2 },
+            { q: "4. Over the past 77 years, the Party ___ the Chinese people in achieving two miracles.", type: "choice", options: ["leads", "led", "has led", "is leading"], answer: 2 },
+            { q: "5. The Chinese economy ___ to progress despite mounting pressure.", type: "choice", options: ["continue", "continues", "continued", "has continued"], answer: 3 },
+            { q: "6. Xi ___ 'one country, two systems' for Hong Kong and Macao.", type: "choice", options: ["stress", "stresses", "stressed", "has stressed"], answer: 2 },
+            { q: "7. He ___ any secessionist activities aimed at 'Taiwan independence'.", type: "choice", options: ["oppose", "opposes", "opposed", "firmly opposed"], answer: 3 },
+            { q: "8. China's express delivery volume ___ 150 billion parcels in 2026.", type: "choice", options: ["exceed", "exceeds", "exceeded", "has exceeded"], answer: 3 },
+            { q: "9. The diving team ___ its 100th gold medal in Asian Games history.", type: "choice", options: ["achieve", "achieves", "achieved", "has achieved"], answer: 2 },
+            { q: "10. The Chinese diving team ___ all 10 gold medals.", type: "choice", options: ["sweep", "sweeps", "swept", "has swept"], answer: 2 },
+            { q: "11. Chen Yiwen ___ the women's 3-meter springboard gold.", type: "choice", options: ["win", "wins", "won", "has won"], answer: 2 },
+            { q: "12. As of the 11th competition day, the Chinese delegation ___ the medal table.", type: "choice", options: ["top", "tops", "topped", "has topped"], answer: 2 },
+            { q: "13. The trade-in funds ___ fully disbursed this year.", type: "choice", options: ["are", "were", "have been", "had been"], answer: 2 },
+            { q: "14. The fourth batch of 62.5 billion yuan in ultra-long special national bonds ___ already allocated.", type: "choice", options: ["is", "was", "has been", "had been"], answer: 2 },
+            { q: "15. Complete national reunification ___ a historical trend that no one can stop.", type: "choice", options: ["is", "was", "has been", "will be"], answer: 0 },
+            { q: "16. Thousands of people ___ at the square to witness the historic moment.", type: "choice", options: ["gather", "gathered", "have gathered", "are gathering"], answer: 1 },
+            { q: "17. The economy ___ remarkable resilience and vitality this year.", type: "choice", options: ["demonstrate", "demonstrates", "demonstrated", "has demonstrated"], answer: 3 },
+            { q: "18. The milestone ___ 12 days earlier than in 2025.", type: "choice", options: ["reach", "reaches", "was reached", "has been reached"], answer: 2 },
+            { q: "19. The dominant performance ___ China's continued strength in diving.", type: "choice", options: ["underscore", "underscores", "underscored", "has underscored"], answer: 2 },
+            { q: "20. The allocation of these funds ___ to boost domestic consumption.", type: "choice", options: ["aim", "aims", "aimed", "has aimed"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. ___ means the process of making something new and vigorous again.", type: "choice", options: ["Rejuvenation", "Decline", "Separation", "Elimination"], answer: 0 },
+            { q: "22. ___ means impossible to stop or prevent.", type: "choice", options: ["Unstoppable", "Avoidable", "Flexible", "Manageable"], answer: 0 },
+            { q: "23. A ___ ceremony is formal and serious.", type: "choice", options: ["solemn", "casual", "informal", "cheerful"], answer: 0 },
+            { q: "24. A ___ is a formal social gathering to welcome guests.", type: "choice", options: ["reception", "rejection", "projection", "inception"], answer: 0 },
+            { q: "25. ___ means the process of making something modern.", type: "choice", options: ["Modernization", "Tradition", "Conservation", "Restoration"], answer: 0 },
+            { q: "26. ___ means the ability to recover quickly from difficulties.", type: "choice", options: ["Resilience", "Fragility", "Rigidity", "Instability"], answer: 0 },
+            { q: "27. ___ means lively and energetic quality.", type: "choice", options: ["Vitality", "Mortality", "Hostility", "Futility"], answer: 0 },
+            { q: "28. To ___ means to pay out money from a fund.", type: "choice", options: ["disburse", "collect", "borrow", "invest"], answer: 0 },
+            { q: "29. ___ means the distribution of resources for a particular purpose.", type: "choice", options: ["Allocation", "Elimination", "Isolation", "Simulation"], answer: 0 },
+            { q: "30. ___ bonds have a very long maturity period.", type: "choice", options: ["Ultra-long", "Short-term", "Medium-term", "Instant"], answer: 0 },
+            { q: "31. A ___ program allows consumers to exchange old items for new ones.", type: "choice", options: ["trade-in", "trade-off", "trade-out", "trade-up"], answer: 0 },
+            { q: "32. A ___ is a significant event in progress or development.", type: "choice", options: ["milestone", "gravestone", "cornerstone", "keystone"], answer: 0 },
+            { q: "33. To ___ means to win all the available prizes or medals.", type: "choice", options: ["sweep", "drop", "skip", "miss"], answer: 0 },
+            { q: "34. A ___ is a flexible board used for diving.", type: "choice", options: ["springboard", "skateboard", "surfboard", "ironing board"], answer: 0 },
+            { q: "35. In diving, a ___ is a raised structure from which divers jump.", type: "choice", options: ["platform", "playground", "stage", "runway"], answer: 0 },
+            { q: "36. A ___ is a group of representatives at a sports event.", type: "choice", options: ["delegation", "segregation", "integration", "migration"], answer: 0 },
+            { q: "37. A ___ is a package wrapped for shipping.", type: "choice", options: ["parcel", "barrel", "tunnel", "channel"], answer: 0 },
+            { q: "38. ___ delivery refers to fast package shipping service.", type: "choice", options: ["Express", "Slow", "Regular", "Standard"], answer: 0 },
+            { q: "39. ___ means the right of self-governance.", type: "choice", options: ["Autonomy", "Dependency", "Hierarchy", "Anarchy"], answer: 0 },
+            { q: "40. A ___ is someone who supports breaking away from a larger group.", type: "choice", options: ["Secessionist", "Unionist", "Federalist", "Nationalist"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. A solemn flag-raising ceremony was held ___ Tiananmen Square.", type: "choice", options: ["at", "in", "on", "by"], answer: 0 },
+            { q: "42. The ceremony celebrated the 77th anniversary ___ the founding of the PRC.", type: "choice", options: ["of", "for", "with", "by"], answer: 0 },
+            { q: "43. Xi expressed full confidence ___ the bright prospects.", type: "choice", options: ["in", "on", "at", "for"], answer: 0 },
+            { q: "44. The Party has led the Chinese people ___ achieving two miracles.", type: "choice", options: ["in", "on", "at", "to"], answer: 0 },
+            { q: "45. The economy has continued to progress ___ mounting pressure.", type: "choice", options: ["despite", "because", "since", "although"], answer: 0 },
+            { q: "46. Xi called ___ peaceful development of cross-Strait relations.", type: "choice", options: ["for", "on", "at", "in"], answer: 0 },
+            { q: "47. He firmly opposed secessionist activities aimed ___ 'Taiwan independence'.", type: "choice", options: ["at", "for", "with", "on"], answer: 0 },
+            { q: "48. The express delivery volume exceeded 150 billion parcels as ___ September 29.", type: "choice", options: ["of", "in", "on", "at"], answer: 0 },
+            { q: "49. The milestone was reached 12 days earlier ___ in 2025.", type: "choice", options: ["than", "as", "from", "to"], answer: 0 },
+            { q: "50. The diving team swept ___ all 10 gold medals.", type: "choice", options: ["up", "out", "away", "off"], answer: 0 },
+            { q: "51. The Chinese delegation topped the medal table ___ 151 gold.", type: "choice", options: ["with", "by", "for", "at"], answer: 0 },
+            { q: "52. Trade-in funds have been fully ___ this year.", type: "choice", options: ["disbursed", "collected", "borrowed", "reserved"], answer: 0 },
+            { q: "53. The allocation aims ___ boost domestic consumption.", type: "choice", options: ["to", "for", "at", "in"], answer: 0 },
+            { q: "54. The national flag was ___ at sunrise.", type: "choice", options: ["hoisted", "lowered", "folded", "carried"], answer: 0 },
+            { q: "55. He reaffirmed that complete national reunification is a historical ___.", type: "choice", options: ["trend", "issue", "problem", "debate"], answer: 0 },
+            { q: "56. The economy has achieved innovation-driven and ___ development.", type: "choice", options: ["high-quality", "low-quality", "medium-quality", "no-quality"], answer: 0 },
+            { q: "57. The diving team won its 100th gold medal ___ Asian Games history.", type: "choice", options: ["in", "on", "at", "for"], answer: 0 },
+            { q: "58. This milestone ___ the robust growth of China's logistics sector.", type: "choice", options: ["reflects", "denies", "ignores", "contradicts"], answer: 0 },
+            { q: "59. The dominant performance underscored China's continued ___ in diving.", type: "choice", options: ["strength", "weakness", "decline", "absence"], answer: 0 },
+            { q: "60. Major indicators are pointing ___ a steady recovery.", type: "choice", options: ["to", "from", "away", "against"], answer: 0 },
+            // 61-80 阅读理解题
+            { q: "61. What anniversary of the PRC founding was celebrated?", type: "choice", options: ["75th", "76th", "77th", "78th"], answer: 2 },
+            { q: "62. Where was the flag-raising ceremony held?", type: "choice", options: ["Great Hall of the People", "Tiananmen Square", "Forbidden City", "Summer Palace"], answer: 1 },
+            { q: "63. What did Xi say about the rejuvenation of the Chinese nation?", type: "choice", options: ["It is impossible", "It is unstoppable", "It is uncertain", "It is declining"], answer: 1 },
+            { q: "64. What are the two miracles China has achieved?", type: "choice", options: ["Rapid economic growth and enduring social stability", "Military power and cultural influence", "Technology and agriculture", "Education and healthcare"], answer: 0 },
+            { q: "65. What development has the economy achieved this year?", type: "choice", options: ["Innovation-driven and high-quality", "Resource-intensive and fast", "Export-only growth", "Slow and steady"], answer: 0 },
+            { q: "66. What did Xi stress for Hong Kong and Macao?", type: "choice", options: ["Full integration", "One country, two systems", "Direct control", "Independence"], answer: 1 },
+            { q: "67. How many parcels has express delivery exceeded?", type: "choice", options: ["100 billion", "120 billion", "150 billion", "200 billion"], answer: 2 },
+            { q: "68. How many days earlier was the delivery milestone than 2025?", type: "choice", options: ["5 days", "8 days", "10 days", "12 days"], answer: 3 },
+            { q: "69. What historic milestone did the diving team achieve?", type: "choice", options: ["50th gold", "75th gold", "100th gold", "150th gold"], answer: 2 },
+            { q: "70. Who won the women's 3-meter springboard?", type: "choice", options: ["Quan Hongchan", "Chen Yiwen", "Wu Minxia", "Shi Tingmao"], answer: 1 },
+            { q: "71. How many gold medals did the diving team sweep?", type: "choice", options: ["8", "9", "10", "12"], answer: 2 },
+            { q: "72. How many gold medals did the Chinese delegation have?", type: "choice", options: ["100", "130", "151", "200"], answer: 2 },
+            { q: "73. How much trade-in funds have been disbursed?", type: "choice", options: ["1,000 billion yuan", "1,500 billion yuan", "2,500 billion yuan", "3,000 billion yuan"], answer: 2 },
+            { q: "74. How much was the fourth batch of ultra-long special national bonds?", type: "choice", options: ["25 billion yuan", "50 billion yuan", "62.5 billion yuan", "100 billion yuan"], answer: 2 },
+            { q: "75. Who won the men's 10-meter platform gold?", type: "choice", options: ["Cao Yuan", "Lian Junjie", "Yang Jian", "Chen Aisen"], answer: 1 },
+            { q: "76. What was the diving team's overall medal count?", type: "choice", options: ["10 gold, 4 silver, 2 bronze", "8 gold, 3 silver, 1 bronze", "12 gold, 5 silver, 3 bronze", "9 gold, 2 silver, 1 bronze"], answer: 0 },
+            { q: "77. As of which competition day did China top the medal table?", type: "choice", options: ["8th", "9th", "10th", "11th"], answer: 3 },
+            { q: "78. What did Xi firmly oppose?", type: "choice", options: ["Economic reform", "Secessionist activities aimed at 'Taiwan independence'", "Cultural exchange", "Foreign investment"], answer: 1 },
+            { q: "79. What has the economy demonstrated this year?", type: "choice", options: ["Decline and recession", "Remarkable resilience and vitality", "Stagnation", "Inflation"], answer: 1 },
+            { q: "80. What does the delivery milestone reflect?", type: "choice", options: ["Industrial decline", "Robust growth of logistics and vitality of consumer demand", "Agricultural output", "Government spending"], answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '在天安门广场举行了庄严的升旗仪式。'", type: "choice", options: ["A solemn flag-raising ceremony was held at Tiananmen Square.", "Tiananmen Square flag-raising solemn.", "Solemn ceremony Tiananmen Square.", "Flag-raising solemn Tiananmen."], answer: 0 },
+            { q: "82. 'rejuvenation' means ___.", type: "choice", options: ["the process of making something new and vigorous again", "the process of declining", "the process of separating", "the process of eliminating"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["The great rejuvenation of the Chinese nation is unstoppable.", "Great rejuvenation unstoppable nation.", "Unstoppable rejuvenation great nation.", "Nation rejuvenation unstoppable great."], answer: 0 },
+            { q: "84. 'solemn' in this context means ___.", type: "choice", options: ["formal and serious", "casual and relaxed", "happy and excited", "quiet and shy"], answer: 0 },
+            { q: "85. Choose the correct translation: '中国快递业务量已超过1500亿件。'", type: "choice", options: ["China's express delivery volume has exceeded 150 billion parcels.", "China express 150 billion parcels.", "150 billion parcels China express.", "Express delivery China 150 billion."], answer: 0 },
+            { q: "86. 'was held' is in the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'A ceremony was held at Tiananmen Square' is ___.", type: "choice", options: ["They held a ceremony at Tiananmen Square.", "A ceremony held Tiananmen Square.", "Tiananmen Square held a ceremony.", "Held ceremony Tiananmen Square."], answer: 0 },
+            { q: "88. 'The Party has led the Chinese people.' The tense is ___.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The diving team swept all 10 gold medals, ___?'", type: "choice", options: ["didn't they", "did they", "don't they", "aren't they"], answer: 0 },
+            { q: "90. 'The economy has continued to progress.' Fill: By 2030, the economy ___ even further.", type: "choice", options: ["will have progressed", "progressed", "progresses", "progressing"], answer: 0 },
+            { q: "91. Choose the correct translation: '中国跳水队包揽了全部10枚金牌。'", type: "choice", options: ["The Chinese diving team swept all 10 gold medals.", "Chinese diving team 10 gold.", "10 gold medals diving team.", "Swept gold medals diving 10."], answer: 0 },
+            { q: "92. 'sweep' in this context means ___.", type: "choice", options: ["to win all available prizes", "to clean with a broom", "to move quickly", "to remove completely"], answer: 0 },
+            { q: "93. 'If the economy continues to grow, consumption will increase.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The funds have been fully disbursed this year.", "The funds fully disbursed year.", "Fully disbursed funds this year.", "This year funds disbursed fully."], answer: 0 },
+            { q: "95. '___ mounting pressure, the economy continued to progress.' Fill in the blank.", type: "choice", options: ["Despite", "Because", "Since", "As"], answer: 0 },
+            { q: "96. The indirect speech of 'Xi said, \"The rejuvenation is unstoppable.\"' is ___.", type: "choice", options: ["Xi said the rejuvenation was unstoppable.", "Xi says the rejuvenation is unstoppable.", "Xi said the rejuvenation unstoppable.", "Xi said rejuvenation was stoppable."], answer: 0 },
+            { q: "97. 'milestone' in the context means ___.", type: "choice", options: ["a significant event marking progress", "a physical stone marker", "a small obstacle", "a daily routine"], answer: 0 },
+            { q: "98. 'has exceeded' uses the ___ tense.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "99. 'The delegation topped the medal table with 151 gold.' The verb is ___.", type: "choice", options: ["topped", "delegation", "151", "gold"], answer: 0 },
+            { q: "100. 'ultra-long special national bonds' means ___.", type: "choice", options: ["government bonds with very long maturity periods", "short-term corporate bonds", "medium-term municipal bonds", "instant international bonds"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
