@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语学习 - 2026年10月3日 | 小剀学苑</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .nav a { color: white; text-decoration: none; font-size: 1.1em; }
+        .nav .date { color: white; font-weight: bold; font-size: 1.2em; }
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .section h2 {
+            color: #2E7D32;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .passage {
+            background: #f9fbe7;
+            border-left: 4px solid #8BC34A;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .passage h3 { color: #33691E; margin-bottom: 15px; }
+        .passage .source { display: block; margin-top: 12px; font-size: 0.85em; color: #888; font-style: italic; }
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        .question p { font-weight: 500; margin-bottom: 10px; color: #333; }
+        .options label {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #e8f5e9; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-card {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #a5d6a7;
+        }
+        .vocab-card .word { font-weight: bold; color: #1b5e20; font-size: 1.1em; }
+        .vocab-card .phonetic { color: #666; font-size: 0.85em; }
+        .vocab-card .meaning { color: #444; margin-top: 5px; }
+        .vocab-card.old { background: #fff8e1; border-color: #ffe082; }
+        .vocab-card.old .word { color: #e65100; }
+        .vocab-section { margin-bottom: 20px; }
+        .vocab-section h3 { color: #2E7D32; margin-bottom: 12px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .result-box.show { display: block; }
+        .result-box.pass { background: #c8e6c9; color: #1b5e20; }
+        .result-box.fail { background: #ffcdd2; color: #b71c1c; }
+        .tab-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            background: #e0e0e0;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .stats { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .stat-item {
+            background: #e8f5e9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-item .num { font-size: 1.5em; font-weight: bold; color: #2E7D32; }
+        .stat-item .lbl { font-size: 0.85em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="../../index.html">🏠 首页</a>
+            <span class="date">📅 2026年10月3日 · 星期六 · 英语</span>
+            <a href="../index.html">📚 英语目录</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 学习统计</h2>
+            <div class="stats">
+                <div class="stat-item"><div class="num" id="totalAnswered">0</div><div class="lbl">已答题</div></div>
+                <div class="stat-item"><div class="num" id="totalCorrect">0</div><div class="lbl">正确数</div></div>
+                <div class="stat-item"><div class="num" id="accuracy">0%</div><div class="lbl">正确率</div></div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+            <p style="text-align:center; color:#666; font-size:0.9em;">数据已自动保存到本地，永久不会丢失</p>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="showTab('reading')">📖 阅读理解</button>
+            <button class="tab-btn" onclick="showTab('vocab')">📝 词汇学习</button>
+            <button class="tab-btn" onclick="showTab('test')">✏️ 综合测试 (100题)</button>
+        </div>
+
+        <!-- 阅读理解 -->
+        <div class="tab-content active" id="tab-reading">
+            <div class="section">
+                <h2>📖 阅读理解 Passage 1</h2>
+                <div class="passage">
+                    <h3>China's National Day Holiday Travel Surge</h3>
+                    <p>China's railway set a record by transporting 252 million passengers on October 1, 2026, the first day of the National Day holiday, marking an unprecedented surge in travel demand. During the seven-day holiday, cross-regional passenger trips are expected to reach 2.13 billion, reflecting the public's enthusiasm for travel during the Golden Week.</p>
+                    <p>The railway sector has entered a 16-day transport period, during which it is expected to handle 284 million passenger trips, deploying approximately 13,000 passenger trains daily to accommodate the peak travel demand. Major railway hubs in Beijing, Shanghai, and Guangzhou have added overnight trains to serve travelers heading to neighboring provinces.</p>
+                    <p>Civil aviation is also experiencing a travel surge, with an estimated 31.19 million passenger trips during the holiday, averaging 2.4 million per day. Airport authorities have conducted safety assessments and increased flight capacity to handle the congestion.</p>
+                    <p>Self-driving travel continues to dominate, accounting for over 90% of total trips. On October 1 alone, expressway traffic reached 71 million vehicle trips, as millions of families took to the road for holiday getaways, creating distinctive travel patterns across the country.</p>
+                    <span class="source">Source: China Daily / Xinhua, 2026-10-02</span>
+                </div>
+                <div id="reading1Questions"></div>
+            </div>
+
+            <div class="section">
+                <h2>📖 阅读理解 Passage 2</h2>
+                <div class="passage">
+                    <h3>Hong Kong Celebrates National Day with Fireworks and 28 Countries Call for End to Unilateral Coercive Measures</h3>
+                    <p>Hong Kong celebrated the 77th anniversary of the founding of the People's Republic of China with a spectacular 23-minute fireworks display over Victoria Harbour, featuring eight parts that illuminated the night sky. The festivities drew large crowds to both sides of the harbour, showcasing the city's distinctive heritage and vibrant culture.</p>
+                    <p>Hong Kong Chief Executive John Lee mentioned the city's first five-year plan, which aims to strengthen economic resilience and promote high-quality development. He highlighted Hong Kong's unique position under "one country, two systems" as a bridge between the mainland and international markets.</p>
+                    <p>In a remarkable milestone, Hong Kong's first astronaut, Lai Kar-ying, celebrated National Day from orbit aboard China's Tiangong space station, sending festive greetings to the nation. This spectacle underscored China's growing capabilities in space exploration.</p>
+                    <p>At the United Nations, 28 countries including China, Russia, Egypt, and Iran jointly called for an end to unilateral coercive measures, arguing that such measures violate international law and undermine multilateralism. The joint statement emphasized that coercive measures cause devastating humanitarian impacts and hinder sustainable development.</p>
+                    <span class="source">Source: Xinhua / China Daily, 2026-10-02</span>
+                </div>
+                <div id="reading2Questions"></div>
+            </div>
+        </div>
+
+        <!-- 词汇学习 -->
+        <div class="tab-content" id="tab-vocab">
+            <div class="section">
+                <h2>📝 新单词学习 (20个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="newVocab"></div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>📝 旧单词复习 (30个)</h2>
+                <div class="vocab-section">
+                    <div class="vocab-grid" id="oldVocab"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 综合测试 -->
+        <div class="tab-content" id="tab-test">
+            <div class="section">
+                <h2>✏️ 综合测试 (100题)</h2>
+                <p style="margin-bottom:15px; color:#666;">包含：语法选择、词汇运用、完形填空、阅读理解、翻译等题型</p>
+                <div id="testQuestions"></div>
+                <div style="text-align:center; margin-top:20px;">
+                    <button class="btn" onclick="submitTest()">提交测试</button>
+                </div>
+                <div class="result-box" id="testResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ localStorage 数据管理 ============
+        const STORAGE_KEY = 'xiaokai_en_2026-10-03';
+        const STORAGE_VERSION = '1.0';
+
+        let savedData = {
+            version: STORAGE_VERSION,
+            date: '2026-10-03',
+            subject: 'english',
+            answers: {},
+            readingAnswers: {},
+            vocabMarked: [],
+            testScore: null,
+            testSubmitted: false,
+            lastUpdated: null
+        };
+
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    savedData = Object.assign(savedData, JSON.parse(stored));
+                } catch(e) { console.error('数据加载失败', e); }
+            }
+        }
+
+        function saveData() {
+            savedData.lastUpdated = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData));
+            updateStats();
+        }
+
+        // ============ 阅读理解数据 ============
+        const reading1Data = [
+            { q: "1. How many passengers did China's railway transport on October 1, 2026?", options: ["25.2 million", "252 million", "2.52 billion", "25.2 billion"], answer: 1 },
+            { q: "2. What kind of surge did the railway transport mark?", options: ["Gradual increase", "Unprecedented surge", "Slight rise", "Moderate growth"], answer: 1 },
+            { q: "3. How many cross-regional passenger trips are expected during the seven-day holiday?", options: ["1.13 billion", "2.13 billion", "3.13 billion", "4.13 billion"], answer: 1 },
+            { q: "4. How long is the railway transport period?", options: ["7 days", "10 days", "16 days", "30 days"], answer: 2 },
+            { q: "5. How many passenger trips is the railway expected to handle during the transport period?", options: ["184 million", "284 million", "384 million", "484 million"], answer: 1 },
+            { q: "6. Approximately how many passenger trains are deployed daily?", options: ["10,000", "11,000", "12,000", "13,000"], answer: 3 },
+            { q: "7. Which cities are mentioned as major railway hubs?", options: ["Beijing, Shanghai, Guangzhou", "Beijing, Shenzhen, Chengdu", "Shanghai, Hangzhou, Nanjing", "Guangzhou, Wuhan, Chongqing"], answer: 0 },
+            { q: "8. What have major railway hubs added to serve travelers?", options: ["High-speed trains", "Overnight trains", "Cargo trains", "Tourist trains"], answer: 1 },
+            { q: "9. How many passenger trips is civil aviation estimated to handle during the holiday?", options: ["21.19 million", "31.19 million", "41.19 million", "51.19 million"], answer: 1 },
+            { q: "10. What is the daily average for civil aviation passenger trips?", options: ["1.4 million", "2.4 million", "3.4 million", "4.4 million"], answer: 1 },
+            { q: "11. What percentage of total trips does self-driving travel account for?", options: ["Over 70%", "Over 80%", "Over 90%", "Over 95%"], answer: 2 },
+            { q: "12. How many vehicle trips were on expressways on October 1?", options: ["51 million", "61 million", "71 million", "81 million"], answer: 2 },
+            { q: "13. What have airport authorities conducted to handle congestion?", options: ["Price reductions", "Safety assessments", "Flight cancellations", "Passenger limits"], answer: 1 },
+            { q: "14. The railway record was set on which day?", options: ["September 30", "October 1", "October 2", "October 3"], answer: 1 },
+            { q: "15. What does the cross-regional trip number reflect?", options: ["Public's enthusiasm for travel", "Government's policy success", "Railway's technical improvement", "Economic recovery"], answer: 0 },
+            { q: "16. What kind of travel continues to dominate?", options: ["Railway travel", "Air travel", "Self-driving travel", "Bus travel"], answer: 2 },
+            { q: "17. What have overnight trains been added to serve?", options: ["Business travelers", "Tourists to neighboring provinces", "International passengers", "Local commuters"], answer: 1 },
+            { q: "18. How many parts did the fireworks display feature?", options: ["6", "7", "8", "9"], answer: 2 },
+            { q: "19. What is the main reason for the expressway traffic surge?", options: ["Commercial shipping", "Holiday getaways by families", "Government transport", "Military movement"], answer: 1 },
+            { q: "20. What pattern has self-driving travel created?", options: ["Uniform patterns", "Distinctive travel patterns", "Disorganized chaos", "Minimal impact"], answer: 1 }
+        ];
+
+        const reading2Data = [
+            { q: "21. How long was Hong Kong's fireworks display?", options: ["15 minutes", "20 minutes", "23 minutes", "30 minutes"], answer: 2 },
+            { q: "22. Where was the fireworks display held?", options: ["Over the city center", "Over Victoria Harbour", "At the Peak", "At Ocean Park"], answer: 1 },
+            { q: "23. Which anniversary was Hong Kong celebrating?", options: ["75th", "76th", "77th", "78th"], answer: 2 },
+            { q: "24. Who is Hong Kong's Chief Executive?", options: ["Carrie Lam", "John Lee", "Leung Chun-ying", "Donald Tsang"], answer: 1 },
+            { q: "25. What did John Lee mention about Hong Kong's planning?", options: ["A ten-year plan", "A five-year plan", "A three-year plan", "A seven-year plan"], answer: 1 },
+            { q: "26. Who is Hong Kong's first astronaut?", options: ["Yang Liwei", "Lai Kar-ying", "Wang Yaping", "Fei Junlong"], answer: 1 },
+            { q: "27. Where did Lai Kar-ying celebrate National Day?", options: ["In Hong Kong", "In Beijing", "From orbit aboard Tiangong", "On a naval ship"], answer: 2 },
+            { q: "28. How many countries called for an end to unilateral coercive measures?", options: ["18", "22", "28", "35"], answer: 2 },
+            { q: "29. Which of these countries was NOT among the 28?", options: ["China", "Russia", "Japan", "Iran"], answer: 2 },
+            { q: "30. What do unilateral coercive measures violate, according to the statement?", options: ["Domestic law", "International law", "Trade agreements", "Environmental regulations"], answer: 1 },
+            { q: "31. What do unilateral coercive measures undermine?", options: ["Economic growth", "Multilateralism", "National sovereignty", "Cultural exchange"], answer: 1 },
+            { q: "32. What impacts do coercive measures cause?", options: ["Economic prosperity", "Devastating humanitarian impacts", "Technological advancement", "Environmental improvement"], answer: 1 },
+            { q: "33. What do coercive measures hinder?", options: ["Military expansion", "Sustainable development", "Cultural preservation", "Population growth"], answer: 1 },
+            { q: "34. How many parts did the fireworks display have?", options: ["6", "7", "8", "10"], answer: 2 },
+            { q: "35. Where was the joint statement made?", options: ["At the WHO", "At the United Nations", "At the WTO", "At the G20"], answer: 1 },
+            { q: "36. What system did John Lee highlight for Hong Kong?", options: ["Full integration", "One country, two systems", "Direct governance", "Federal system"], answer: 1 },
+            { q: "37. What role does Hong Kong serve, according to John Lee?", options: ["A manufacturing hub", "A bridge between mainland and international markets", "A military base", "A tax haven"], answer: 1 },
+            { q: "38. What did the fireworks showcase?", options: ["Military strength", "Distinctive heritage and vibrant culture", "Economic data", "Sports achievements"], answer: 1 },
+            { q: "39. What did Lai Kar-ying send from space?", options: ["Scientific data", "Festive greetings", "Weather reports", "Technical updates"], answer: 1 },
+            { q: "40. What did the space milestone underscore?", options: ["China's military power", "China's growing capabilities in space exploration", "China's economic strength", "China's diplomatic influence"], answer: 1 }
+        ];
+
+        function renderReading(containerId, data, prefix) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.readingAnswers[prefix + '_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="${prefix}_${i}" value="${j}" ${checked} onchange="saveReadingAnswer('${prefix}', ${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveReadingAnswer(prefix, qIndex, ansIndex) {
+            savedData.readingAnswers[prefix + '_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        // ============ 词汇数据 ============
+        const newVocabData = [
+            { word: "surge", phonetic: "/sɜːrdʒ/", meaning: "n./v. 激增；汹涌" },
+            { word: "unprecedented", phonetic: "/ʌnˈpresɪdentɪd/", meaning: "adj. 史无前例的" },
+            { word: "cross-regional", phonetic: "/krɒs ˈriːdʒənl/", meaning: "adj. 跨区域的" },
+            { word: "peak", phonetic: "/piːk/", meaning: "n. 高峰 adj. 高峰的" },
+            { word: "deploy", phonetic: "/dɪˈplɔɪ/", meaning: "v. 部署；调度" },
+            { word: "accommodate", phonetic: "/əˈkɒmədeɪt/", meaning: "v. 容纳；适应" },
+            { word: "hub", phonetic: "/hʌb/", meaning: "n. 枢纽；中心" },
+            { word: "overnight", phonetic: "/ˌoʊvərˈnaɪt/", meaning: "adj./adv. 过夜的；夜间" },
+            { word: "distinctive", phonetic: "/dɪˈstɪŋktɪv/", meaning: "adj. 独特的；有特色的" },
+            { word: "neighboring", phonetic: "/ˈneɪbərɪŋ/", meaning: "adj. 邻近的；相邻的" },
+            { word: "congestion", phonetic: "/kənˈdʒestʃən/", meaning: "n. 拥堵；拥堵" },
+            { word: "assessment", phonetic: "/əˈsesmənt/", meaning: "n. 评估；评价" },
+            { word: "spectacular", phonetic: "/spekˈtækjʊlər/", meaning: "adj. 壮观的；惊人的" },
+            { word: "heritage", phonetic: "/ˈherɪtɪdʒ/", meaning: "n. 遗产；传统" },
+            { word: "festivities", phonetic: "/fesˈtɪvətiz/", meaning: "n. 庆祝活动；庆典" },
+            { word: "fireworks", phonetic: "/ˈfaɪərwɜːrks/", meaning: "n. 烟花；烟火" },
+            { word: "spectacle", phonetic: "/ˈspektəkl/", meaning: "n. 壮观场面；奇观" },
+            { word: "orbit", phonetic: "/ˈɔːrbɪt/", meaning: "n. 轨道 v. 绕轨运行" },
+            { word: "coercive", phonetic: "/koʊˈɜːrsɪv/", meaning: "adj. 强制的；胁迫的" },
+            { word: "multilateralism", phonetic: "/ˌmʌltɪˈlætərəlɪzəm/", meaning: "n. 多边主义" }
+        ];
+
+        const oldVocabData = [
+            { word: "rejuvenation", phonetic: "/rɪˌdʒuːvəˈneɪʃn/", meaning: "n. 复兴；振兴" },
+            { word: "unstoppable", phonetic: "/ʌnˈstɒpəbl/", meaning: "adj. 不可阻挡的" },
+            { word: "solemn", phonetic: "/ˈsɒləm/", meaning: "adj. 庄严的；隆重的" },
+            { word: "reception", phonetic: "/rɪˈsepʃn/", meaning: "n. 招待会" },
+            { word: "modernization", phonetic: "/ˌmɒdənaɪˈzeɪʃn/", meaning: "n. 现代化" },
+            { word: "resilience", phonetic: "/rɪˈzɪliəns/", meaning: "n. 韧性；恢复力" },
+            { word: "vitality", phonetic: "/vaɪˈtæləti/", meaning: "n. 活力；生命力" },
+            { word: "disburse", phonetic: "/dɪsˈbɜːrs/", meaning: "v. 拨付；支付" },
+            { word: "allocation", phonetic: "/ˌæləˈkeɪʃn/", meaning: "n. 分配；拨款" },
+            { word: "milestone", phonetic: "/ˈmaɪlstoʊn/", meaning: "n. 里程碑" },
+            { word: "sweep", phonetic: "/swiːp/", meaning: "v. 包揽；席卷" },
+            { word: "delegation", phonetic: "/ˌdelɪˈɡeɪʃn/", meaning: "n. 代表团" },
+            { word: "parcel", phonetic: "/ˈpɑːrsl/", meaning: "n. 包裹" },
+            { word: "express", phonetic: "/ɪkˈspres/", meaning: "adj. 快递的；快速的" },
+            { word: "autonomy", phonetic: "/ɔːˈtɒnəmi/", meaning: "n. 自治；自主" },
+            { word: "secessionist", phonetic: "/sɪˈseʃnɪst/", meaning: "n. 分裂主义者" },
+            { word: "devastating", phonetic: "/ˈdevəsteɪtɪŋ/", meaning: "adj. 毁灭性的" },
+            { word: "deploy", phonetic: "/dɪˈplɔɪ/", meaning: "v. 部署；调遣" },
+            { word: "debris", phonetic: "/dəˈbriː/", meaning: "n. 碎片；残骸" },
+            { word: "restore", phonetic: "/rɪˈstɔːr/", meaning: "v. 恢复；修复" },
+            { word: "journalist", phonetic: "/ˈdʒɜːrnəlɪst/", meaning: "n. 记者" },
+            { word: "trigger", phonetic: "/ˈtrɪɡər/", meaning: "v. 触发；引发" },
+            { word: "collapse", phonetic: "/kəˈlæps/", meaning: "n./v. 坍塌" },
+            { word: "capacity", phonetic: "/kəˈpæsəti/", meaning: "n. 容量；产能" },
+            { word: "renewable", phonetic: "/rɪˈnuːəbl/", meaning: "adj. 可再生的" },
+            { word: "blueprint", phonetic: "/ˈbluːprɪnt/", meaning: "n. 蓝图；方案" },
+            { word: "framework", phonetic: "/ˈfreɪmwɜːrk/", meaning: "n. 框架；体系" },
+            { word: "cooperation", phonetic: "/koʊˌɒpəˈreɪʃn/", meaning: "n. 合作；协作" },
+            { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", meaning: "n. 倡议" },
+            { word: "volunteer", phonetic: "/ˌvɒlənˈtɪr/", meaning: "n. 志愿者" }
+        ];
+
+        function renderVocab(containerId, data, isNew) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-card' + (isNew ? '' : ' old');
+                const marked = savedData.vocabMarked.includes(isNew ? 'new_' + i : 'old_' + i);
+                div.innerHTML = `
+                    <div class="word">${item.word} ${marked ? '✅' : ''}</div>
+                    <div class="phonetic">${item.phonetic}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <button onclick="toggleVocab('${isNew ? 'new' : 'old'}', ${i})" style="margin-top:5px; padding:4px 10px; border:1px solid #ccc; border-radius:5px; background:${marked ? '#4CAF50' : '#fff'}; color:${marked ? '#fff' : '#333'}; cursor:pointer; font-size:0.85em;">${marked ? '已掌握' : '标记掌握'}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleVocab(type, index) {
+            const key = type + '_' + index;
+            const i = savedData.vocabMarked.indexOf(key);
+            if (i > -1) savedData.vocabMarked.splice(i, 1);
+            else savedData.vocabMarked.push(key);
+            saveData();
+            if (type === 'new') renderVocab('newVocab', newVocabData, true);
+            else renderVocab('oldVocab', oldVocabData, false);
+        }
+
+        // ============ 100题测试数据 ============
+        const testData = [
+            // 1-20 语法选择题
+            { q: "1. China's railway ___ a record by transporting 252 million passengers on October 1.", type: "choice", options: ["set", "was set", "has set", "had set"], answer: 0 },
+            { q: "2. Cross-regional passenger trips ___ to reach 2.13 billion during the holiday.", type: "choice", options: ["expect", "are expected", "expected", "have expected"], answer: 1 },
+            { q: "3. The railway sector ___ a 16-day transport period.", type: "choice", options: ["enters", "entered", "has entered", "is entering"], answer: 2 },
+            { q: "4. Approximately 13,000 passenger trains ___ daily to accommodate the peak demand.", type: "choice", options: ["deploy", "deployed", "are deployed", "have been deployed"], answer: 2 },
+            { q: "5. Major railway hubs ___ overnight trains to serve travelers.", type: "choice", options: ["add", "added", "have added", "are adding"], answer: 2 },
+            { q: "6. Civil aviation ___ an estimated 31.19 million passenger trips during the holiday.", type: "choice", options: ["handle", "handles", "is handling", "is expected to handle"], answer: 3 },
+            { q: "7. Airport authorities ___ safety assessments and increased flight capacity.", type: "choice", options: ["conduct", "conducted", "have conducted", "are conducting"], answer: 1 },
+            { q: "8. Self-driving travel ___ for over 90% of total trips.", type: "choice", options: ["account", "accounts", "accounted", "has accounted"], answer: 1 },
+            { q: "9. Hong Kong ___ the 77th anniversary with a spectacular fireworks display.", type: "choice", options: ["celebrate", "celebrates", "celebrated", "has celebrated"], answer: 2 },
+            { q: "10. The fireworks display ___ over Victoria Harbour.", type: "choice", options: ["hold", "held", "was held", "has been held"], answer: 2 },
+            { q: "11. Hong Kong's first astronaut ___ National Day from orbit.", type: "choice", options: ["celebrate", "celebrates", "celebrated", "has celebrated"], answer: 2 },
+            { q: "12. 28 countries ___ for an end to unilateral coercive measures.", type: "choice", options: ["call", "called", "have called", "are calling"], answer: 2 },
+            { q: "13. Unilateral coercive measures ___ international law.", type: "choice", options: ["violate", "violates", "violated", "have violated"], answer: 0 },
+            { q: "14. Such measures ___ multilateralism.", type: "choice", options: ["undermine", "undermines", "undermined", "have undermined"], answer: 0 },
+            { q: "15. Coercive measures ___ devastating humanitarian impacts.", type: "choice", options: ["cause", "causes", "caused", "have caused"], answer: 0 },
+            { q: "16. On October 1, expressway traffic ___ 71 million vehicle trips.", type: "choice", options: ["reach", "reaches", "reached", "has reached"], answer: 2 },
+            { q: "17. The festivities ___ large crowds to both sides of the harbour.", type: "choice", options: ["draw", "drew", "have drawn", "are drawing"], answer: 1 },
+            { q: "18. John Lee ___ the city's first five-year plan.", type: "choice", options: ["mention", "mentions", "mentioned", "has mentioned"], answer: 2 },
+            { q: "19. The joint statement ___ that coercive measures hinder sustainable development.", type: "choice", options: ["emphasize", "emphasizes", "emphasized", "has emphasized"], answer: 1 },
+            { q: "20. Millions of families ___ to the road for holiday getaways.", type: "choice", options: ["take", "took", "have taken", "are taking"], answer: 1 },
+            // 21-40 词汇运用
+            { q: "21. ___ means a sudden large increase.", type: "choice", options: ["Surge", "Decline", "Stability", "Shortage"], answer: 0 },
+            { q: "22. ___ means never having happened before.", type: "choice", options: ["Unprecedented", "Expected", "Common", "Frequent"], answer: 0 },
+            { q: "23. ___ travel refers to movement across different regions.", type: "choice", options: ["Cross-regional", "Local", "Domestic", "Indoor"], answer: 0 },
+            { q: "24. A ___ period is the time of highest activity.", type: "choice", options: ["peak", "low", "off", "quiet"], answer: 0 },
+            { q: "25. To ___ means to move resources into position for use.", type: "choice", options: ["deploy", "withdraw", "conceal", "abandon"], answer: 0 },
+            { q: "26. To ___ means to provide space or adapt to something.", type: "choice", options: ["Accommodate", "Reject", "Exclude", "Ignore"], answer: 0 },
+            { q: "27. A ___ is a central point of activity or transport.", type: "choice", options: ["hub", "spoke", "edge", "corner"], answer: 0 },
+            { q: "28. ___ trains run through the night.", type: "choice", options: ["Overnight", "Morning", "Afternoon", "Weekend"], answer: 0 },
+            { q: "29. ___ means having a unique quality that makes something stand out.", type: "choice", options: ["Distinctive", "Ordinary", "Common", "Similar"], answer: 0 },
+            { q: "30. ___ provinces are those adjacent to each other.", type: "choice", options: ["Neighboring", "Distant", "Remote", "Separate"], answer: 0 },
+            { q: "31. ___ refers to overcrowding, especially of traffic.", type: "choice", options: ["Congestion", "Freedom", "Space", "Silence"], answer: 0 },
+            { q: "32. An ___ is an evaluation or judgment.", type: "choice", options: ["assessment", "assignment", "assistance", "assembly"], answer: 0 },
+            { q: "33. ___ means very impressive or dramatic to look at.", type: "choice", options: ["Spectacular", "Ordinary", "Subtle", "Quiet"], answer: 0 },
+            { q: "34. ___ refers to traditions and cultural treasures passed down through generations.", type: "choice", options: ["Heritage", "Garbage", "Currency", "Merchandise"], answer: 0 },
+            { q: "35. ___ are celebrations and festive events.", type: "choice", options: ["Festivities", "Disasters", "Meetings", "Negotiations"], answer: 0 },
+            { q: "36. ___ are explosive devices used for celebration displays.", type: "choice", options: ["Fireworks", "Fireplaces", "Firefighters", "Firewalls"], answer: 0 },
+            { q: "37. A ___ is a visually striking scene or event.", type: "choice", options: ["spectacle", "specimen", "spectrum", "speculation"], answer: 0 },
+            { q: "38. An ___ is the curved path of an object around a celestial body.", type: "choice", options: ["orbit", "orbiting", "orbital", "orbiter"], answer: 0 },
+            { q: "39. ___ measures use force or threats to compel action.", type: "choice", options: ["Coercive", "Voluntary", "Friendly", "Diplomatic"], answer: 0 },
+            { q: "40. ___ is the principle of cooperation among multiple countries.", type: "choice", options: ["Multilateralism", "Unilateralism", "Isolationism", "Nationalism"], answer: 0 },
+            // 41-60 完形填空
+            { q: "41. China's railway set a record ___ transporting 252 million passengers.", type: "choice", options: ["by", "with", "for", "in"], answer: 0 },
+            { q: "42. Cross-regional passenger trips are expected ___ reach 2.13 billion.", type: "choice", options: ["to", "for", "at", "in"], answer: 0 },
+            { q: "43. The railway sector has entered a 16-day transport ___.", type: "choice", options: ["period", "event", "season", "phase"], answer: 0 },
+            { q: "44. Trains are deployed daily to accommodate the ___ demand.", type: "choice", options: ["peak", "low", "average", "minimal"], answer: 0 },
+            { q: "45. Major railway hubs have added overnight trains to serve travelers ___ to neighboring provinces.", type: "choice", options: ["heading", "leaving", "avoiding", "returning"], answer: 0 },
+            { q: "46. Airport authorities have conducted safety ___ and increased flight capacity.", type: "choice", options: ["assessments", "accidents", "violations", "incidents"], answer: 0 },
+            { q: "47. Self-driving travel accounts ___ over 90% of total trips.", type: "choice", options: ["for", "of", "to", "with"], answer: 0 },
+            { q: "48. Millions of families took ___ the road for holiday getaways.", type: "choice", options: ["to", "on", "in", "at"], answer: 0 },
+            { q: "49. Hong Kong celebrated the 77th anniversary ___ a spectacular fireworks display.", type: "choice", options: ["with", "by", "for", "at"], answer: 0 },
+            { q: "50. The fireworks display was held ___ Victoria Harbour.", type: "choice", options: ["over", "under", "beside", "near"], answer: 0 },
+            { q: "51. The festivities drew large crowds ___ both sides of the harbour.", type: "choice", options: ["to", "from", "on", "at"], answer: 0 },
+            { q: "52. John Lee mentioned the city's first five-year ___.", type: "choice", options: ["plan", "rule", "law", "term"], answer: 0 },
+            { q: "53. Lai Kar-ying celebrated National Day ___ orbit aboard Tiangong.", type: "choice", options: ["from", "in", "on", "at"], answer: 0 },
+            { q: "54. The 28 countries jointly called ___ an end to unilateral coercive measures.", type: "choice", options: ["for", "on", "at", "in"], answer: 0 },
+            { q: "55. Such measures violate international law and ___ multilateralism.", type: "choice", options: ["undermine", "strengthen", "support", "promote"], answer: 0 },
+            { q: "56. Coercive measures cause ___ humanitarian impacts.", type: "choice", options: ["devastating", "beneficial", "minor", "positive"], answer: 0 },
+            { q: "57. The fireworks featured eight parts that ___ the night sky.", type: "choice", options: ["illuminated", "darkened", "obscured", "shadowed"], answer: 0 },
+            { q: "58. Hong Kong's unique position ___ 'one country, two systems' was highlighted.", type: "choice", options: ["under", "over", "with", "by"], answer: 0 },
+            { q: "59. This spectacle underscored China's growing ___ in space exploration.", type: "choice", options: ["capabilities", "limitations", "weaknesses", "restrictions"], answer: 0 },
+            { q: "60. The joint statement emphasized that coercive measures ___ sustainable development.", type: "choice", options: ["hinder", "promote", "support", "enable"], answer: 0 },
+            // 61-80 阅读理解题
+            { q: "61. How many passengers did the railway transport on October 1?", type: "choice", options: ["25.2 million", "252 million", "2.52 billion", "25.2 billion"], answer: 1 },
+            { q: "62. How many cross-regional trips are expected during the holiday?", type: "choice", options: ["1.13 billion", "2.13 billion", "3.13 billion", "4.13 billion"], answer: 1 },
+            { q: "63. How long is the railway transport period?", type: "choice", options: ["7 days", "10 days", "16 days", "30 days"], answer: 2 },
+            { q: "64. How many passenger trains are deployed daily?", type: "choice", options: ["10,000", "11,000", "12,000", "13,000"], answer: 3 },
+            { q: "65. What is the estimated civil aviation passenger volume during the holiday?", type: "choice", options: ["21.19 million", "31.19 million", "41.19 million", "51.19 million"], answer: 1 },
+            { q: "66. What percentage do self-driving trips account for?", type: "choice", options: ["Over 70%", "Over 80%", "Over 90%", "Over 95%"], answer: 2 },
+            { q: "67. How many vehicle trips were on expressways on October 1?", type: "choice", options: ["51 million", "61 million", "71 million", "81 million"], answer: 2 },
+            { q: "68. How long was Hong Kong's fireworks display?", type: "choice", options: ["15 minutes", "20 minutes", "23 minutes", "30 minutes"], answer: 2 },
+            { q: "69. Who is Hong Kong's Chief Executive?", type: "choice", options: ["Carrie Lam", "John Lee", "Leung Chun-ying", "Donald Tsang"], answer: 1 },
+            { q: "70. Who is Hong Kong's first astronaut?", type: "choice", options: ["Yang Liwei", "Lai Kar-ying", "Wang Yaping", "Fei Junlong"], answer: 1 },
+            { q: "71. Where did the astronaut celebrate National Day?", type: "choice", options: ["In Hong Kong", "In Beijing", "From orbit aboard Tiangong", "On a naval ship"], answer: 2 },
+            { q: "72. How many countries called for ending unilateral coercive measures?", type: "choice", options: ["18", "22", "28", "35"], answer: 2 },
+            { q: "73. Which country was NOT among the 28?", type: "choice", options: ["China", "Russia", "Japan", "Iran"], answer: 2 },
+            { q: "74. What do unilateral coercive measures violate?", type: "choice", options: ["Domestic law", "International law", "Trade agreements", "Environmental rules"], answer: 1 },
+            { q: "75. What do such measures undermine?", type: "choice", options: ["Economic growth", "Multilateralism", "National sovereignty", "Cultural exchange"], answer: 1 },
+            { q: "76. How many parts did the fireworks have?", type: "choice", options: ["6", "7", "8", "10"], answer: 2 },
+            { q: "77. What did the fireworks showcase?", type: "choice", options: ["Military strength", "Distinctive heritage and vibrant culture", "Economic data", "Sports achievements"], answer: 1 },
+            { q: "78. What did John Lee highlight about Hong Kong?", type: "choice", options: ["Full integration", "One country, two systems", "Direct governance", "Federal system"], answer: 1 },
+            { q: "79. What did the 28 countries issue at the UN?", type: "choice", options: ["A trade agreement", "A joint statement", "A military pact", "A cultural treaty"], answer: 1 },
+            { q: "80. How many railway passengers are expected during the 16-day transport period?", type: "choice", options: ["184 million", "284 million", "384 million", "484 million"], answer: 1 },
+            // 81-100 句型转换/翻译
+            { q: "81. Choose the correct translation: '10月1日铁路运送了2.52亿人次，创历史新高。'", type: "choice", options: ["China's railway set a record by transporting 252 million passengers on October 1.", "Railway October 1 record 252 million.", "252 million railway record October 1.", "October 1 railway 252 million record."], answer: 0 },
+            { q: "82. 'unprecedented' means ___.", type: "choice", options: ["never having happened or existed before", "happening regularly", "slightly unusual", "partially expected"], answer: 0 },
+            { q: "83. Choose the correct sentence:", type: "choice", options: ["Self-driving travel accounts for over 90% of total trips.", "Self-driving travel over 90% total trips.", "Over 90% self-driving travel total.", "Total trips self-driving over 90%."], answer: 0 },
+            { q: "84. 'accommodate' in this context means ___.", type: "choice", options: ["to provide enough space for", "to refuse entry to", "to reduce capacity of", "to close down"], answer: 0 },
+            { q: "85. Choose the correct translation: '28国呼吁结束单边强制措施。'", type: "choice", options: ["28 countries called for an end to unilateral coercive measures.", "28 countries end coercive measures.", "Coercive measures 28 countries end.", "End unilateral measures 28 countries."], answer: 0 },
+            { q: "86. 'are expected to reach' uses the ___ voice.", type: "choice", options: ["passive", "active", "conditional", "imperative"], answer: 0 },
+            { q: "87. The active voice of 'Cross-regional trips are expected to reach 2.13 billion' is ___.", type: "choice", options: ["Authorities expect cross-regional trips to reach 2.13 billion.", "Cross-regional trips expect 2.13 billion.", "2.13 billion expect cross-regional trips.", "Reach 2.13 billion cross-regional trips."], answer: 0 },
+            { q: "88. 'The railway sector has entered a 16-day transport period.' The tense is ___.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "89. Choose the correct question tag: 'The fireworks display drew large crowds, ___?'", type: "choice", options: ["didn't it", "did it", "doesn't it", "isn't it"], answer: 0 },
+            { q: "90. 'Self-driving travel accounts for over 90%.' Fill: By next year, self-driving travel ___ even more dominant.", type: "choice", options: ["will have become", "became", "becomes", "becoming"], answer: 0 },
+            { q: "91. Choose the correct translation: '香港以壮观的烟花汇演庆祝77周年国庆。'", type: "choice", options: ["Hong Kong celebrated the 77th anniversary with a spectacular fireworks display.", "Hong Kong 77th anniversary spectacular fireworks.", "Spectacular fireworks Hong Kong 77th.", "77th anniversary fireworks spectacular Hong Kong."], answer: 0 },
+            { q: "92. 'spectacle' in this context means ___.", type: "choice", options: ["a visually striking scene or event", "a pair of glasses", "a small object", "a quiet moment"], answer: 0 },
+            { q: "93. 'If coercive measures are lifted, sustainable development can resume.' This contains ___ clause.", type: "choice", options: ["a conditional", "an imperative", "a relative", "a noun"], answer: 0 },
+            { q: "94. Choose the correct sentence:", type: "choice", options: ["The 28 countries jointly called for an end to unilateral coercive measures.", "The 28 countries jointly called end unilateral coercive.", "Jointly called 28 countries end measures.", "Unilateral measures 28 countries called end."], answer: 0 },
+            { q: "95. '___ the peak demand, the railway deployed 13,000 trains daily.' Fill in the blank.", type: "choice", options: ["To accommodate", "Because", "Although", "Despite"], answer: 0 },
+            { q: "96. The indirect speech of 'Lee said, \"Hong Kong has a unique position.\"' is ___.", type: "choice", options: ["Lee said Hong Kong had a unique position.", "Lee says Hong Kong has a unique position.", "Lee said Hong Kong unique position.", "Lee said Hong Kong had uniquely positioned."], answer: 0 },
+            { q: "97. 'congestion' in the context means ___.", type: "choice", options: ["overcrowding, especially of traffic", "open space", "smooth flow", "empty roads"], answer: 0 },
+            { q: "98. 'has entered' uses the ___ tense.", type: "choice", options: ["present perfect", "past", "future", "present"], answer: 0 },
+            { q: "99. 'The festivities drew large crowds to both sides of the harbour.' The verb is ___.", type: "choice", options: ["drew", "festivities", "large", "harbour"], answer: 0 },
+            { q: "100. 'unilateral coercive measures' means ___.", type: "choice", options: ["force or pressure applied by one country alone", "mutual agreements between nations", "voluntary trade partnerships", "collective security arrangements"], answer: 0 }
+        ];
+
+        function renderTest() {
+            const container = document.getElementById('testQuestions');
+            container.innerHTML = '';
+            testData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                let optionsHtml = '';
+                item.options.forEach((opt, j) => {
+                    const savedAns = savedData.answers['test_' + i];
+                    const checked = savedAns === j ? 'checked' : '';
+                    optionsHtml += `<label><input type="radio" name="test_${i}" value="${j}" ${checked} onchange="saveTestAnswer(${i}, ${j})"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+                });
+                div.innerHTML = `<p>${item.q}</p><div class="options">${optionsHtml}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTestAnswer(qIndex, ansIndex) {
+            savedData.answers['test_' + qIndex] = ansIndex;
+            saveData();
+        }
+
+        function submitTest() {
+            let correct = 0;
+            let answered = 0;
+            testData.forEach((item, i) => {
+                const userAns = savedData.answers['test_' + i];
+                if (userAns !== undefined) {
+                    answered++;
+                    if (userAns === item.answer) correct++;
+                }
+            });
+
+            if (answered < 50) {
+                const result = document.getElementById('testResult');
+                result.className = 'result-box fail show';
+                result.innerHTML = `⚠️ 你只完成了 ${answered} 题。请至少完成50题后再提交。<br><br>目前正确：${correct}/${answered}`;
+                return;
+            }
+
+            const score = Math.round((correct / testData.length) * 100);
+            savedData.testScore = score;
+            savedData.testSubmitted = true;
+            saveData();
+
+            const result = document.getElementById('testResult');
+            result.className = 'result-box ' + (score >= 60 ? 'pass' : 'fail') + ' show';
+            result.innerHTML = `
+                <h3>🎉 测试完成！</h3>
+                <p>得分：${score} 分</p>
+                <p>正确：${correct} / ${testData.length}</p>
+                <p>完成率：${answered}/${testData.length}</p>
+                <p>${score >= 90 ? '太棒了！继续保持！🌟' : score >= 60 ? '不错！继续努力！💪' : '继续加油，下次会更好！📚'}</p>
+                <p style="font-size:0.9em; margin-top:10px;">✅ 成绩已永久保存到本地</p>
+            `;
+        }
+
+        // ============ 统计更新 ============
+        function updateStats() {
+            const testAnswered = Object.keys(savedData.answers).filter(k => k.startsWith('test_')).length;
+            const readingAnswered = Object.keys(savedData.readingAnswers).length;
+            const total = testAnswered + readingAnswered;
+
+            let correct = 0;
+            testData.forEach((item, i) => {
+                if (savedData.answers['test_' + i] === item.answer) correct++;
+            });
+            [...reading1Data, ...reading2Data].forEach((item, i) => {
+                const prefix = i < reading1Data.length ? 'r1' : 'r2';
+                const idx = i < reading1Data.length ? i : i - reading1Data.length;
+                if (savedData.readingAnswers[prefix + '_' + idx] === item.answer) correct++;
+            });
+
+            document.getElementById('totalAnswered').textContent = total;
+            document.getElementById('totalCorrect').textContent = correct;
+            document.getElementById('accuracy').textContent = total > 0 ? Math.round((correct/total)*100) + '%' : '0%';
+            document.getElementById('progressBar').style.width = (total / 120 * 100) + '%';
+        }
+
+        // ============ Tab 切换 ============
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ 初始化 ============
+        loadData();
+        renderReading('reading1Questions', reading1Data, 'r1');
+        renderReading('reading2Questions', reading2Data, 'r2');
+        renderVocab('newVocab', newVocabData, true);
+        renderVocab('oldVocab', oldVocabData, false);
+        renderTest();
+        updateStats();
+
+        // 页面关闭前保存
+        window.addEventListener('beforeunload', saveData);
+    </script>
+</body>
+</html>
